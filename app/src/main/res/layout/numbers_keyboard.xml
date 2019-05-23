@@ -1,78 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:padding="0dp"
-        app:useDefaultMargins="false"
-        android:columnCount="4">
+        android:id="@+id/numbers_keyboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <Button
             android:id="@+id/key_7"
+            android:layout_alignParentStart="true"
             style="@style/MyKeyboardButtons"
             android:text="7"
     />
     <Button
             android:id="@+id/key_8"
+
+            android:layout_toEndOf="@+id/key_7"
             style="@style/MyKeyboardButtons"
             android:text="8"/>
     <Button
             android:id="@+id/key_9"
+            android:layout_toEndOf="@+id/key_8"
             style="@style/MyKeyboardButtons"
             android:text="9"/>
     <Button
             android:id="@+id/key_delete"
             style="@style/MyKeyboardButtons"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@id/key_9"
             android:text="Delete"/>
     <Button
             android:id="@+id/key_4"
+            android:layout_alignParentStart="true"
             style="@style/MyKeyboardButtons"
+            android:layout_below="@+id/key_7"
             android:text="4"/>
     <Button
             android:id="@+id/key_5"
             style="@style/MyKeyboardButtons"
+            android:layout_below="@id/key_8"
+            android:layout_toEndOf="@id/key_4"
             android:text="5"/>
     <Button
             android:id="@+id/key_6"
+            android:layout_below="@id/key_9"
+            android:layout_toEndOf="@id/key_5"
             style="@style/MyKeyboardButtons"
             android:text="6"/>
     <Button
             android:id="@+id/key_date"
+            android:layout_toEndOf="@id/key_6"
+            android:layout_below="@id/key_delete"
+
+            android:layout_alignParentEnd="true"
             style="@style/MyKeyboardButtons"
             android:text="Date"/>
     <Button
             android:id="@+id/key_1"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/key_4"
             style="@style/MyKeyboardButtons"
             android:text="1"/>
     <Button
             android:id="@+id/key_2"
+            android:layout_below="@id/key_5"
+            android:layout_toEndOf="@id/key_1"
             style="@style/MyKeyboardButtons"
             android:text="2"/>
     <Button
             android:id="@+id/key_3"
+            android:layout_below="@id/key_6"
+            android:layout_toEndOf="@id/key_2"
             style="@style/MyKeyboardButtons"
             android:text="3"/>
     <Button
             android:id="@+id/key_enter"
-            android:layout_height="0dp"
-            android:layout_rowSpan="2"
-            android:layout_columnSpan="1"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:gravity="center"
-            android:layout_gravity="fill"
+
+            android:layout_alignParentEnd="true"
+            style="@style/MyKeyboardButtons"
+            android:layout_below="@id/key_date"
+            android:layout_toEndOf="@id/key_3"
+             android:layout_alignBottom="@+id/key_diveder"
             android:text="ENTER"/>
     <Button
             android:id="@+id/key_0"
             style="@style/MyKeyboardButtons"
-            android:text="0"/>
+            android:layout_below="@id/key_1"
+            android:text="0" android:layout_alignParentStart="true"/>
     <Button
             android:id="@+id/key_000"
+            android:layout_below="@id/key_2"
+            android:layout_toEndOf="@id/key_0"
             style="@style/MyKeyboardButtons"
             android:text="000"/>
     <Button
             android:id="@+id/key_diveder"
+            android:layout_toEndOf="@id/key_000"
+            android:layout_below="@+id/key_3"
             style="@style/MyKeyboardButtons"
             android:text=","/>
 
-</GridLayout>
+</RelativeLayout>
+
