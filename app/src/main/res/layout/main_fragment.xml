@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <TextView
@@ -9,9 +10,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/keyboard"
             android:hint="0"
+            android:gravity="end"
             android:textSize="40sp"
             android:textAllCaps="true"
-            android:layoutDirection="rtl"
             android:paddingRight="16dp"
             android:id="@+id/expense"/>
 
