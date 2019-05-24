@@ -6,7 +6,7 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var active:AndroidXMvpAppCompatFragment
+    lateinit var active: AndroidXMvpAppCompatFragment
     private val mainFragment = MainFragment()
     private val costsFragment = CostsFragment()
     private val chartFragment = ChartFragment()
@@ -16,9 +16,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val fm = supportFragmentManager
-        fm.beginTransaction().add(R.id.main_container,chartFragment, "chart").hide(chartFragment).commit()
-        fm.beginTransaction().add(R.id.main_container,costsFragment,"costs").hide(costsFragment).commit()
-        fm.beginTransaction().add(R.id.main_container,mainFragment,"main").commit()
+        fm.beginTransaction().add(R.id.main_container, chartFragment, "chart").hide(chartFragment).commit()
+        fm.beginTransaction().add(R.id.main_container, costsFragment, "costs").hide(costsFragment).commit()
+        fm.beginTransaction().add(R.id.main_container, mainFragment, "main").commit()
         active = mainFragment
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {

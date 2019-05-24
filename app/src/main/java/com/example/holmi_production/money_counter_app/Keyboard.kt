@@ -14,17 +14,17 @@ class Keyboard @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : RelativeLayout(context, attrs, defStyle, defStyleRes) {
 
-    private lateinit var mKeyboardLitener: IKeyboardListener
+    private lateinit var mKeyboardListener: IKeyboardListener
 
     init {
         Log.d("qwerty", "init")
         View.inflate(context, R.layout.numbers_keyboard, this)
-        key_0.setOnClickListener { mKeyboardLitener.numberPressed(0) }
-        key_000.setOnClickListener { mKeyboardLitener.numberPressed(100) }
+        key_0.setOnClickListener { mKeyboardListener.numberPressed(0) }
+        key_000.setOnClickListener { mKeyboardListener.numberPressed(100) }
     }
 
-    fun setListener(mKeyboardListener: IKeyboardListener) {
-        this.mKeyboardLitener = mKeyboardListener
+    fun setListener(mKeyboardListener: IKeyboardListener){
+        this.mKeyboardListener = mKeyboardListener
     }
 
 }

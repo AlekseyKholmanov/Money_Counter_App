@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +15,11 @@ class MainFragment : AndroidXMvpAppCompatFragment(), IKeyboardListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.main_fragment, container, false)
-
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        Keyboard(context!!).setListener(this as IKeyboardListener)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val key = view.findViewById<Keyboard>(R.id.keyboard)
+        key.setListener(this)
     }
 }
