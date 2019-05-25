@@ -11,8 +11,12 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.main_fragment.*
 
-class MainFragment : AndroidXMvpAppCompatFragment(),
+class MainFragment : AndroidXMvpAppCompatFragment(),MainFragmnetView,
     IKeyboardListener {
+    override fun updateMoney(money: String) {
+        expense.text = money
+    }
+
     override fun zeroPressed(number: String) {
         if (text == "")
             return
@@ -32,9 +36,8 @@ class MainFragment : AndroidXMvpAppCompatFragment(),
     }
 
     override fun enterPressed() {
-        Snackbar.make(main_fragment, text, Snackbar.LENGTH_SHORT).show()
-        text = ""
-        displaySum()
+        presenter.saveSpending()
+        Snackbar.make(main_fragment, "save", Snackbar.LENGTH_SHORT).show()
     }
 
     override fun deletePressed() {
@@ -52,13 +55,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(),
     }
 
     private fun displaySum() {
-        if (text.contains('.')) {
-            val float = text.toFloat()
-            val str = String.format("%.1f", float)
-            text = str
-            expense.text = text
-        } else
-            expense.text = text
+
     }
 
     private var text: String = ""
