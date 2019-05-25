@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.google.android.material.snackbar.Snackbar
@@ -24,8 +25,8 @@ class MainFragment : AndroidXMvpAppCompatFragment(),
     override fun dividerPressed(divider: String) {
         if (divider == "." && text.contains("."))
             return
-        else{
-            text+=divider
+        else {
+            text += divider
             displaySum()
         }
     }
@@ -44,7 +45,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(),
     }
 
     override fun numberPressed(simbol: String) {
-        if(text.contains('.')&&text.takeLast(1)!=".")
+        if (text.contains('.') && text.takeLast(1) != ".")
             text = text.dropLast(1)
         text += simbol
         displaySum()
@@ -62,12 +63,13 @@ class MainFragment : AndroidXMvpAppCompatFragment(),
 
     private var text: String = ""
     private lateinit var key: Keyboard
+
     @InjectPresenter
     lateinit var presenter: MainFragmentPresenter
 
-//    fun initPresenter():MainFragmentPresenter{
-//
-//    }
+    fun initPresenter():MainFragmentPresenter{
+        return App.component.getMainPresenter()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.main_fragment, container, false)
