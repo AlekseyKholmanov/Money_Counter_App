@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app
 
 import android.content.Context
+import android.database.Observable
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -19,8 +20,8 @@ class Keyboard @JvmOverloads constructor(
     init {
         Log.d("qwerty", "init")
         View.inflate(context, R.layout.numbers_keyboard, this)
-        key_0.setOnClickListener { mKeyboardListener.numberPressed("0") }
-        key_000.setOnClickListener { mKeyboardListener.numberPressed("000") }
+        key_0.setOnClickListener { mKeyboardListener.zeroPressed("0") }
+        key_000.setOnClickListener { mKeyboardListener.zeroPressed("000") }
         key_1.setOnClickListener { mKeyboardListener.numberPressed("1") }
         key_2.setOnClickListener { mKeyboardListener.numberPressed("2") }
         key_3.setOnClickListener { mKeyboardListener.numberPressed("3") }
@@ -38,11 +39,14 @@ class Keyboard @JvmOverloads constructor(
     fun setListener(mKeyboardListener: IKeyboardListener) {
         this.mKeyboardListener = mKeyboardListener
     }
-
+    fun sd(){
+    }
 }
 
 interface IKeyboardListener {
     fun numberPressed(number: String)
+    fun zeroPressed(number: String)
+    fun dividerPressed(divider:String = ".")
     fun enterPressed()
     fun deletePressed()
 }
