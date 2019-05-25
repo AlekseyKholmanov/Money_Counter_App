@@ -1,11 +1,11 @@
-package com.example.holmi_production.money_counter_app
+package com.example.holmi_production.money_counter_app.main
 
 import android.content.Context
-import android.database.Observable
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
+import com.example.holmi_production.money_counter_app.R
 import kotlinx.android.synthetic.main.numbers_keyboard.view.*
 
 class Keyboard @JvmOverloads constructor(

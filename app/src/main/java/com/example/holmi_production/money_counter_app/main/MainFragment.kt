@@ -1,14 +1,17 @@
-package com.example.holmi_production.money_counter_app
+package com.example.holmi_production.money_counter_app.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.main_fragment.*
 
-class MainFragment : AndroidXMvpAppCompatFragment(), IKeyboardListener {
+class MainFragment : AndroidXMvpAppCompatFragment(),
+    IKeyboardListener {
     override fun zeroPressed(number: String) {
         if (text == "")
             return
@@ -58,7 +61,13 @@ class MainFragment : AndroidXMvpAppCompatFragment(), IKeyboardListener {
     }
 
     private var text: String = ""
-    private lateinit var key:Keyboard
+    private lateinit var key: Keyboard
+    @InjectPresenter
+    lateinit var presenter: MainFragmentPresenter
+
+//    fun initPresenter():MainFragmentPresenter{
+//
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.main_fragment, container, false)

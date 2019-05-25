@@ -16,11 +16,11 @@
             android:paddingRight="16dp"
             android:id="@+id/expense"/>
 
-    <com.example.holmi_production.money_counter_app.Keyboard
+    <com.example.holmi_production.money_counter_app.main.Keyboard
             android:id="@+id/keyboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent">
-    </com.example.holmi_production.money_counter_app.Keyboard>
+    </com.example.holmi_production.money_counter_app.main.Keyboard>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
