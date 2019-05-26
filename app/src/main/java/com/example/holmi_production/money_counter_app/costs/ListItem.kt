@@ -1,0 +1,3 @@
+package com.example.holmi_production.money_counter_app.costs
+
+interface ListItem

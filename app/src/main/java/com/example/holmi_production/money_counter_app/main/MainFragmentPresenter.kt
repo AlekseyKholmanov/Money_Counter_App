@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.main
 
+import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.async
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.model.CategoryTypes
@@ -10,6 +11,7 @@ import com.example.holmi_production.money_counter_app.toCurencyFormat
 import org.joda.time.DateTime
 import javax.inject.Inject
 
+@InjectViewState
 class MainFragmentPresenter @Inject constructor(private val repository: SpendingRepository) :
     BasePresenter<MainFragmnetView>() {
 
