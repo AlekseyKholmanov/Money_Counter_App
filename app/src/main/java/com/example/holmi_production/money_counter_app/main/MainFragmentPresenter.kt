@@ -21,9 +21,7 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
         val spending = Spending(null, sum.toFloat(), CategoryTypes.NONE, DateTime())
         repository.insert(spending)
             .async()
-            .subscribe {
-                sum = ""
-            }
+            .subscribe {}
             .keep()
     }
 
@@ -48,6 +46,7 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
             }
             ButtonTypes.ENTER -> {
                 saveSpending()
+                sum = ""
             }
             ButtonTypes.NUMERIC -> {
                 if (sum.contains('.') && sum.takeLast(1) != ".")
