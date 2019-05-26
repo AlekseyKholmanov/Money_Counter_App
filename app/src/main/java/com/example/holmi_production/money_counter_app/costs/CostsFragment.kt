@@ -18,7 +18,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
 
     private lateinit var adapter: CostsAdapter
     @InjectPresenter
-    private lateinit var presenter: CostsPresenter
+    lateinit var presenter: CostsPresenter
 
     @ProvidePresenter
     fun providePresenter() = App.component.getCostsPresenter()
@@ -36,7 +36,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        presenter.loadCosts()
     }
 
     override fun onError(error: Throwable) {

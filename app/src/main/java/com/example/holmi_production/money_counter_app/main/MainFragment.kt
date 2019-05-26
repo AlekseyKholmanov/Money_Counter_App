@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
@@ -44,6 +45,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     @InjectPresenter
     lateinit var presenter: MainFragmentPresenter
 
+    @ProvidePresenter
     fun initPresenter(): MainFragmentPresenter {
         return App.component.getMainPresenter()
     }
