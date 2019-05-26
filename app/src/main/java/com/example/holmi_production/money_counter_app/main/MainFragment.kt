@@ -7,64 +7,44 @@ import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.main_fragment.*
 
-class MainFragment : AndroidXMvpAppCompatFragment(),MainFragmnetView,
+class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener {
     override fun updateMoney(money: String) {
         expense.text = money
     }
 
     override fun zeroPressed(number: String) {
-        if (text == "")
-            return
-        else {
-            text += number
-            displaySum()
-        }
+        presenter.buttonPressed(ButtonTypes.ZERO, number)
     }
 
     override fun dividerPressed(divider: String) {
-        if (divider == "." && text.contains("."))
-            return
-        else {
-            text += divider
-            displaySum()
-        }
+        presenter.buttonPressed(ButtonTypes.DIVIDER, divider)
     }
 
     override fun enterPressed() {
-        presenter.saveSpending()
+        presenter.buttonPressed(ButtonTypes.ENTER)
         Snackbar.make(main_fragment, "save", Snackbar.LENGTH_SHORT).show()
     }
 
     override fun deletePressed() {
-        text = text.dropLast(1)
-        if (text.takeLast(1) == ".")
-            text = text.dropLast(1)
-        displaySum()
+        presenter.buttonPressed(ButtonTypes.DELETE)
     }
 
-    override fun numberPressed(simbol: String) {
-        if (text.contains('.') && text.takeLast(1) != ".")
-            text = text.dropLast(1)
-        text += simbol
-        displaySum()
+    override fun numericPressed(numeric: String) {
+        presenter.buttonPressed(ButtonTypes.NUMERIC, numeric)
     }
 
-    private fun displaySum() {
-
-    }
-
-    private var text: String = ""
     private lateinit var key: Keyboard
 
     @InjectPresenter
     lateinit var presenter: MainFragmentPresenter
 
-    fun initPresenter():MainFragmentPresenter{
+    fun initPresenter(): MainFragmentPresenter {
         return App.component.getMainPresenter()
     }
 

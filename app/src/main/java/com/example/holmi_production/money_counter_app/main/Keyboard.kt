@@ -22,16 +22,16 @@ class Keyboard @JvmOverloads constructor(
         View.inflate(context, R.layout.numbers_keyboard, this)
         key_0.setOnClickListener { mKeyboardListener.zeroPressed("0") }
         key_000.setOnClickListener { mKeyboardListener.zeroPressed("000") }
-        key_1.setOnClickListener { mKeyboardListener.numberPressed("1") }
-        key_2.setOnClickListener { mKeyboardListener.numberPressed("2") }
-        key_3.setOnClickListener { mKeyboardListener.numberPressed("3") }
-        key_4.setOnClickListener { mKeyboardListener.numberPressed("4") }
-        key_5.setOnClickListener { mKeyboardListener.numberPressed("5") }
-        key_6.setOnClickListener { mKeyboardListener.numberPressed("6") }
-        key_7.setOnClickListener { mKeyboardListener.numberPressed("7") }
-        key_8.setOnClickListener { mKeyboardListener.numberPressed("8") }
-        key_9.setOnClickListener { mKeyboardListener.numberPressed("9") }
-        key_divider.setOnClickListener { mKeyboardListener.numberPressed(".") }
+        key_1.setOnClickListener { mKeyboardListener.numericPressed("1") }
+        key_2.setOnClickListener { mKeyboardListener.numericPressed("2") }
+        key_3.setOnClickListener { mKeyboardListener.numericPressed("3") }
+        key_4.setOnClickListener { mKeyboardListener.numericPressed("4") }
+        key_5.setOnClickListener { mKeyboardListener.numericPressed("5") }
+        key_6.setOnClickListener { mKeyboardListener.numericPressed("6") }
+        key_7.setOnClickListener { mKeyboardListener.numericPressed("7") }
+        key_8.setOnClickListener { mKeyboardListener.numericPressed("8") }
+        key_9.setOnClickListener { mKeyboardListener.numericPressed("9") }
+        key_divider.setOnClickListener { mKeyboardListener.numericPressed(".") }
         key_delete.setOnClickListener { mKeyboardListener.deletePressed() }
         key_enter.setOnClickListener { mKeyboardListener.enterPressed() }
     }
@@ -39,14 +39,12 @@ class Keyboard @JvmOverloads constructor(
     fun setListener(mKeyboardListener: IKeyboardListener) {
         this.mKeyboardListener = mKeyboardListener
     }
-    fun sd(){
-    }
 }
 
 interface IKeyboardListener {
-    fun numberPressed(number: String)
+    fun numericPressed(number: String)
     fun zeroPressed(number: String)
-    fun dividerPressed(divider:String = ".")
+    fun dividerPressed(divider:String)
     fun enterPressed()
     fun deletePressed()
 }

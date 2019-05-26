@@ -1,12 +1,13 @@
 package com.example.holmi_production.money_counter_app.main
 
 import com.example.holmi_production.money_counter_app.async
+import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.model.CategoryTypes
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.toCurencyFormat
-import java.util.*
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 class MainFragmentPresenter @Inject constructor(private val repository: SpendingRepository) :
@@ -14,14 +15,44 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
 
     var sum = ""
 
-    fun saveSpending() {
-        val spending = Spending(null, sum.toFloat(), CategoryTypes.NONE, Date())
+    private fun saveSpending() {
+        val spending = Spending(null, sum.toFloat(), CategoryTypes.NONE, DateTime())
         repository.insert(spending)
             .async()
             .subscribe {
-                viewState.updateMoney(sum.toCurencyFormat())
                 sum = ""
             }
             .keep()
+    }
+
+    fun buttonPressed(buttonTypes: ButtonTypes, value: String? = null) {
+        when (buttonTypes) {
+            ButtonTypes.DELETE -> {
+                sum = sum.dropLast(1)
+                if (sum.takeLast(1) == ".")
+                    sum = sum.dropLast(1)
+            }
+            ButtonTypes.DIVIDER -> {
+                when {
+                    value == "." && sum.contains(".") -> return
+                    else -> sum += value
+                }
+            }
+            ButtonTypes.ZERO -> {
+                when (sum) {
+                    "" -> return
+                    else -> sum += value
+                }
+            }
+            ButtonTypes.ENTER -> {
+                saveSpending()
+            }
+            ButtonTypes.NUMERIC -> {
+                if (sum.contains('.') && sum.takeLast(1) != ".")
+                    sum = sum.dropLast(1)
+                sum += value
+            }
+        }
+        viewState.updateMoney(sum.toCurencyFormat())
     }
 }
