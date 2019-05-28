@@ -15,29 +15,12 @@ import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener {
+    override fun buttonPressed(type: ButtonTypes, value: String?) {
+        presenter.buttonPressed(type,value!!)
+    }
+
     override fun updateMoney(money: String) {
         expense.text = money
-    }
-
-    override fun zeroPressed(number: String) {
-        presenter.buttonPressed(ButtonTypes.ZERO, number)
-    }
-
-    override fun dividerPressed(divider: String) {
-        presenter.buttonPressed(ButtonTypes.DIVIDER, divider)
-    }
-
-    override fun enterPressed() {
-        presenter.buttonPressed(ButtonTypes.ENTER)
-        Snackbar.make(main_fragment, "save", Snackbar.LENGTH_SHORT).show()
-    }
-
-    override fun deletePressed() {
-        presenter.buttonPressed(ButtonTypes.DELETE)
-    }
-
-    override fun numericPressed(numeric: String) {
-        presenter.buttonPressed(ButtonTypes.NUMERIC, numeric)
     }
 
     private lateinit var key: Keyboard
