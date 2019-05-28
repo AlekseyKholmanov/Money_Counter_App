@@ -1,10 +1,9 @@
 package com.example.holmi_production.money_counter_app.model
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 import com.example.holmi_production.money_counter_app.costs.ListItem
-import com.example.holmi_production.money_counter_app.orm.Converters
 import org.joda.time.DateTime
 import java.io.Serializable
 
@@ -15,7 +14,8 @@ data class Spending(
 
     val price: Float,
 
-    val categoryTypes: CategoryTypes,
+    @Embedded
+    val categoryTypes: CategoryType,
 
     val spendingDate: DateTime
-) : Serializable,ListItem
+) : Serializable, ListItem

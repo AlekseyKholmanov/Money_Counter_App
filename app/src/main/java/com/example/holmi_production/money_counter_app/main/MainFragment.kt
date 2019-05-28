@@ -10,13 +10,12 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener {
     override fun buttonPressed(type: ButtonTypes, value: String?) {
-        presenter.buttonPressed(type,value!!)
+        presenter.buttonPressed(type,value)
     }
 
     override fun updateMoney(money: String) {

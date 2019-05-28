@@ -36,11 +36,11 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        presenter.getCount()
         presenter.loadCosts()
     }
 
     override fun onError(error: Throwable) {
-        if (adapter.itemCount == 0)
             showEmptyPlaceholder()
     }
 

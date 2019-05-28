@@ -1,11 +1,13 @@
 package com.example.holmi_production.money_counter_app.costs
 
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.async
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
+import com.example.holmi_production.money_counter_app.sortedByDescending
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
-import io.reactivex.Single
+import io.reactivex.Flowable
 import io.reactivex.rxkotlin.toObservable
 import javax.inject.Inject
 
@@ -20,24 +22,39 @@ class CostsPresenter @Inject constructor(
                 trasform(it)
             }
             .async()
-            .subscribe({ item ->
+            .subscribe(
+                { item ->
                 viewState.showSpending(item)
             },
                 { error ->
-                    viewState.onError(error)
-                })
+                viewState.onError(error)
+            }
+            )
             .keep()
     }
 
-    private fun trasform(costs: List<Spending>): Single<List<ListItem>> {
+    fun getCount(){
+        repository.getCount()
+            .async()
+            .subscribe { it->
+                Log.d("qwerty",it.toString())
+            }
+            .keep()
+    }
+
+    private fun trasform(costs: List<Spending>): Flowable<List<ListItem>> {
         return costs.toObservable()
             .groupBy { it.spendingDate.toLocalDate() }
+            .sortedByDescending { it.key!! }
             .flatMap { group ->
                 group
+                    .sortedByDescending { it.spendingDate}
                     .cast(ListItem::class.java)
                     .startWith(CostTimeDivider(group.key!!.toString(DATE_FORMAT)))
+
             }
             .toList()
+            .toFlowable()
     }
 
     companion object {

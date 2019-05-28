@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.costs.adapter
 
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.costs.ListItem
+import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
@@ -27,9 +29,15 @@ class CostsItemDelegate() : AdapterDelegate<List<ListItem>>() {
         list: List<Any>) {
         if (holder is ViewHolder) {
             val item = items[position] as Spending
-            holder.category.text = item.categoryTypes.toString()
+            if (item.categoryTypes.isSpending){
+                holder.category.textSize = 40f
+            }
+            else{
+                holder.category.textSize = 10f
+            }
+            holder.category.text = item.categoryTypes.categoryClass.name
             holder.date.tag = items[position]
-            holder.date.text = item.spendingDate.toString()
+            holder.date.text = item.spendingDate.toString("hh:mm")
             holder.sum.text = item.price.toString()
         }
 

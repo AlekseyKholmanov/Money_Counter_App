@@ -4,8 +4,7 @@ import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.async
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
-import com.example.holmi_production.money_counter_app.model.IncomeType
-import com.example.holmi_production.money_counter_app.model.SpendingType
+import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
@@ -20,7 +19,7 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
     var sum = ""
 
     private fun saveSpending() {
-        val spending = Spending(null, sum.toFloat(), IncomeType.SALARY, DateTime())
+        val spending = Spending(null, sum.toFloat(), CategoryType.SALARY, DateTime())
         repository.insert(spending)
             .async()
             .subscribe {
@@ -29,7 +28,7 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
             .keep()
     }
 
-    fun buttonPressed(buttonTypes: ButtonTypes, value: String) {
+    fun buttonPressed(buttonTypes: ButtonTypes, value: String? = null) {
         when (buttonTypes) {
             ButtonTypes.DELETE -> {
                 sum = sum.dropLast(1)
