@@ -22,13 +22,17 @@ class ScrollItem @JvmOverloads constructor(
         View.inflate(getContext(), R.layout.scroll_view_item, this)
         scroll_item_text.text = type
         scroll_item_text.tag = position
+        if (position==0)
+            scroll_item_text.setBackgroundColor(Color.DKGRAY)
+        else
+            scroll_item_text.setBackgroundColor(Color.LTGRAY)
         scroll_item_text.setOnClickListener {
             isClicked = !isClicked
             it.setBackgroundColor(
                 if (isClicked)
-                    Color.LTGRAY
+                    Color.DKGRAY
                 else
-                    Color.TRANSPARENT
+                    Color.LTGRAY
             )
             mScrollListener.buttonPressed(position)
         }
