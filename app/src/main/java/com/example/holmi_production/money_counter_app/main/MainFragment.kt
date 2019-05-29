@@ -40,5 +40,6 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         super.onViewCreated(view, savedInstanceState)
         key = view.findViewById(R.id.keyboard)
         key.setListener(this)
+
     }
 }
