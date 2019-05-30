@@ -30,7 +30,6 @@ class ScrollView @JvmOverloads constructor(
             val newsChild = hsv_container.getChildAt(position)
             newsChild.findViewById<Button>(R.id.scroll_item_text).setBackgroundColor(Color.DKGRAY)
             pressed = position
-            Log.d("qwerty", CategoryClass.values()[position].name)
         }
     }
 

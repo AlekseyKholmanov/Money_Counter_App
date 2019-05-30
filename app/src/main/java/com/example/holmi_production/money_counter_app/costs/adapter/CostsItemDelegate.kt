@@ -38,7 +38,7 @@ class CostsItemDelegate() : AdapterDelegate<List<ListItem>>() {
             }
             holder.category.text = item.categoryTypes.categoryClass.name
             holder.date.tag = items[position]
-            holder.date.text = item.spendingDate.toString("hh:mm")
+            holder.date.text = item.spendingDate.toString("HH:mm")
             holder.sum.text = item.price.toString()
         }
 
