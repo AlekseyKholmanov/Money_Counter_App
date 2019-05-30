@@ -1,6 +1,9 @@
 package com.example.holmi_production.money_counter_app
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.holmi_production.money_counter_app.chart.ChartFragment
 import com.example.holmi_production.money_counter_app.costs.CostsFragment
@@ -9,7 +12,12 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var active: AndroidXMvpAppCompatFragment
+    companion object {
+        private val STORAGE_NAME = "StorageName"
+        private val FIRST_OPEN = "FirstOpen"
+    }
+
+    private lateinit var active: AndroidXMvpAppCompatFragment
     private val mainFragment = MainFragment()
     private val costsFragment = CostsFragment()
     private val chartFragment = ChartFragment()
@@ -17,7 +25,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        openFragments()
+        val preferences = this.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE)
+        if (preferences.contains(FIRST_OPEN)) {
+            return
+        } else {
+            preferences.edit().putBoolean(FIRST_OPEN, true).apply()
+            val i = Intent(this, FirstActivity::class.java)
+            startActivity(i)
+            Log.d("qwerty", "first launch")
+        }
 
+    }
+
+    private fun openFragments() {
         val fm = supportFragmentManager
         fm.beginTransaction().add(R.id.main_container, chartFragment, "chart").hide(chartFragment).commit()
         fm.beginTransaction().add(R.id.main_container, costsFragment, "costs").hide(costsFragment).commit()

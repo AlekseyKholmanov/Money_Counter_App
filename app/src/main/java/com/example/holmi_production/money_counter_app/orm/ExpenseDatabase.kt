@@ -8,7 +8,7 @@ import com.example.holmi_production.money_counter_app.model.Spending
 @TypeConverters(Converters::class)
 @Database(
     entities = [Spending::class],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 abstract class ExpenseDatabase : RoomDatabase() {
