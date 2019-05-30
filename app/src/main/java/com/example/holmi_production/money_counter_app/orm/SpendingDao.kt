@@ -18,4 +18,7 @@ interface SpendingDao{
 
     @Insert(onConflict = REPLACE)
     fun insert(spending:Spending)
+
+    @Query("Select price FROM Spending Where isSpending = 1")
+    fun getSpentSum():Flowable<List<Float>>
 }

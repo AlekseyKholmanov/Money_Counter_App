@@ -14,6 +14,10 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback {
+    override fun updateSpentSum(sum: String) {
+        spent.text = sum
+    }
+
     override fun callback(type: Int) {
         presenter.setType(type)
     }
@@ -47,6 +51,6 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         scroll = view.findViewById(R.id.hsv)
         scroll.setCallback(this)
         key.setListener(this)
-
+        presenter.getSpentSum()
     }
 }

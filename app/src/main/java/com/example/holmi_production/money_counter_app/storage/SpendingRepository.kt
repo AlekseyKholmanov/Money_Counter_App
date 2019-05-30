@@ -23,4 +23,8 @@ class SpendingRepository @Inject constructor(
     fun getCount(): Flowable<Int> {
         return dao.getCount()
     }
+
+    fun getSpentSum(): Flowable<List<Float>> {
+        return dao.getSpentSum()
+    }
 }

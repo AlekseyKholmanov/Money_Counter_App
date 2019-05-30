@@ -29,6 +29,15 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
             }
             .keep()
     }
+    fun getSpentSum(){
+        repository.getSpentSum()
+            .async()
+            .subscribe {
+                viewState.updateSpentSum(it.sum().toString())
+            }
+            .keep()
+    }
+
 
     fun buttonPressed(buttonTypes: ButtonTypes, value: String? = null) {
         when (buttonTypes) {
