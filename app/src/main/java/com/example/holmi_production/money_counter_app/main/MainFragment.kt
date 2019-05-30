@@ -1,7 +1,6 @@
 package com.example.holmi_production.money_counter_app.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback {
@@ -39,7 +38,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

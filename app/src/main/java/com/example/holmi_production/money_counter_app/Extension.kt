@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import java.util.*
 
 fun <T> Single<T>.async(): Single<T> {

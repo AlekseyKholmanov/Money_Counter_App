@@ -9,6 +9,6 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 
 class ChartFragment : AndroidXMvpAppCompatFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.chart_fragment,container,false)
+        return inflater.inflate(R.layout.fragment_chart,container,false)
     }
 }

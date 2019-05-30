@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.example.holmi_production.money_counter_app.R
-import kotlinx.android.synthetic.main.scroll_view_item.view.*
+import kotlinx.android.synthetic.main.horizontal_scroll_item.view.*
 
 class ScrollItem @JvmOverloads constructor(
     type: String,
@@ -18,7 +18,7 @@ class ScrollItem @JvmOverloads constructor(
     private lateinit var mScrollListener: IScrollListener
 
     init {
-        View.inflate(getContext(), R.layout.scroll_view_item, this)
+        View.inflate(getContext(), R.layout.horizontal_scroll_item, this)
         scroll_item_text.text = type
         scroll_item_text.tag = position
         if (position==0)

@@ -12,7 +12,7 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.costs.adapter.CostsAdapter
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import kotlinx.android.synthetic.main.costst_fragment.*
+import kotlinx.android.synthetic.main.fragment_costs.*
 
 class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
 
@@ -24,7 +24,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
     fun providePresenter() = App.component.getCostsPresenter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.costst_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_costs, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.RelativeLayout
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
-import kotlinx.android.synthetic.main.numbers_keyboard.view.*
+import kotlinx.android.synthetic.main.keyboard.view.*
 
 class Keyboard @JvmOverloads constructor(
     context: Context,
@@ -20,7 +20,7 @@ class Keyboard @JvmOverloads constructor(
 
     init {
         Log.d("qwerty", "init")
-        View.inflate(context, R.layout.numbers_keyboard, this)
+        View.inflate(context, R.layout.keyboard, this)
         key_0.setOnClickListener { mKeyboardListener.buttonPressed( ButtonTypes.ZERO,"0") }
         key_000.setOnClickListener { mKeyboardListener.buttonPressed(ButtonTypes.ZERO,"000") }
         key_1.setOnClickListener { mKeyboardListener.buttonPressed(ButtonTypes.NUMERIC,"1") }
