@@ -4,6 +4,7 @@ import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.async
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
+import com.example.holmi_production.money_counter_app.model.CategoryClass
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
@@ -17,13 +18,14 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
     BasePresenter<MainFragmnetView>() {
 
     var sum = ""
+    private var type = 0
 
     private fun saveSpending() {
-        val spending = Spending(null, sum.toFloat(), CategoryType.SALARY, DateTime())
+        val spending = Spending(null, sum.toFloat(), getCategoryType(type), DateTime())
         repository.insert(spending)
             .async()
             .subscribe {
-                Log.d("qwerty","inserted")
+                Log.d("qwerty", "inserted")
             }
             .keep()
     }
@@ -58,5 +60,14 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
             }
         }
         viewState.updateMoney(sum.toCurencyFormat())
+    }
+
+    fun setType(type: Int) {
+        this.type = type
+
+    }
+    private fun getCategoryType(type:Int): CategoryType {
+        val enum = CategoryClass.values()[type]
+        return  CategoryType.list.single { it.categoryClass == enum }
     }
 }

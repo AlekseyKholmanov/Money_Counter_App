@@ -16,7 +16,6 @@ class ScrollItem @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
     private lateinit var mScrollListener: IScrollListener
-    private var isClicked: Boolean = false
 
     init {
         View.inflate(getContext(), R.layout.scroll_view_item, this)
@@ -27,13 +26,6 @@ class ScrollItem @JvmOverloads constructor(
         else
             scroll_item_text.setBackgroundColor(Color.LTGRAY)
         scroll_item_text.setOnClickListener {
-            isClicked = !isClicked
-            it.setBackgroundColor(
-                if (isClicked)
-                    Color.DKGRAY
-                else
-                    Color.LTGRAY
-            )
             mScrollListener.buttonPressed(position)
         }
     }

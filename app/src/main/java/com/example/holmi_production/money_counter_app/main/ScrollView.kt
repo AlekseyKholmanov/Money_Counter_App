@@ -19,10 +19,12 @@ class ScrollView @JvmOverloads constructor(
 ) : HorizontalScrollView(context, attrs, defStyleAttr), ScrollItem.IScrollListener {
 
     private var pressed: Int = 0
+    private lateinit var mScrollCallback: IScrollCallback
     override fun buttonPressed(position: Int) {
         if (position == pressed)
             return
         else {
+            mScrollCallback.callback(position)
             val child = hsv_container.getChildAt(pressed)
             child.findViewById<Button>(R.id.scroll_item_text).setBackgroundColor(Color.LTGRAY)
             val newsChild = hsv_container.getChildAt(position)
@@ -45,4 +47,12 @@ class ScrollView @JvmOverloads constructor(
             container.addView(view)
         }
     }
+
+    fun setCallback(mScrollCallback: IScrollCallback){
+        this.mScrollCallback = mScrollCallback
+    }
+}
+
+interface IScrollCallback {
+    fun callback(type: Int)
 }

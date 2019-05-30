@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.costs.adapter
 
 import android.content.res.Resources
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,10 +31,10 @@ class CostsItemDelegate() : AdapterDelegate<List<ListItem>>() {
         if (holder is ViewHolder) {
             val item = items[position] as Spending
             if (item.categoryTypes.isSpending){
-                holder.category.textSize = 40f
+                holder.category.setBackgroundColor(Color.RED)
             }
             else{
-                holder.category.textSize = 10f
+                holder.category.setBackgroundColor(Color.GREEN)
             }
             holder.category.text = item.categoryTypes.categoryClass.name
             holder.date.tag = items[position]

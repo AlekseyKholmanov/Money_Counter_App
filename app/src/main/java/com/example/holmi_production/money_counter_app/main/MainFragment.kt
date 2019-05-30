@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +14,13 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
-    IKeyboardListener {
+    IKeyboardListener, IScrollCallback {
+    override fun callback(type: Int) {
+        presenter.setType(type)
+    }
+
     override fun buttonPressed(type: ButtonTypes, value: String?) {
-        presenter.buttonPressed(type,value)
+        presenter.buttonPressed(type, value)
     }
 
     override fun updateMoney(money: String) {
@@ -23,6 +28,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     }
 
     private lateinit var key: Keyboard
+    private lateinit var scroll: ScrollView
 
     @InjectPresenter
     lateinit var presenter: MainFragmentPresenter
@@ -39,6 +45,8 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         key = view.findViewById(R.id.keyboard)
+        scroll = view.findViewById(R.id.hsv)
+        scroll.setCallback(this)
         key.setListener(this)
 
     }
