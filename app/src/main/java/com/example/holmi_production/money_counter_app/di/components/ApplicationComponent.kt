@@ -3,6 +3,7 @@ package com.example.holmi_production.money_counter_app.di.components
 import com.example.holmi_production.money_counter_app.costs.CostsPresenter
 import com.example.holmi_production.money_counter_app.di.modules.ApplicationModule
 import com.example.holmi_production.money_counter_app.di.modules.ContextModule
+import com.example.holmi_production.money_counter_app.firstLaunch.FirstLaunchPresenter
 import com.example.holmi_production.money_counter_app.main.MainFragmentPresenter
 import dagger.Component
 import javax.inject.Singleton
@@ -12,4 +13,5 @@ import javax.inject.Singleton
 interface ApplicationComponent {
     fun getMainPresenter():MainFragmentPresenter
     fun getCostsPresenter():CostsPresenter
+    fun getFirstLaunchPresenter():FirstLaunchPresenter
 }

@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.costs.adapter
 
-import android.content.res.Resources
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.costs.ListItem
-import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
@@ -47,7 +45,7 @@ class CostsItemDelegate() : AdapterDelegate<List<ListItem>>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val date: AppCompatTextView = view.findViewById(R.id.date)
         val category: AppCompatTextView = view.findViewById(R.id.category)
-        val sum: AppCompatTextView = view.findViewById(R.id.sum)
+        val sum: AppCompatTextView = view.findViewById(R.id.start_sum)
     }
 
 }

@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.holmi_production.money_counter_app.chart.ChartFragment
 import com.example.holmi_production.money_counter_app.costs.CostsFragment
+import com.example.holmi_production.money_counter_app.firstLaunch.FirstActivity
 import com.example.holmi_production.money_counter_app.main.MainFragment
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.activity_main.*
