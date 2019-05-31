@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -41,6 +42,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
     }
 
     override fun onError(error: Throwable) {
+        if(adapter.itemCount == 0)
             showEmptyPlaceholder()
     }
 
