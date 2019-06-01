@@ -8,6 +8,9 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_main.*
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 fun <T> Single<T>.async(): Single<T> {
@@ -37,6 +40,29 @@ fun String.toCurencyFormat(): String {
         String.format("%.1f", float)
     } else
         this
+}
+
+fun DateTime.toRUformat(): String {
+    val formatter = DateTimeFormat.forPattern("dd MMMM yyyy")
+        .withLocale(Locale("ru"))
+    return formatter.print(this)
+
+}
+
+fun Int.getDayAddition(): String {
+    val last = this % 10
+    val mod = this % 100
+    val end: String
+    end = if (last == 1 && mod != 11)
+        "день"
+    else
+        if ((last < 5 && last != 0)
+            && (mod < 10 || mod > 20)
+        )
+            "дня"
+        else
+            "дней"
+    return "$this $end"
 }
 
 inline fun <T : Any, K : Comparable<K>> Observable<T>.sortedByDescending(crossinline keySelector: (T) -> K): Observable<T> {

@@ -78,6 +78,13 @@
             android:hint="дата"
             android:layout_marginStart="8dp"
             android:focusable="false"/>
+    <TextView
+            android:id="@+id/date_difference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/date"
+            app:layout_constraintTop_toBottomOf="@id/date"
+            android:hint="разница"/>
 
     <Button
             android:id="@+id/finish_activity"

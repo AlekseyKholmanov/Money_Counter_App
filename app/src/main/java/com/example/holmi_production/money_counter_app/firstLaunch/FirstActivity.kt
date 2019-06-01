@@ -4,45 +4,35 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.core.view.isVisible
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatActivity
 import kotlinx.android.synthetic.main.first_launch_activity.*
-import java.text.SimpleDateFormat
-import java.util.*
+import org.joda.time.DateTime
 
-class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView, TextWatcher {
-    override fun afterTextChanged(s: Editable?) {
+class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView {
+
+    override fun showSumPerDay(sumPerDay: String) {
+
+        sum_per_day.text = sumPerDay
     }
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-    }
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        finish_activity.isEnabled = (date.text.isNotEmpty() && start_sum.text.isNotEmpty())
-
+    override fun showDate(pickedDate: String, difference: String) {
+        date.setText(pickedDate)
+        date_difference.text = difference
     }
 
     override fun displayDateActivity() {
-
     }
-    var c: Calendar = Calendar.getInstance()
-    var dateDialog: DatePickerDialog.OnDateSetListener =
-        DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-            c.set(Calendar.YEAR,year)
-            c.set(Calendar.MONTH,monthOfYear)
-            c.set(Calendar.DAY_OF_MONTH,dayOfMonth)
-            updateLabel()
+
+    private var dateDialog: DatePickerDialog.OnDateSetListener =
+        DatePickerDialog.OnDateSetListener { picker, year, monthOfYear, dayOfMonth ->
+            val time = DateTime(picker.year, picker.month + 1, picker.dayOfMonth, 0, 0)
+            presenter.setDate(time)
         }
-
-    private fun updateLabel() {
-        val myFormat = "dd/MM/yy" //In which you need put here
-        val sdf = SimpleDateFormat(myFormat, Locale.UK)
-
-        date.setText(sdf.format(c.time))
-    }
 
     @InjectPresenter
     lateinit var presenter: FirstLaunchPresenter
@@ -58,17 +48,57 @@ class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView, TextWatch
         finish_activity.setOnClickListener {
             finish()
         }
-        start_sum.addTextChangedListener(this)
-        date.addTextChangedListener(this)
+        start_sum.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (start_sum.text.isEmpty()) {
+                    finish_activity.isEnabled = false
+                    sum_per_day.isVisible = false
+                }
+                else {
+                    sum_per_day.isVisible = true
+                    presenter.getSum(s.toString().toDouble())
+                }
+                if (date.text.isNotEmpty()) {
+                    presenter.getSumPerDay()
+                    finish_activity.isEnabled = true
+                }
+            }
+        })
+        date.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (start_sum.text.isNotEmpty()) {
+                    presenter.getSumPerDay()
+                    finish_activity.isEnabled = true
+                }
+                else
+                    finish_activity.isEnabled = false
+            }
+        })
         date.setOnClickListener {
+            val time = DateTime()
             val picker = DatePickerDialog(
                 this,
                 dateDialog,
-                c.get(Calendar.YEAR),
-                c.get(Calendar.MONTH),
-                c.get(Calendar.DAY_OF_MONTH)
+                time.year,
+                time.monthOfYear - 1,
+                time.dayOfMonth
             )
-            picker.datePicker.minDate = System.currentTimeMillis()-1000
+            picker.datePicker.minDate =
+                DateTime()
+                    .withTimeAtStartOfDay()
+                    .plusDays(1)
+                    .millis
             picker.show()
         }
     }
