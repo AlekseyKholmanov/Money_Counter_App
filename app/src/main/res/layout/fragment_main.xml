@@ -37,7 +37,6 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/left_text"
             app:layout_constraintRight_toRightOf="parent"
-            android:hint="22500 руб"
             android:textSize="26dp"
             android:paddingLeft="16dp"
     />

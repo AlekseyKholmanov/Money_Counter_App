@@ -14,6 +14,9 @@ import kotlinx.android.synthetic.main.first_launch_activity.*
 import org.joda.time.DateTime
 
 class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView {
+    override fun showMainScreen() {
+        finish()
+    }
 
     override fun showSumPerDay(sumPerDay: String) {
 
@@ -25,13 +28,10 @@ class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView {
         date_difference.text = difference
     }
 
-    override fun displayDateActivity() {
-    }
-
     private var dateDialog: DatePickerDialog.OnDateSetListener =
         DatePickerDialog.OnDateSetListener { picker, year, monthOfYear, dayOfMonth ->
             val time = DateTime(picker.year, picker.month + 1, picker.dayOfMonth, 0, 0)
-            presenter.setDate(time)
+            presenter.updateDate(time)
         }
 
     @InjectPresenter
@@ -46,14 +46,14 @@ class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.first_launch_activity)
         finish_activity.setOnClickListener {
-            finish()
+            presenter.goToMainScreen()
         }
         start_sum.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
-
+            //TODO возможно объединить в один или вынести в презентер
             override fun afterTextChanged(s: Editable?) {
                 if (start_sum.text.isEmpty()) {
                     finish_activity.isEnabled = false

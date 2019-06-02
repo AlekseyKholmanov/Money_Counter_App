@@ -29,15 +29,22 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
             }
             .keep()
     }
-    fun getSpentSum(){
+
+    //TODO сделать в один поток
+    fun getSum() {
         repository.getSpentSum()
             .async()
             .subscribe {
                 viewState.updateSpentSum(it.sum().toString())
             }
             .keep()
+        repository.getIncomeSum()
+            .async()
+            .subscribe {
+                viewState.showIncomeSum(it.sum().toString())
+            }
+            .keep()
     }
-
 
     fun buttonPressed(buttonTypes: ButtonTypes, value: String? = null) {
         when (buttonTypes) {
@@ -75,8 +82,9 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
         this.type = type
 
     }
-    private fun getCategoryType(type:Int): CategoryType {
+
+    private fun getCategoryType(type: Int): CategoryType {
         val enum = CategoryClass.values()[type]
-        return  CategoryType.list.single { it.categoryClass == enum }
+        return CategoryType.list.single { it.categoryClass == enum }
     }
 }

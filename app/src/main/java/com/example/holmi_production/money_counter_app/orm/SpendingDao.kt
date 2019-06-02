@@ -21,4 +21,7 @@ interface SpendingDao{
 
     @Query("Select price FROM Spending Where isSpending = 1")
     fun getSpentSum():Flowable<List<Float>>
+
+    @Query("Select price from Spending where isSpending=0")
+    fun getIncomeSum():Flowable<List<Float>>
 }
