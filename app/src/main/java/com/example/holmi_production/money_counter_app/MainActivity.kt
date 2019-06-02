@@ -3,6 +3,7 @@ package com.example.holmi_production.money_counter_app
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.holmi_production.money_counter_app.chart.ChartFragment
@@ -28,14 +29,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        openFragments()
         val preferences = this.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE)
+
+        openFragments()
         if (preferences.contains(FIRST_OPEN)) {
-            return
         } else {
             preferences.edit().putBoolean(FIRST_OPEN, true).apply()
             val i = Intent(this, FirstActivity::class.java)
-            startActivity(i)
+            startActivityForResult(i, 1)
             Log.d("qwerty", "first launch")
         }
 

@@ -1,7 +1,6 @@
 package com.example.holmi_production.money_counter_app.main
 
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,10 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback {
+    override fun showDaysLeft(days: String) {
+        sum_per_day_left_days.text = days
+    }
+
     override fun showSumPerDay(money: String) {
         sum_per_day.text = money
     }
@@ -61,6 +64,6 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         scroll.setCallback(this)
         key.setListener(this)
         presenter.getSum()
-        presenter.getSumPerDay()
+        presenter.getDaysLeft()
     }
 }

@@ -14,6 +14,7 @@ enum class Expense(i: Int) {
 data class CategoryType(val expense: Expense, val isSpending: Boolean) {
     companion object {
         val list: List<CategoryType> = listOf(
+            CategoryType(Expense.SALARY,false),
             CategoryType(Expense.SALE, true),
             CategoryType(Expense.OTHER, true),
             CategoryType(Expense.FOOD, true),

@@ -1,8 +1,11 @@
 package com.example.holmi_production.money_counter_app.main
 
+import android.content.Context
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
+import com.example.holmi_production.money_counter_app.MainActivity
 import com.example.holmi_production.money_counter_app.async
+import com.example.holmi_production.money_counter_app.getDayAddition
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.model.Expense
 import com.example.holmi_production.money_counter_app.model.CategoryType
@@ -13,12 +16,14 @@ import com.example.holmi_production.money_counter_app.storage.SumPerDayRepositor
 import com.example.holmi_production.money_counter_app.toCurencyFormat
 import io.reactivex.rxkotlin.Flowables
 import org.joda.time.DateTime
+import org.joda.time.Days
 import javax.inject.Inject
 
 @InjectViewState
 class MainFragmentPresenter @Inject constructor(
     private val spendRep: SpendingRepository,
-    private val sumPerDay: SumPerDayRepository) :
+    private val sumPerDay: SumPerDayRepository,
+    private val contex:Context) :
     BasePresenter<MainFragmnetView>() {
 
     var sum = ""
@@ -39,26 +44,24 @@ class MainFragmentPresenter @Inject constructor(
     fun getSum() {
         Flowables.zip(
             spendRep.getSpentSum(),
-            spendRep.getIncomeSum()
+            spendRep.getIncomeSum(),
+            sumPerDay.getByDate(DateTime().withTimeAtStartOfDay())
         )
             .async()
-            .subscribe { (spent, income) ->
+            .subscribe { (spent, income, sumPerDay) ->
                 val spentSum = spent.sum()
                 viewState.showSpentSum(spentSum.toString())
                 viewState.showIncomeSum((income.sum() - spentSum).toString())
+                viewState.showSumPerDay(sumPerDay.sum.toString().toCurencyFormat())
             }
             .keep()
-
-
     }
 
-    fun getSumPerDay(){
-        sumPerDay.getByDate(DateTime().withTimeAtStartOfDay())
-            .async()
-            .subscribe {it->
-                viewState.showSumPerDay(it.sum.toString())
-            }
-            .keep()
+    fun getDaysLeft(){
+        val shared = contex.getSharedPreferences(MainActivity.STORAGE_NAME,Context.MODE_PRIVATE)
+        val leftDate = shared.getLong(MainActivity.END_PERIOD,0)
+        val diff = Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(leftDate)).days
+        viewState.showDaysLeft(" на ${diff.getDayAddition()}")
     }
 
     fun buttonPressed(buttonTypes: ButtonTypes, value: String? = null) {

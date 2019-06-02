@@ -19,18 +19,23 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/spent_text"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:hint="9862 руб"
             android:textSize="26dp"
-            android:paddingStart="16dp"
-    />
+            android:hint="сумма"
+            android:paddingStart="16dp"/>
     <TextView
             android:id="@+id/sum_per_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/spent"
             app:layout_constraintLeft_toLeftOf="@id/spent"
-            android:paddingStart="16dp"
-            android:text="BLAHH"/>
+            android:paddingStart="16dp"/>
+    <TextView
+            android:id="@+id/sum_per_day_left_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/sum_per_day"
+            app:layout_constraintTop_toTopOf="@id/sum_per_day"
+    android:hint=" на n дней"/>
     <TextView
             android:id="@+id/left_text"
             android:layout_width="wrap_content"
@@ -46,8 +51,8 @@
             app:layout_constraintTop_toBottomOf="@+id/left_text"
             app:layout_constraintRight_toRightOf="parent"
             android:textSize="26dp"
-            android:paddingLeft="16dp"
-    />
+            android:hint="сумма"
+            android:paddingLeft="16dp"/>
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,10 +70,7 @@
             app:layout_constraintBottom_toTopOf="@id/keyboard"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
-
     </com.example.holmi_production.money_counter_app.main.ScrollView>
-
-
     <com.example.holmi_production.money_counter_app.main.Keyboard
             android:id="@+id/keyboard"
             android:layout_width="match_parent"
