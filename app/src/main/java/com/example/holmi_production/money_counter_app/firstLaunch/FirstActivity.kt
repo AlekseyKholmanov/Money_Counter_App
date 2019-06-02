@@ -29,7 +29,7 @@ class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView {
     }
 
     private var dateDialog: DatePickerDialog.OnDateSetListener =
-        DatePickerDialog.OnDateSetListener { picker, year, monthOfYear, dayOfMonth ->
+        DatePickerDialog.OnDateSetListener { picker, _, _, _ ->
             val time = DateTime(picker.year, picker.month + 1, picker.dayOfMonth, 0, 0)
             presenter.updateDate(time)
         }

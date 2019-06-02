@@ -9,19 +9,19 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 
 @Dao
-interface SpendingDao{
+interface SpendingDao {
     @Query("SELECT * FROM Spending")
-    fun getAll():Flowable<List<Spending>>
+    fun getAll(): Flowable<List<Spending>>
 
     @Query("Select COUNT(*) From  Spending")
-    fun getCount():Flowable<Int>
+    fun getCount(): Flowable<Int>
 
     @Insert(onConflict = REPLACE)
-    fun insert(spending:Spending)
+    fun insert(spending: Spending)
 
     @Query("Select price FROM Spending Where isSpending = 1")
-    fun getSpentSum():Flowable<List<Float>>
+    fun getSpentSum(): Flowable<List<Float>>
 
-    @Query("Select price from Spending where isSpending=0")
-    fun getIncomeSum():Flowable<List<Float>>
+    @Query("Select price from Spending where isSpending = 0")
+    fun getIncomeSum(): Flowable<List<Float>>
 }

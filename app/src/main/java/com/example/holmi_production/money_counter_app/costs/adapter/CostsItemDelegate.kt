@@ -34,7 +34,7 @@ class CostsItemDelegate() : AdapterDelegate<List<ListItem>>() {
             else{
                 holder.category.setBackgroundColor(Color.GREEN)
             }
-            holder.category.text = item.categoryTypes.categoryClass.name
+            holder.category.text = item.categoryTypes.expense.name
             holder.date.tag = items[position]
             holder.date.text = item.spendingDate.toString("HH:mm")
             holder.sum.text = item.price.toString()

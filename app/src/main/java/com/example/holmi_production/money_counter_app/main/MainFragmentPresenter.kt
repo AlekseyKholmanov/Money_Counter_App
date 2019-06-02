@@ -4,25 +4,31 @@ import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.async
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
-import com.example.holmi_production.money_counter_app.model.CategoryClass
+import com.example.holmi_production.money_counter_app.model.Expense
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
+import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import com.example.holmi_production.money_counter_app.toCurencyFormat
+import io.reactivex.rxkotlin.Flowables
 import org.joda.time.DateTime
 import javax.inject.Inject
 
 @InjectViewState
-class MainFragmentPresenter @Inject constructor(private val repository: SpendingRepository) :
+class MainFragmentPresenter @Inject constructor(
+    private val spendRep: SpendingRepository,
+    private val sumPerDay: SumPerDayRepository) :
     BasePresenter<MainFragmnetView>() {
 
     var sum = ""
     private var type = 0
 
     private fun saveSpending() {
+        if (sum == "")
+            return
         val spending = Spending(null, sum.toFloat(), getCategoryType(type), DateTime())
-        repository.insert(spending)
+        spendRep.insert(spending)
             .async()
             .subscribe {
                 Log.d("qwerty", "inserted")
@@ -30,18 +36,27 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
             .keep()
     }
 
-    //TODO сделать в один поток
     fun getSum() {
-        repository.getSpentSum()
+        Flowables.zip(
+            spendRep.getSpentSum(),
+            spendRep.getIncomeSum()
+        )
             .async()
-            .subscribe {
-                viewState.updateSpentSum(it.sum().toString())
+            .subscribe { (spent, income) ->
+                val spentSum = spent.sum()
+                viewState.showSpentSum(spentSum.toString())
+                viewState.showIncomeSum((income.sum() - spentSum).toString())
             }
             .keep()
-        repository.getIncomeSum()
+
+
+    }
+
+    fun getSumPerDay(){
+        sumPerDay.getByDate(DateTime().withTimeAtStartOfDay())
             .async()
-            .subscribe {
-                viewState.showIncomeSum(it.sum().toString())
+            .subscribe {it->
+                viewState.showSumPerDay(it.sum.toString())
             }
             .keep()
     }
@@ -56,6 +71,7 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
             ButtonTypes.DIVIDER -> {
                 when {
                     value == "." && sum.contains(".") -> return
+                    sum == "" -> sum = "0."
                     else -> sum += value
                 }
             }
@@ -75,7 +91,7 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
                 sum += value
             }
         }
-        viewState.updateMoney(sum.toCurencyFormat())
+        viewState.showMoney(sum.toCurencyFormat())
     }
 
     fun setType(type: Int) {
@@ -84,7 +100,7 @@ class MainFragmentPresenter @Inject constructor(private val repository: Spending
     }
 
     private fun getCategoryType(type: Int): CategoryType {
-        val enum = CategoryClass.values()[type]
-        return CategoryType.list.single { it.categoryClass == enum }
+        val enum = Expense.values()[type]
+        return CategoryType.list.single { it.expense == enum }
     }
 }

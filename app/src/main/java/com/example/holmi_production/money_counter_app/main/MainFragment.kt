@@ -15,11 +15,15 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback {
+    override fun showSumPerDay(money: String) {
+        sum_per_day.text = money
+    }
+
     override fun showIncomeSum(money: String) {
         left.text = money
     }
 
-    override fun updateSpentSum(sum: String) {
+    override fun showSpentSum(sum: String) {
         spent.text = sum
     }
 
@@ -31,7 +35,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         presenter.buttonPressed(type, value)
     }
 
-    override fun updateMoney(money: String) {
+    override fun showMoney(money: String) {
         expense.text = money
     }
 
@@ -57,5 +61,6 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         scroll.setCallback(this)
         key.setListener(this)
         presenter.getSum()
+        presenter.getSumPerDay()
     }
 }

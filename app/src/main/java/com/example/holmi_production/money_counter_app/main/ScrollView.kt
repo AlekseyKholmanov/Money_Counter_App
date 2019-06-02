@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.CategoryClass
+import com.example.holmi_production.money_counter_app.model.Expense
 import kotlinx.android.synthetic.main.horizontal_scroll.view.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 
@@ -37,9 +37,9 @@ class ScrollView @JvmOverloads constructor(
         val container = rootView.findViewById<LinearLayout>(R.id.hsv_container)
         val lParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         hsv.layoutParams = lParams
-        val count = CategoryClass.values().size - 1
+        val count = Expense.values().size - 1
         for (i in 0..count) {
-            val category = CategoryClass.values()[i].name
+            val category = Expense.values()[i].name
             val view = ScrollItem(category, i, getContext())
             view.setListener(this)
             container.addView(view)

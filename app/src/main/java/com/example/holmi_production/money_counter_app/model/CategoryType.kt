@@ -1,6 +1,6 @@
 package com.example.holmi_production.money_counter_app.model
 
-enum class CategoryClass(i: Int) {
+enum class Expense(i: Int) {
     SALARY(0),
     SALE(1),
     OTHER(2),
@@ -11,16 +11,15 @@ enum class CategoryClass(i: Int) {
 
 }
 
-data class CategoryType(val categoryClass: CategoryClass, val isSpending: Boolean) {
+data class CategoryType(val expense: Expense, val isSpending: Boolean) {
     companion object {
         val list: List<CategoryType> = listOf(
-            CategoryType(CategoryClass.SALARY, false),
-            CategoryType(CategoryClass.SALE, true),
-            CategoryType(CategoryClass.OTHER, true),
-            CategoryType(CategoryClass.FOOD, true),
-            CategoryType(CategoryClass.BAR, true),
-            CategoryType(CategoryClass.HOME, true),
-            CategoryType(CategoryClass.TRAVEL, true)
+            CategoryType(Expense.SALE, true),
+            CategoryType(Expense.OTHER, true),
+            CategoryType(Expense.FOOD, true),
+            CategoryType(Expense.BAR, true),
+            CategoryType(Expense.HOME, true),
+            CategoryType(Expense.TRAVEL, true)
         )
     }
 }

@@ -14,8 +14,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        private val STORAGE_NAME = "StorageName"
+        val STORAGE_NAME = "StorageName"
         private val FIRST_OPEN = "FirstOpen"
+        val START_PERIOD = "START_PERIOD"
+        val END_PERIOD = "END_PERIOD"
     }
 
     private lateinit var active: AndroidXMvpAppCompatFragment
