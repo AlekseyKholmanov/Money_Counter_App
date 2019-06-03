@@ -44,16 +44,19 @@ class MainFragmentPresenter @Inject constructor(
     fun getSum() {
         Flowables.zip(
             spendRep.getSpentSum(),
-            spendRep.getIncomeSum(),
-            sumPerDay.getByDate(DateTime().withTimeAtStartOfDay())
+            spendRep.getIncomeSum()
         )
             .async()
-            .subscribe ({ (spent, income, sumPerDay) ->
+            .subscribe ({ (spent, income) ->
                 Log.d("qwerty","update sums")
                 viewState.showSpentSum(spent.sum().toString())
                 viewState.showIncomeSum((income.sum() - spent.sum()).toString())
-                viewState.showSumPerDay(sumPerDay.sum.toString().toCurencyFormat())
+
             },{t-> Log.d("qwerty",t.toString() )})
+            .keep()
+        sumPerDay.getByDate(DateTime().withTimeAtStartOfDay())
+            .async()
+            .subscribe { it-> viewState.showSumPerDay(it.sum.toString().toCurencyFormat()) }
             .keep()
     }
 

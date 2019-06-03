@@ -36,17 +36,17 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
         spendingList.layoutManager = LinearLayoutManager(requireContext())
 
         spendingList.adapter = adapter
-//        val swipeHandle = object : SwipeToDeleteCallback(context!!) {
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                val item = adapter.items[viewHolder.adapterPosition]
-//                if (item is Spending) {
-//                    adapter.removeItem(viewHolder.adapterPosition)
-//                    presenter.delete(item)
-//                }
-//            }
-//        }
-//        val itemTouchHelper = ItemTouchHelper(swipeHandle)
-//        itemTouchHelper.attachToRecyclerView(spendingList)
+        val swipeHandle = object : SwipeToDeleteCallback(context!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val item = adapter.items[viewHolder.adapterPosition]
+                if (item is Spending) {
+                    adapter.removeItem(viewHolder.adapterPosition)
+                    presenter.delete(item)
+                }
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandle)
+        itemTouchHelper.attachToRecyclerView(spendingList)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
