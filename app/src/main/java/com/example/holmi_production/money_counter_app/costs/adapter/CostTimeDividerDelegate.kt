@@ -10,18 +10,18 @@ import com.example.holmi_production.money_counter_app.costs.CostTimeDivider
 import com.example.holmi_production.money_counter_app.costs.ListItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
-class CostTimeDividerDelegate : AdapterDelegate<List<ListItem>>() {
+class CostTimeDividerDelegate : AdapterDelegate<MutableList<ListItem>>() {
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_costs_date_divider, parent, false)
         return ViewHolder(view as TextView)
     }
 
-    override fun isForViewType(items: List<ListItem>, position: Int): Boolean {
+    override fun isForViewType(items: MutableList<ListItem>, position: Int): Boolean {
         return items[position] is CostTimeDivider
     }
 
     override fun onBindViewHolder(
-        items: List<ListItem>,
+        items: MutableList<ListItem>,
         position: Int,
         holder: RecyclerView.ViewHolder,
         payloads: List<Any>) {

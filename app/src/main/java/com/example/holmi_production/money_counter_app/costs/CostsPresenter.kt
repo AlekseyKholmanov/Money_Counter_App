@@ -24,7 +24,7 @@ class CostsPresenter @Inject constructor(
             .async()
             .subscribe(
                 { item ->
-                viewState.showSpending(item)
+                viewState.showSpending(item.toMutableList())
             },
                 { error ->
                 viewState.onError(error)

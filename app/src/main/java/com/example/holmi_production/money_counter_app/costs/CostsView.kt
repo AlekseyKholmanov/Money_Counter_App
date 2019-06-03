@@ -4,5 +4,5 @@ import com.arellomobile.mvp.MvpView
 
 interface CostsView :MvpView{
     fun onError(error:Throwable)
-    fun showSpending(spending: List<ListItem>)
+    fun showSpending(spending: MutableList<ListItem>)
 }

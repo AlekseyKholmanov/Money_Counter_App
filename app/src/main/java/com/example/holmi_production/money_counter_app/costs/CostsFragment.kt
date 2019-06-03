@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
@@ -32,7 +33,16 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
         super.onViewCreated(view, savedInstanceState)
         adapter = CostsAdapter()
         spendingList.layoutManager = LinearLayoutManager(requireContext())
+
         spendingList.adapter = adapter
+        val swipeHandle = object :SwipeToDeleteCallback(context!!){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                adapter.removeItem(viewHolder.adapterPosition)
+                adapter.notifyDataSetChanged()
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandle)
+        itemTouchHelper.attachToRecyclerView(spendingList)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -46,7 +56,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
             showEmptyPlaceholder()
     }
 
-    override fun showSpending(spending: List<ListItem>) {
+    override fun showSpending(spending: MutableList<ListItem>) {
         adapter.items = spending
         if (spending.isEmpty())
             showEmptyPlaceholder()
