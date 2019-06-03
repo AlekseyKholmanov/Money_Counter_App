@@ -4,7 +4,6 @@ import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Single
 import javax.inject.Inject
 
 class SpendingRepository @Inject constructor(
@@ -16,20 +15,20 @@ class SpendingRepository @Inject constructor(
         return Completable.fromCallable { dao.insert(spending) }
     }
 
-    fun getAll(): Flowable<List<Spending>>{
+    fun getAll(): Flowable<List<Spending>> {
         return dao.getAll()
-    }
-
-    fun getCount(): Flowable<Int> {
-        return dao.getCount()
     }
 
     fun getSpentSum(): Flowable<List<Float>> {
         return dao.getSpentSum()
     }
 
-    fun getIncomeSum():Flowable<List<Float>>{
+    fun getIncomeSum(): Flowable<List<Float>> {
         return dao.getIncomeSum()
+    }
+
+    fun delete(spending: Spending): Completable {
+        return Completable.fromCallable { dao.delete(spending) }
     }
 
 }

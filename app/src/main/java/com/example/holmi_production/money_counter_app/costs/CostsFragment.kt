@@ -13,6 +13,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.costs.adapter.CostsAdapter
+import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_costs.*
 
@@ -35,24 +36,26 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
         spendingList.layoutManager = LinearLayoutManager(requireContext())
 
         spendingList.adapter = adapter
-        val swipeHandle = object :SwipeToDeleteCallback(context!!){
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                adapter.removeItem(viewHolder.adapterPosition)
-                adapter.notifyDataSetChanged()
-            }
-        }
-        val itemTouchHelper = ItemTouchHelper(swipeHandle)
-        itemTouchHelper.attachToRecyclerView(spendingList)
+//        val swipeHandle = object : SwipeToDeleteCallback(context!!) {
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                val item = adapter.items[viewHolder.adapterPosition]
+//                if (item is Spending) {
+//                    adapter.removeItem(viewHolder.adapterPosition)
+//                    presenter.delete(item)
+//                }
+//            }
+//        }
+//        val itemTouchHelper = ItemTouchHelper(swipeHandle)
+//        itemTouchHelper.attachToRecyclerView(spendingList)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter.getCount()
         presenter.loadCosts()
     }
 
     override fun onError(error: Throwable) {
-        if(adapter.itemCount == 0)
+        if (adapter.itemCount == 0)
             showEmptyPlaceholder()
     }
 
@@ -65,6 +68,10 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
             spendingList.isVisible = true
             adapter.notifyDataSetChanged()
         }
+    }
+
+    override fun updateList() {
+        adapter.notifyDataSetChanged()
     }
 
     private fun showEmptyPlaceholder() {

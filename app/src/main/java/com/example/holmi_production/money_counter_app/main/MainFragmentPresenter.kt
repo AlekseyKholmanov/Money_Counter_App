@@ -48,12 +48,12 @@ class MainFragmentPresenter @Inject constructor(
             sumPerDay.getByDate(DateTime().withTimeAtStartOfDay())
         )
             .async()
-            .subscribe { (spent, income, sumPerDay) ->
-                val spentSum = spent.sum()
-                viewState.showSpentSum(spentSum.toString())
-                viewState.showIncomeSum((income.sum() - spentSum).toString())
+            .subscribe ({ (spent, income, sumPerDay) ->
+                Log.d("qwerty","update sums")
+                viewState.showSpentSum(spent.sum().toString())
+                viewState.showIncomeSum((income.sum() - spent.sum()).toString())
                 viewState.showSumPerDay(sumPerDay.sum.toString().toCurencyFormat())
-            }
+            },{t-> Log.d("qwerty",t.toString() )})
             .keep()
     }
 
@@ -99,7 +99,6 @@ class MainFragmentPresenter @Inject constructor(
 
     fun setType(type: Int) {
         this.type = type
-
     }
 
     private fun getCategoryType(type: Int): CategoryType {

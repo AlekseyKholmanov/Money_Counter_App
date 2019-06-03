@@ -24,20 +24,20 @@ class CostsPresenter @Inject constructor(
             .async()
             .subscribe(
                 { item ->
-                viewState.showSpending(item.toMutableList())
-            },
+                    viewState.showSpending(item.toMutableList())
+                },
                 { error ->
-                viewState.onError(error)
-            }
+                    viewState.onError(error)
+                }
             )
             .keep()
     }
 
-    fun getCount(){
-        repository.getCount()
+    fun delete(spending: Spending) {
+        repository.delete(spending)
             .async()
-            .subscribe { it->
-                Log.d("qwerty",it.toString())
+            .subscribe {
+                viewState.updateList()
             }
             .keep()
     }
@@ -48,7 +48,7 @@ class CostsPresenter @Inject constructor(
             .sortedByDescending { it.key!! }
             .flatMap { group ->
                 group
-                    .sortedByDescending { it.spendingDate}
+                    .sortedByDescending { it.spendingDate }
                     .cast(ListItem::class.java)
                     .startWith(CostTimeDivider(group.key!!.toString(DATE_FORMAT)))
 

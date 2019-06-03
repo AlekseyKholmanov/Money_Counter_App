@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.orm
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
@@ -13,9 +14,6 @@ interface SpendingDao {
     @Query("SELECT * FROM Spending")
     fun getAll(): Flowable<List<Spending>>
 
-    @Query("Select COUNT(*) From  Spending")
-    fun getCount(): Flowable<Int>
-
     @Insert(onConflict = REPLACE)
     fun insert(spending: Spending)
 
@@ -24,4 +22,7 @@ interface SpendingDao {
 
     @Query("Select price from Spending where isSpending = 0")
     fun getIncomeSum(): Flowable<List<Float>>
+
+    @Delete
+    fun delete(spending: Spending)
 }

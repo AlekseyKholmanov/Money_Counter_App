@@ -30,13 +30,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val preferences = this.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE)
-
         openFragments()
         if (preferences.contains(FIRST_OPEN)) {
+            return
         } else {
             preferences.edit().putBoolean(FIRST_OPEN, true).apply()
             val i = Intent(this, FirstActivity::class.java)
-            startActivityForResult(i, 1)
+            startActivity(i)
             Log.d("qwerty", "first launch")
         }
 

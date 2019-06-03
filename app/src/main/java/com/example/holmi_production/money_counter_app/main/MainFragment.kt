@@ -58,12 +58,12 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         key = view.findViewById(R.id.keyboard)
         scroll = view.findViewById(R.id.hsv)
         scroll.setCallback(this)
         key.setListener(this)
         presenter.getSum()
         presenter.getDaysLeft()
+        super.onViewCreated(view, savedInstanceState)
     }
 }
