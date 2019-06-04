@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.holmi_production.money_counter_app.costs.ListItem
 import org.joda.time.DateTime
-import java.io.Serializable
 
 @Entity
 data class Spending(
@@ -18,4 +17,5 @@ data class Spending(
     val categoryTypes: CategoryType,
 
     val spendingDate: DateTime
-) : Serializable, ListItem
+
+) : ListItem

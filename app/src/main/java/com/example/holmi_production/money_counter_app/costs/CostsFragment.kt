@@ -40,7 +40,8 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val item = adapter.items[viewHolder.adapterPosition]
                 if (item is Spending) {
-                    adapter.removeItem(viewHolder.adapterPosition)
+                    adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                    adapter.notifyDataSetChanged()
                     presenter.delete(item)
                 }
             }

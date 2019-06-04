@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.costs.adapter
 
-import android.app.LauncherActivity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -10,18 +9,18 @@ import com.example.holmi_production.money_counter_app.costs.CostTimeDivider
 import com.example.holmi_production.money_counter_app.costs.ListItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
-class CostTimeDividerDelegate : AdapterDelegate<MutableList<ListItem>>() {
+class CostTimeDividerDelegate : AdapterDelegate<List<ListItem>>() {
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_costs_date_divider, parent, false)
         return ViewHolder(view as TextView)
     }
 
-    override fun isForViewType(items: MutableList<ListItem>, position: Int): Boolean {
+    override fun isForViewType(items: List<ListItem>, position: Int): Boolean {
         return items[position] is CostTimeDivider
     }
 
     override fun onBindViewHolder(
-        items: MutableList<ListItem>,
+        items: List<ListItem>,
         position: Int,
         holder: RecyclerView.ViewHolder,
         payloads: List<Any>) {
