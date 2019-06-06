@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +15,16 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback {
+    override fun enterPressed(money: Double) {
+        Log.d("qwerty",money.toString())
+        presenter.saveSpend(money)
+    }
+
+    override fun moneyUpdated(money: Double) {
+    }
+
     override fun showDaysLeft(days: String) {
-        sum_per_day_left_days.text = days
+        left_days.text = days
     }
 
     override fun showSumPerDay(money: String) {
@@ -34,12 +43,9 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         presenter.setType(type)
     }
 
-    override fun buttonPressed(type: ButtonTypes, value: String?) {
-        presenter.buttonPressed(type, value)
-    }
 
     override fun showMoney(money: String) {
-        expense.text = money
+//        expense.text = money
     }
 
     private lateinit var key: Keyboard

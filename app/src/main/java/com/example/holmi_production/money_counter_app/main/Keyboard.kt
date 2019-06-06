@@ -19,30 +19,27 @@ class Keyboard @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : RelativeLayout(context, attrs, defStyle, defStyleRes) {
 
-
     private lateinit var mKeyboardListener: IKeyboardListener
-    var sum =""
+    var sum = ""
 
     init {
-        Log.d("qwerty", "init")
         View.inflate(context, R.layout.keyboard, this)
-
-        key_0.setOnClickListener { pressed(ButtonTypes.ZERO,"0") }
-        key_1.setOnClickListener {pressed(ButtonTypes.NUMERIC,"1") }
-        key_2.setOnClickListener {pressed(ButtonTypes.NUMERIC,"2") }
-        key_3.setOnClickListener { pressed(ButtonTypes.NUMERIC,"3") }
-        key_4.setOnClickListener { pressed(ButtonTypes.NUMERIC,"4") }
-        key_5.setOnClickListener { pressed(ButtonTypes.NUMERIC,"5") }
-        key_6.setOnClickListener { pressed(ButtonTypes.NUMERIC,"6") }
-        key_7.setOnClickListener { pressed(ButtonTypes.NUMERIC,"7") }
-        key_8.setOnClickListener { pressed(ButtonTypes.NUMERIC,"8") }
-        key_9.setOnClickListener {pressed(ButtonTypes.NUMERIC,"9") }
-        key_divider.setOnClickListener { pressed(ButtonTypes.DIVIDER,".") }
+        key_0.setOnClickListener { pressed(ButtonTypes.ZERO, "0") }
+        key_1.setOnClickListener { pressed(ButtonTypes.NUMERIC, "1") }
+        key_2.setOnClickListener { pressed(ButtonTypes.NUMERIC, "2") }
+        key_3.setOnClickListener { pressed(ButtonTypes.NUMERIC, "3") }
+        key_4.setOnClickListener { pressed(ButtonTypes.NUMERIC, "4") }
+        key_5.setOnClickListener { pressed(ButtonTypes.NUMERIC, "5") }
+        key_6.setOnClickListener { pressed(ButtonTypes.NUMERIC, "6") }
+        key_7.setOnClickListener { pressed(ButtonTypes.NUMERIC, "7") }
+        key_8.setOnClickListener { pressed(ButtonTypes.NUMERIC, "8") }
+        key_9.setOnClickListener { pressed(ButtonTypes.NUMERIC, "9") }
+        key_divider.setOnClickListener { pressed(ButtonTypes.DIVIDER, ".") }
         key_delete.setOnClickListener { pressed(ButtonTypes.DELETE) }
         key_enter.setOnClickListener { pressed(ButtonTypes.ENTER) }
     }
 
-    fun pressed(type:ButtonTypes, value: String? = null){
+    fun pressed(type: ButtonTypes, value: String? = null) {
         when (type) {
             ButtonTypes.DELETE -> {
                 sum = sum.dropLast(1)
@@ -56,7 +53,6 @@ class Keyboard @JvmOverloads constructor(
                     else -> sum += value
                 }
             }
-            //TODO triple zero bug when 0.
             ButtonTypes.ZERO -> {
                 when (sum) {
                     "" -> return
@@ -64,7 +60,13 @@ class Keyboard @JvmOverloads constructor(
                 }
             }
             ButtonTypes.ENTER -> {
-                sum = ""
+                when (sum) {
+                    "" -> return
+                    else -> {
+                        mKeyboardListener.enterPressed(sum.toDouble())
+                        sum = ""
+                    }
+                }
             }
             ButtonTypes.NUMERIC -> {
                 if (sum == "0")
@@ -74,10 +76,9 @@ class Keyboard @JvmOverloads constructor(
                 sum += value
             }
         }
+
         expense.text = sum
     }
-
-
 
     fun setListener(mKeyboardListener: IKeyboardListener) {
         this.mKeyboardListener = mKeyboardListener
@@ -85,5 +86,6 @@ class Keyboard @JvmOverloads constructor(
 }
 
 interface IKeyboardListener {
-    fun buttonPressed(type:ButtonTypes, value: String? = null)
+    fun enterPressed(money: Double)
+    fun moneyUpdated(money: Double)
 }

@@ -11,7 +11,7 @@ data class Spending(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
 
-    val price: Float,
+    val price: Double,
 
     @Embedded
     val categoryTypes: CategoryType,

@@ -17,13 +17,13 @@ import javax.inject.Inject
 @InjectViewState
 class FirstLaunchPresenter @Inject constructor(private val spendingRep: SpendingRepository, private val perDayRep:SumPerDayRepository, val context:Context) :
     BasePresenter<FirstLaunchView>() {
-    private var sum: Int = 0
+    private var sum: Double = 0.0
     private var dif: Int = 0
     private lateinit var endPeriod:DateTime
     private lateinit var startPeriod: DateTime
     private var sumPerDay:Double = 0.0
     fun getSum(sum: Double) {
-        this.sum = sum.toInt()
+        this.sum = sum
     }
 
     fun getSumPerDay() {
@@ -42,7 +42,7 @@ class FirstLaunchPresenter @Inject constructor(private val spendingRep: Spending
         spendingRep.insert(
             Spending(
                 null,
-                sum.toFloat(),
+                sum,
                 CategoryType(Expense.SALARY, false),
                 DateTime.now().withTimeAtStartOfDay()
             )

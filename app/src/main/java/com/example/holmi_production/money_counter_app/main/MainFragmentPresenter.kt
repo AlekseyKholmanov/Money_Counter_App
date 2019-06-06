@@ -22,23 +22,25 @@ import javax.inject.Inject
 @InjectViewState
 class MainFragmentPresenter @Inject constructor(
     private val spendRep: SpendingRepository,
-    private val sumPerDay: SumPerDayRepository,
-    private val contex:Context) :
+    private val perDayRep: SumPerDayRepository,
+    private val contex: Context) :
     BasePresenter<MainFragmnetView>() {
 
-    var sum = ""
     private var type = 0
+    private var sumPerDay = 0.0
 
-    private fun saveSpending() {
-        if (sum == "")
-            return
-        val spending = Spending(null, sum.toFloat(), getCategoryType(type), DateTime())
+    fun saveSpend(sum:Double) {
+        val spending = Spending(null, sum, getCategoryType(type), DateTime())
         spendRep.insert(spending)
             .async()
-            .subscribe {
-                Log.d("qwerty", "inserted")
-            }
+            .subscribe {}
             .keep()
+        if (sum > sumPerDay)
+            sumPerDay = 0.0
+        else {
+            sumPerDay -= sum
+        }
+        viewState.showSumPerDay(sumPerDay.toString())
     }
 
     fun getSum() {
@@ -47,58 +49,28 @@ class MainFragmentPresenter @Inject constructor(
             spendRep.getIncomeSum()
         )
             .async()
-            .subscribe ({ (spent, income) ->
-                Log.d("qwerty","update sums")
+            .subscribe({ (spent, income) ->
                 viewState.showSpentSum(spent.sum().toString())
                 viewState.showIncomeSum((income.sum() - spent.sum()).toString())
 
-            },{t-> Log.d("qwerty",t.toString() )})
+            }, { t -> Log.d("qwerty", t.toString()) })
             .keep()
-        sumPerDay.getByDate(DateTime().withTimeAtStartOfDay())
+        perDayRep.getByDate(DateTime().withTimeAtStartOfDay())
             .async()
-            .subscribe { it-> viewState.showSumPerDay(it.sum.toString().toCurencyFormat()) }
+            .subscribe {
+                sumPerDay = it.sum
+                viewState.showSumPerDay(it.sum.toString().toCurencyFormat())
+            }
             .keep()
     }
 
-    fun getDaysLeft(){
-        val shared = contex.getSharedPreferences(MainActivity.STORAGE_NAME,Context.MODE_PRIVATE)
-        val leftDate = shared.getLong(MainActivity.END_PERIOD,0)
+    fun getDaysLeft() {
+        val shared = contex.getSharedPreferences(MainActivity.STORAGE_NAME, Context.MODE_PRIVATE)
+        val leftDate = shared.getLong(MainActivity.END_PERIOD, 0)
         val diff = Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(leftDate)).days
         viewState.showDaysLeft(" на ${diff.getDayAddition()}")
     }
 
-    fun buttonPressed(buttonTypes: ButtonTypes, value: String? = null) {
-        when (buttonTypes) {
-            ButtonTypes.DELETE -> {
-                sum = sum.dropLast(1)
-                if (sum.takeLast(1) == ".")
-                    sum = sum.dropLast(1)
-            }
-            ButtonTypes.DIVIDER -> {
-                when {
-                    value == "." && sum.contains(".") -> return
-                    sum == "" -> sum = "0."
-                    else -> sum += value
-                }
-            }
-            ButtonTypes.ZERO -> {
-                when (sum) {
-                    "" -> return
-                    else -> sum += value
-                }
-            }
-            ButtonTypes.ENTER -> {
-                saveSpending()
-                sum = ""
-            }
-            ButtonTypes.NUMERIC -> {
-                if (sum.contains('.') && sum.takeLast(1) != ".")
-                    sum = sum.dropLast(1)
-                sum += value
-            }
-        }
-        viewState.showMoney(sum.toCurencyFormat())
-    }
 
     fun setType(type: Int) {
         this.type = type

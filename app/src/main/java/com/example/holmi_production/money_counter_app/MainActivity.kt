@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(i)
             Log.d("qwerty", "first launch")
         }
-
     }
 
     private fun openFragments() {
