@@ -11,13 +11,11 @@
     </style>
 
     <style name="MyKeyboardButtons">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:gravity">center</item>
-        <!--<item name="android:layout_columnWeight">1</item>-->
+        <item name="android:layout_columnWeight" >1</item>
+        <item name="android:layout_rowWeight">1</item>
+        <item name="android:layout_gravity">fill_horizontal</item>
         <!--<item name="android:gravity">center</item>-->
-        <!--<item name="android:layout_gravity">fill_horizontal</item>-->
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
 </resources>
