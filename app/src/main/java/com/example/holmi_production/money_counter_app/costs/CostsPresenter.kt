@@ -51,7 +51,6 @@ class CostsPresenter @Inject constructor(
                     .sortedByDescending { it.spendingDate }
                     .cast(ListItem::class.java)
                     .startWith(CostTimeDivider(group.key!!.toString(DATE_FORMAT)))
-
             }
             .toList()
             .toFlowable()

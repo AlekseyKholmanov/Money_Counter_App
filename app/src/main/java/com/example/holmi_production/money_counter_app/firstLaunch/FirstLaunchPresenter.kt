@@ -15,20 +15,24 @@ import org.joda.time.Days
 import javax.inject.Inject
 
 @InjectViewState
-class FirstLaunchPresenter @Inject constructor(private val spendingRep: SpendingRepository, private val perDayRep:SumPerDayRepository, val context:Context) :
+class FirstLaunchPresenter @Inject constructor(
+    private val spendingRep: SpendingRepository,
+    private val perDayRep: SumPerDayRepository,
+    val context: Context) :
     BasePresenter<FirstLaunchView>() {
     private var sum: Double = 0.0
     private var dif: Int = 0
-    private lateinit var endPeriod:DateTime
+    private lateinit var endPeriod: DateTime
     private lateinit var startPeriod: DateTime
-    private var sumPerDay:Double = 0.0
+    private var sumPerDay: Double = 0.0
     fun getSum(sum: Double) {
         this.sum = sum
     }
 
     fun getSumPerDay() {
-        sumPerDay = sum.toDouble()/dif
-        viewState.showSumPerDay(sumPerDay.toString().toCurencyFormat())
+        sumPerDay = sum / dif
+        sumPerDay = String.format("%.1f", sumPerDay).toDouble()
+        viewState.showSumPerDay(sumPerDay.toString())
     }
 
     fun updateDate(date: DateTime) {
@@ -51,16 +55,17 @@ class FirstLaunchPresenter @Inject constructor(private val spendingRep: Spending
             .keep()
 
         val list = arrayListOf<SumPerDay>()
-        for(i in 0..dif){
-            list.add(SumPerDay(startPeriod.plusDays(i),sumPerDay))
+        for (i in 0..dif) {
+            list.add(SumPerDay(startPeriod.plusDays(i), sumPerDay))
         }
         perDayRep.insert(list)
             .async()
             .subscribe()
             .keep()
 
-        val preferences = context.getSharedPreferences(MainActivity.STORAGE_NAME,Context.MODE_PRIVATE)
+        val preferences = context.getSharedPreferences(MainActivity.STORAGE_NAME, Context.MODE_PRIVATE)
         preferences.edit()
+            .putBoolean(MainActivity.FIRST_OPEN, true)
             .putLong(MainActivity.START_PERIOD, startPeriod.millis)
             .putLong(MainActivity.END_PERIOD, endPeriod.millis)
             .apply()

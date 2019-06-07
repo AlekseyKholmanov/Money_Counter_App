@@ -34,12 +34,11 @@ fun <T> Maybe<T>.async(): Maybe<T> {
         .observeOn(AndroidSchedulers.mainThread())
 }
 
-fun String.toCurencyFormat(): String {
-    return if (this.contains('.')) {
-        val float = this.toFloat()
-        String.format("%.1f", float)
-    } else
-        this
+fun Number.toCurencyFormat(): String {
+    return if (this.toString().takeLast(2) == ".0")
+        (this.toString().dropLast(2))
+    else
+        String.format("%.1f", this)
 }
 
 fun DateTime.toRUformat(): String {

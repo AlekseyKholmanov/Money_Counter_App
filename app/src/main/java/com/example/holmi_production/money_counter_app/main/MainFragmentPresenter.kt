@@ -6,10 +6,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.MainActivity
 import com.example.holmi_production.money_counter_app.async
 import com.example.holmi_production.money_counter_app.getDayAddition
-import com.example.holmi_production.money_counter_app.model.ButtonTypes
-import com.example.holmi_production.money_counter_app.model.Expense
-import com.example.holmi_production.money_counter_app.model.CategoryType
-import com.example.holmi_production.money_counter_app.model.Spending
+import com.example.holmi_production.money_counter_app.model.*
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
@@ -35,12 +32,12 @@ class MainFragmentPresenter @Inject constructor(
             .async()
             .subscribe {}
             .keep()
-        if (sum > sumPerDay)
-            sumPerDay = 0.0
-        else {
-            sumPerDay -= sum
-        }
-        viewState.showSumPerDay(sumPerDay.toString())
+        sumPerDay = if(sum>sumPerDay) 0.0 else sumPerDay-sum
+        perDayRep.insert(SumPerDay(DateTime().withTimeAtStartOfDay(),sumPerDay))
+            .async()
+            .subscribe()
+            .keep()
+        viewState.showSumPerDay(sumPerDay.toCurencyFormat())
     }
 
     fun getSum() {
@@ -50,8 +47,8 @@ class MainFragmentPresenter @Inject constructor(
         )
             .async()
             .subscribe({ (spent, income) ->
-                viewState.showSpentSum(spent.sum().toString())
-                viewState.showIncomeSum((income.sum() - spent.sum()).toString())
+                viewState.showSpentSum(spent.sum().toCurencyFormat())
+                viewState.showIncomeSum((income.sum() - spent.sum()).toCurencyFormat())
 
             }, { t -> Log.d("qwerty", t.toString()) })
             .keep()
@@ -59,7 +56,7 @@ class MainFragmentPresenter @Inject constructor(
             .async()
             .subscribe {
                 sumPerDay = it.sum
-                viewState.showSumPerDay(it.sum.toString().toCurencyFormat())
+                viewState.showSumPerDay(it.sum.toCurencyFormat())
             }
             .keep()
     }
