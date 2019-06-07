@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     companion object {
         val STORAGE_NAME = "StorageName"
-        private val FIRST_OPEN = "FirstOpen"
+        val FIRST_OPEN = "FirstOpen"
         val START_PERIOD = "START_PERIOD"
         val END_PERIOD = "END_PERIOD"
     }
@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         if (preferences.contains(FIRST_OPEN)) {
             return
         } else {
-            preferences.edit().putBoolean(FIRST_OPEN, true).apply()
             val i = Intent(this, FirstActivity::class.java)
             startActivity(i)
             Log.d("qwerty", "first launch")
