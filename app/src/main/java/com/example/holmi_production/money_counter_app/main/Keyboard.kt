@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.toCurencyFormat
@@ -20,7 +21,7 @@ class Keyboard @JvmOverloads constructor(
 ) : RelativeLayout(context, attrs, defStyle, defStyleRes) {
 
     private lateinit var mKeyboardListener: IKeyboardListener
-    var sum = ""
+    var sum = "0"
 
     init {
         View.inflate(context, R.layout.keyboard, this)
@@ -42,9 +43,16 @@ class Keyboard @JvmOverloads constructor(
     fun pressed(type: ButtonTypes, value: String? = null) {
         when (type) {
             ButtonTypes.DELETE -> {
-                sum = sum.dropLast(1)
-                if (sum.takeLast(1) == ".")
+                if (sum == "0") return
+                else {
                     sum = sum.dropLast(1)
+                    if (sum.takeLast(1) == ".") {
+                        sum = sum.dropLast(1)
+                    }
+                    if(sum.isEmpty())
+                        sum="0"
+                }
+
             }
             ButtonTypes.DIVIDER -> {
                 when {
@@ -55,16 +63,16 @@ class Keyboard @JvmOverloads constructor(
             }
             ButtonTypes.ZERO -> {
                 when (sum) {
-                    "" -> return
+                    "0" -> return
                     else -> sum += value
                 }
             }
             ButtonTypes.ENTER -> {
                 when (sum) {
-                    "" -> return
+                    "0" -> return
                     else -> {
                         mKeyboardListener.enterPressed(sum.toDouble())
-                        sum = ""
+                        sum = "0"
                     }
                 }
             }
@@ -78,6 +86,7 @@ class Keyboard @JvmOverloads constructor(
         }
 
         expense.text = sum
+        mKeyboardListener.moneyUpdated(sum.toDouble())
     }
 
     fun setListener(mKeyboardListener: IKeyboardListener) {
