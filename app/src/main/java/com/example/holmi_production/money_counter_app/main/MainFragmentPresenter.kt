@@ -14,6 +14,7 @@ import com.example.holmi_production.money_counter_app.toCurencyFormat
 import io.reactivex.rxkotlin.Flowables
 import org.joda.time.DateTime
 import org.joda.time.Days
+import java.sql.Date
 import javax.inject.Inject
 
 @InjectViewState
@@ -26,18 +27,36 @@ class MainFragmentPresenter @Inject constructor(
     private var type = 0
     private var sumPerDay = 0.0
 
-    fun saveSpend(sum:Double) {
+    fun saveSpend(sum: Double) {
+        val time = DateTime().withTimeAtStartOfDay()
         val spending = Spending(null, sum, getCategoryType(type), DateTime())
         spendRep.insert(spending)
             .async()
             .subscribe {}
             .keep()
-        sumPerDay = if(sum>sumPerDay) 0.0 else sumPerDay-sum
-        perDayRep.insert(SumPerDay(DateTime().withTimeAtStartOfDay(),sumPerDay))
-            .async()
-            .subscribe()
-            .keep()
-        viewState.showSumPerDay(sumPerDay.toCurencyFormat())
+        if (spending.categoryTypes == Expense.SALARY) {
+            perDayRep.getFromDate(time)
+                .async()
+                .subscribe({ list ->
+                    val middle = sum / list.count()
+                    val newSum = arrayListOf<SumPerDay>()
+                    for (i in 0 until list.count()) {
+                        newSum.add(list[i].copy(sum = list[i].sum + middle))
+                    }
+                    perDayRep.insert(newSum.toList())
+                        .async()
+                        .subscribe()
+                        .keep()
+                }, { t -> Log.d("qwerty", t.toString()) })
+                .keep()
+        } else {
+            sumPerDay = if (sum > sumPerDay) 0.0 else sumPerDay - sum
+            //TODO показ новой  суммы в день
+            perDayRep.insert(SumPerDay(DateTime().withTimeAtStartOfDay(), sumPerDay))
+                .async()
+                .subscribe()
+                .keep()
+        }
     }
 
     fun getSum() {
@@ -45,11 +64,11 @@ class MainFragmentPresenter @Inject constructor(
             spendRep.getSpentSum(),
             spendRep.getIncomeSum()
         )
+            .distinctUntilChanged()
             .async()
             .subscribe({ (spent, income) ->
                 viewState.showSpentSum(spent.sum().toCurencyFormat())
                 viewState.showIncomeSum((income.sum() - spent.sum()).toCurencyFormat())
-
             }, { t -> Log.d("qwerty", t.toString()) })
             .keep()
         perDayRep.getByDate(DateTime().withTimeAtStartOfDay())
@@ -68,13 +87,11 @@ class MainFragmentPresenter @Inject constructor(
         viewState.showDaysLeft(" на ${diff.getDayAddition()}")
     }
 
-
     fun setType(type: Int) {
         this.type = type
     }
 
-    private fun getCategoryType(type: Int): CategoryType {
-        val enum = Expense.values()[type]
-        return CategoryType.list.single { it.expense == enum }
+    private fun getCategoryType(type: Int): Expense {
+        return Expense.values()[type]
     }
 }
