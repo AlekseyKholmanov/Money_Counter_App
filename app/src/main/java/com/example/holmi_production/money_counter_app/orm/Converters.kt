@@ -12,7 +12,7 @@ class Converters {
 
     @TypeConverter
     fun fromType(type: Expense): Int {
-        return type.ordinal
+        return type.id
     }
 
     @TypeConverter

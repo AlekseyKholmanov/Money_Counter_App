@@ -13,8 +13,7 @@ data class Spending(
 
     val price: Double,
 
-    @Embedded
-    val categoryTypes: CategoryType,
+    val categoryTypes: Expense,
 
     val spendingDate: DateTime
 

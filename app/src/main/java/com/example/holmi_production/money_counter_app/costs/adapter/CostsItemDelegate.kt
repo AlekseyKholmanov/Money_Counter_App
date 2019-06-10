@@ -44,7 +44,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         val category: AppCompatTextView = v.findViewById(R.id.category)
         val sum: AppCompatTextView = v.findViewById(R.id.start_sum)
         fun bind(spending: Spending) {
-            category.text = spending.categoryTypes.expense.name
+            category.text = spending.categoryTypes.name
             date.text = spending.spendingDate.toString("HH:mm")
             sum.text = spending.price.toCurencyFormat()
         }
