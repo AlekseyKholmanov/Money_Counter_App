@@ -37,8 +37,8 @@ class FirstLaunchPresenter @Inject constructor(
     fun updateDate(date: DateTime) {
         endPeriod = date.withTimeAtStartOfDay()
         startPeriod = DateTime().withTimeAtStartOfDay()
-        dif = Days.daysBetween(startPeriod, endPeriod).days
-        viewState.showDate(date.toRUformat(), dif.getDayAddition())
+        dif = (Days.daysBetween(startPeriod, endPeriod)+1).days
+        viewState.showDate(date.toRUformat(), (dif).getDayAddition())
     }
 
     fun goToMainScreen() {
@@ -54,7 +54,7 @@ class FirstLaunchPresenter @Inject constructor(
             .keep()
 
         val list = arrayListOf<SumPerDay>()
-        for (i in 0..dif) {
+        for (i in 0 until dif) {
             list.add(SumPerDay(startPeriod.plusDays(i), sumPerDay))
         }
         perDayRep.insert(list)

@@ -37,7 +37,7 @@ class MainFragmentPresenter @Inject constructor(
         if (spending.categoryTypes == Expense.SALARY) {
             perDayRep.getFromDate(time)
                 .async()
-                .subscribe({ list ->
+                .doAfterSuccess { list ->
                     val middle = sum / list.count()
                     val newSum = arrayListOf<SumPerDay>()
                     for (i in 0 until list.count()) {
@@ -47,15 +47,39 @@ class MainFragmentPresenter @Inject constructor(
                         .async()
                         .subscribe()
                         .keep()
-                }, { t -> Log.d("qwerty", t.toString()) })
+                }
+                .subscribe({}, { t -> Log.d("qwerty", t.toString()) })
                 .keep()
         } else {
-            sumPerDay = if (sum > sumPerDay) 0.0 else sumPerDay - sum
-            //TODO показ новой  суммы в день
-            perDayRep.insert(SumPerDay(DateTime().withTimeAtStartOfDay(), sumPerDay))
-                .async()
-                .subscribe()
-                .keep()
+            if (sum <= sumPerDay) {
+                sumPerDay -= sum
+                perDayRep.insert(SumPerDay(DateTime().withTimeAtStartOfDay(), sumPerDay))
+                    .async()
+                    .subscribe()
+                    .keep()
+            } else {
+                val diff = sum - sumPerDay
+                sumPerDay = 0.0
+                perDayRep.getFromDate(time)
+                    .async()
+                    .doAfterSuccess { list ->
+                        val middle = diff / (list.count()-1)
+                        val newSum = arrayListOf<SumPerDay>()
+                        for (i in 1 until list.count()) {
+                            newSum.add(list[i].copy(sum = list[i].sum - middle))
+                        }
+                        newSum[0] = SumPerDay(time,0.0)
+                        perDayRep.insert(newSum.toList())
+                            .async()
+                            .subscribe {
+                                viewState.showNewSumPerDay(newSum[1].sum.toCurencyFormat())
+                            }
+                            .keep()
+                    }
+                    .subscribe()
+                    .keep()
+            }
+
         }
     }
 
@@ -83,7 +107,7 @@ class MainFragmentPresenter @Inject constructor(
     fun getDaysLeft() {
         val shared = contex.getSharedPreferences(MainActivity.STORAGE_NAME, Context.MODE_PRIVATE)
         val leftDate = shared.getLong(MainActivity.END_PERIOD, 0)
-        val diff = Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(leftDate)).days
+        val diff = Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(leftDate)).days + 1
         viewState.showDaysLeft(" на ${diff.getDayAddition()}")
     }
 
