@@ -124,7 +124,6 @@
                 app:layout_constraintLeft_toRightOf="@id/key_2"
                 app:layout_constraintBottom_toTopOf="@id/key_0"
                 android:background="@color/design_default_color_primary"
-                android:foreground="?attr/selectableItemBackground"
         />
         <Button
                 android:id="@+id/key_enter"
@@ -137,7 +136,7 @@
                 app:layout_constraintTop_toBottomOf="@id/key_date"
                 android:layout_height="0dp"
                 android:background="@color/design_default_color_primary"
-                android:foreground="?attr/selectableItemBackground"/>
+        />
         <Button
                 android:id="@+id/key_0"
                 style="@style/MyKeyboardButtons"
@@ -146,7 +145,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/key_divider"
                 android:background="@color/design_default_color_primary"
-                android:foreground="?attr/selectableItemBackground"
 
         />
         <Button
@@ -156,7 +154,6 @@
                 app:layout_constraintRight_toLeftOf="@id/key_enter"
                 android:text="."
                 android:background="@color/design_default_color_primary"
-                android:foreground="?attr/selectableItemBackground"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
