@@ -11,7 +11,7 @@ data class Spending(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
 
-    val price: Double,
+    val sum: Double,
 
     val categoryTypes: Expense,
 

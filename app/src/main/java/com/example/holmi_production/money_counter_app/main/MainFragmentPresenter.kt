@@ -30,10 +30,7 @@ class MainFragmentPresenter @Inject constructor(
     fun saveSpend(sum: Double) {
         val time = DateTime().withTimeAtStartOfDay()
         val spending = Spending(null, sum, getCategoryType(type), DateTime())
-        spendRep.insert(spending)
-            .async()
-            .subscribe {}
-            .keep()
+        spendRep.insert(spending).async().subscribe {}.keep()
         if (spending.categoryTypes == Expense.SALARY) {
             perDayRep.getFromDate(time)
                 .async()
@@ -43,10 +40,7 @@ class MainFragmentPresenter @Inject constructor(
                     for (i in 0 until list.count()) {
                         newSum.add(list[i].copy(sum = list[i].sum + middle))
                     }
-                    perDayRep.insert(newSum.toList())
-                        .async()
-                        .subscribe()
-                        .keep()
+                    perDayRep.insert(newSum.toList()).async().subscribe().keep()
                 }
                 .subscribe({}, { t -> Log.d("qwerty", t.toString()) })
                 .keep()
@@ -63,23 +57,19 @@ class MainFragmentPresenter @Inject constructor(
                 perDayRep.getFromDate(time)
                     .async()
                     .doAfterSuccess { list ->
-                        val middle = diff / (list.count()-1)
+                        val middle = diff / (list.count() - 1)
                         val newSum = arrayListOf<SumPerDay>()
                         for (i in 1 until list.count()) {
                             newSum.add(list[i].copy(sum = list[i].sum - middle))
                         }
-                        newSum[0] = SumPerDay(time,0.0)
-                        perDayRep.insert(newSum.toList())
-                            .async()
-                            .subscribe {
-                                viewState.showNewSumPerDay(newSum[1].sum.toCurencyFormat())
-                            }
-                            .keep()
+                        newSum[0] = SumPerDay(time, 0.0)
+                        perDayRep.insert(newSum.toList()).async().subscribe {
+                            viewState.showNewSumPerDay(newSum[1].sum.toCurencyFormat())
+                        }.keep()
                     }
                     .subscribe()
                     .keep()
             }
-
         }
     }
 
@@ -97,6 +87,7 @@ class MainFragmentPresenter @Inject constructor(
             .keep()
         perDayRep.getByDate(DateTime().withTimeAtStartOfDay())
             .async()
+            .distinctUntilChanged()
             .subscribe {
                 sumPerDay = it.sum
                 viewState.showSumPerDay(it.sum.toCurencyFormat())

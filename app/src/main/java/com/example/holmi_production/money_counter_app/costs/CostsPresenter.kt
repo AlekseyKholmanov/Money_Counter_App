@@ -12,6 +12,8 @@ import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.toObservable
+import org.joda.time.DateTime
+import java.util.*
 import javax.inject.Inject
 
 @InjectViewState
@@ -21,48 +23,68 @@ class CostsPresenter @Inject constructor(
 ) : BasePresenter<CostsView>() {
 
     fun loadCosts() {
-        spRep.getAll()
-            .flatMap {
-                trasform(it)
-            }
-            .async()
+        spRep.getAll().flatMap { trasform(it) }.async()
             .subscribe(
-                { item ->
-                    viewState.showSpending(item.toMutableList())
-                },
-                { error ->
-                    viewState.onError(error)
-                }
+                { item -> viewState.showSpending(item.toMutableList()) },
+                { error -> viewState.onError(error) }
             )
             .keep()
     }
 
     fun delete(spending: Spending) {
-        spRep.delete(spending)
-            .async()
-            .subscribe {
-                viewState.updateList()
+        val time = DateTime().withTimeAtStartOfDay()
+        when (spending.categoryTypes) {
+            Expense.SALARY -> {
+                pdRep.getFromDate(time)
+                    .async()
+                    .doOnSuccess { sums ->
+                        val newSums = sums.toMutableList()
+                        val daysCount: Int
+                        if (sums[0].sum < spending.sum / sums.count()) {
+                            daysCount = sums.count()
+                            for (i in 1 until daysCount) {
+                                newSums[i] = sums[i].copy(sum = sums[i].sum - spending.sum / daysCount)
+                            }
+                        } else {
+                            daysCount = sums.count()
+                            for (i in 0 until sums.count()) {
+                                newSums[i] = sums[i].copy(sum = sums[i].sum - spending.sum / daysCount)
+                            }
+                        }
+                        pdRep.insert(newSums.toList()).async().subscribe().keep()
+                    }
+                    .subscribe({}, { t -> Log.d("qwerty", t.toString()) })
+                    .keep()
             }
-            .keep()
-//        if(spending.categoryTypes == Expense.SALARY){
-//            pdRep.getFromDate(time)
-//                .async()
-//                .firstOrError()
-//                .subscribe({
-//                        it->
-//                    perDayRep.insert(SumPerDay(time,it.sum+spending.price))
-//                        .async()
-//                        .subscribe()
-//                        .keep()
-//                },{t->Log.d("qwerty",t.toString())})
-//                .keep()
-//        }
-        if(spending.categoryTypes == Expense.SALARY){
-            Log.d("qwerty", "ты пидор")
+            else -> {
+                when (spending.spendingDate.dayOfYear()) {
+                    DateTime.now().dayOfYear() -> {
+                        pdRep.getByDate(time)
+                            .async()
+                            .firstOrError()
+                            .doOnSuccess { it ->
+                                val newSum = it.copy(sum = it.sum + spending.sum)
+                                pdRep.insert(newSum)
+                                Log.d("qwerty", "succes")
+                            }
+                            .doOnError { t -> Log.d("qwerty", t.toString()) }
+                            .subscribe().keep()
+                    }
+                    else -> {
+                        pdRep.getFromDate(time)
+                            .async()
+                            .doOnSuccess { sums ->
+                                val daysCount = sums.count()
+                                val newList = sums.toMutableList()
+                                newList.forEach { t -> t.sum += spending.sum / daysCount }
+                                pdRep.insert(newList).async().subscribe().keep()
+                            }
+                            .subscribe().keep()
+                    }
+                }
+            }
         }
-        else{
-            Log.d("qwerty","ты гей")
-        }
+        spRep.delete(spending).async().subscribe { viewState.updateList() }.keep()
     }
 
     private fun trasform(costs: List<Spending>): Flowable<List<ListItem>> {

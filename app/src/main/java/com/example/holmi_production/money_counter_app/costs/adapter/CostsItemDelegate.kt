@@ -8,7 +8,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.costs.ListItem
-import com.example.holmi_production.money_counter_app.costs.SwipeToDeleteCallback
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.toCurencyFormat
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
@@ -46,7 +45,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         fun bind(spending: Spending) {
             category.text = spending.categoryTypes.name
             date.text = spending.spendingDate.toString("HH:mm")
-            sum.text = spending.price.toCurencyFormat()
+            sum.text = spending.sum.toCurencyFormat()
         }
 
     }

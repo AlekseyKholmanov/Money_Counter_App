@@ -10,5 +10,5 @@ data class SumPerDay(
     @PrimaryKey(autoGenerate = false)
     val dateTime: DateTime,
 
-    val sum: Double
+    var sum: Double
 ):Serializable

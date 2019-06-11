@@ -37,7 +37,7 @@ class FirstLaunchPresenter @Inject constructor(
     fun updateDate(date: DateTime) {
         endPeriod = date.withTimeAtStartOfDay()
         startPeriod = DateTime().withTimeAtStartOfDay()
-        dif = (Days.daysBetween(startPeriod, endPeriod)+1).days
+        dif = (Days.daysBetween(startPeriod, endPeriod) + 1).days
         viewState.showDate(date.toRUformat(), (dif).getDayAddition())
     }
 
@@ -49,9 +49,7 @@ class FirstLaunchPresenter @Inject constructor(
                 Expense.SALARY,
                 DateTime.now().withTimeAtStartOfDay()
             )
-        ).async()
-            .subscribe()
-            .keep()
+        ).async().subscribe().keep()
 
         val list = arrayListOf<SumPerDay>()
         for (i in 0 until dif) {
