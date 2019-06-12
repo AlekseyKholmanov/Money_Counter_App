@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.main
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,15 +9,15 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback {
-    override fun showNewSumPerDay(sum: String) {
-        new_sum_per_day_text.visibility = View.VISIBLE
-        new_sum_per_day.visibility = View.VISIBLE
+    override fun showNewSumPerDay(sum: String,isDisplayed:Boolean) {
+        val displayed = if (isDisplayed) View.VISIBLE else View.GONE
+        new_sum_per_day_text.visibility = displayed
+        new_sum_per_day.visibility = displayed
         new_sum_per_day.text = sum
     }
 

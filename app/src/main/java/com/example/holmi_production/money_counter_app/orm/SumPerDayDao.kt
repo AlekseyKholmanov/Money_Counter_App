@@ -22,5 +22,5 @@ interface SumPerDayDao {
     fun getByDate(dateTime: DateTime): Flowable<SumPerDay>
 
     @Query("SELECT * FROM SumPerDay WHERE dateTime>=:dateTime")
-    fun getFromDate(dateTime: DateTime): Single<List<SumPerDay>>
+    fun getFromDate(dateTime: DateTime): Flowable<List<SumPerDay>>
 }

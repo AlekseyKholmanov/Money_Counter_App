@@ -8,5 +8,5 @@ interface MainFragmnetView:MvpView{
     fun showIncomeSum(money:String)
     fun showSumPerDay(money:String)
     fun showDaysLeft(days:String)
-    fun showNewSumPerDay(sum:String)
+    fun showNewSumPerDay(sum:String,isDisplayed:Boolean)
 }

@@ -37,6 +37,7 @@ class CostsPresenter @Inject constructor(
             Expense.SALARY -> {
                 pdRep.getFromDate(time)
                     .async()
+                    .firstOrError()
                     .doOnSuccess { sums ->
                         val newSums = sums.toMutableList()
                         val daysCount: Int
@@ -73,6 +74,7 @@ class CostsPresenter @Inject constructor(
                     else -> {
                         pdRep.getFromDate(time)
                             .async()
+                            .firstOrError()
                             .doOnSuccess { sums ->
                                 val daysCount = sums.count()
                                 val newList = sums.toMutableList()

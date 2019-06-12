@@ -23,5 +23,5 @@ class SumPerDayRepository @Inject constructor(
 
     fun getByDate(dateTime: DateTime): Flowable<SumPerDay> = dao.getByDate(dateTime)
 
-    fun getFromDate(dateTime: DateTime):Single<List<SumPerDay>> = dao.getFromDate(dateTime)
+    fun getFromDate(dateTime: DateTime):Flowable<List<SumPerDay>> = dao.getFromDate(dateTime)
 }
