@@ -42,14 +42,14 @@ class CostsPresenter @Inject constructor(
                         val newSums = sums.toMutableList()
                         val daysCount: Int
                         if (sums[0].sum < spending.sum / sums.count()) {
-                            daysCount = sums.count()
+                            daysCount = sums.count()+1
                             for (i in 1 until daysCount) {
-                                newSums[i] = sums[i].copy(sum = sums[i].sum - spending.sum / daysCount)
+                                newSums[i].sum = sums[i].sum - spending.sum / daysCount
                             }
                         } else {
                             daysCount = sums.count()
                             for (i in 0 until sums.count()) {
-                                newSums[i] = sums[i].copy(sum = sums[i].sum - spending.sum / daysCount)
+                                newSums[i].sum = sums[i].sum - spending.sum / daysCount
                             }
                         }
                         pdRep.insert(newSums.toList()).async().subscribe().keep()
@@ -64,8 +64,7 @@ class CostsPresenter @Inject constructor(
                             .async()
                             .firstOrError()
                             .doOnSuccess { it ->
-                                val newSum = it.copy(sum = it.sum + spending.sum)
-                                pdRep.insert(newSum)
+                                pdRep.insert(it.inc(spending.sum))
                                 Log.d("qwerty", "succes")
                             }
                             .doOnError { t -> Log.d("qwerty", t.toString()) }

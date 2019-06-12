@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback {
     override fun showNewSumPerDay(sum: String,isDisplayed:Boolean) {
-        val displayed = if (isDisplayed) View.VISIBLE else View.GONE
+        val displayed = if (isDisplayed) View.VISIBLE  else View.GONE
         new_sum_per_day_text.visibility = displayed
         new_sum_per_day.visibility = displayed
         new_sum_per_day.text = sum

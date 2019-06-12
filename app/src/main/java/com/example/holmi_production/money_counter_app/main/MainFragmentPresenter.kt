@@ -60,9 +60,9 @@ class MainFragmentPresenter @Inject constructor(
                     .firstOrError()
                     .doAfterSuccess { list ->
                         val middle = diff / (list.count() - 1)
-                        val newSum = arrayListOf<SumPerDay>()
+                        val newSum = list.toMutableList()
                         for (i in 1 until list.count()) {
-                            newSum.add(list[i].copy(sum = list[i].sum - middle))
+                            newSum[i].sum =list[i].sum - middle
                         }
                         newSum[0] = SumPerDay(time, 0.0)
                         perDayRep.insert(newSum.toList()).async().subscribe ().keep()
@@ -92,7 +92,7 @@ class MainFragmentPresenter @Inject constructor(
                     return@subscribe
                 sumPerDay = list[0].sum
                 viewState.showSumPerDay(list[0].sum.toCurencyFormat())
-                viewState.showNewSumPerDay(list[1].sum.toCurencyFormat(), list[0].sum != 0.0)
+                viewState.showNewSumPerDay(list[1].sum.toCurencyFormat(), list[0].sum == 0.0)
             },{t->Log.d("qwerty",t.toString())})
             .keep()
     }
