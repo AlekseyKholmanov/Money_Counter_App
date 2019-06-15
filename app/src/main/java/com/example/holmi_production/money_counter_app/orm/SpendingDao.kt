@@ -7,21 +7,29 @@ import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.example.holmi_production.money_counter_app.model.Spending
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.Single
+import org.joda.time.DateTime
 
 @Dao
 interface SpendingDao {
     @Query("SELECT * FROM Spending")
-    fun getAll(): Flowable<List<Spending>>
+    fun observeSpending(): Flowable<List<Spending>>
+
+    @Query("SELECT * FROM Spending")
+    fun getSpendings():List<Spending>
+
+    @Query("SELECT * FROM Spending WHERE spendingDate =:date")
+    fun getSpending(date:DateTime): Maybe<Spending>
 
     @Insert(onConflict = REPLACE)
     fun insert(spending: Spending)
 
-    @Query("Select sum FROM Spending Where categoryTypes != 0")
-    fun getSpentSum(): Flowable<List<Float>>
+    @Query("SELECT sum FROM Spending WHERE categoryTypes != 0")
+    fun getSpentSum(): List<Float>
 
-    @Query("Select sum from Spending where categoryTypes == 0")
-    fun getIncomeSum(): Flowable<List<Float>>
+    @Query("SELECT sum FROM Spending WHERE categoryTypes == 0")
+    fun getIncomeSum(): List<Float>
 
     @Delete
     fun delete(spending: Spending)

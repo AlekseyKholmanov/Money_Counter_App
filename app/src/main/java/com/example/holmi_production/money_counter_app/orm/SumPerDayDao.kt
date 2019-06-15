@@ -16,11 +16,14 @@ interface SumPerDayDao {
     fun insert(sumPerDay: SumPerDay)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(sumPerDayList: List<SumPerDay>)
+    fun insert(sumPerDayList: Collection<SumPerDay>)
 
-    @Query("Select * from SumPerDay where dateTime=:dateTime")
-    fun getByDate(dateTime: DateTime): Flowable<SumPerDay>
+    @Query("SELECT * FROM SumPerDay")
+    fun observeSumPerDay():Flowable<List<SumPerDay>>
+
+    @Query("SELECT * FROM SumPerDay WHERE dateTime=:dateTime")
+    fun getOnDate(dateTime: DateTime): SumPerDay
 
     @Query("SELECT * FROM SumPerDay WHERE dateTime>=:dateTime")
-    fun getFromDate(dateTime: DateTime): Flowable<List<SumPerDay>>
+    fun getPeriodFrom(dateTime: DateTime): List<SumPerDay>
 }

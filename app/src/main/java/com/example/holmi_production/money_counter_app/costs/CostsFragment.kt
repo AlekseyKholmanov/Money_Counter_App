@@ -60,7 +60,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
             showEmptyPlaceholder()
     }
 
-    override fun showSpending(spending: MutableList<ListItem>) {
+    override fun showSpending(spending: List<ListItem>) {
         adapter.items = spending
         if (spending.isEmpty())
             showEmptyPlaceholder()

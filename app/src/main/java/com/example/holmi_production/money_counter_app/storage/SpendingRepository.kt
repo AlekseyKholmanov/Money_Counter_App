@@ -11,39 +11,43 @@ import javax.inject.Inject
 class SpendingRepository @Inject constructor(
     database: ExpenseDatabase
 ) {
-    private val dao = database.spendingDao()
-    private val periodDao = database.peiodDao()
+    private val dao = database.spendingDao
+    private val periodDao = database.peiodDao
 
     fun insert(spending: Spending): Completable {
         return Completable.fromCallable { dao.insert(spending) }
     }
 
-    fun getAll(): Flowable<List<Spending>> {
-        return dao.getAll()
+    fun getAll(): Single<List<Spending>> {
+        return Single.fromCallable { dao.getSpendings()}
     }
 
-    fun getSpentSum(): Flowable<List<Float>> {
-        return dao.getSpentSum()
+    fun observeSpending():Flowable<List<Spending>>{
+        return dao.observeSpending()
     }
 
-    fun getIncomeSum(): Flowable<List<Float>> {
-        return dao.getIncomeSum()
+    fun getSpentSum(): Single<List<Float>> {
+        return Single.fromCallable { dao.getSpentSum() }
+    }
+
+    fun getIncomeSum(): Single<List<Float>> {
+        return Single.fromCallable { dao.getIncomeSum() }
     }
 
     fun delete(spending: Spending): Completable {
         return Completable.fromCallable { dao.delete(spending) }
     }
 
-    fun getPeiods():Single<List<Period>>{
+    fun getPeiods(): Single<List<Period>> {
         return periodDao.getAll()
     }
-    fun insertPeriods(periods:List<Period>):Completable{
+
+    fun insertPeriods(periods: List<Period>): Completable {
         return Completable.fromCallable { periodDao.insert(periods) }
     }
-    fun insertPeriod(period:Period):Completable{
+
+    fun insertPeriod(period: Period): Completable {
         return Completable.fromCallable { periodDao.insert(period) }
     }
-
-
 
 }

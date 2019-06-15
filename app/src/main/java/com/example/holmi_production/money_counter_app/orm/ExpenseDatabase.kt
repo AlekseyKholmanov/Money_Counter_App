@@ -14,7 +14,7 @@ import com.example.holmi_production.money_counter_app.model.SumPerDay
     exportSchema = false
 )
 abstract class ExpenseDatabase : RoomDatabase() {
-    abstract fun spendingDao(): SpendingDao
-    abstract fun sumPerDayDao(): SumPerDayDao
-    abstract fun peiodDao():PeriodDao
+    abstract val spendingDao: SpendingDao
+    abstract val sumPerDayDao: SumPerDayDao
+    abstract val peiodDao:PeriodDao
 }

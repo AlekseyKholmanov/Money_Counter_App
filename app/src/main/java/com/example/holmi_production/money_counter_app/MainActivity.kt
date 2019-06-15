@@ -64,15 +64,11 @@ class MainActivity : AppCompatActivity() {
             channel.enableVibration(false)
             notificationManager.createNotificationChannel(channel)
         }
-        val calendar: Calendar = Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE,10)
-        }
+        val time = DateTime().withTimeAtStartOfDay().plusDays(1).plusMinutes(10)
         val am = getSystemService<AlarmManager>()
         val intent = Intent(this, DayChangeReceiver::class.java)
         val pi = PendingIntent.getBroadcast(this, 0, intent, 0)
-        am?.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pi)
+        am?.setInexactRepeating(AlarmManager.RTC_WAKEUP,time.millis, AlarmManager.INTERVAL_DAY, pi)
         Log.d("qwerty","alarmed")
     }
 
