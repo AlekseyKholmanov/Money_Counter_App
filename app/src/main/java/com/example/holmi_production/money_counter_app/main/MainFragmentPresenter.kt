@@ -11,9 +11,6 @@ import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import com.example.holmi_production.money_counter_app.toCurencyFormat
-import io.reactivex.rxkotlin.Flowables
-import io.reactivex.rxkotlin.Singles
-import kotlinx.android.synthetic.main.fragment_main.view.*
 import org.joda.time.DateTime
 import org.joda.time.Days
 import javax.inject.Inject
@@ -42,16 +39,19 @@ class MainFragmentPresenter @Inject constructor(
                 } else {
                     val isSalary = spending.categoryTypes == Expense.SALARY
                     val startIndex = if (isSalary) 0 else 1
-                    val startSum = if (isSalary) sum  else sum- todaySum
+                    val startSum = if (isSalary) sum else sum - todaySum
                     val daysCount = (list.count() - startIndex)
-                    val middleSum = startSum / daysCount
-                    val newSum = list.toMutableList()
+                    val averageSum = startSum / daysCount
+                    val sumPerDayList = list.toMutableList()
                     for (i in startIndex until list.count()) {
-                        newSum[i].sum = if (isSalary) list[i].sum + middleSum else list[i].sum - middleSum
+                        sumPerDayList[i].sum =
+                            if (isSalary)
+                                list[i].sum + averageSum
+                            else list[i].sum - averageSum
                     }
-                    if(!isSalary)
-                        newSum[0] = SumPerDay(time, 0.0)
-                    perDayRep.insert(newSum).async().subscribe().keep()
+                    if (!isSalary)
+                        sumPerDayList[0] = SumPerDay(time, 0.0)
+                    perDayRep.insert(sumPerDayList).async().subscribe().keep()
                 }
             }
             .keep()
@@ -60,26 +60,23 @@ class MainFragmentPresenter @Inject constructor(
     fun getSum() {
         spendRep.observeSpending()
             .async()
-            .switchIfEmpty {  Log.d("qwerty", "empty")}
+            .switchIfEmpty { Log.d("qwerty", "empty") }
             .subscribe { list ->
-                if (list.count()==0)
-                    return@subscribe
                 val a = list.filter { it.categoryTypes.isSpending }.map { it.sum }.ifEmpty { listOf(0.0) }
                 val b = list.filter { !it.categoryTypes.isSpending }.map { it.sum }.ifEmpty { listOf(0.0) }
-                viewState.showIncomeSum(b.sum().toCurencyFormat())
+                viewState.showIncomeSum((b.sum() - a.sum()).toCurencyFormat())
                 viewState.showSpentSum(a.sum().toCurencyFormat())
             }
             .keep()
         perDayRep.observeSumPerDay()
             .async()
-            .switchIfEmpty { Log.d("qwerty", "empty") }
             .subscribe { list ->
-                if (list.count()==0)
+                if (list.count() == 0)
                     return@subscribe
                 val today = list.single { it.dateTime == DateTime().withTimeAtStartOfDay() }
-                val nextDay = list.single{it.dateTime == DateTime().withTimeAtStartOfDay ().plusDays(1)}
+                val nextDay = list.single { it.dateTime == DateTime().withTimeAtStartOfDay().plusDays(1) }
                 viewState.showSumPerDay(today.sum.toCurencyFormat())
-                viewState.showNewSumPerDay(nextDay.sum.toCurencyFormat(),true)
+                viewState.showNewSumPerDay(nextDay.sum.toCurencyFormat(), true)
             }
             .keep()
     }

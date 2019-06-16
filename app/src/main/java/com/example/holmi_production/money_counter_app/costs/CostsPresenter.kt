@@ -25,8 +25,8 @@ class CostsPresenter @Inject constructor(
         spRep.observeSpending()
             .async()
             .flatMap { trasform(it) }
-            .subscribe ({item -> viewState.showSpending(item)},
-                {error -> viewState.onError(error)})
+            .subscribe({ item -> viewState.showSpending(item) },
+                { error -> viewState.onError(error) })
             .keep()
     }
 
@@ -36,19 +36,18 @@ class CostsPresenter @Inject constructor(
             Expense.SALARY -> {
                 pdRep.getFromDate(time)
                     .async()
-                    .subscribe{
-                            sums ->
+                    .subscribe { sums ->
                         val newSums = sums.toMutableList()
                         val daysCount: Int
                         if (sums[0].sum < spending.sum / sums.count()) {
-                            daysCount = sums.count() + 1
-                            for (i in 1 until daysCount) {
-                                newSums[i].sum = sums[i].sum - spending.sum / daysCount
+                            daysCount = sums.count()-1
+                            for (i in 1 until sums.count()) {
+                                newSums[i].sum = sums[i].sum - (spending.sum / daysCount)
                             }
                         } else {
                             daysCount = sums.count()
                             for (i in 0 until sums.count()) {
-                                newSums[i].sum = sums[i].sum - spending.sum / daysCount
+                                newSums[i].sum = sums[i].sum - (spending.sum / daysCount)
                             }
                         }
                         pdRep.insert(newSums).async().subscribe().keep()
@@ -61,19 +60,20 @@ class CostsPresenter @Inject constructor(
                         pdRep.getOnDate(time)
                             .async()
                             .doOnError { t -> Log.d("qwerty", t.toString()) }
-                            .subscribe{it ->
+                            .subscribe { it ->
                                 pdRep.insert(it.inc(spending.sum)).async().subscribe().keep()
-                                Log.d("qwerty", "succes")}
+                            }
                             .keep()
                     }
                     else -> {
                         pdRep.getFromDate(time)
                             .async()
-                            .subscribe{sums ->
+                            .subscribe { sums ->
                                 val daysCount = sums.count()
                                 val newList = sums.toMutableList()
                                 newList.forEach { t -> t.sum += spending.sum / daysCount }
-                                pdRep.insert(newList).async().subscribe().keep()}
+                                pdRep.insert(newList).async().subscribe().keep()
+                            }
                             .keep()
                     }
                 }
