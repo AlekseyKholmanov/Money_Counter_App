@@ -59,13 +59,9 @@ class FirstLaunchPresenter @Inject constructor(
             .async()
             .subscribe()
             .keep()
-
-        val preferences = context.getSharedPreferences(MainActivity.STORAGE_NAME, Context.MODE_PRIVATE)
-        preferences.edit()
-            .putBoolean(MainActivity.FIRST_OPEN, true)
-            .putLong(MainActivity.START_PERIOD, startPeriod.millis)
-            .putLong(MainActivity.END_PERIOD, endPeriod.millis)
-            .apply()
+        perDayRep.setAppOpened()
+        perDayRep.saveStartDate(startPeriod)
+        perDayRep.saveEndDate(endPeriod)
         viewState.showMainScreen()
     }
 

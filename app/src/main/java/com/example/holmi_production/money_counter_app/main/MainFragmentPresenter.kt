@@ -82,7 +82,7 @@ class MainFragmentPresenter @Inject constructor(
     }
 
     fun getDaysLeft() {
-        val shared = contex.getSharedPreferences(MainActivity.STORAGE_NAME, Context.MODE_PRIVATE)
+        val shared = contex.getSharedPreferences("PREFERENCE_STORAGE", Context.MODE_PRIVATE)
         val leftDate = shared.getLong(MainActivity.END_PERIOD, 0)
         val diff = Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(leftDate)).days + 1
         viewState.showDaysLeft(" на ${diff.getDayAddition()}")

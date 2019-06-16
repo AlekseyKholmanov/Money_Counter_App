@@ -2,10 +2,12 @@ package com.example.holmi_production.money_counter_app.di.modules
 
 import android.app.Application
 import android.content.Context
+import android.preference.Preference
 import androidx.room.Room
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import dagger.Module
 import dagger.Provides
+import java.util.prefs.Preferences
 import javax.inject.Singleton
 
 @Module

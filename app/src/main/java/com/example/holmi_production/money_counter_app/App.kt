@@ -5,6 +5,7 @@ import com.example.holmi_production.money_counter_app.di.components.ApplicationC
 import com.example.holmi_production.money_counter_app.di.components.DaggerApplicationComponent
 import com.example.holmi_production.money_counter_app.di.modules.ApplicationModule
 import com.example.holmi_production.money_counter_app.di.modules.ContextModule
+import com.example.holmi_production.money_counter_app.di.modules.PreferenceModule
 
 class App:Application(){
     companion object{
@@ -20,6 +21,7 @@ class App:Application(){
         component = DaggerApplicationComponent.builder()
             .applicationModule(ApplicationModule(this))
             .contextModule(ContextModule(this))
+            .preferenceModule(PreferenceModule(applicationContext))
             .build()
     }
 }
