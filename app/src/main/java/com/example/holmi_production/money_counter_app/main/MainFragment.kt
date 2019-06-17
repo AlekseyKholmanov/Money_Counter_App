@@ -13,14 +13,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
-import com.example.holmi_production.money_counter_app.NotificationManager
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_main.*
-import javax.inject.Inject
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
-    IKeyboardListener, IScrollCallback{
+    IKeyboardListener, IScrollCallback {
 
     override fun showNewSumPerDay(sum: String, isDisplayed: Boolean) {
         val displayed = if (isDisplayed) View.VISIBLE else View.GONE
@@ -63,9 +61,11 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
 
     private lateinit var key: Keyboard
     private lateinit var scroll: ScrollView
+
+
     private val mDayChangedReciever: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            Log.d("qwerty", "recieved")
+            presenter.alarmTriggered()
         }
 
     }
@@ -87,6 +87,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         scroll.setCallback(this)
         key.setListener(this)
         presenter.getSum()
+        presenter.initializeNotification()
         presenter.getDaysLeft()
         super.onViewCreated(view, savedInstanceState)
     }

@@ -9,6 +9,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.holmi_production.money_counter_app.MainActivity
+import com.example.holmi_production.money_counter_app.NotificationManager
 import com.example.holmi_production.money_counter_app.R
 
 class DayChangeReceiver : BroadcastReceiver() {
@@ -19,7 +20,7 @@ class DayChangeReceiver : BroadcastReceiver() {
         }
         val pi = PendingIntent.getActivity(context, 0, intt, 0)
         send(context)
-        val builder = NotificationCompat.Builder(context, "148")
+        val builder = NotificationCompat.Builder(context, NotificationManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("blah blah bla")
             .setContentText("ble ble ble")

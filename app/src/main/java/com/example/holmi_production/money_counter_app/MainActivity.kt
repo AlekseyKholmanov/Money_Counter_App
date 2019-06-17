@@ -14,9 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        val STORAGE_NAME = "StorageName"
         val FIRST_OPEN = "FirstOpen"
-        val START_PERIOD = "START_PERIOD"
         val END_PERIOD = "END_PERIOD"
     }
 

@@ -55,8 +55,11 @@ class MainFragmentPresenter @Inject constructor(
             .keep()
     }
 
+    fun initializeNotification() {
+        notificationManager.setNotificationTime()
+    }
+
     fun getSum() {
-        notificationManager.initialize()
         spendRep.observeSpending()
             .async()
             .switchIfEmpty { Log.d("qwerty", "empty") }
@@ -93,5 +96,21 @@ class MainFragmentPresenter @Inject constructor(
 
     private fun getCategoryType(type: Int): Expense {
         return Expense.values()[type]
+    }
+
+    fun alarmTriggered() {
+        Log.d("qwert","alarm triggered")
+        perDayRep.getFromDate(DateTime().withTimeAtStartOfDay().minusDays(1))
+            .async()
+            .subscribe { it ->
+                val yesterday = it[0]
+                if (yesterday.sum == 0.0)
+                    return@subscribe
+                else {
+                    val newTodaySum = it[1].also { it.sum + yesterday.sum }
+                    perDayRep.insert(newTodaySum).async().subscribe().keep()
+                }
+            }
+            .keep()
     }
 }

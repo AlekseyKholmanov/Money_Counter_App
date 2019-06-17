@@ -16,11 +16,10 @@ class NotificationManager @Inject constructor(
     private val application: Application) {
     init {
         createNotificationChannel()
-        setNotificationTime()
     }
 
-    private fun setNotificationTime() {
-        val time = DateTime().withTimeAtStartOfDay().plusHours(20).plusMinutes(0)
+    fun setNotificationTime() {
+        val time = DateTime().withTimeAtStartOfDay().plusDays(1).plusHours(1).plusMinutes(0)
         val intent = Intent(application, DayChangeReceiver::class.java)
         val pi = PendingIntent.getBroadcast(application, 0, intent, 0)
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time.millis, AlarmManager.INTERVAL_DAY, pi)
@@ -36,15 +35,13 @@ class NotificationManager @Inject constructor(
             channel.lightColor = Color.RED
             channel.enableVibration(false)
             notificationManager.createNotificationChannel(channel)
+
+            Log.d("qwerty", "initialize channel")
         }
     }
 
-    fun initialize() {
-
-    }
-
     companion object {
-        private const val CHANNEL_ID = "notifications"
+        const val CHANNEL_ID = "notifications"
         private const val CHANNEL_NAME = "Уведомления"
     }
 }
