@@ -3,14 +3,11 @@ package com.example.holmi_production.money_counter_app.main
 import android.content.Context
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
-import com.example.holmi_production.money_counter_app.MainActivity
-import com.example.holmi_production.money_counter_app.async
-import com.example.holmi_production.money_counter_app.getDayAddition
+import com.example.holmi_production.money_counter_app.*
 import com.example.holmi_production.money_counter_app.model.*
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
-import com.example.holmi_production.money_counter_app.toCurencyFormat
 import org.joda.time.DateTime
 import org.joda.time.Days
 import javax.inject.Inject
@@ -19,7 +16,8 @@ import javax.inject.Inject
 class MainFragmentPresenter @Inject constructor(
     private val spendRep: SpendingRepository,
     private val perDayRep: SumPerDayRepository,
-    private val contex: Context) :
+    private val contex: Context,
+    private val notificationManager: NotificationManager) :
     BasePresenter<MainFragmnetView>() {
 
     private var type = 0
@@ -58,6 +56,7 @@ class MainFragmentPresenter @Inject constructor(
     }
 
     fun getSum() {
+        notificationManager.initialize()
         spendRep.observeSpending()
             .async()
             .switchIfEmpty { Log.d("qwerty", "empty") }
