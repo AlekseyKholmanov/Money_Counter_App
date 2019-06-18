@@ -6,6 +6,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.*
 import com.example.holmi_production.money_counter_app.model.*
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
+import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import org.joda.time.DateTime
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class MainFragmentPresenter @Inject constructor(
     private val spendRep: SpendingRepository,
     private val perDayRep: SumPerDayRepository,
+    private val settings: SettingRepository,
     private val contex: Context,
     private val notificationManager: NotificationManager) :
     BasePresenter<MainFragmnetView>() {
@@ -86,10 +88,12 @@ class MainFragmentPresenter @Inject constructor(
     }
 
     fun getDaysLeft() {
-        val shared = contex.getSharedPreferences("PREFERENCE_STORAGE", Context.MODE_PRIVATE)
-        val leftDate = shared.getLong(MainActivity.END_PERIOD, 0)
-        val diff = Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(leftDate)).days + 1
-        viewState.showDaysLeft(" на ${diff.getDayAddition()}")
+        settings.observeEndDate()
+            .subscribe ({
+                val diff = Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(it)).days + 1
+                viewState.showDaysLeft(" на ${diff.getDayAddition()}")
+            },{Log.d("qwerty",it.toString())})
+            .keep()
     }
 
     fun setType(type: Int) {
@@ -101,7 +105,7 @@ class MainFragmentPresenter @Inject constructor(
     }
 
     fun alarmTriggered() {
-        Log.d("qwert","alarm triggered")
+        Log.d("qwert", "alarm triggered")
         perDayRep.getFromDate(DateTime().withTimeAtStartOfDay().minusDays(1))
             .async()
             .subscribe { it ->

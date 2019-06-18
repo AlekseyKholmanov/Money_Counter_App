@@ -7,6 +7,7 @@ import com.example.holmi_production.money_counter_app.model.Expense
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.model.SumPerDay
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
+import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import org.joda.time.DateTime
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class FirstLaunchPresenter @Inject constructor(
     private val spendingRep: SpendingRepository,
     private val perDayRep: SumPerDayRepository,
+    private val settings:SettingRepository,
     val context: Context) :
     BasePresenter<FirstLaunchView>() {
     private var sum: Double = 0.0
@@ -59,9 +61,9 @@ class FirstLaunchPresenter @Inject constructor(
             .async()
             .subscribe()
             .keep()
-        perDayRep.setAppOpened()
-        perDayRep.saveStartDate(startPeriod)
-        perDayRep.saveEndDate(endPeriod)
+        settings.setAppOpened()
+        settings.saveStartDate(startPeriod)
+        settings.saveEndDate(endPeriod)
         viewState.showMainScreen()
     }
 

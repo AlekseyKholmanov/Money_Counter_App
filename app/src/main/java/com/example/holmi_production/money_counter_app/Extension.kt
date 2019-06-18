@@ -24,6 +24,14 @@ fun <T> Flowable<T>.async(): Flowable<T> {
         .observeOn(AndroidSchedulers.mainThread())
 }
 
+fun <T> Flowable<T>.subscribeOnIo(): Flowable<T> {
+    return subscribeOn(Schedulers.io())
+}
+
+fun <T> Flowable<T>.observeOnUi(delayError: Boolean = true): Flowable<T> {
+    return observeOn(AndroidSchedulers.mainThread(), delayError)
+}
+
 fun Completable.async(): Completable {
     return subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
