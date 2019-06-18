@@ -10,6 +10,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatActivity
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.first_launch_activity.*
 import org.joda.time.DateTime
 
@@ -19,8 +20,11 @@ class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView {
     }
 
     override fun showSumPerDay(sumPerDay: String) {
-
         sum_per_day.text = sumPerDay
+    }
+
+    override fun onBackPressed() {
+        Snackbar.make(first_launch_activity,"введите дату и сумму", Snackbar.LENGTH_SHORT).show()
     }
 
     override fun showDate(pickedDate: String, difference: String) {
@@ -53,13 +57,13 @@ class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
+
             //TODO возможно объединить в один или вынести в презентер
             override fun afterTextChanged(s: Editable?) {
                 if (start_sum.text.isEmpty()) {
                     finish_activity.isEnabled = false
                     sum_per_day.isVisible = false
-                }
-                else {
+                } else {
                     sum_per_day.isVisible = true
                     presenter.getSum(s.toString().toDouble())
                 }
@@ -80,8 +84,7 @@ class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView {
                 if (start_sum.text.isNotEmpty()) {
                     presenter.getSumPerDay()
                     finish_activity.isEnabled = true
-                }
-                else
+                } else
                     finish_activity.isEnabled = false
             }
         })

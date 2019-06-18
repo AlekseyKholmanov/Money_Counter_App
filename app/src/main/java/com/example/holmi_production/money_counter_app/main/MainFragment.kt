@@ -62,13 +62,12 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     private lateinit var key: Keyboard
     private lateinit var scroll: ScrollView
 
-
     private val mDayChangedReciever: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             presenter.alarmTriggered()
         }
-
     }
+
     @InjectPresenter
     lateinit var presenter: MainFragmentPresenter
 

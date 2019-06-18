@@ -62,10 +62,12 @@ class MainFragmentPresenter @Inject constructor(
     fun getSum() {
         spendRep.observeSpending()
             .async()
-            .switchIfEmpty { Log.d("qwerty", "empty") }
+            .doOnError {
+                Log.d("qwerty", "error")
+            }
             .subscribe { list ->
-                val a = list.filter { it.categoryTypes.isSpending }.map { it.sum }.ifEmpty { listOf(0.0) }
-                val b = list.filter { !it.categoryTypes.isSpending }.map { it.sum }.ifEmpty { listOf(0.0) }
+                val a = list.filter { it.categoryTypes.isSpending }.map { it.sum }
+                val b = list.filter { !it.categoryTypes.isSpending }.map { it.sum }
                 viewState.showIncomeSum((b.sum() - a.sum()).toCurencyFormat())
                 viewState.showSpentSum(a.sum().toCurencyFormat())
             }
