@@ -35,25 +35,8 @@ class SumPerDayRepository @Inject constructor(
         return Single.fromCallable { dao.getPeriodFrom(dateTime) }
     }
 
-    fun setAppOpened(){
-        pref.edit().putBoolean(FIRST_OPEN,true).apply()
-    }
-
-    fun saveStartDate(startDay:DateTime){
-        pref.edit().putLong(START_PERIOD, startDay.millis).apply()
-    }
-
-    fun saveEndDate(endDate:DateTime){
-        pref.edit().putLong(END_PERIOD,endDate.millis).apply()
-    }
-
-    fun isOpened():Boolean{
-        return pref.contains(FIRST_OPEN)
-    }
 
 
 
-    val FIRST_OPEN = "FirstOpen"
-    val START_PERIOD = "START_PERIOD"
-    val END_PERIOD = "END_PERIOD"
+
 }
