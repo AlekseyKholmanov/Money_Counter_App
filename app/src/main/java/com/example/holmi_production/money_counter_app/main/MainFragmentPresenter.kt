@@ -88,12 +88,19 @@ class MainFragmentPresenter @Inject constructor(
     }
 
     fun getDaysLeft() {
+        val date = settings.getEmdPeriod()
+        val diff = getDiffDay(date)
+        viewState.showDaysLeft(" на ${diff.getDayAddition()}")
+
         settings.observeEndDate()
             .subscribe ({
-                val diff = Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(it)).days + 1
-                viewState.showDaysLeft(" на ${diff.getDayAddition()}")
+                viewState.showDaysLeft(" на ${getDiffDay(it).getDayAddition()}")
             },{Log.d("qwerty",it.toString())})
             .keep()
+    }
+
+    private fun getDiffDay(date:Long): Int {
+        return Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(date)).days + 1
     }
 
     fun setType(type: Int) {

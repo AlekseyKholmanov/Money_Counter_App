@@ -35,6 +35,10 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return pref.contains(FIRST_OPEN)
     }
 
+    fun getEmdPeriod(): Long {
+        return pref.getLong(END_PERIOD,0)
+    }
+
     fun observeEndDate(): Flowable<Long> {
         Log.d("qwerty", "observe end date")
         return settingSubject.toFlowable(BackpressureStrategy.LATEST).async()
