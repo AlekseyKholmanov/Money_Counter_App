@@ -35,7 +35,7 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return pref.contains(FIRST_OPEN)
     }
 
-    fun getEmdPeriod(): Long {
+    fun getEndPeriod(): Long {
         return pref.getLong(END_PERIOD,0)
     }
 

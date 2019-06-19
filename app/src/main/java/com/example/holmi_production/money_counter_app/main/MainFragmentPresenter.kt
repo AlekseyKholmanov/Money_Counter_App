@@ -1,7 +1,12 @@
 package com.example.holmi_production.money_counter_app.main
 
+import android.app.Notification
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.*
 import com.example.holmi_production.money_counter_app.model.*
@@ -88,27 +93,16 @@ class MainFragmentPresenter @Inject constructor(
     }
 
     fun getDaysLeft() {
-        val date = settings.getEmdPeriod()
-        val diff = getDiffDay(date)
-        viewState.showDaysLeft(" на ${diff.getDayAddition()}")
-
+        updateDayLeft()
         settings.observeEndDate()
-            .subscribe ({
+            .subscribe({
                 viewState.showDaysLeft(" на ${getDiffDay(it).getDayAddition()}")
-            },{Log.d("qwerty",it.toString())})
+            }, { Log.d("qwerty", it.toString()) })
             .keep()
-    }
-
-    private fun getDiffDay(date:Long): Int {
-        return Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(date)).days + 1
     }
 
     fun setType(type: Int) {
         this.type = type
-    }
-
-    private fun getCategoryType(type: Int): Expense {
-        return Expense.values()[type]
     }
 
     fun alarmTriggered() {
@@ -117,13 +111,56 @@ class MainFragmentPresenter @Inject constructor(
             .async()
             .subscribe { it ->
                 val yesterday = it[0]
+                val newTodaySum = it[1]
+                newTodaySum.sum+=yesterday.sum
                 if (yesterday.sum == 0.0)
                     return@subscribe
                 else {
-                    val newTodaySum = it[1].also { it.sum + yesterday.sum }
                     perDayRep.insert(newTodaySum).async().subscribe().keep()
                 }
+                val notification = buildNotification(yesterday.sum, newTodaySum.sum)
+                sendNotification(notification)
             }
             .keep()
+        updateDayLeft()
+    }
+
+    private fun getCategoryType(type: Int): Expense {
+        return Expense.values()[type]
+    }
+
+    private fun getDiffDay(date: Long): Int {
+        return Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(date)).days + 1
+    }
+
+    private fun updateDayLeft() {
+        val date = settings.getEndPeriod()
+        val diff = getDiffDay(date)
+        viewState.showDaysLeft(" на ${diff.getDayAddition()}")
+    }
+
+    private fun buildNotification(saveSum: Double, newSum: Double): Notification {
+        val intt = Intent(contex, MainActivity::class.java).apply {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+        val intent = PendingIntent.getActivity(contex, 0, intt, 0)
+        return NotificationCompat.Builder(contex, NotificationManager.CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("Итоги дня")
+            .setContentText("ble ble ble")
+            .setStyle(
+                NotificationCompat.InboxStyle()
+                    .addLine("Удалось сэкономить вчера:${saveSum.toCurencyFormat()}")
+                    .addLine("Сумма на сегодня :${newSum.toCurencyFormat()}")
+            )
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(intent)
+            .build()
+    }
+
+    private fun sendNotification(notification: Notification) {
+        with(NotificationManagerCompat.from(contex)) {
+            notify(1, notification)
+        }
     }
 }
