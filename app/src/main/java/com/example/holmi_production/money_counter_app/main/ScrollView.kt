@@ -39,14 +39,14 @@ class ScrollView @JvmOverloads constructor(
         hsv.layoutParams = lParams
         val count = Expense.values().size - 1
         for (i in 0..count) {
-            val category = Expense.values()[i].name
+            val category = Expense.values()[i].description
             val view = ScrollItem(category, i, getContext())
             view.setListener(this)
             container.addView(view)
         }
     }
 
-    fun setCallback(mScrollCallback: IScrollCallback){
+    fun setCallback(mScrollCallback: IScrollCallback) {
         this.mScrollCallback = mScrollCallback
     }
 }

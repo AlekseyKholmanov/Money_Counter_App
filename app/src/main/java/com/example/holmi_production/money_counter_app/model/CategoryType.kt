@@ -1,13 +1,17 @@
 package com.example.holmi_production.money_counter_app.model
 
-enum class Expense(val id: Int,val isSpending: Boolean) {
-    SALARY(0,false),
-    SALE(1,true),
-    OTHER(2,true),
-    FOOD(3,true),
-    BAR(4,true),
-    HOME(5,true),
-    TRAVEL(6,true)
+enum class Expense(val id: Int,val isSpending: Boolean, val description:String) {
+    SALARY(0,false, "зарплата"),
+    FOOD(1,true,"продукты"),
+    ENTERTAINMENT(2,true,"Кино, музеи..."),
+    BAR(3,true, "рестораны"),
+    HOME(4,true,"дом"),
+    TRANSPORT(5,true, "транспорт"),
+    WEAR(6,true, "Одежда"),
+    NET(7,true,"Связь"),
+    OTHER(8,true,"другое")
+
+
 
 }
 
