@@ -35,7 +35,7 @@ class MainFragmentPresenter @Inject constructor(
 
         spendRep.insert(spending).async().subscribe {}.keep()
 
-        perDayRep.getFromDate(time)
+        perDayRep.getPeriodFrom(time)
             .async()
             .subscribe { list ->
                 val todaySum = list.single { it.dateTime == time }.sum
@@ -107,7 +107,7 @@ class MainFragmentPresenter @Inject constructor(
 
     fun alarmTriggered() {
         Log.d("qwert", "alarm triggered")
-        perDayRep.getFromDate(DateTime().withTimeAtStartOfDay().minusDays(1))
+        perDayRep.getPeriodFrom(DateTime().withTimeAtStartOfDay().minusDays(1))
             .async()
             .subscribe { it ->
                 val yesterday = it[0]
@@ -150,7 +150,7 @@ class MainFragmentPresenter @Inject constructor(
             .setContentText("ble ble ble")
             .setStyle(
                 NotificationCompat.InboxStyle()
-                    .addLine("Удалось сэкономить вчера:${saveSum.toCurencyFormat()}")
+                    .addLine("Вчера сэкономлено:${saveSum.toCurencyFormat()}")
                     .addLine("Сумма на сегодня :${newSum.toCurencyFormat()}")
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

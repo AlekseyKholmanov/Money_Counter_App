@@ -5,5 +5,6 @@ enum class ButtonTypes {
     ENTER,
     DIVIDER,
     NUMERIC,
-    DELETE
+    DELETE,
+    DATE
 }

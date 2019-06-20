@@ -19,6 +19,10 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback {
+    override fun showDialog() {
+        val fragment = CategoryAlertDialog.newInstance()
+        fragment.show(childFragmentManager,"blah")
+    }
 
     override fun showNewSumPerDay(sum: String, isDisplayed: Boolean) {
         val displayed = if (isDisplayed) View.VISIBLE else View.GONE

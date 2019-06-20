@@ -38,6 +38,7 @@ class Keyboard @JvmOverloads constructor(
         key_divider.setOnClickListener { pressed(ButtonTypes.DIVIDER, ".") }
         key_delete.setOnClickListener { pressed(ButtonTypes.DELETE) }
         key_enter.setOnClickListener { pressed(ButtonTypes.ENTER) }
+        key_date.setOnClickListener { pressed(ButtonTypes.DATE) }
     }
 
     fun pressed(type: ButtonTypes, value: String? = null) {
@@ -83,6 +84,9 @@ class Keyboard @JvmOverloads constructor(
                     sum = sum.dropLast(1)
                 sum += value
             }
+            ButtonTypes.DATE ->{
+                mKeyboardListener.showDialog()
+            }
         }
 
         expense.text = sum
@@ -97,4 +101,5 @@ class Keyboard @JvmOverloads constructor(
 interface IKeyboardListener {
     fun enterPressed(money: Double)
     fun moneyUpdated(money: Double)
+    fun showDialog()
 }

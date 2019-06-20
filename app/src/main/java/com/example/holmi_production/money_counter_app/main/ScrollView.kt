@@ -35,8 +35,6 @@ class ScrollView @JvmOverloads constructor(
     init {
         val rootView = View.inflate(getContext(), R.layout.horizontal_scroll, this)
         val container = rootView.findViewById<LinearLayout>(R.id.hsv_container)
-        val lParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        hsv.layoutParams = lParams
         val count = Expense.values().size - 1
         for (i in 0..count) {
             val category = Expense.values()[i].description

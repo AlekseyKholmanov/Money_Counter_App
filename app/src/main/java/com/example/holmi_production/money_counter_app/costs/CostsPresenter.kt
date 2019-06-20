@@ -10,7 +10,6 @@ import com.example.holmi_production.money_counter_app.sortedByDescending
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import io.reactivex.Flowable
-import io.reactivex.Maybe
 import io.reactivex.rxkotlin.toObservable
 import org.joda.time.DateTime
 import javax.inject.Inject
@@ -34,7 +33,7 @@ class CostsPresenter @Inject constructor(
         val time = DateTime().withTimeAtStartOfDay()
         when (spending.categoryTypes) {
             Expense.SALARY -> {
-                pdRep.getFromDate(time)
+                pdRep.getPeriodFrom(time)
                     .async()
                     .subscribe { sums ->
                         val newSums = sums.toMutableList()
@@ -66,7 +65,7 @@ class CostsPresenter @Inject constructor(
                             .keep()
                     }
                     else -> {
-                        pdRep.getFromDate(time)
+                        pdRep.getPeriodFrom(time)
                             .async()
                             .subscribe { sums ->
                                 val daysCount = sums.count()
