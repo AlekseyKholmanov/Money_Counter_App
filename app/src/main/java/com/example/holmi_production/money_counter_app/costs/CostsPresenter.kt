@@ -3,7 +3,7 @@ package com.example.holmi_production.money_counter_app.costs
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.async
-import com.example.holmi_production.money_counter_app.model.Expense
+import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.sortedByDescending
@@ -32,7 +32,7 @@ class CostsPresenter @Inject constructor(
     fun delete(spending: Spending) {
         val time = DateTime().withTimeAtStartOfDay()
         when (spending.categoryTypes) {
-            Expense.SALARY -> {
+            CategoryType.SALARY -> {
                 pdRep.getPeriodFrom(time)
                     .async()
                     .subscribe { sums ->

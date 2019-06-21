@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.model
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.holmi_production.money_counter_app.costs.ListItem
@@ -13,7 +12,7 @@ data class Spending(
 
     val sum: Double,
 
-    val categoryTypes: Expense,
+    val categoryTypes: CategoryType,
 
     val spendingDate: DateTime
 

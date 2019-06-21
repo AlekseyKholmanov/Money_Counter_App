@@ -31,7 +31,7 @@ class SumPerDayRepository @Inject constructor(
         return Single.fromCallable { dao.getOnDate(dateTime) }
     }
 
-    fun getFromDate(dateTime: DateTime): Single<List<SumPerDay>> {
+    fun getPeriodFrom(dateTime: DateTime): Single<List<SumPerDay>> {
         return Single.fromCallable { dao.getPeriodFrom(dateTime) }
     }
 

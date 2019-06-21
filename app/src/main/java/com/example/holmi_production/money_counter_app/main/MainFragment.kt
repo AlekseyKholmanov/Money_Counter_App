@@ -14,13 +14,19 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
-    IKeyboardListener, IScrollCallback {
+    IKeyboardListener, IScrollCallback, ICategoryChosed {
+    override fun chosed(type: CategoryType) {
+        Log.d("qwerty",type.description)
+    }
+
     override fun showDialog() {
         val fragment = CategoryAlertDialog.newInstance()
+        fragment.setListener(this)
         fragment.show(childFragmentManager,"blah")
     }
 

@@ -4,14 +4,12 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.Expense
+import com.example.holmi_production.money_counter_app.model.CategoryType
 import kotlinx.android.synthetic.main.horizontal_scroll.view.*
-import kotlinx.android.synthetic.main.fragment_main.view.*
 
 class ScrollView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -35,9 +33,9 @@ class ScrollView @JvmOverloads constructor(
     init {
         val rootView = View.inflate(getContext(), R.layout.horizontal_scroll, this)
         val container = rootView.findViewById<LinearLayout>(R.id.hsv_container)
-        val count = Expense.values().size - 1
+        val count = CategoryType.values().size - 1
         for (i in 0..count) {
-            val category = Expense.values()[i].description
+            val category = CategoryType.values()[i].description
             val view = ScrollItem(category, i, getContext())
             view.setListener(this)
             container.addView(view)

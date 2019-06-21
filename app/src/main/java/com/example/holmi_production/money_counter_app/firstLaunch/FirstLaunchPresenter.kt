@@ -3,7 +3,7 @@ package com.example.holmi_production.money_counter_app.firstLaunch
 import android.content.Context
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.*
-import com.example.holmi_production.money_counter_app.model.Expense
+import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.model.SumPerDay
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
@@ -48,7 +48,7 @@ class FirstLaunchPresenter @Inject constructor(
             Spending(
                 null,
                 sum,
-                Expense.SALARY,
+                CategoryType.SALARY,
                 DateTime.now().withTimeAtStartOfDay()
             )
         ).async().subscribe().keep()

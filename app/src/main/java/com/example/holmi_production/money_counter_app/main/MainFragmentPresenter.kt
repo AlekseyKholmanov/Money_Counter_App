@@ -39,10 +39,10 @@ class MainFragmentPresenter @Inject constructor(
             .async()
             .subscribe { list ->
                 val todaySum = list.single { it.dateTime == time }.sum
-                if (todaySum >= sum && spending.categoryTypes != Expense.SALARY) {
+                if (todaySum >= sum && spending.categoryTypes != CategoryType.SALARY) {
                     perDayRep.insert(SumPerDay(time, todaySum - sum)).async().subscribe().keep()
                 } else {
-                    val isSalary = spending.categoryTypes == Expense.SALARY
+                    val isSalary = spending.categoryTypes == CategoryType.SALARY
                     val startIndex = if (isSalary) 0 else 1
                     val startSum = if (isSalary) sum else sum - todaySum
                     val daysCount = (list.count() - startIndex)
@@ -125,8 +125,8 @@ class MainFragmentPresenter @Inject constructor(
         updateDayLeft()
     }
 
-    private fun getCategoryType(type: Int): Expense {
-        return Expense.values()[type]
+    private fun getCategoryType(type: Int): CategoryType {
+        return CategoryType.values()[type]
     }
 
     private fun getDiffDay(date: Long): Int {

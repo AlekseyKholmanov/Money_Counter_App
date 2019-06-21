@@ -7,7 +7,7 @@ import android.widget.GridLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.Expense
+import com.example.holmi_production.money_counter_app.model.CategoryType
 
 class CategoryAlertDialog : DialogFragment() {
     companion object {
@@ -17,13 +17,22 @@ class CategoryAlertDialog : DialogFragment() {
         }
     }
 
+    lateinit var categoryChosed: ICategoryChosed
+    fun setListener(categoryChosed: ICategoryChosed) {
+        this.categoryChosed = categoryChosed
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val gridLayout = GridLayout(context)
         val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         gridLayout.layoutParams = params
         gridLayout.columnCount = 3
-        for (i in 0 until Expense.values().count()) {
-            val categoryItem = CategoryItem(Expense.values()[i].description, context!!)
+        for (i in 0 until CategoryType.values().count()) {
+            val categoryItem = CategoryItem(CategoryType.values()[i].description, context!!)
+            categoryItem.setOnClickListener {
+                categoryChosed.chosed(CategoryType.values()[i])
+                this.dismiss()
+            }
             gridLayout.addView(categoryItem)
         }
 
@@ -32,4 +41,8 @@ class CategoryAlertDialog : DialogFragment() {
             .setView(gridLayout)
             .create()
     }
+}
+
+interface ICategoryChosed {
+    fun chosed(type: CategoryType)
 }

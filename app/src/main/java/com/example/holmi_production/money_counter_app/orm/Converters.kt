@@ -1,17 +1,17 @@
 package com.example.holmi_production.money_counter_app.orm
 
 import androidx.room.TypeConverter
-import com.example.holmi_production.money_counter_app.model.Expense
+import com.example.holmi_production.money_counter_app.model.CategoryType
 import org.joda.time.DateTime
 
 class Converters {
     @TypeConverter
-    fun toType(type:Int): Expense {
-        return Expense.values()[type]
+    fun toType(type:Int): CategoryType {
+        return CategoryType.values()[type]
     }
 
     @TypeConverter
-    fun fromType(type: Expense): Int {
+    fun fromType(type: CategoryType): Int {
         return type.id
     }
 
