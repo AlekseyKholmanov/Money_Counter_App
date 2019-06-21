@@ -44,7 +44,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:paddingRight="16dp"
-            android:hint="Осталось"/>
+            android:hint="Доступно"/>
     <TextView
             android:id="@+id/left"
             android:layout_width="wrap_content"
