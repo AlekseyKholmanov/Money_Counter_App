@@ -29,10 +29,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         list: List<Any>) {
         if (holder is ViewHolder) {
             val item = items[position] as Spending
-            if (item.categoryTypes.isSpending)
-                holder.category.setBackgroundColor(Color.RED)
-            else
-                holder.category.setBackgroundColor(Color.GREEN)
+            holder.category.setBackgroundColor(item.categoryTypes.color)
             holder.bind(item)
         }
     }
@@ -46,6 +43,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
             category.text = spending.categoryTypes.description
             date.text = spending.spendingDate.toString("HH:mm")
             sum.text = spending.sum.toCurencyFormat()
+
         }
 
     }

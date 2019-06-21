@@ -27,7 +27,7 @@ class MainFragmentPresenter @Inject constructor(
     private val notificationManager: NotificationManager) :
     BasePresenter<MainFragmnetView>() {
 
-    private var type = 0
+    private var type = CategoryType.OTHER.id
 
     fun saveSpend(sum: Double) {
         val time = DateTime().withTimeAtStartOfDay()

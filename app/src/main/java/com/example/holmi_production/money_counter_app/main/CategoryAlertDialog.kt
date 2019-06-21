@@ -18,6 +18,7 @@ class CategoryAlertDialog : DialogFragment() {
     }
 
     lateinit var categoryChosed: ICategoryChosed
+    var selectedType = CategoryType.OTHER
     fun setListener(categoryChosed: ICategoryChosed) {
         this.categoryChosed = categoryChosed
     }
@@ -27,10 +28,11 @@ class CategoryAlertDialog : DialogFragment() {
         val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         gridLayout.layoutParams = params
         gridLayout.columnCount = 3
-        for (i in 0 until CategoryType.values().count()) {
-            val categoryItem = CategoryItem(CategoryType.values()[i].description, context!!)
+        for (i in 0 until CategoryType.values().count() - 1) {
+            val categoryItem = CategoryItem(CategoryType.values()[i], context!!)
             categoryItem.setOnClickListener {
-                categoryChosed.chosed(CategoryType.values()[i])
+                selectedType = CategoryType.values()[i]
+                categoryChosed.chosed(selectedType)
                 this.dismiss()
             }
             gridLayout.addView(categoryItem)

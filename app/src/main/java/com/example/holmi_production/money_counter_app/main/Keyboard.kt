@@ -2,16 +2,14 @@ package com.example.holmi_production.money_counter_app.main
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.view.isVisible
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
-import com.example.holmi_production.money_counter_app.toCurencyFormat
+import com.example.holmi_production.money_counter_app.model.CategoryType
 import kotlinx.android.synthetic.main.keyboard.view.*
+import kotlinx.android.synthetic.main.keyboard_category_date_block.view.*
 
 class Keyboard @JvmOverloads constructor(
     context: Context,
@@ -39,6 +37,10 @@ class Keyboard @JvmOverloads constructor(
         key_delete.setOnClickListener { pressed(ButtonTypes.DELETE) }
         key_enter.setOnClickListener { pressed(ButtonTypes.ENTER) }
         key_date.setOnClickListener { pressed(ButtonTypes.DATE) }
+        key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
+        expense.text = sum
+        key_category.findViewById<TextView>(R.id.selectedText).text = CategoryType.OTHER.description
+        key_category.setBackgroundColor(CategoryType.OTHER.color)
     }
 
     fun pressed(type: ButtonTypes, value: String? = null) {
@@ -50,8 +52,8 @@ class Keyboard @JvmOverloads constructor(
                     if (sum.takeLast(1) == ".") {
                         sum = sum.dropLast(1)
                     }
-                    if(sum.isEmpty())
-                        sum="0"
+                    if (sum.isEmpty())
+                        sum = "0"
                 }
 
             }
@@ -84,8 +86,11 @@ class Keyboard @JvmOverloads constructor(
                     sum = sum.dropLast(1)
                 sum += value
             }
-            ButtonTypes.DATE ->{
-                mKeyboardListener.showDialog()
+            ButtonTypes.DATE -> {
+                //mKeyboardListener.showDateDialog()
+            }
+            ButtonTypes.CATEGORY->{
+                mKeyboardListener.showCategoryDialog()
             }
         }
 
@@ -101,5 +106,6 @@ class Keyboard @JvmOverloads constructor(
 interface IKeyboardListener {
     fun enterPressed(money: Double)
     fun moneyUpdated(money: Double)
-    fun showDialog()
+    fun showCategoryDialog()
+    fun showDateDialog()
 }

@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -17,14 +18,21 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.keyboard_category_date_block.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback, ICategoryChosed {
-    override fun chosed(type: CategoryType) {
-        Log.d("qwerty",type.description)
+    override fun showDateDialog() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showDialog() {
+    override fun chosed(type: CategoryType) {
+        key_category.setBackgroundColor(type.color)
+        key_category.findViewById<TextView>(R.id.selectedText).text = type.description
+        presenter.setType(type.id)
+    }
+
+    override fun showCategoryDialog() {
         val fragment = CategoryAlertDialog.newInstance()
         fragment.setListener(this)
         fragment.show(childFragmentManager,"blah")
