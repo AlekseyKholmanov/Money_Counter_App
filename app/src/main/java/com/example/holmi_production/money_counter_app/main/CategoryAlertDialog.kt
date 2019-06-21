@@ -2,7 +2,6 @@ package com.example.holmi_production.money_counter_app.main
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import androidx.appcompat.app.AlertDialog
@@ -19,21 +18,18 @@ class CategoryAlertDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val layout = GridLayout(context)
-        val parms = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        layout.layoutParams = parms
-        layout.columnCount = 3
-        val inflater = View.inflate(context, R.layout.dialog_layout, null)
-        val container = inflater.findViewById<GridLayout>(R.id.dialog_root)
+        val gridLayout = GridLayout(context)
+        val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        gridLayout.layoutParams = params
+        gridLayout.columnCount = 3
         for (i in 0 until Expense.values().count()) {
             val categoryItem = CategoryItem(Expense.values()[i].description, context!!)
-            layout.addView(categoryItem)
+            gridLayout.addView(categoryItem)
         }
 
         return AlertDialog.Builder(requireContext())
             .setIcon(R.drawable.ic_launcher_background)
-            .setTitle("Blah")
-            .setView(layout)
+            .setView(gridLayout)
             .create()
     }
 }
