@@ -6,16 +6,16 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/selectedText"
-            android:textSize="28sp"
+            android:id="@+id/mainText"
+            android:textSize="24sp"
             android:layout_margin="8dp"
             android:layout_centerHorizontal="true"
             android:text="Категория"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/selectedText"
-            android:id="@+id/choiseText"
+            android:layout_below="@id/mainText"
+            android:id="@+id/furtherText"
             android:textSize="18sp"
             android:layout_centerHorizontal="true"
             android:text="выбрать"

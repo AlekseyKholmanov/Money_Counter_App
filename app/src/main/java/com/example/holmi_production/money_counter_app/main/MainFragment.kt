@@ -23,19 +23,20 @@ import kotlinx.android.synthetic.main.keyboard_category_date_block.*
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback, ICategoryChosed {
     override fun showDateDialog() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val dialog = DateAlertDialog.newInstance()
+        dialog.show(childFragmentManager, "date")
     }
 
     override fun chosed(type: CategoryType) {
         key_category.setBackgroundColor(type.color)
-        key_category.findViewById<TextView>(R.id.selectedText).text = type.description
+        key_category.findViewById<TextView>(R.id.mainText).text = type.description
         presenter.setType(type.id)
     }
 
     override fun showCategoryDialog() {
-        val fragment = CategoryAlertDialog.newInstance()
-        fragment.setListener(this)
-        fragment.show(childFragmentManager,"blah")
+        val dialog = CategoryAlertDialog.newInstance()
+        dialog.setListener(this)
+        dialog.show(childFragmentManager, "category")
     }
 
     override fun showNewSumPerDay(sum: String, isDisplayed: Boolean) {

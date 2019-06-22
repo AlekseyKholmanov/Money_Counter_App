@@ -11,7 +11,6 @@ import com.example.holmi_production.money_counter_app.model.CategoryType
 
 class CategoryAlertDialog : DialogFragment() {
     companion object {
-        @JvmStatic
         fun newInstance(): CategoryAlertDialog {
             return CategoryAlertDialog()
         }

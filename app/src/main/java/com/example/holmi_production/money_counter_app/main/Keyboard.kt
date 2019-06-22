@@ -36,11 +36,13 @@ class Keyboard @JvmOverloads constructor(
         key_divider.setOnClickListener { pressed(ButtonTypes.DIVIDER, ".") }
         key_delete.setOnClickListener { pressed(ButtonTypes.DELETE) }
         key_enter.setOnClickListener { pressed(ButtonTypes.ENTER) }
-        key_date.setOnClickListener { pressed(ButtonTypes.DATE) }
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
-        expense.text = sum
-        key_category.findViewById<TextView>(R.id.selectedText).text = CategoryType.OTHER.description
+        key_category.findViewById<TextView>(R.id.mainText).text = CategoryType.OTHER.description
         key_category.setBackgroundColor(CategoryType.OTHER.color)
+        key_date.setOnClickListener { pressed(ButtonTypes.DATE) }
+        key_date.findViewById<TextView>(R.id.mainText).text = "Дата"
+        key_date.findViewById<TextView>(R.id.furtherText). text = "выбрать"
+        expense.text = sum
     }
 
     fun pressed(type: ButtonTypes, value: String? = null) {
@@ -87,7 +89,7 @@ class Keyboard @JvmOverloads constructor(
                 sum += value
             }
             ButtonTypes.DATE -> {
-                //mKeyboardListener.showDateDialog()
+                mKeyboardListener.showDateDialog()
             }
             ButtonTypes.CATEGORY->{
                 mKeyboardListener.showCategoryDialog()
