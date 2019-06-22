@@ -28,10 +28,11 @@ class MainFragmentPresenter @Inject constructor(
     BasePresenter<MainFragmnetView>() {
 
     private var type = CategoryType.OTHER.id
+    private var time = DateTime()
 
     fun saveSpend(sum: Double) {
         val time = DateTime().withTimeAtStartOfDay()
-        val spending = Spending(null, sum, getCategoryType(type), DateTime())
+        val spending = Spending(null, sum, getCategoryType(type), time)
 
         spendRep.insert(spending).async().subscribe {}.keep()
 
@@ -112,7 +113,7 @@ class MainFragmentPresenter @Inject constructor(
             .subscribe { it ->
                 val yesterday = it[0]
                 val newTodaySum = it[1]
-                newTodaySum.sum+=yesterday.sum
+                newTodaySum.sum += yesterday.sum
                 if (yesterday.sum == 0.0)
                     return@subscribe
                 else {

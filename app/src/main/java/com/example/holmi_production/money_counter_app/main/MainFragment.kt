@@ -19,15 +19,21 @@ import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.keyboard_category_date_block.*
+import org.joda.time.DateTime
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
-    IKeyboardListener, IScrollCallback, ICategoryChosed {
+    IKeyboardListener, IScrollCallback, ICategoryPickedListener, IDateDialogCallback {
+    override fun datePicked(date: DateTime) {
+
+    }
+
     override fun showDateDialog() {
         val dialog = DateAlertDialog.newInstance()
+        dialog.setListener(this)
         dialog.show(childFragmentManager, "date")
     }
 
-    override fun chosed(type: CategoryType) {
+    override fun categoryPicked(type: CategoryType) {
         key_category.setBackgroundColor(type.color)
         key_category.findViewById<TextView>(R.id.mainText).text = type.description
         presenter.setType(type.id)

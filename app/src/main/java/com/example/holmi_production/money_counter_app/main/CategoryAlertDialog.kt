@@ -16,10 +16,12 @@ class CategoryAlertDialog : DialogFragment() {
         }
     }
 
-    lateinit var categoryChosed: ICategoryChosed
+    lateinit var callback: ICategoryPickedListener
+
     var selectedType = CategoryType.OTHER
-    fun setListener(categoryChosed: ICategoryChosed) {
-        this.categoryChosed = categoryChosed
+
+    fun setListener(callback: ICategoryPickedListener) {
+        this.callback = callback
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -31,7 +33,7 @@ class CategoryAlertDialog : DialogFragment() {
             val categoryItem = CategoryItem(CategoryType.values()[i], context!!)
             categoryItem.setOnClickListener {
                 selectedType = CategoryType.values()[i]
-                categoryChosed.chosed(selectedType)
+                callback.categoryPicked(selectedType)
                 this.dismiss()
             }
             gridLayout.addView(categoryItem)
@@ -44,6 +46,6 @@ class CategoryAlertDialog : DialogFragment() {
     }
 }
 
-interface ICategoryChosed {
-    fun chosed(type: CategoryType)
+interface ICategoryPickedListener {
+    fun categoryPicked(type: CategoryType)
 }
