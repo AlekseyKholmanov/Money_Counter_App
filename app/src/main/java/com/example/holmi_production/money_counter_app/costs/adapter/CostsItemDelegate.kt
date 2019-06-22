@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.costs.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
 class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cost_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.cost_list_item, parent, false)
         return ViewHolder(view)
     }
 

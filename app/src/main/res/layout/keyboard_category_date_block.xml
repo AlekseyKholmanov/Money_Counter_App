@@ -6,7 +6,7 @@
         android:layout_height="wrap_content">
     <include
             android:id="@+id/key_category"
-            layout="@layout/simple_item"
+            layout="@layout/button_with_description"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -16,7 +16,7 @@
 
     <include
             android:id="@+id/key_date"
-            layout="@layout/simple_item"
+            layout="@layout/button_with_description"
             android:layout_alignParentEnd="true"
             android:layout_height="wrap_content"
             android:layout_width="0dp"
