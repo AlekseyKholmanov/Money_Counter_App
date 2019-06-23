@@ -18,6 +18,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.keyboard.*
 import kotlinx.android.synthetic.main.keyboard_category_date_block.*
 import org.joda.time.DateTime
 

@@ -39,10 +39,7 @@ class Keyboard @JvmOverloads constructor(
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
         key_category.findViewById<TextView>(R.id.mainText).text = CategoryType.OTHER.description
         key_category.setBackgroundColor(CategoryType.OTHER.color)
-        key_date.setOnClickListener { pressed(ButtonTypes.DATE) }
-        key_date.findViewById<TextView>(R.id.mainText).text = "Дата"
-        key_date.findViewById<TextView>(R.id.furtherText). text = "выбрать"
-        expense.text = sum
+        sum.text = sum
     }
 
     fun pressed(type: ButtonTypes, value: String? = null) {
@@ -67,10 +64,10 @@ class Keyboard @JvmOverloads constructor(
                 }
             }
             ButtonTypes.ZERO -> {
-                when (sum) {
-                    "0" -> return
-                    else -> sum += value
-                }
+                if (sum == "0") return
+                if (sum.contains(Regex("[.].*"))) return
+                else sum += value
+
             }
             ButtonTypes.ENTER -> {
                 when (sum) {
@@ -91,12 +88,12 @@ class Keyboard @JvmOverloads constructor(
             ButtonTypes.DATE -> {
                 mKeyboardListener.showDateDialog()
             }
-            ButtonTypes.CATEGORY->{
+            ButtonTypes.CATEGORY -> {
                 mKeyboardListener.showCategoryDialog()
             }
         }
 
-        expense.text = sum
+        sum.text = sum
         mKeyboardListener.moneyUpdated(sum.toDouble())
     }
 
