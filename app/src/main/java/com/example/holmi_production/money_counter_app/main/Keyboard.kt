@@ -9,7 +9,6 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import kotlinx.android.synthetic.main.keyboard.view.*
-import kotlinx.android.synthetic.main.keyboard_category_date_block.view.*
 
 class Keyboard @JvmOverloads constructor(
     context: Context,
@@ -19,7 +18,7 @@ class Keyboard @JvmOverloads constructor(
 ) : RelativeLayout(context, attrs, defStyle, defStyleRes) {
 
     private lateinit var mKeyboardListener: IKeyboardListener
-    var sum = "0"
+    private var purshaseSum = "0"
 
     init {
         View.inflate(context, R.layout.keyboard, this)
@@ -39,62 +38,59 @@ class Keyboard @JvmOverloads constructor(
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
         key_category.findViewById<TextView>(R.id.mainText).text = CategoryType.OTHER.description
         key_category.setBackgroundColor(CategoryType.OTHER.color)
-        sum.text = sum
+        purshace_sum_textview.text = purshaseSum
     }
 
-    fun pressed(type: ButtonTypes, value: String? = null) {
+    private fun pressed(type: ButtonTypes, value: String? = null) {
         when (type) {
             ButtonTypes.DELETE -> {
-                if (sum == "0") return
+                if (purshaseSum == "0") return
                 else {
-                    sum = sum.dropLast(1)
-                    if (sum.takeLast(1) == ".") {
-                        sum = sum.dropLast(1)
+                    purshaseSum = purshaseSum.dropLast(1)
+                    if (purshaseSum.takeLast(1) == ".") {
+                        purshaseSum = purshaseSum.dropLast(1)
                     }
-                    if (sum.isEmpty())
-                        sum = "0"
+                    if (purshaseSum.isEmpty())
+                        purshaseSum = "0"
                 }
 
             }
             ButtonTypes.DIVIDER -> {
                 when {
-                    value == "." && sum.contains(".") -> return
-                    sum == "" -> sum = "0."
-                    else -> sum += value
+                    value == "." && purshaseSum.contains(".") -> return
+                    purshaseSum == "" -> purshaseSum = "0."
+                    else -> purshaseSum += value
                 }
             }
             ButtonTypes.ZERO -> {
-                if (sum == "0") return
-                if (sum.contains(Regex("[.].*"))) return
-                else sum += value
+                if (purshaseSum == "0") return
+                if (purshaseSum.contains(Regex("[.].*"))) return
+                else purshaseSum += value
 
             }
             ButtonTypes.ENTER -> {
-                when (sum) {
+                when (purshaseSum) {
                     "0" -> return
                     else -> {
-                        mKeyboardListener.enterPressed(sum.toDouble())
-                        sum = "0"
+                        mKeyboardListener.enterPressed(purshaseSum.toDouble())
+                        purshaseSum = "0"
                     }
                 }
             }
             ButtonTypes.NUMERIC -> {
-                if (sum == "0")
-                    sum = ""
-                if (sum.contains('.') && sum.takeLast(1) != ".")
-                    sum = sum.dropLast(1)
-                sum += value
-            }
-            ButtonTypes.DATE -> {
-                mKeyboardListener.showDateDialog()
+                if (purshaseSum == "0")
+                    purshaseSum = ""
+                if (purshaseSum.contains('.') && purshaseSum.takeLast(1) != ".")
+                    purshaseSum = purshaseSum.dropLast(1)
+                purshaseSum += value
             }
             ButtonTypes.CATEGORY -> {
                 mKeyboardListener.showCategoryDialog()
             }
         }
 
-        sum.text = sum
-        mKeyboardListener.moneyUpdated(sum.toDouble())
+        purshace_sum_textview.text = purshaseSum
+        mKeyboardListener.moneyUpdated(purshaseSum.toDouble())
     }
 
     fun setListener(mKeyboardListener: IKeyboardListener) {
@@ -106,5 +102,4 @@ interface IKeyboardListener {
     fun enterPressed(money: Double)
     fun moneyUpdated(money: Double)
     fun showCategoryDialog()
-    fun showDateDialog()
 }

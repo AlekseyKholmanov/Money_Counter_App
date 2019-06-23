@@ -8,16 +8,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <include android:id="@+id/key_category"
-                 layout="@layout/button_with_description"
-                 android:layout_width="0dp"
-                 android:layout_height="match_parent"
-                 app:layout_constraintHorizontal_weight="4"
-                 app:layout_constraintLeft_toLeftOf="parent"
-                 app:layout_constraintRight_toLeftOf="@id/sum"
+        <include
+                android:id="@+id/key_category"
+                layout="@layout/button_with_description"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintHorizontal_weight="4"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/purshace_sum_textview"
         />
         <TextView
-                android:id="@+id/sum"
+                android:id="@+id/purshace_sum_textview"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:textColor="#FFFFFF"

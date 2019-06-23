@@ -6,6 +6,5 @@ enum class ButtonTypes {
     DIVIDER,
     NUMERIC,
     DELETE,
-    DATE,
     CATEGORY
 }
