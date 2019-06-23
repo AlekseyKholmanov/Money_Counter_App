@@ -8,11 +8,11 @@ import java.io.Serializable
 @Entity
 data class SumPerDay(
     @PrimaryKey(autoGenerate = false)
-    val dateTime: DateTime,
+    val id: String,
 
     var sum: Double
 ):Serializable{
     operator fun inc(inc:Double):SumPerDay{
-        return SumPerDay(dateTime,sum + inc)
+        return SumPerDay(id,sum + inc)
     }
 }

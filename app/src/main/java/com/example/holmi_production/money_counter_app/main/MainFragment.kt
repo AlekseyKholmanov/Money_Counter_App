@@ -19,7 +19,6 @@ import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.keyboard.*
-import org.joda.time.DateTime
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback, ICategoryPickedListener {
@@ -36,7 +35,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         dialog.show(childFragmentManager, "category")
     }
 
-    override fun showNewSumPerDay(sum: String, isDisplayed: Boolean) {
+    override fun showAverageSum(sum: String, isDisplayed: Boolean) {
         val displayed = if (isDisplayed) View.VISIBLE else View.GONE
         new_sum_per_day_text.visibility = displayed
         new_sum_per_day.visibility = displayed
@@ -101,7 +100,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         scroll = view.findViewById(R.id.hsv)
         scroll.setCallback(this)
         key.setListener(this)
-        presenter.getSum()
+        presenter.startObserveSum()
         presenter.initializeNotification()
         presenter.getDaysLeft()
         super.onViewCreated(view, savedInstanceState)

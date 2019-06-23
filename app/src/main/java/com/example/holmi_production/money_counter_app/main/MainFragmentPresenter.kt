@@ -9,20 +9,20 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.*
-import com.example.holmi_production.money_counter_app.model.*
+import com.example.holmi_production.money_counter_app.model.CategoryType
+import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import org.joda.time.DateTime
-import org.joda.time.Days
 import javax.inject.Inject
 
 @InjectViewState
 class MainFragmentPresenter @Inject constructor(
-    private val spendRep: SpendingRepository,
-    private val perDayRep: SumPerDayRepository,
-    private val settings: SettingRepository,
+    private val spendingRepository: SpendingRepository,
+    private val sumPerDayRepository: SumPerDayRepository,
+    private val settingRepository: SettingRepository,
     private val contex: Context,
     private val notificationManager: NotificationManager) :
     BasePresenter<MainFragmnetView>() {
@@ -30,33 +30,30 @@ class MainFragmentPresenter @Inject constructor(
     private var type = CategoryType.OTHER.id
 
     fun saveSpend(sum: Double) {
-        val startDayTime = DateTime().withTimeAtStartOfDay()
         val spending = Spending(null, sum, getCategoryType(type), DateTime())
+        spendingRepository.insert(spending).complete().keep()
 
-        spendRep.insert(spending).async().subscribe {}.keep()
-
-        perDayRep.getPeriodFrom(startDayTime)
+        sumPerDayRepository.getBoth()
             .async()
-            .subscribe { list ->
-                val todaySum = list.single { it.dateTime == startDayTime }.sum
-                if (todaySum >= sum && spending.categoryTypes != CategoryType.SALARY) {
-                    perDayRep.insert(SumPerDay(startDayTime, todaySum - sum)).async().subscribe().keep()
-                } else {
-                    val isSalary = spending.categoryTypes == CategoryType.SALARY
-                    val startIndex = if (isSalary) 0 else 1
-                    val startSum = if (isSalary) sum else sum - todaySum
-                    val daysCount = (list.count() - startIndex)
-                    val averageSum = startSum / daysCount
-                    val sumPerDayList = list.toMutableList()
-                    for (i in startIndex until list.count()) {
-                        sumPerDayList[i].sum =
-                            if (isSalary)
-                                list[i].sum + averageSum
-                            else list[i].sum - averageSum
-                    }
-                    if (!isSalary)
-                        sumPerDayList[0] = SumPerDay(startDayTime, 0.0)
-                    perDayRep.insert(sumPerDayList).async().subscribe().keep()
+            .subscribe { it ->
+                val today = it.first.sum
+                val average = it.second.sum
+                //вычитаем сумму из текущего дня
+                if (today >= sum && spending.categoryTypes != CategoryType.SALARY)
+                    sumPerDayRepository.insertToday(today - sum).complete().keep()
+                //увеличиваем сумму у всех дней т.к. зарплата
+                else if (spending.categoryTypes == CategoryType.SALARY) {
+                    val daysCount = settingRepository.getTillEnd()
+                    val deltaAverage = sum / daysCount
+                    sumPerDayRepository.insertAverage(average + deltaAverage).complete().keep()
+                    sumPerDayRepository.insertToday(today + deltaAverage).complete().keep()
+                }
+                //сумма сегодня < траты, вычитаем из общей суммы
+                else {
+                    val daysCount = settingRepository.getTillEnd() - 1
+                    val deltaAverage = (sum-today) / daysCount
+                    sumPerDayRepository.insertAverage(average - deltaAverage).complete().keep()
+                    sumPerDayRepository.insertToday(0.0).complete().keep()
                 }
             }
             .keep()
@@ -66,8 +63,8 @@ class MainFragmentPresenter @Inject constructor(
         notificationManager.setNotificationTime()
     }
 
-    fun getSum() {
-        spendRep.observeSpending()
+    fun startObserveSum() {
+        spendingRepository.observeSpending()
             .async()
             .doOnError {
                 Log.d("qwerty", "error")
@@ -79,24 +76,25 @@ class MainFragmentPresenter @Inject constructor(
                 viewState.showSpentSum(a.sum().toCurencyFormat())
             }
             .keep()
-        perDayRep.observeSumPerDay()
+        sumPerDayRepository.observeToday()
             .async()
-            .subscribe { list ->
-                if (list.count() == 0)
-                    return@subscribe
-                val today = list.single { it.dateTime == DateTime().withTimeAtStartOfDay() }
-                val nextDay = list.single { it.dateTime == DateTime().withTimeAtStartOfDay().plusDays(1) }
+            .subscribe { today ->
                 viewState.showSumPerDay(today.sum.toCurencyFormat())
-                viewState.showNewSumPerDay(nextDay.sum.toCurencyFormat(), true)
+            }
+            .keep()
+        sumPerDayRepository.observeAverage()
+            .async()
+            .subscribe { average ->
+                viewState.showAverageSum(average.sum.toCurencyFormat(), true)
             }
             .keep()
     }
 
     fun getDaysLeft() {
         updateDayLeft()
-        settings.observeEndDate()
+        settingRepository.observeEndDate()
             .subscribe({
-                viewState.showDaysLeft(" на ${getDiffDay(it).getDayAddition()}")
+                viewState.showDaysLeft(" на ${settingRepository.getTillEnd().getDayAddition()}")
             }, { Log.d("qwerty", it.toString()) })
             .keep()
     }
@@ -107,17 +105,13 @@ class MainFragmentPresenter @Inject constructor(
 
     fun alarmTriggered() {
         Log.d("qwert", "alarm triggered")
-        perDayRep.getPeriodFrom(DateTime().withTimeAtStartOfDay().minusDays(1))
+        sumPerDayRepository.getBoth()
             .async()
             .subscribe { it ->
-                val yesterday = it[0]
-                val newTodaySum = it[1]
-                newTodaySum.sum += yesterday.sum
-                if (yesterday.sum == 0.0)
-                    return@subscribe
-                else {
-                    perDayRep.insert(newTodaySum).async().subscribe().keep()
-                }
+                val yesterday = it.first
+                val newTodaySum = it.second
+                sumPerDayRepository.insertToday(newTodaySum.inc(yesterday.sum).sum).complete().keep()
+
                 val notification = buildNotification(yesterday.sum, newTodaySum.sum)
                 sendNotification(notification)
             }
@@ -129,13 +123,8 @@ class MainFragmentPresenter @Inject constructor(
         return CategoryType.values()[type]
     }
 
-    private fun getDiffDay(date: Long): Int {
-        return Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(date)).days + 1
-    }
-
     private fun updateDayLeft() {
-        val date = settings.getEndPeriod()
-        val diff = getDiffDay(date)
+        val diff = settingRepository.getTillEnd()
         viewState.showDaysLeft(" на ${diff.getDayAddition()}")
     }
 

@@ -6,6 +6,7 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_main.*
 import org.joda.time.DateTime
@@ -35,6 +36,10 @@ fun <T> Flowable<T>.observeOnUi(delayError: Boolean = true): Flowable<T> {
 fun Completable.async(): Completable {
     return subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
+}
+
+fun Completable.complete():Disposable{
+    return async().subscribe()
 }
 
 fun <T> Maybe<T>.async(): Maybe<T> {

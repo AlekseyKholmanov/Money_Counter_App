@@ -5,7 +5,6 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.*
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
-import com.example.holmi_production.money_counter_app.model.SumPerDay
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
@@ -16,15 +15,15 @@ import javax.inject.Inject
 
 @InjectViewState
 class FirstLaunchPresenter @Inject constructor(
-    private val spendingRep: SpendingRepository,
-    private val perDayRep: SumPerDayRepository,
-    private val settings:SettingRepository,
+    private val spendingRepository: SpendingRepository,
+    private val sumPerDayRepository: SumPerDayRepository,
+    private val settingRepository:SettingRepository,
     val context: Context) :
     BasePresenter<FirstLaunchView>() {
     private var sum: Double = 0.0
     private var dif: Int = 0
     private lateinit var endPeriod: DateTime
-    private lateinit var startPeriod: DateTime
+    private lateinit var today: DateTime
     private var sumPerDay: Double = 0.0
     fun getSum(sum: Double) {
         this.sum = sum
@@ -38,32 +37,20 @@ class FirstLaunchPresenter @Inject constructor(
 
     fun updateDate(date: DateTime) {
         endPeriod = date.withTimeAtStartOfDay()
-        startPeriod = DateTime().withTimeAtStartOfDay()
-        dif = (Days.daysBetween(startPeriod, endPeriod) + 1).days
+        today = DateTime().withTimeAtStartOfDay()
+        dif = (Days.daysBetween(today, endPeriod) + 1).days
         viewState.showDate(date.toRUformat(), (dif).getDayAddition())
     }
 
     fun goToMainScreen() {
-        spendingRep.insert(
-            Spending(
-                null,
-                sum,
-                CategoryType.SALARY,
-                DateTime.now().withTimeAtStartOfDay()
-            )
+        spendingRepository.insert(
+            Spending(null,sum,CategoryType.SALARY,today)
         ).async().subscribe().keep()
-
-        val list = arrayListOf<SumPerDay>()
-        for (i in 0 until dif) {
-            list.add(SumPerDay(startPeriod.plusDays(i), sumPerDay))
-        }
-        perDayRep.insert(list)
-            .async()
-            .subscribe()
-            .keep()
-        settings.setAppOpened()
-        settings.saveStartDate(startPeriod)
-        settings.saveEndDate(endPeriod)
+        sumPerDayRepository.insertAverage(sumPerDay).complete().keep()
+        sumPerDayRepository.insertToday(sumPerDay).complete().keep()
+        settingRepository.setAppOpened()
+        settingRepository.saveStartDate(today)
+        settingRepository.saveEndDate(endPeriod)
         viewState.showMainScreen()
     }
 

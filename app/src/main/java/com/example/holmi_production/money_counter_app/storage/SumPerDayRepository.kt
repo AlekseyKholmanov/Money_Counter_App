@@ -1,42 +1,45 @@
 package com.example.holmi_production.money_counter_app.storage
 
-import android.content.SharedPreferences
-import com.example.holmi_production.money_counter_app.MainActivity
 import com.example.holmi_production.money_counter_app.model.SumPerDay
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
-import org.joda.time.DateTime
-import java.util.*
+import io.reactivex.rxkotlin.Singles
 import javax.inject.Inject
 
 class SumPerDayRepository @Inject constructor(
-    private val pref:SharedPreferences,
     private val database: ExpenseDatabase
 ) {
+    companion object {
+        val today = "TODAY_SUM"
+        val average = "AVERAGE_SUM"
+    }
+
     private val dao = database.sumPerDayDao
 
-    fun insert(sumPerDay: SumPerDay): Completable {
-        return Completable.fromCallable { dao.insert(sumPerDay) }
+    fun insertToday(todaySum: Double): Completable {
+        val sum = SumPerDay(today, todaySum)
+        return Completable.fromCallable { dao.insert(sum) }
     }
 
-    fun insert(sumPerDayList: Collection<SumPerDay>): Completable {
-        return Completable.fromCallable { dao.insert(sumPerDayList) }
+    fun insertAverage(averageSum: Double): Completable {
+        val sum = SumPerDay(average, averageSum)
+        return Completable.fromCallable { dao.insert(sum) }
     }
 
-    fun observeSumPerDay(): Flowable<List<SumPerDay>> = dao.observeSumPerDay()
+    fun observeToday(): Flowable<SumPerDay> = dao.observeSum(today)
+    fun observeAverage(): Flowable<SumPerDay> = dao.observeSum(average)
 
-    fun getOnDate(dateTime: DateTime): Single<SumPerDay> {
-        return Single.fromCallable { dao.getOnDate(dateTime) }
+    fun getToday(): Single<SumPerDay> {
+        return Single.fromCallable { dao.getSum(today) }
     }
 
-    fun getPeriodFrom(dateTime: DateTime): Single<List<SumPerDay>> {
-        return Single.fromCallable { dao.getPeriodFrom(dateTime) }
+    fun getBoth(): Single<Pair<SumPerDay, SumPerDay>> {
+        return Singles.zip(getToday(),getAverage())
     }
 
-
-
-
-
+    fun getAverage(): Single<SumPerDay> {
+        return Single.fromCallable { dao.getSum(average) }
+    }
 }
