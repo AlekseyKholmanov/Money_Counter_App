@@ -28,20 +28,19 @@ class MainFragmentPresenter @Inject constructor(
     BasePresenter<MainFragmnetView>() {
 
     private var type = CategoryType.OTHER.id
-    private var time = DateTime()
 
     fun saveSpend(sum: Double) {
-        val time = DateTime().withTimeAtStartOfDay()
-        val spending = Spending(null, sum, getCategoryType(type), time)
+        val startDayTime = DateTime().withTimeAtStartOfDay()
+        val spending = Spending(null, sum, getCategoryType(type), DateTime())
 
         spendRep.insert(spending).async().subscribe {}.keep()
 
-        perDayRep.getPeriodFrom(time)
+        perDayRep.getPeriodFrom(startDayTime)
             .async()
             .subscribe { list ->
-                val todaySum = list.single { it.dateTime == time }.sum
+                val todaySum = list.single { it.dateTime == startDayTime }.sum
                 if (todaySum >= sum && spending.categoryTypes != CategoryType.SALARY) {
-                    perDayRep.insert(SumPerDay(time, todaySum - sum)).async().subscribe().keep()
+                    perDayRep.insert(SumPerDay(startDayTime, todaySum - sum)).async().subscribe().keep()
                 } else {
                     val isSalary = spending.categoryTypes == CategoryType.SALARY
                     val startIndex = if (isSalary) 0 else 1
@@ -56,7 +55,7 @@ class MainFragmentPresenter @Inject constructor(
                             else list[i].sum - averageSum
                     }
                     if (!isSalary)
-                        sumPerDayList[0] = SumPerDay(time, 0.0)
+                        sumPerDayList[0] = SumPerDay(startDayTime, 0.0)
                     perDayRep.insert(sumPerDayList).async().subscribe().keep()
                 }
             }
@@ -141,10 +140,10 @@ class MainFragmentPresenter @Inject constructor(
     }
 
     private fun buildNotification(saveSum: Double, newSum: Double): Notification {
-        val intt = Intent(contex, MainActivity::class.java).apply {
+        val intent = Intent(contex, MainActivity::class.java).apply {
             PendingIntent.FLAG_UPDATE_CURRENT
         }
-        val intent = PendingIntent.getActivity(contex, 0, intt, 0)
+        val pIntent = PendingIntent.getActivity(contex, 0, intent, 0)
         return NotificationCompat.Builder(contex, NotificationManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Итоги дня")
@@ -155,7 +154,7 @@ class MainFragmentPresenter @Inject constructor(
                     .addLine("Сумма на сегодня :${newSum.toCurencyFormat()}")
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(intent)
+            .setContentIntent(pIntent)
             .build()
     }
 
