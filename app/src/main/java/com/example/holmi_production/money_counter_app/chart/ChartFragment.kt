@@ -4,11 +4,51 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.model.CategoryType
+import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import kotlinx.android.synthetic.main.fragment_chart.*
 
-class ChartFragment : AndroidXMvpAppCompatFragment() {
+class ChartFragment : AndroidXMvpAppCompatFragment(),ChartView {
+    override fun showPie(data: Map<CategoryType, List<Spending>>) {
+        chart_pie.description.text = "Chart Pie"
+        chart_pie.holeRadius = 25f
+        val first = arrayListOf<PieEntry>()
+        val second = arrayListOf<String>()
+        val colors = arrayListOf<Int>()
+        data.forEach { (category, spendings) ->
+            val sum = spendings.sumByDouble { it.sum }
+            first.add(PieEntry(sum.toFloat(), category.id.toFloat()))
+            second.add(category.description)
+            colors.add(category.color)
+        }
+        val pieSet = PieDataSet(first.toList(),"Spendings")
+        val data = PieData(pieSet)
+        pieSet.colors = colors
+        chart_pie.data = data
+        chart_pie.animateXY(2000,2000)
+    }
+
+    @InjectPresenter
+    lateinit var presenter: ChartPresenter
+
+    @ProvidePresenter
+    fun providePresenter() = App.component.getChartPresenter()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_chart,container,false)
+        return inflater.inflate(R.layout.fragment_chart, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.getPieData()
     }
 }

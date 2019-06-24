@@ -25,11 +25,11 @@ interface SpendingDao {
     @Insert(onConflict = REPLACE)
     fun insert(spending: Spending)
 
-    @Query("SELECT sum FROM Spending WHERE categoryTypes != 0")
-    fun getSpentSum(): List<Float>
+    @Query("SELECT * FROM Spending WHERE categoryTypes != 0")
+    fun getSpentSum(): List<Spending>
 
-    @Query("SELECT sum FROM Spending WHERE categoryTypes == 0")
-    fun getIncomeSum(): List<Float>
+    @Query("SELECT * FROM Spending WHERE categoryTypes == 0")
+    fun getIncomeSum(): List<Spending>
 
     @Delete
     fun delete(spending: Spending)

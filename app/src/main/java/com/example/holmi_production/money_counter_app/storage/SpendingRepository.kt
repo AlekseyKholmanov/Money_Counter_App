@@ -26,11 +26,11 @@ class SpendingRepository @Inject constructor(
         return dao.observeSpending()
     }
 
-    fun getSpentSum(): Single<List<Float>> {
+    fun getSpent(): Single<List<Spending>> {
         return Single.fromCallable { dao.getSpentSum() }
     }
 
-    fun getIncomeSum(): Single<List<Float>> {
+    fun getIncome(): Single<List<Spending>> {
         return Single.fromCallable { dao.getIncomeSum() }
     }
 
