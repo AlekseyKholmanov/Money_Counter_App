@@ -9,4 +9,5 @@ interface MainFragmnetView:MvpView{
     fun showSumPerDay(money:String)
     fun showDaysLeft(days:String)
     fun showAverageSum(sum:String, isDisplayed:Boolean)
+    fun showSnack(message: String)
 }

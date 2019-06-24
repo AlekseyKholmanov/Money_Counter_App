@@ -21,13 +21,17 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.keyboard.*
 import org.joda.time.DateTime
-import java.util.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback, ICategoryPickedListener, IDatePickerCallback {
-    override fun datePicked(date: DateTime) {
-        Snackbar.make(frament_main, date.toString("YYYY-MM-dd", Locale.getDefault()), Snackbar.LENGTH_SHORT)
+    override fun showSnack(message: String) {
+
+        Snackbar.make(frament_main, message, Snackbar.LENGTH_SHORT)
             .show()
+    }
+
+    override fun datePicked(date: DateTime) {
+        presenter.recalculateAverageSum(date)
     }
 
     override fun categoryPicked(type: CategoryType) {
@@ -108,7 +112,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         scroll.setCallback(this)
         key.setListener(this)
         left_days.setOnClickListener {
-            val dialog = TimePickerDialog.newInstance()
+            val dialog = TimePickerDialog.newInstance(withMinDate = true)
             dialog.setListener(this)
             dialog.show(childFragmentManager, "datePicker")
         }

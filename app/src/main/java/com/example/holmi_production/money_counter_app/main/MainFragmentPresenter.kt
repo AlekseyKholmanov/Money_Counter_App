@@ -16,6 +16,7 @@ import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import org.joda.time.DateTime
+import org.joda.time.Days
 import javax.inject.Inject
 
 @InjectViewState
@@ -51,7 +52,7 @@ class MainFragmentPresenter @Inject constructor(
                 //сумма сегодня < траты, вычитаем из общей суммы
                 else {
                     val daysCount = settingRepository.getTillEnd() - 1
-                    val deltaAverage = (sum-today) / daysCount
+                    val deltaAverage = (sum - today) / daysCount
                     sumPerDayRepository.insertAverage(average - deltaAverage).complete().keep()
                     sumPerDayRepository.insertToday(0.0).complete().keep()
                 }
@@ -117,6 +118,22 @@ class MainFragmentPresenter @Inject constructor(
             }
             .keep()
         updateDayLeft()
+    }
+
+    fun recalculateAverageSum(endDate: DateTime) {
+        spendingRepository.getAll()
+            .async()
+            .subscribe { list ->
+                val spent = list.filter { it.categoryTypes.isSpending }.map { it.sum }.sum()
+                val income = list.filter { !it.categoryTypes.isSpending }.map { it.sum }.sum()
+                val period = (Days.daysBetween(DateTime.now(), endDate)).days + 1
+                val averageSum = (income - spent) / period
+                settingRepository.saveEndDate(endDate)
+                sumPerDayRepository.insertToday(averageSum).complete().keep()
+                sumPerDayRepository.insertAverage(averageSum).complete().keep()
+                viewState.showSnack("новая сумма: $averageSum на ${period.getDayAddition()}")
+            }
+            .keep()
     }
 
     private fun getCategoryType(type: Int): CategoryType {

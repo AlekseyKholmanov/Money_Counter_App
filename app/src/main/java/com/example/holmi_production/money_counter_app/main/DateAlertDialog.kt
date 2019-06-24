@@ -40,7 +40,7 @@ class DateAlertDialog : DialogFragment(), IDatePickerCallback {
         select.findViewById<TextView>(R.id.mainText).text = "Выбрать"
         select.findViewById<TextView>(R.id.furtherText).visibility = View.INVISIBLE
         select.setOnClickListener {
-            val picker = TimePickerDialog.newInstance()
+            val picker = TimePickerDialog.newInstance(withMinDate = true)
             picker.show(childFragmentManager, "datePicker")
             picker.setListener(this)
         }

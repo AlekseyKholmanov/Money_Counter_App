@@ -42,7 +42,7 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
 
     fun getTillEnd(): Int {
         val endDate = getEndPeriod()
-        return Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(endDate)).days + 1
+        return Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(endDate)).days
     }
 
     fun observeEndDate(): Flowable<Long> {
