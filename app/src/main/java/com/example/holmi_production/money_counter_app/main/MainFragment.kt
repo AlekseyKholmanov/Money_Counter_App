@@ -17,11 +17,18 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.keyboard.*
+import org.joda.time.DateTime
+import java.util.*
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
-    IKeyboardListener, IScrollCallback, ICategoryPickedListener {
+    IKeyboardListener, IScrollCallback, ICategoryPickedListener, IDatePickerCallback {
+    override fun datePicked(date: DateTime) {
+        Snackbar.make(frament_main, date.toString("YYYY-MM-dd", Locale.getDefault()), Snackbar.LENGTH_SHORT)
+            .show()
+    }
 
     override fun categoryPicked(type: CategoryType) {
         key_category.setBackgroundColor(type.color)
@@ -100,6 +107,11 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         scroll = view.findViewById(R.id.hsv)
         scroll.setCallback(this)
         key.setListener(this)
+        left_days.setOnClickListener {
+            val dialog = TimePickerDialog.newInstance()
+            dialog.setListener(this)
+            dialog.show(childFragmentManager, "datePicker")
+        }
         presenter.startObserveSum()
         presenter.initializeNotification()
         presenter.getDaysLeft()
