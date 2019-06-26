@@ -8,7 +8,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import java.text.SimpleDateFormat

@@ -1,6 +1,8 @@
 package com.example.holmi_production.money_counter_app.chart
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +13,39 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import kotlinx.android.synthetic.main.fragment_chart.*
+import kotlinx.android.synthetic.main.fragment__bottom_chart.*
 
 class ChartFragment : AndroidXMvpAppCompatFragment(),ChartView {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("qwerty","chart attached")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("qwerty","chart stopped")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("qwerty","chart view destroyed")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("qwerty","chart detached")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("qwerty","chart resumed")
+    }
     override fun showPie(data: Map<CategoryType, List<Spending>>) {
         chart_pie.description.text = "Chart Pie"
+        chart_pie.description.textSize = 20f
         chart_pie.holeRadius = 25f
         val first = arrayListOf<PieEntry>()
         val second = arrayListOf<String>()
@@ -31,10 +57,13 @@ class ChartFragment : AndroidXMvpAppCompatFragment(),ChartView {
             colors.add(category.color)
         }
         val pieSet = PieDataSet(first.toList(),"Spendings")
+        pieSet.valueTextSize = 16f
+        pieSet.sliceSpace = 2f
         val data = PieData(pieSet)
         pieSet.colors = colors
         chart_pie.data = data
-        chart_pie.animateXY(2000,2000)
+        chart_pie.animateXY(1000,1000)
+
     }
 
     @InjectPresenter
@@ -44,7 +73,7 @@ class ChartFragment : AndroidXMvpAppCompatFragment(),ChartView {
     fun providePresenter() = App.component.getChartPresenter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_chart, container, false)
+        return inflater.inflate(R.layout.fragment__bottom_chart, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

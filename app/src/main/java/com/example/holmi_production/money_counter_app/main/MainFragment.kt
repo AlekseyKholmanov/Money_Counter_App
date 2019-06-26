@@ -18,7 +18,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import kotlinx.android.synthetic.main.keyboard.*
 import org.joda.time.DateTime
 
@@ -30,7 +30,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
 
     override fun showSnack(message: String) {
 
-        Snackbar.make(frament_main, message, Snackbar.LENGTH_SHORT)
+        Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
             .show()
     }
 
@@ -132,7 +132,7 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return inflater.inflate(R.layout.fragment_bottom_keyboard, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

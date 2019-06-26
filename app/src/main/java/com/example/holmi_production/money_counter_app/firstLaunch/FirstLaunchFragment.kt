@@ -4,51 +4,30 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatActivity
+import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.first_launch_activity.*
+import kotlinx.android.synthetic.main.fragment_first_launch.*
 import org.joda.time.DateTime
 
-class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView {
+class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
     override fun showMainScreen() {
-        finish()
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showSumPerDay(sumPerDay: String) {
-        sum_per_day.text = sumPerDay
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_first_launch, container, false)
     }
 
-    override fun onBackPressed() {
-        Snackbar.make(first_launch_activity,"введите дату и сумму", Snackbar.LENGTH_SHORT).show()
-    }
-
-    override fun showDate(pickedDate: String, difference: String) {
-        date.setText(pickedDate)
-        date_difference.text = difference
-    }
-
-    private var dateDialog: DatePickerDialog.OnDateSetListener =
-        DatePickerDialog.OnDateSetListener { picker, _, _, _ ->
-            val time = DateTime(picker.year, picker.month + 1, picker.dayOfMonth, 0, 0)
-            presenter.updateDate(time)
-        }
-
-    @InjectPresenter
-    lateinit var presenter: FirstLaunchPresenter
-
-    @ProvidePresenter
-    fun initPresenter(): FirstLaunchPresenter {
-        return App.component.getFirstLaunchPresenter()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.first_launch_activity)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         finish_activity.setOnClickListener {
             presenter.goToMainScreen()
         }
@@ -91,7 +70,7 @@ class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView {
         date.setOnClickListener {
             val time = DateTime()
             val picker = DatePickerDialog(
-                this,
+                context,
                 dateDialog,
                 time.year,
                 time.monthOfYear - 1,
@@ -104,6 +83,29 @@ class FirstActivity : AndroidXMvpAppCompatActivity(), FirstLaunchView {
                     .millis
             picker.show()
         }
+
     }
 
+    override fun showSumPerDay(sumPerDay: String) {
+        sum_per_day.text = sumPerDay
+    }
+
+    override fun showDate(pickedDate: String, difference: String) {
+        date.setText(pickedDate)
+        date_difference.text = difference
+    }
+
+    private var dateDialog: DatePickerDialog.OnDateSetListener =
+        DatePickerDialog.OnDateSetListener { picker, _, _, _ ->
+            val time = DateTime(picker.year, picker.month + 1, picker.dayOfMonth, 0, 0)
+            presenter.updateDate(time)
+        }
+
+    @InjectPresenter
+    lateinit var presenter: FirstLaunchPresenter
+
+    @ProvidePresenter
+    fun initPresenter(): FirstLaunchPresenter {
+        return App.component.getFirstLaunchPresenter()
+    }
 }

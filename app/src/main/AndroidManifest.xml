@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".firstLaunch.FirstActivity"
+                android:name=".firstLaunch.FirstLaunchFragment"
                 android:screenOrientation="portrait"/>
     </application>
 

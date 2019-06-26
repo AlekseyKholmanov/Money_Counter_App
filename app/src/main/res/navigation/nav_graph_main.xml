@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph_main"
+            app:startDestination="@id/navMain">
+    <fragment
+            android:id="@+id/navMain"
+            android:name="com.example.holmi_production.money_counter_app.BottomHostFragment"
+            android:label=""
+            tools:layout="@layout/fragment_bottom_container"
+    />
+    <fragment
+            android:id="@+id/navFirstLaunch"
+            android:name="com.example.holmi_production.money_counter_app.firstLaunch.FirstLaunchFragment"
+            android:label="Home"
+            tools:layout="@layout/fragment_first_launch"
+    />
+
+</navigation>

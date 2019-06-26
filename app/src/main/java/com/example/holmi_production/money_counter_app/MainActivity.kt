@@ -1,19 +1,12 @@
 package com.example.holmi_production.money_counter_app
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.holmi_production.money_counter_app.chart.ChartFragment
 import com.example.holmi_production.money_counter_app.costs.CostsFragment
-import com.example.holmi_production.money_counter_app.firstLaunch.FirstActivity
 import com.example.holmi_production.money_counter_app.main.MainFragment
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -29,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navController = findNavController(R.id.mainNavFragment)
-        bottom_navigation.setupWithNavController(navController)
 //        val preferences = this.getSharedPreferences("PREFERENCE_STORAGE", Context.MODE_PRIVATE)
 //        val navController =findNavController(R.id.mainNavFragment)
 //
@@ -37,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 //        if (preferences.contains(FIRST_OPEN)) {
 //            return
 //        } else {
-//            val i = Intent(this, FirstActivity::class.java)
+//            val i = Intent(this, FirstLaunchFragment::class.java)
 //            startActivity(i)
 //            Log.d("qwerty", "first launch")
 //        }
@@ -45,31 +37,31 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp() = findNavController(R.id.mainNavFragment).navigateUp()
 
-    private fun openFragments() {
-        val fm = supportFragmentManager
-        fm.beginTransaction().add(R.id.main_container, chartFragment, "chart").hide(chartFragment).commit()
-        fm.beginTransaction().add(R.id.main_container, costsFragment, "costs").hide(costsFragment).commit()
-        fm.beginTransaction().add(R.id.main_container, mainFragment, "main").commit()
-        active = mainFragment
-        bottom_navigation.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.mainFragment -> {
-                    fm.beginTransaction().hide(active).show(mainFragment).commit()
-                    active = mainFragment
-                    return@setOnNavigationItemSelectedListener true
-                }
-                R.id.costsFragment -> {
-                    fm.beginTransaction().hide(active).show(costsFragment).commit()
-                    active = costsFragment
-                    return@setOnNavigationItemSelectedListener true
-                }
-                R.id.chartFragment -> {
-                    fm.beginTransaction().hide(active).show(chartFragment).commit()
-                    active = chartFragment
-                    return@setOnNavigationItemSelectedListener true
-                }
-            }
-            return@setOnNavigationItemSelectedListener false
-        }
-    }
+//    private fun openFragments() {
+//        val fm = supportFragmentManager
+//        fm.beginTransaction().add(R.id.main_container, chartFragment, "chart").hide(chartFragment).commit()
+//        fm.beginTransaction().add(R.id.main_container, costsFragment, "costs").hide(costsFragment).commit()
+//        fm.beginTransaction().add(R.id.main_container, mainFragment, "main").commit()
+//        active = mainFragment
+//        bottom_navigation.setOnNavigationItemSelectedListener { item ->
+//            when (item.itemId) {
+//                R.id.mainFragment -> {
+//                    fm.beginTransaction().hide(active).show(mainFragment).commit()
+//                    active = mainFragment
+//                    return@setOnNavigationItemSelectedListener true
+//                }
+//                R.id.costsFragment -> {
+//                    fm.beginTransaction().hide(active).show(costsFragment).commit()
+//                    active = costsFragment
+//                    return@setOnNavigationItemSelectedListener true
+//                }
+//                R.id.chartFragment -> {
+//                    fm.beginTransaction().hide(active).show(chartFragment).commit()
+//                    active = chartFragment
+//                    return@setOnNavigationItemSelectedListener true
+//                }
+//            }
+//            return@setOnNavigationItemSelectedListener false
+//        }
+//    }
 }
