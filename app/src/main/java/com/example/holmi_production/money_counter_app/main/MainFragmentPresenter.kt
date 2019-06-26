@@ -28,10 +28,9 @@ class MainFragmentPresenter @Inject constructor(
     private val notificationManager: NotificationManager) :
     BasePresenter<MainFragmnetView>() {
 
-    private var type = CategoryType.OTHER.id
-
     fun saveSpend(sum: Double) {
-        val spending = Spending(null, sum, getCategoryType(type), DateTime())
+        val categoryType = settingRepository.getCategoryValue()
+        val spending = Spending(null, sum, getCategoryType(categoryType), DateTime())
         spendingRepository.insert(spending).complete().keep()
 
         sumPerDayRepository.getBoth()
@@ -64,14 +63,11 @@ class MainFragmentPresenter @Inject constructor(
         notificationManager.setNotificationTime()
     }
 
-    fun startObserveSum() {
+    fun setObservers() {
         Log.d("qwerty", "start Obserfve + ${this.hashCode()}")
 
         spendingRepository.observeSpending()
             .async()
-            .doOnError {
-                Log.d("qwerty", "error")
-            }
             .subscribe { list ->
                 val a = list.filter { it.categoryTypes.isSpending }.map { it.sum }
                 val b = list.filter { !it.categoryTypes.isSpending }.map { it.sum }
@@ -91,19 +87,31 @@ class MainFragmentPresenter @Inject constructor(
                 viewState.showAverageSum(average.sum.toCurencyFormat(), true)
             }
             .keep()
+        settingRepository.observeCategoryValue()
+            .async()
+            .subscribe {
+                viewState.showCategoryButton(CategoryType.values()[it])
+            }
+            .keep()
+        settingRepository.observeEndDate()
+            .async()
+            .subscribe {
+                viewState.showDaysLeft(" на ${settingRepository.getTillEnd().getDayAddition()}")
+            }
+            .keep()
     }
 
     fun getDaysLeft() {
         updateDayLeft()
-        settingRepository.observeEndDate()
-            .subscribe({
-                viewState.showDaysLeft(" на ${settingRepository.getTillEnd().getDayAddition()}")
-            }, { Log.d("qwerty", it.toString()) })
-            .keep()
+    }
+
+    fun getCategoryButtonValue() {
+        val type = settingRepository.getCategoryValue()
+        viewState.showCategoryButton(getCategoryType(type))
     }
 
     fun setType(type: Int) {
-        this.type = type
+        settingRepository.setCategoryButtonType(type)
     }
 
     fun alarmTriggered() {

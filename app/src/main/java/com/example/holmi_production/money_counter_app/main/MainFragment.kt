@@ -24,6 +24,10 @@ import org.joda.time.DateTime
 
 class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     IKeyboardListener, IScrollCallback, ICategoryPickedListener, IDatePickerCallback {
+    override fun showCategoryButton(categoryType: CategoryType) {
+        keyboard.setCategoryButtonValue(categoryType)
+    }
+
     override fun showSnack(message: String) {
 
         Snackbar.make(frament_main, message, Snackbar.LENGTH_SHORT)
@@ -141,9 +145,11 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
             dialog.setListener(this)
             dialog.show(childFragmentManager, "datePicker")
         }
-        presenter.startObserveSum()
-        presenter.initializeNotification()
+
         presenter.getDaysLeft()
+        presenter.getCategoryButtonValue()
+        presenter.setObservers()
+        presenter.initializeNotification()
         super.onViewCreated(view, savedInstanceState)
     }
 

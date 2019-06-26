@@ -36,8 +36,6 @@ class Keyboard @JvmOverloads constructor(
         key_delete.setOnClickListener { pressed(ButtonTypes.DELETE) }
         key_enter.setOnClickListener { pressed(ButtonTypes.ENTER) }
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
-        key_category.findViewById<TextView>(R.id.mainText).text = CategoryType.OTHER.description
-        key_category.setBackgroundColor(CategoryType.OTHER.color)
         purshace_sum_textview.text = purshaseSum
     }
 
@@ -91,6 +89,11 @@ class Keyboard @JvmOverloads constructor(
 
         purshace_sum_textview.text = purshaseSum
         mKeyboardListener.moneyUpdated(purshaseSum.toDouble())
+    }
+
+    fun setCategoryButtonValue(type: CategoryType) {
+        key_category.findViewById<TextView>(R.id.mainText).text = type.description
+        key_category.setBackgroundColor(type.color)
     }
 
     fun setListener(mKeyboardListener: IKeyboardListener) {
