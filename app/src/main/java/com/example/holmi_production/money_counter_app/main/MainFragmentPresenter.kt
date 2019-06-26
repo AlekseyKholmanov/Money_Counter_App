@@ -9,6 +9,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.*
+import com.example.holmi_production.money_counter_app.extensions.async
+import com.example.holmi_production.money_counter_app.extensions.complete
+import com.example.holmi_production.money_counter_app.extensions.getDayAddition
+import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter

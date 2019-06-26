@@ -27,7 +27,7 @@ class DateAlertDialog : DialogFragment(), IDatePickerCallback {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val root = View.inflate(context, R.layout.date_dialog, null)
+        val root = View.inflate(context, R.layout.dialog_date, null)
         val container = root.findViewById<ConstraintLayout>(R.id.date_dialog)
         val yesterday = container.getViewById(R.id.yesterday_date)
         val today = container.getViewById(R.id.today_date)

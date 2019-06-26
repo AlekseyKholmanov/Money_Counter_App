@@ -2,7 +2,6 @@ package com.example.holmi_production.money_counter_app.storage
 
 import android.content.SharedPreferences
 import android.util.Log
-import com.example.holmi_production.money_counter_app.async
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject

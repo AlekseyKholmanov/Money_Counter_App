@@ -2,8 +2,8 @@ package com.example.holmi_production.money_counter_app.costs
 
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
-import com.example.holmi_production.money_counter_app.async
-import com.example.holmi_production.money_counter_app.complete
+import com.example.holmi_production.money_counter_app.extensions.async
+import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
