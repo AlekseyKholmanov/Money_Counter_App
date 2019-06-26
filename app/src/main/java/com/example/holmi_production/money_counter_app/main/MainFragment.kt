@@ -30,6 +30,31 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
             .show()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("qwerty","main attached")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("qwerty","main stopped")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("qwerty","main view destroyed")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("qwerty","main detached")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("qwerty","main resumed")
+    }
+
     override fun datePicked(date: DateTime) {
         presenter.recalculateAverageSum(date)
     }

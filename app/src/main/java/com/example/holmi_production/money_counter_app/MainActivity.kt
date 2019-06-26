@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.holmi_production.money_counter_app.chart.ChartFragment
 import com.example.holmi_production.money_counter_app.costs.CostsFragment
 import com.example.holmi_production.money_counter_app.firstLaunch.FirstActivity
@@ -15,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     companion object {
         val FIRST_OPEN = "FirstOpen"
-        val END_PERIOD = "END_PERIOD"
     }
 
     private lateinit var active: AndroidXMvpAppCompatFragment
@@ -26,16 +28,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val preferences = this.getSharedPreferences("PREFERENCE_STORAGE", Context.MODE_PRIVATE)
-        openFragments()
-        if (preferences.contains(FIRST_OPEN)) {
-            return
-        } else {
-            val i = Intent(this, FirstActivity::class.java)
-            startActivity(i)
-            Log.d("qwerty", "first launch")
-        }
+        val navController = findNavController(R.id.mainNavFragment)
+        bottom_navigation.setupWithNavController(navController)
+//        val preferences = this.getSharedPreferences("PREFERENCE_STORAGE", Context.MODE_PRIVATE)
+//        val navController =findNavController(R.id.mainNavFragment)
+//
+//        openFragments()
+//        if (preferences.contains(FIRST_OPEN)) {
+//            return
+//        } else {
+//            val i = Intent(this, FirstActivity::class.java)
+//            startActivity(i)
+//            Log.d("qwerty", "first launch")
+//        }
     }
+
+    override fun onSupportNavigateUp() = findNavController(R.id.mainNavFragment).navigateUp()
 
     private fun openFragments() {
         val fm = supportFragmentManager
@@ -45,17 +53,17 @@ class MainActivity : AppCompatActivity() {
         active = mainFragment
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.action_main -> {
+                R.id.mainFragment -> {
                     fm.beginTransaction().hide(active).show(mainFragment).commit()
                     active = mainFragment
                     return@setOnNavigationItemSelectedListener true
                 }
-                R.id.action_costs -> {
+                R.id.costsFragment -> {
                     fm.beginTransaction().hide(active).show(costsFragment).commit()
                     active = costsFragment
                     return@setOnNavigationItemSelectedListener true
                 }
-                R.id.action_chart -> {
+                R.id.chartFragment -> {
                     fm.beginTransaction().hide(active).show(chartFragment).commit()
                     active = chartFragment
                     return@setOnNavigationItemSelectedListener true

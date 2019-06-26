@@ -65,6 +65,8 @@ class MainFragmentPresenter @Inject constructor(
     }
 
     fun startObserveSum() {
+        Log.d("qwerty", "start Obserfve + ${this.hashCode()}")
+
         spendingRepository.observeSpending()
             .async()
             .doOnError {

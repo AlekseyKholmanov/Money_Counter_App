@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
       android:background="@color/design_default_color_primary_variant">
     <item
-            android:id="@+id/action_main"
+            android:id="@+id/mainFragment"
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/text_main"
-            app:showAsAction="ifRoom"/>
+            android:title="@string/text_main"/>
     <item
-            android:id="@+id/action_costs"
+            android:id="@+id/costsFragment"
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/text_сosts"
-            app:showAsAction="ifRoom"/>
+            android:title="@string/text_сosts"/>
     <item
-            android:id="@+id/action_chart"
+            android:id="@+id/chartFragment"
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/text_chart"
-            app:showAsAction="ifRoom"/>
+            android:title="@string/text_chart"/>
 </menu>
