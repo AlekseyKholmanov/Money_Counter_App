@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.broadcasts
+package com.example.holmi_production.money_counter_app.notification
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -6,7 +6,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
-class DayChangeReceiver : BroadcastReceiver() {
+class NotificationAlarmReciever : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("qwerty", "beach fuck")
         send(context)

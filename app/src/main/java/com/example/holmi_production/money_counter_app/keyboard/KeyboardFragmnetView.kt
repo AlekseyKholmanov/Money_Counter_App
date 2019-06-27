@@ -1,9 +1,9 @@
-package com.example.holmi_production.money_counter_app.main
+package com.example.holmi_production.money_counter_app.keyboard
 
 import com.arellomobile.mvp.MvpView
 import com.example.holmi_production.money_counter_app.model.CategoryType
 
-interface MainFragmnetView:MvpView{
+interface KeyboardFragmnetView:MvpView{
     fun showMoney(money:String)
     fun showSpentSum(sum:String)
     fun showIncomeSum(money:String)

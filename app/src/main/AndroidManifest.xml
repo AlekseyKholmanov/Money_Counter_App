@@ -11,7 +11,7 @@
             android:supportsRtl="false"
             android:theme="@style/AppTheme">
         <receiver
-                android:name=".broadcasts.DayChangeReceiver"
+                android:name=".notification.NotificationAlarmReciever"
                 android:enabled="true"
                 android:exported="true">
         </receiver>

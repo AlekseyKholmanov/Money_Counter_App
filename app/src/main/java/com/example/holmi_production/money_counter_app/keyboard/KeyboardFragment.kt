@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.main
+package com.example.holmi_production.money_counter_app.keyboard
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import kotlinx.android.synthetic.main.keyboard.*
 import org.joda.time.DateTime
 
-class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
+class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     IKeyboardListener, IScrollCallback, ICategoryPickedListener, IDatePickerCallback {
     override fun showCategoryButton(categoryType: CategoryType) {
         keyboard.setCategoryButtonValue(categoryType)
@@ -124,10 +124,10 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
     }
 
     @InjectPresenter
-    lateinit var presenter: MainFragmentPresenter
+    lateinit var presenter: KeyboardFragmentPresenter
 
     @ProvidePresenter
-    fun initPresenter(): MainFragmentPresenter {
+    fun initPresenter(): KeyboardFragmentPresenter {
         return App.component.getMainPresenter()
     }
 

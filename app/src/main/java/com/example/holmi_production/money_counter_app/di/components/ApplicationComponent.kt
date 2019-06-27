@@ -7,14 +7,14 @@ import com.example.holmi_production.money_counter_app.di.modules.ApplicationModu
 import com.example.holmi_production.money_counter_app.di.modules.ContextModule
 import com.example.holmi_production.money_counter_app.di.modules.PreferenceModule
 import com.example.holmi_production.money_counter_app.firstLaunch.FirstLaunchPresenter
-import com.example.holmi_production.money_counter_app.main.MainFragmentPresenter
+import com.example.holmi_production.money_counter_app.keyboard.KeyboardFragmentPresenter
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [ContextModule::class, ApplicationModule::class, PreferenceModule::class])
 interface ApplicationComponent {
-    fun getMainPresenter(): MainFragmentPresenter
+    fun getMainPresenter(): KeyboardFragmentPresenter
     fun getCostsPresenter(): CostsPresenter
     fun getFirstLaunchPresenter(): FirstLaunchPresenter
     fun getChartPresenter(): ChartPresenter

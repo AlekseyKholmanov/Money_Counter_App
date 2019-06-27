@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.main
+package com.example.holmi_production.money_counter_app.keyboard
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -16,6 +16,7 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
+import com.example.holmi_production.money_counter_app.notification.NotificationManager
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
@@ -24,12 +25,12 @@ import org.joda.time.Days
 import javax.inject.Inject
 
 @InjectViewState
-class MainFragmentPresenter @Inject constructor(
+class KeyboardFragmentPresenter @Inject constructor(
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,
     private val contex: Context) :
-    BasePresenter<MainFragmnetView>() {
+    BasePresenter<KeyboardFragmnetView>() {
 
     fun saveSpend(sum: Double) {
         val categoryType = settingRepository.getCategoryValue()
@@ -159,7 +160,7 @@ class MainFragmentPresenter @Inject constructor(
             PendingIntent.FLAG_UPDATE_CURRENT
         }
         val pIntent = PendingIntent.getActivity(contex, 0, intent, 0)
-        return NotificationCompat.Builder(contex, CustomNotificationManager.CHANNEL_ID)
+        return NotificationCompat.Builder(contex, NotificationManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Итоги дня")
             .setContentText("ble ble ble")

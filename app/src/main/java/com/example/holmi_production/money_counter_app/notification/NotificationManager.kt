@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app
+package com.example.holmi_production.money_counter_app.notification
 
 import android.app.*
 import android.app.NotificationManager
@@ -6,11 +6,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
-import com.example.holmi_production.money_counter_app.broadcasts.DayChangeReceiver
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class CustomNotificationManager @Inject constructor(
+class NotificationManager @Inject constructor(
     private val notificationManager: NotificationManager,
     private val alarmManager: AlarmManager,
     private val application: Application) {
@@ -20,7 +19,7 @@ class CustomNotificationManager @Inject constructor(
 
     fun setNotificationTime() {
         val time = DateTime().withTimeAtStartOfDay().plusDays(1).plusHours(1).plusMinutes(0)
-        val intent = Intent(application, DayChangeReceiver::class.java)
+        val intent = Intent(application, NotificationAlarmReciever::class.java)
         val pi = PendingIntent.getBroadcast(application, 0, intent, 0)
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time.millis, AlarmManager.INTERVAL_DAY, pi)
         Log.d("qwerty", "Notification time setted")
@@ -28,7 +27,9 @@ class CustomNotificationManager @Inject constructor(
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
             notificationManager.createNotificationChannel(channel)
             channel.description = "My channel description"
             channel.enableLights(true)

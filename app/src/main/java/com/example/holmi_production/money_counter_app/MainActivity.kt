@@ -3,13 +3,8 @@ package com.example.holmi_production.money_counter_app
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import com.example.holmi_production.money_counter_app.chart.ChartFragment
-import com.example.holmi_production.money_counter_app.costs.CostsFragment
-import com.example.holmi_production.money_counter_app.main.MainFragment
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.example.holmi_production.money_counter_app.notification.NotificationManager
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -17,12 +12,12 @@ class MainActivity : AppCompatActivity() {
         val FIRST_OPEN = "FirstOpen"
     }
 
-    @Inject lateinit var customNotificationManager: CustomNotificationManager
+    @Inject lateinit var notificationManager: NotificationManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         App.component.inject(this)
-        customNotificationManager.setNotificationTime()
+        notificationManager.setNotificationTime()
         val navController = findNavController(R.id.mainNavFragment)
         val graph = navController.graph
         val preferences = this.getSharedPreferences("PREFERENCE_STORAGE", Context.MODE_PRIVATE)

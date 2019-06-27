@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.main
+package com.example.holmi_production.money_counter_app.keyboard
 
 import android.app.DatePickerDialog
 import android.app.Dialog
