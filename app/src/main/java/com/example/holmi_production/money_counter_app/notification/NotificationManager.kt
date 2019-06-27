@@ -13,7 +13,9 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import org.joda.time.DateTime
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class NotificationManager @Inject constructor(
     private val notificationManager: NotificationManager,
     private val alarmManager: AlarmManager,

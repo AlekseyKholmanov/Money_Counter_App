@@ -126,7 +126,7 @@ class KeyboardFragmentPresenter @Inject constructor(
                 settingRepository.saveEndDate(endDate)
                 sumPerDayRepository.insertToday(averageSum).complete().keep()
                 sumPerDayRepository.insertAverage(averageSum).complete().keep()
-                viewState.showSnack("новая сумма: $averageSum на ${period.getDayAddition()}")
+                viewState.showSnack("новая сумма: ${averageSum.toCurencyFormat()} на ${period.getDayAddition()}")
             }
             .keep()
     }
