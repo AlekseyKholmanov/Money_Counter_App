@@ -1,16 +1,10 @@
 package com.example.holmi_production.money_counter_app.broadcasts
 
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.example.holmi_production.money_counter_app.MainActivity
-import com.example.holmi_production.money_counter_app.NotificationManager
-import com.example.holmi_production.money_counter_app.R
 
 class DayChangeReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

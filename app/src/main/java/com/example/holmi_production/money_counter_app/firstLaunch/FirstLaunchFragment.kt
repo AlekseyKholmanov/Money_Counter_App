@@ -8,18 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_first_launch.*
 import org.joda.time.DateTime
 
 class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
     override fun showMainScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        findNavController().navigate(R.id.action_navFirstLaunch_to_navMain)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -145,7 +145,6 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
             dialog.setListener(this)
             dialog.show(childFragmentManager, "datePicker")
         }
-
         presenter.getDaysLeft()
         presenter.getCategoryButtonValue()
         presenter.setObservers()
