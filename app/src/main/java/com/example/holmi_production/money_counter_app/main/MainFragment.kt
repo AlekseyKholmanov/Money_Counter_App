@@ -148,7 +148,6 @@ class MainFragment : AndroidXMvpAppCompatFragment(), MainFragmnetView,
         presenter.getDaysLeft()
         presenter.getCategoryButtonValue()
         presenter.setObservers()
-        presenter.initializeNotification()
         super.onViewCreated(view, savedInstanceState)
     }
 

@@ -28,8 +28,7 @@ class MainFragmentPresenter @Inject constructor(
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,
-    private val contex: Context,
-    private val notificationManager: NotificationManager) :
+    private val contex: Context) :
     BasePresenter<MainFragmnetView>() {
 
     fun saveSpend(sum: Double) {
@@ -61,10 +60,6 @@ class MainFragmentPresenter @Inject constructor(
                 }
             }
             .keep()
-    }
-
-    fun initializeNotification() {
-        notificationManager.setNotificationTime()
     }
 
     fun setObservers() {
@@ -164,7 +159,7 @@ class MainFragmentPresenter @Inject constructor(
             PendingIntent.FLAG_UPDATE_CURRENT
         }
         val pIntent = PendingIntent.getActivity(contex, 0, intent, 0)
-        return NotificationCompat.Builder(contex, NotificationManager.CHANNEL_ID)
+        return NotificationCompat.Builder(contex, CustomNotificationManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Итоги дня")
             .setContentText("ble ble ble")

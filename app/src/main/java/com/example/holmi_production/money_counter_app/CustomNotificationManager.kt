@@ -10,7 +10,7 @@ import com.example.holmi_production.money_counter_app.broadcasts.DayChangeReceiv
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class NotificationManager @Inject constructor(
+class CustomNotificationManager @Inject constructor(
     private val notificationManager: NotificationManager,
     private val alarmManager: AlarmManager,
     private val application: Application) {
