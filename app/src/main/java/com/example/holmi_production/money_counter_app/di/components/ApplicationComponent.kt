@@ -6,6 +6,7 @@ import com.example.holmi_production.money_counter_app.costs.CostsPresenter
 import com.example.holmi_production.money_counter_app.di.modules.ApplicationModule
 import com.example.holmi_production.money_counter_app.di.modules.ContextModule
 import com.example.holmi_production.money_counter_app.di.modules.PreferenceModule
+import com.example.holmi_production.money_counter_app.endPeriod.EndPeriodPresenter
 import com.example.holmi_production.money_counter_app.firstLaunch.FirstLaunchPresenter
 import com.example.holmi_production.money_counter_app.keyboard.KeyboardFragmentPresenter
 import com.example.holmi_production.money_counter_app.main.MainPresenter
@@ -21,6 +22,7 @@ interface ApplicationComponent {
     fun getFirstLaunchPresenter(): FirstLaunchPresenter
     fun getChartPresenter(): ChartPresenter
     fun getMainPresenter():MainPresenter
+    fun getEndPeriodPresenter():EndPeriodPresenter
     fun inject(activity: MainActivity)
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
 }
