@@ -4,16 +4,17 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.example.holmi_production.money_counter_app.App
+import com.example.holmi_production.money_counter_app.interactor.NotificationInteractor
+import javax.inject.Inject
 
-class NotificationAlarmReciever : BroadcastReceiver() {
+class NotificationAlarmReciever @Inject constructor(): BroadcastReceiver() {
+
+    @Inject lateinit var notificationInteractor: NotificationInteractor
+
     override fun onReceive(context: Context, intent: Intent) {
-        Log.d("qwerty", "beach fuck")
-        send(context)
-
-    }
-    private fun send(context: Context){
-        val intent = Intent("custom-intent-filter")
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+        App.component.inject(this)
+        Log.d("qwerty", "notification received")
+        notificationInteractor.alarmTriggered()
     }
 }

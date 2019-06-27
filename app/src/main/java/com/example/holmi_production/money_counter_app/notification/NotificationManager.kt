@@ -6,6 +6,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
+import com.example.holmi_production.money_counter_app.main.MainActivity
 import org.joda.time.DateTime
 import javax.inject.Inject
 
@@ -38,6 +43,37 @@ class NotificationManager @Inject constructor(
             notificationManager.createNotificationChannel(channel)
 
             Log.d("qwerty", "initialize channel")
+        }
+    }
+
+    private fun buildNotification(saveSum: Double, newSum: Double): Notification {
+        val intent = Intent(application, MainActivity::class.java).apply {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+        val pIntent = PendingIntent.getActivity(application, 0, intent, 0)
+        return NotificationCompat.Builder(application, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("Итоги дня")
+            .setContentText("ble ble ble")
+            .setStyle(
+                NotificationCompat.InboxStyle()
+                    .addLine("Вчера сэкономлено:${saveSum.toCurencyFormat()}")
+                    .addLine("Сумма на сегодня :${newSum.toCurencyFormat()}")
+            )
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pIntent)
+            .build()
+    }
+
+    fun notify(savedSum:Double, newSumPerDay:Double){
+        val notification = buildNotification(savedSum, newSumPerDay)
+        sendNotification(notification)
+    }
+
+
+    private fun sendNotification(notification: Notification) {
+        with(NotificationManagerCompat.from(application)) {
+            notify(1, notification)
         }
     }
 

@@ -13,6 +13,7 @@ import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
+import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
@@ -114,22 +115,6 @@ class KeyboardFragmentPresenter @Inject constructor(
         settingRepository.setCategoryButtonType(type)
     }
 
-    fun alarmTriggered() {
-        Log.d("qwert", "alarm triggered")
-        sumPerDayRepository.getBoth()
-            .async()
-            .subscribe { it ->
-                val yesterday = it.first
-                val newTodaySum = it.second
-                sumPerDayRepository.insertToday(newTodaySum.inc(yesterday.sum).sum).complete().keep()
-
-                val notification = buildNotification(yesterday.sum, newTodaySum.sum)
-                sendNotification(notification)
-            }
-            .keep()
-        updateDayLeft()
-    }
-
     fun recalculateAverageSum(endDate: DateTime) {
         spendingRepository.getAll()
             .async()
@@ -155,28 +140,5 @@ class KeyboardFragmentPresenter @Inject constructor(
         viewState.showDaysLeft(" на ${diff.getDayAddition()}")
     }
 
-    private fun buildNotification(saveSum: Double, newSum: Double): Notification {
-        val intent = Intent(contex, MainActivity::class.java).apply {
-            PendingIntent.FLAG_UPDATE_CURRENT
-        }
-        val pIntent = PendingIntent.getActivity(contex, 0, intent, 0)
-        return NotificationCompat.Builder(contex, NotificationManager.CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("Итоги дня")
-            .setContentText("ble ble ble")
-            .setStyle(
-                NotificationCompat.InboxStyle()
-                    .addLine("Вчера сэкономлено:${saveSum.toCurencyFormat()}")
-                    .addLine("Сумма на сегодня :${newSum.toCurencyFormat()}")
-            )
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pIntent)
-            .build()
-    }
 
-    private fun sendNotification(notification: Notification) {
-        with(NotificationManagerCompat.from(contex)) {
-            notify(1, notification)
-        }
-    }
 }

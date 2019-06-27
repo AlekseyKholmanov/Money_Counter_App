@@ -117,12 +117,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     private lateinit var key: Keyboard
     private lateinit var scroll: ScrollView
 
-    private val mDayChangedReciever: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            presenter.alarmTriggered()
-        }
-    }
-
     @InjectPresenter
     lateinit var presenter: KeyboardFragmentPresenter
 
@@ -149,17 +143,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         presenter.getCategoryButtonValue()
         presenter.setObservers()
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        LocalBroadcastManager.getInstance(this.requireContext())
-            .registerReceiver(mDayChangedReciever, IntentFilter("custom-intent-filter"))
-    }
-
-    override fun onDestroy() {
-        LocalBroadcastManager.getInstance(this.requireContext()).unregisterReceiver(mDayChangedReciever)
-        super.onDestroy()
     }
 }
 

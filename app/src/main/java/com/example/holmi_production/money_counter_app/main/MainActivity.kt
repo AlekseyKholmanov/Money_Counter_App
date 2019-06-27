@@ -1,9 +1,12 @@
-package com.example.holmi_production.money_counter_app
+package com.example.holmi_production.money_counter_app.main
 
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.example.holmi_production.money_counter_app.App
+import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.notification.NotificationManager
 import javax.inject.Inject
 
