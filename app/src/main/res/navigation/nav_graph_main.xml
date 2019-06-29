@@ -16,5 +16,12 @@
             tools:layout="@layout/fragment_first_launch">
         <action android:id="@+id/action_navFirstLaunch_to_navMain" app:destination="@id/navMain"/>
     </fragment>
+    <fragment
+            android:id="@+id/navEndPeriod"
+            android:name="com.example.holmi_production.money_counter_app.endPeriod.EndPeriodFragment"
+            android:label=""
+            tools:layout="@layout/fragment_end_period">
+        <action android:id="@+id/action_navEndPeriod_to_navMain" app:destination="@id/navMain"/>
+    </fragment>
 
 </navigation>

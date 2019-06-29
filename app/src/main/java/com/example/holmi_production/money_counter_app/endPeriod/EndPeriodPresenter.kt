@@ -10,4 +10,8 @@ class EndPeriodPresenter @Inject constructor(): MvpPresenter<EndPeriodView>() {
 
     }
 
+    fun goToMain(){
+        viewState.goToMain()
+    }
+
 }

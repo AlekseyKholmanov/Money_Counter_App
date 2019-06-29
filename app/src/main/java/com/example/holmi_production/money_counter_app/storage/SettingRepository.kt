@@ -84,6 +84,14 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return settingSubject.toFlowable(BackpressureStrategy.LATEST)
     }
 
+    fun setIsEnd() {
+        pref.edit().putBoolean(IS_END, true).apply()
+    }
+
+    fun getIsEnd(): Boolean {
+        return pref.getBoolean(IS_END, false)
+    }
+
     val FIRST_OPEN = "FirstOpen"
     val START_PERIOD = "START_PERIOD"
     val END_PERIOD = "END_PERIOD"

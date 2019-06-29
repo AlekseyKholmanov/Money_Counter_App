@@ -100,6 +100,27 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="navEndPeriod">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="10" />
+                            <option name="y" value="314" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_navEndPeriod_to_navMain">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="navFirstLaunch">
                     <value>
                       <LayoutPositions>
@@ -126,8 +147,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="12" />
+                            <option name="x" value="296" />
+                            <option name="y" value="172" />
                           </Point>
                         </option>
                       </LayoutPositions>

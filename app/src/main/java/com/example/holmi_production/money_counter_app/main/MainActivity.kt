@@ -36,7 +36,10 @@ class MainActivity : AndroidXMvpAppCompatActivity(), MainView {
         val preferences = this.getSharedPreferences("PREFERENCE_STORAGE", Context.MODE_PRIVATE)
         if (!preferences.contains(FIRST_OPEN))
             graph.startDestination = R.id.navFirstLaunch
+        else if (preferences.getBoolean("IS_END",false))
+            graph.startDestination = R.id.navEndPeriod
         navController.graph = graph
+
     }
 
     private val mDayChangedReciever: BroadcastReceiver = object : BroadcastReceiver() {
