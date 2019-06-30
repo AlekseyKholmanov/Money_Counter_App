@@ -66,7 +66,11 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return pref.contains(FIRST_OPEN)
     }
 
-    private fun getEndPeriod(): Long {
+    fun getStartDate():Long{
+        return pref.getLong(START_PERIOD,0)
+    }
+
+    fun getEndPeriod(): Long {
         return pref.getLong(END_PERIOD, 0)
     }
 
@@ -84,17 +88,17 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return settingSubject.toFlowable(BackpressureStrategy.LATEST)
     }
 
-    fun setIsEnd() {
-        pref.edit().putBoolean(IS_END, true).apply()
+    fun setIsEnd(isEnd:Boolean) {
+        pref.edit().putBoolean(IS_END, isEnd).apply()
     }
 
     fun getIsEnd(): Boolean {
         return pref.getBoolean(IS_END, false)
     }
 
-    val FIRST_OPEN = "FirstOpen"
-    val START_PERIOD = "START_PERIOD"
-    val END_PERIOD = "END_PERIOD"
-    val IS_END = "IS_END"
-    val CATEGORY_VALUE = "Category_value"
+    private val FIRST_OPEN = "FirstOpen"
+    private val START_PERIOD = "START_PERIOD"
+    private val END_PERIOD = "END_PERIOD"
+    private val IS_END = "IS_END"
+    private val CATEGORY_VALUE = "Category_value"
 }

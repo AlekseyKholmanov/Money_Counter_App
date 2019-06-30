@@ -12,9 +12,7 @@ class MainPresenter @Inject constructor(
     private val settingRepository: SettingRepository) : BasePresenter<MainView>() {
 
     fun getNotification() {
-        val endDate = settingRepository.getTillEnd()
-        if (endDate <= 0)
-            settingRepository.setIsEnd()
+
         notificationInteractor.alarmTriggered().keep()
     }
 }

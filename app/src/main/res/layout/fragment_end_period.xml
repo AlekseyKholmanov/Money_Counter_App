@@ -15,7 +15,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:text=""
             tools:text="BLABLALBA"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:layout_margin="8dp"/>
     <TextView
             android:id="@+id/end_period_date_row"
@@ -26,43 +26,57 @@
             android:text="За период с 06 по 10 "
             android:layout_margin="8dp"/>
     <TextView
-            android:id="@+id/end_period_spent_text"
+            android:id="@+id/end_period_spended_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="СУММА В НАЧАЛЕ ПЕРИОДА:"
+            android:text="Потрачено:"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/end_period_date_row"
-            android:layout_margin="8dp"
-    />
+            android:layout_margin="8dp"/>
 
     <TextView
-            android:id="@+id/end_period_spent_sum"
+            android:id="@+id/end_period_spended_sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="5067.5 Рублей:"
-            app:layout_constraintStart_toEndOf="@id/end_period_spent_text"
+            app:layout_constraintStart_toEndOf="@id/end_period_spended_text"
             app:layout_constraintTop_toBottomOf="@id/end_period_date_row"
-            android:layout_margin="8dp"
-    />
+            android:layout_margin="8dp"/>
     <TextView
-            android:id="@+id/end_period_income_text"
+            android:id="@+id/end_period_left_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="СУММА В КОНЦЕ ПЕРИОДА:"
+            android:text="Осталось:"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/end_period_spent_text"
-            android:layout_margin="8dp"
-    />
+            app:layout_constraintTop_toBottomOf="@id/end_period_spended_text"
+            android:layout_margin="8dp"/>
 
     <TextView
-            android:id="@+id/end_period_income_sum"
+            android:id="@+id/end_period_left_sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1098.1 Рубль:"
-            app:layout_constraintStart_toEndOf="@id/end_period_income_text"
-            app:layout_constraintTop_toBottomOf="@id/end_period_spent_text"
-            android:layout_margin="8dp"
-    />
+            app:layout_constraintStart_toEndOf="@id/end_period_left_text"
+            app:layout_constraintTop_toBottomOf="@id/end_period_spended_text"
+            android:layout_margin="8dp"/>
+
+    <TextView
+            android:id="@+id/end_period_average_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Средняя трата в день:"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/end_period_left_text"
+            android:layout_margin="8dp"/>
+
+    <TextView
+            android:id="@+id/end_period_average_sum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1098.1 Рубль:"
+            app:layout_constraintStart_toEndOf="@id/end_period_average_text"
+            app:layout_constraintTop_toBottomOf="@id/end_period_left_text"
+            android:layout_margin="8dp"/>
     <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/endPeriod_next"
             android:layout_width="match_parent"

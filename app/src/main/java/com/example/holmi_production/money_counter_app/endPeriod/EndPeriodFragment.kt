@@ -13,6 +13,22 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import kotlinx.android.synthetic.main.fragment_end_period.*
 
 class EndPeriodFragment : AndroidXMvpAppCompatFragment(),EndPeriodView {
+    override fun showDatePeriod(start: String, end: String) {
+        end_period_date_row.text = "За период с $start по $end:"
+    }
+
+    override fun showLeftSum(sum: String) {
+        end_period_left_sum.text = sum
+    }
+
+    override fun showSpendedSum(sum: String) {
+        end_period_spended_sum.text = sum
+    }
+
+    override fun ShowAverageSumForPeriod(sum: String) {
+        end_period_average_sum.text = sum
+    }
+
     override fun goToMain() {
         findNavController().navigate(R.id.action_navEndPeriod_to_navMain)
     }
@@ -27,7 +43,7 @@ class EndPeriodFragment : AndroidXMvpAppCompatFragment(),EndPeriodView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getDatas()
+        presenter.getSum()
         endPeriod_next.setOnClickListener {
             presenter.goToMain()
         }

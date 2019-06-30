@@ -16,5 +16,4 @@ import com.example.holmi_production.money_counter_app.model.SumPerDay
 abstract class ExpenseDatabase : RoomDatabase() {
     abstract val spendingDao: SpendingDao
     abstract val sumPerDayDao: SumPerDayDao
-    abstract val peiodDao:PeriodDao
 }
