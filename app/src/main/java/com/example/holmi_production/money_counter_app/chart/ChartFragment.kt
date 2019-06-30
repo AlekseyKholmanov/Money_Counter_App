@@ -44,24 +44,26 @@ class ChartFragment : AndroidXMvpAppCompatFragment(),ChartView {
         Log.d("qwerty","chart resumed")
     }
     override fun showPie(data: Map<CategoryType, List<Spending>>) {
-        chart_pie.description.text = "Chart Pie"
+        chart_pie.description.text = "Расходы"
         chart_pie.description.textSize = 20f
-        chart_pie.holeRadius = 25f
+        chart_pie.holeRadius = 40f
         val first = arrayListOf<PieEntry>()
         val second = arrayListOf<String>()
         val colors = arrayListOf<Int>()
+
         data.forEach { (category, spendings) ->
             val sum = spendings.sumByDouble { it.sum }
-            first.add(PieEntry(sum.toFloat(), category.id.toFloat()))
+            first.add(PieEntry(sum.toFloat(), category.description))
             second.add(category.description)
             colors.add(category.color)
         }
-        val pieSet = PieDataSet(first.toList(),"Spendings")
-        pieSet.valueTextSize = 16f
+        val pieSet = PieDataSet(first.toList(),null)
+        val pieData = PieData(pieSet)
+        pieSet.valueTextSize = 20f
         pieSet.sliceSpace = 2f
-        val data = PieData(pieSet)
         pieSet.colors = colors
-        chart_pie.data = data
+        chart_pie.data = pieData
+        chart_pie.description.textSize = 25f
         chart_pie.animateXY(1000,1000)
 
     }
