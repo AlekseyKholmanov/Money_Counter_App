@@ -41,7 +41,7 @@ class FirstLaunchPresenter @Inject constructor(
     fun updateDate(date: DateTime) {
         endPeriod = date.withTimeAtStartOfDay()
         today = DateTime().withTimeAtStartOfDay()
-        dif = (Days.daysBetween(today, endPeriod) + 1).days
+        dif = (Days.daysBetween(today, endPeriod)).days
         viewState.showDate(date.toRUformat(), (dif).getDayAddition())
     }
 
