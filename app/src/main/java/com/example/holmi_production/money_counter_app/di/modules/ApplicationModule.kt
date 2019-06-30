@@ -4,14 +4,14 @@ import android.app.AlarmManager
 import android.app.Application
 import android.app.NotificationManager
 import android.content.Context
-import android.preference.Preference
-import androidx.core.content.ContextCompat.getSystemService
+import android.content.Context.NOTIFICATION_SERVICE
+import android.content.Context.VIBRATOR_SERVICE
+import android.os.Vibrator
 import androidx.core.content.getSystemService
 import androidx.room.Room
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import dagger.Module
 import dagger.Provides
-import java.util.prefs.Preferences
 import javax.inject.Singleton
 
 @Module
@@ -39,6 +39,12 @@ class ApplicationModule(private val application: Application) {
     @Provides
     @Singleton
     fun provideNotificationManager():NotificationManager{
-        return  application.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        return  application.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+    }
+
+    @Provides
+    @Singleton
+    fun provideVibrator(): Vibrator {
+        return application.getSystemService(VIBRATOR_SERVICE) as Vibrator
     }
 }

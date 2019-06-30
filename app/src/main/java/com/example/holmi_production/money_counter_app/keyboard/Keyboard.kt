@@ -5,10 +5,13 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.Vibrator
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import kotlinx.android.synthetic.main.keyboard.view.*
+import javax.inject.Inject
 
 class Keyboard @JvmOverloads constructor(
     context: Context,
@@ -19,6 +22,8 @@ class Keyboard @JvmOverloads constructor(
 
     private lateinit var mKeyboardListener: IKeyboardListener
     private var purshaseSum = "0"
+    @Inject
+    lateinit var vibrator: Vibrator
 
     init {
         View.inflate(context, R.layout.keyboard, this)
@@ -37,9 +42,13 @@ class Keyboard @JvmOverloads constructor(
         key_enter.setOnClickListener { pressed(ButtonTypes.ENTER) }
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
         purshace_sum_textview.text = purshaseSum
+        App.component.inject(this)
+
     }
 
     private fun pressed(type: ButtonTypes, value: String? = null) {
+        vibrator.vibrate(50)
+
         when (type) {
             ButtonTypes.DELETE -> {
                 if (purshaseSum == "0") return

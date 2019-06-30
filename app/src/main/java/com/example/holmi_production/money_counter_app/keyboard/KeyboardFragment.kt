@@ -111,7 +111,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     private lateinit var key: Keyboard
-    private lateinit var scroll: ScrollView
 
     @InjectPresenter
     lateinit var presenter: KeyboardFragmentPresenter
@@ -127,8 +126,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         key = view.findViewById(R.id.keyboard)
-        scroll = view.findViewById(R.id.hsv)
-        scroll.setCallback(this)
         key.setListener(this)
         left_days.setOnClickListener {
             val dialog = TimePickerDialog.newInstance(withMinDate = true)

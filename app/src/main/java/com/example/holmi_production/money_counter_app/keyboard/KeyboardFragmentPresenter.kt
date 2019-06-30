@@ -85,7 +85,7 @@ class KeyboardFragmentPresenter @Inject constructor(
         sumPerDayRepository.observeAverage()
             .async()
             .subscribe { average ->
-                viewState.showAverageSum(average.sum.toCurencyFormat(), true)
+                viewState.showAverageSum(average.sum.toCurencyFormat(), average.sum >= 0.0)
             }
             .keep()
         settingRepository.observeCategoryValue()

@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.interactor
 
-import android.content.Context
 import android.util.Log
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete

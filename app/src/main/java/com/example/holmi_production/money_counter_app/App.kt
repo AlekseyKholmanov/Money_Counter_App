@@ -26,5 +26,3 @@ class App:Application(){
             .build()
     }
 }
-
-//TODO отписка от интерфейсов
