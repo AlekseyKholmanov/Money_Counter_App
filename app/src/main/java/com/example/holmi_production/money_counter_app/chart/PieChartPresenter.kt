@@ -8,10 +8,10 @@ import com.example.holmi_production.money_counter_app.storage.SumPerDayRepositor
 import javax.inject.Inject
 
 @InjectViewState
-class ChartPresenter @Inject constructor(
+class PieChartPresenter @Inject constructor(
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository
-) : BasePresenter<ChartView>() {
+) : BasePresenter<PieChartView>() {
     fun getPieData() {
         spendingRepository.getSpent()
             .async()

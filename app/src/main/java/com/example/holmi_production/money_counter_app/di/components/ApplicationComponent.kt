@@ -1,7 +1,7 @@
 package com.example.holmi_production.money_counter_app.di.components
 
 import com.example.holmi_production.money_counter_app.main.MainActivity
-import com.example.holmi_production.money_counter_app.chart.ChartPresenter
+import com.example.holmi_production.money_counter_app.chart.PieChartPresenter
 import com.example.holmi_production.money_counter_app.costs.CostsPresenter
 import com.example.holmi_production.money_counter_app.di.modules.ApplicationModule
 import com.example.holmi_production.money_counter_app.di.modules.ContextModule
@@ -21,7 +21,7 @@ interface ApplicationComponent {
     fun getKeyboardPresenter(): KeyboardFragmentPresenter
     fun getCostsPresenter(): CostsPresenter
     fun getFirstLaunchPresenter(): FirstLaunchPresenter
-    fun getChartPresenter(): ChartPresenter
+    fun getChartPresenter(): PieChartPresenter
     fun getMainPresenter():MainPresenter
     fun getEndPeriodPresenter():EndPeriodPresenter
     fun inject(activity: MainActivity)
