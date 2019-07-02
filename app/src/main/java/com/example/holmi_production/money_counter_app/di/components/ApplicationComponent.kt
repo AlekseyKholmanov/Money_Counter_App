@@ -24,6 +24,7 @@ interface ApplicationComponent {
     fun getChartPresenter(): PieChartPresenter
     fun getMainPresenter():MainPresenter
     fun getEndPeriodPresenter():EndPeriodPresenter
+    fun getStackedPresenter():StackedFragmentPresenter
     fun inject(activity: MainActivity)
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
     fun inject(keyboard: Keyboard)

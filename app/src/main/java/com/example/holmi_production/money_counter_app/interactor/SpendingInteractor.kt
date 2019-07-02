@@ -13,7 +13,7 @@ class SpendingInteractor @Inject constructor(
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository) {
 
-    fun getAll(): Single<Pair<List<Spending>, List<Spending>>> {
+    fun getAllSeparate(): Single<Pair<List<Spending>, List<Spending>>> {
         return spendingRepository.getAll()
             .async()
             .map { list->
@@ -21,5 +21,10 @@ class SpendingInteractor @Inject constructor(
                 val spending = list.toMutableList().filter { it.categoryTypes!=CategoryType.SALARY}
                 return@map Pair<List<Spending>,List<Spending>>(income,spending)
                 }
+    }
+
+    fun getAll(): Single<List<Spending>>{
+        return spendingRepository.getAll()
+            .async()
     }
 }

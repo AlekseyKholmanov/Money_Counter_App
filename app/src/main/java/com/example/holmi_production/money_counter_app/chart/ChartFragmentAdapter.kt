@@ -9,7 +9,7 @@ class ChartFragmentAdapter(fm: FragmentManager, behavior: Int = BEHAVIOR_RESUME_
     override fun getItem(position: Int): Fragment {
         return when (ChartType.values()[position]){
             ChartType.PIE_CHART -> PieChartFragment()
-            ChartType.GRAPH_CHART -> GraphPieFragment()
+            ChartType.GRAPH_CHART -> StackedChartFragmnet()
         }
     }
 

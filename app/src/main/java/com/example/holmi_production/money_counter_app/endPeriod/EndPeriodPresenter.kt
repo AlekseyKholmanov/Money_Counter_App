@@ -7,7 +7,6 @@ import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import javax.inject.Inject
 @InjectViewState
 class EndPeriodPresenter @Inject constructor(
@@ -19,7 +18,7 @@ class EndPeriodPresenter @Inject constructor(
         val startDate = settingRepository.getStartDate().toDateTime()
         val endDate = settingRepository.getEndPeriod().toDateTime()
         val periodDays = settingRepository.getTillEnd()
-        spendingInteractor.getAll()
+        spendingInteractor.getAllSeparate()
             .subscribe ({ it ->
                 val income = it.first
                 val spending = it.second
