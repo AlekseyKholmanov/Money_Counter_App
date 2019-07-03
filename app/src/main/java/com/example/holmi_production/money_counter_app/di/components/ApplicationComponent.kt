@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.di.components
 
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.chart.PieChartPresenter
+import com.example.holmi_production.money_counter_app.chart.StackedPresenter
 import com.example.holmi_production.money_counter_app.costs.CostsPresenter
 import com.example.holmi_production.money_counter_app.di.modules.ApplicationModule
 import com.example.holmi_production.money_counter_app.di.modules.ContextModule
@@ -24,7 +25,7 @@ interface ApplicationComponent {
     fun getChartPresenter(): PieChartPresenter
     fun getMainPresenter():MainPresenter
     fun getEndPeriodPresenter():EndPeriodPresenter
-    fun getStackedPresenter():StackedFragmentPresenter
+    fun getStackedPresenter():StackedPresenter
     fun inject(activity: MainActivity)
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
     fun inject(keyboard: Keyboard)

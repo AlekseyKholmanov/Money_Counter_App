@@ -12,11 +12,12 @@ class StackedPresenter @Inject constructor(private val spendingInteractor: Spend
 
     fun getDatas() {
         spendingInteractor.getAll()
-            .map { it.filter { it.spendingDate >= DateTime().minusDays(7) } }
+            .map { it.filter { it.spendingDate >= DateTime().minusDays(5) } }
             .map { it.groupBy { it.spendingDate } }
             .subscribe { list->
                 viewState.showFraph(list)
             }
+            .keep()
 
     }
 }
