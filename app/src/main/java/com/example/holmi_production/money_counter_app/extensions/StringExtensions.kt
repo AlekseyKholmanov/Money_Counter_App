@@ -8,7 +8,7 @@ fun Number.toCurencyFormat(): String {
     return if (this.toString().takeLast(2) == ".0")
         (this.toString().dropLast(2))
     else
-        String.format("%.1f", this)
+        String.format(Locale.ROOT,"%.1f", this)
 }
 
 fun DateTime.toRUformat(): String {
