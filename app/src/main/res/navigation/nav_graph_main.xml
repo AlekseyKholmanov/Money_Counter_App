@@ -14,14 +14,19 @@
             android:name="com.example.holmi_production.money_counter_app.firstLaunch.FirstLaunchFragment"
             android:label="Home"
             tools:layout="@layout/fragment_first_launch">
-        <action android:id="@+id/action_navFirstLaunch_to_navMain" app:destination="@id/navMain"/>
+        <action android:id="@+id/action_navFirstLaunch_to_navMain" app:destination="@id/navMain"
+                app:launchSingleTop="false" app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_enter_anim" app:popUpToInclusive="false"
+                app:popUpTo="@+id/nav_graph_main"/>
     </fragment>
     <fragment
             android:id="@+id/navEndPeriod"
             android:name="com.example.holmi_production.money_counter_app.endPeriod.EndPeriodFragment"
             android:label=""
             tools:layout="@layout/fragment_end_period">
-        <action android:id="@+id/action_navEndPeriod_to_navMain" app:destination="@id/navMain"/>
+        <action android:id="@+id/action_navEndPeriod_to_navMain" app:destination="@id/navMain"
+                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
+                app:popUpToInclusive="false" app:launchSingleTop="false" app:popUpTo="@+id/nav_graph_main"/>
     </fragment>
 
 </navigation>

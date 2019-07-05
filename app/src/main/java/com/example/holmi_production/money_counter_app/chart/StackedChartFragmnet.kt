@@ -8,6 +8,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.github.mikephil.charting.charts.BarChart
@@ -18,7 +19,7 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import org.joda.time.DateTime
-import java.util.*
+import kotlin.collections.ArrayList
 
 class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
 
@@ -26,22 +27,30 @@ class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
 
     override fun showFraph(list: Map<DateTime, List<Spending>>) {
         val keys = list.keys.toTypedArray()
-        val values = ArrayList<BarEntry>()
-        for (i in 0 until list.count()) {
-            val sum = list[keys[i]]?.sumByDouble { it.sum }?.toFloat() ?: 0f
-            values.add(BarEntry(i.toFloat(), sum))
-        }
 
-        val set = BarDataSet(values, "blabla")
         val dataSets = ArrayList<IBarDataSet>()
-        dataSets.add(set)
-        val data = BarData(dataSets)
-        chart.data = data
-        chart.barData.setValueTextSize(25f)
+        for (i in 0 until list.count()) {
 
-        chart.xAxis.labelCount = list.count()
-        chart.notifyDataSetChanged()
+            val groupedSpending = list.getValue(keys[i]).groupBy { it.categoryTypes }
+            val sums = ArrayList<Pair<Float, CategoryType>>()
+            groupedSpending.forEach { (type, spendings) ->
+                sums.add(Pair(spendings.sumByDouble { it.sum }.toFloat(), type))
+            }
+            val newList = sums.sortedWith(Comparator { o1, o2 -> o1.first.compareTo(o2.first) })
+            val entry = BarEntry(i.toFloat(), newList.map { it.first }.toFloatArray())
+            val barDataSet = BarDataSet(listOf(entry), i.toString())
 
+            barDataSet.colors = newList.map { it.second.color }
+            dataSets.add(barDataSet)
+
+            val data = BarData(dataSets)
+            chart.data = data
+            chart.barData.setValueTextSize(18f)
+
+            chart.xAxis.labelCount = list.count()
+            chart.notifyDataSetChanged()
+
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -59,6 +68,8 @@ class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
         chart.setDrawValueAboveBar(false)
         chart.isHighlightFullBarEnabled = false
 
+        chart.description.text=""
+
         val leftAxis = chart.axisLeft
         leftAxis.axisMinimum = 0f // this replaces setStartAtZero(true)
         chart.axisRight.isEnabled = false
@@ -69,6 +80,7 @@ class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
         xLabels.textSize = 10f
 
         val l = chart.legend
+        l.isEnabled = false
         l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
         l.orientation = Legend.LegendOrientation.HORIZONTAL

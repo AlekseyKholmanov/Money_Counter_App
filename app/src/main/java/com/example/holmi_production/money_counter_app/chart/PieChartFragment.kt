@@ -38,6 +38,7 @@ class PieChartFragment: AndroidXMvpAppCompatFragment(),PieChartView{
         chart_pie.description.text = "Расходы"
         chart_pie.description.textSize = 20f
         chart_pie.holeRadius = 40f
+        chart_pie.isRotationEnabled = false
         val first = arrayListOf<PieEntry>()
         val second = arrayListOf<String>()
         val colors = arrayListOf<Int>()

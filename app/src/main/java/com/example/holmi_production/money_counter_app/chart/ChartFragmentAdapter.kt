@@ -18,7 +18,7 @@ class ChartFragmentAdapter(fm: FragmentManager, behavior: Int = BEHAVIOR_RESUME_
     override fun getPageTitle(position: Int): CharSequence {
         return when (ChartType.values()[position]) {
             ChartType.PIE_CHART -> "Pie"
-            ChartType.GRAPH_CHART -> "Graph"
+            ChartType.GRAPH_CHART -> "Stacked bar"
         }
     }
 }
