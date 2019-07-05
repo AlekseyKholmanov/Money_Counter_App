@@ -37,6 +37,9 @@ class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
         dataSets.add(set)
         val data = BarData(dataSets)
         chart.data = data
+        chart.barData.setValueTextSize(25f)
+
+        chart.xAxis.labelCount = list.count()
         chart.notifyDataSetChanged()
 
     }
@@ -61,16 +64,19 @@ class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
         chart.axisRight.isEnabled = false
 
         val xLabels = chart.xAxis
-        xLabels.position = XAxis.XAxisPosition.TOP
+        xLabels.position = XAxis.XAxisPosition.BOTTOM
+        xLabels.setDrawGridLines(false)
+        xLabels.textSize = 10f
 
         val l = chart.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
         l.orientation = Legend.LegendOrientation.HORIZONTAL
         l.setDrawInside(false)
-        l.formSize = 8f
+        l.formSize = 20f
         l.formToTextSpace = 4f
         l.xEntrySpace = 6f
+        l.textSize = 25f
 
         presenter.getDatas()
 
