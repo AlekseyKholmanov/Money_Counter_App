@@ -26,10 +26,10 @@ class CategoryAlertDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val gridLayout = GridLayout(context)
-        val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         gridLayout.layoutParams = params
         gridLayout.columnCount = 3
-        for (i in 0 until CategoryType.values().count() - 1) {
+        for (i in 0 until CategoryType.values().count()) {
             val categoryItem = CategoryItem(CategoryType.values()[i], context!!)
             categoryItem.setOnClickListener {
                 selectedType = CategoryType.values()[i]

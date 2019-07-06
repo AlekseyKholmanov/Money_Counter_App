@@ -65,7 +65,6 @@ class KeyboardFragmentPresenter @Inject constructor(
     }
 
     fun setObservers() {
-        Log.d("qwerty", "start Obserfve + ${this.hashCode()}")
 
         spendingRepository.observeSpending()
             .async()
