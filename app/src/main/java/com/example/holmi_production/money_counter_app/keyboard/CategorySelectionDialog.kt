@@ -30,7 +30,9 @@ class CategoryAlertDialog : DialogFragment() {
         gridLayout.layoutParams = params
         gridLayout.columnCount = 3
         for (i in 0 until CategoryType.values().count()) {
-            val categoryItem = CategoryItem(CategoryType.values()[i], context!!)
+            val type = CategoryType.values()[i]
+            val categoryItem =
+                CategoryItem(type.color, type.description, getImage(type), context!!)
             categoryItem.setOnClickListener {
                 selectedType = CategoryType.values()[i]
                 callback.categoryPicked(selectedType)
@@ -43,6 +45,20 @@ class CategoryAlertDialog : DialogFragment() {
             .setIcon(R.drawable.ic_launcher_background)
             .setView(gridLayout)
             .create()
+    }
+
+    private fun getImage(categoryType: CategoryType): Int {
+        return when (categoryType) {
+            CategoryType.SALARY -> R.drawable.icon_salary
+            CategoryType.HOME -> R.drawable.icon_home
+            CategoryType.ENTERTAINMENT -> R.drawable.icon_glass
+            CategoryType.FOOD -> R.drawable.icon_food
+            CategoryType.TRANSPORT -> R.drawable.icon_bus
+            CategoryType.WEAR -> R.drawable.icon_clothes_2
+            CategoryType.NET -> R.drawable.icon_network
+            CategoryType.BAR -> R.drawable.icon_bar
+            CategoryType.OTHER -> R.drawable.icon_other
+        }
     }
 }
 
