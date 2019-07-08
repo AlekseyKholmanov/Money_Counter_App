@@ -38,10 +38,6 @@ class CategoryAlertDialog : DialogFragment() {
         val gridView = view.findViewById(R.id.gridView) as GridView
         gridView.adapter = CategoryDialogAdapter(context!!,callback)
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 }
 
 interface ICategoryPickedListener {

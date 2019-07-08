@@ -20,6 +20,9 @@ import org.joda.time.DateTime
 
 class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     IKeyboardListener, IScrollCallback, ICategoryPickedListener, IDatePickerCallback {
+
+    private lateinit var dialog: CategoryAlertDialog
+
     override fun showCategoryButton(categoryType: CategoryType) {
         keyboard.setCategoryButtonValue(categoryType)
     }
@@ -32,27 +35,27 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("qwerty","main attached")
+        Log.d("qwerty", "main attached")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d("qwerty","main stopped")
+        Log.d("qwerty", "main stopped")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("qwerty","main view destroyed")
+        Log.d("qwerty", "main view destroyed")
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.d("qwerty","main detached")
+        Log.d("qwerty", "main detached")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("qwerty","main resumed")
+        Log.d("qwerty", "main resumed")
     }
 
     override fun datePicked(date: DateTime) {
@@ -63,10 +66,11 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         key_category.setBackgroundColor(type.color)
         key_category.findViewById<TextView>(R.id.mainText).text = type.description
         presenter.setType(type.id)
+        dialog.dismiss()
     }
 
     override fun showCategoryDialog() {
-        val dialog = CategoryAlertDialog.newInstance()
+        dialog = CategoryAlertDialog.newInstance()
         dialog.setListener(this)
         dialog.show(childFragmentManager, "category")
     }

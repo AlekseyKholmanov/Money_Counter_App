@@ -22,8 +22,7 @@ class CategoryDialogAdapter(context: Context, callback: ICategoryPickedListener)
         v.setBackgroundColor(type.color)
         text.text = type.description
         image.setImageResource(getImage(type))
-        v.setOnClickListener { mCallback.categoryPicked(type)
-        parent!!.invalidate()}
+        v.setOnClickListener { mCallback.categoryPicked(type)}
         return v
     }
 
