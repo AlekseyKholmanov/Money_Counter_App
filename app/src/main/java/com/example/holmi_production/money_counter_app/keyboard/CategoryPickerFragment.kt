@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
-import androidx.fragment.app.DialogFragment
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
@@ -30,8 +29,11 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val gridView = view.findViewById(R.id.gridView) as GridView
-        gridView.adapter = CategoryDialogAdapter(context!!)
+        val costsGrid = view.findViewById(R.id.costsGrid) as GridView
+        val incomeGrid = view.findViewById(R.id.incomeGrid) as GridView
+        val list = CategoryType.values().toList()
+        costsGrid.adapter = CategoryDialogAdapter(context!!,list.filter { it.isSpending })
+        incomeGrid.adapter = CategoryDialogAdapter(context!!,list.filter { !it.isSpending })
     }
 }
 

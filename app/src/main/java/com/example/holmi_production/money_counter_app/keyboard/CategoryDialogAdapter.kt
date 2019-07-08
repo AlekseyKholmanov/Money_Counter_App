@@ -11,11 +11,12 @@ import androidx.navigation.findNavController
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.CategoryType
 
-class CategoryDialogAdapter(context: Context) : BaseAdapter() {
+class CategoryDialogAdapter(context: Context,
+                            private var types:List<CategoryType>) : BaseAdapter() {
 
     var mInflater = LayoutInflater.from(context)
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
-        val type = CategoryType.values()[position]
+        val type = types[position]
         val v = mInflater.inflate(R.layout.dialog_category_item, parent, false)
         val text = v.findViewById<TextView>(R.id.text_category_dialog)
         val image = v.findViewById(R.id.image_category_dialog) as ImageView
@@ -29,15 +30,15 @@ class CategoryDialogAdapter(context: Context) : BaseAdapter() {
     }
 
     override fun getItem(position: Int): Any {
-        return CategoryType.values()[position]
+        return types[position]
     }
 
     override fun getItemId(position: Int): Long {
-        return CategoryType.values()[position].id.toLong()
+        return types[position].id.toLong()
     }
 
     override fun getCount(): Int {
-        return CategoryType.values().count()
+        return types.count()
     }
 
     private fun getImage(categoryType: CategoryType): Int {
