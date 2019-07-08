@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
@@ -21,7 +22,7 @@ import org.joda.time.DateTime
 class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     IKeyboardListener, IScrollCallback, ICategoryPickedListener, IDatePickerCallback {
 
-    private lateinit var dialog: CategoryAlertDialog
+    private lateinit var dialog: CategoryPickerFragment
 
     override fun showCategoryButton(categoryType: CategoryType) {
         keyboard.setCategoryButtonValue(categoryType)
@@ -66,13 +67,12 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         key_category.setBackgroundColor(type.color)
         key_category.findViewById<TextView>(R.id.mainText).text = type.description
         presenter.setType(type.id)
-        dialog.dismiss()
     }
 
     override fun showCategoryDialog() {
-        dialog = CategoryAlertDialog.newInstance()
+        dialog = CategoryPickerFragment.newInstance()
         dialog.setListener(this)
-        dialog.show(childFragmentManager, "category")
+        findNavController().navigate(R.id.action_mainFragment_to_categoryPickerFragment)
     }
 
     override fun showAverageSum(sum: String, isDisplayed: Boolean) {

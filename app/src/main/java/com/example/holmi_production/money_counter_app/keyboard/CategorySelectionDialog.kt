@@ -1,24 +1,19 @@
 package com.example.holmi_production.money_counter_app.keyboard
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
 import android.widget.GridView
-import android.widget.GridView.AUTO_FIT
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import kotlinx.android.synthetic.main.dialog_category_picker.*
 
-class CategoryAlertDialog : DialogFragment() {
+class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
     companion object {
-        fun newInstance(): CategoryAlertDialog {
-            return CategoryAlertDialog()
+        fun newInstance(): CategoryPickerFragment {
+            return CategoryPickerFragment()
         }
     }
 
@@ -36,7 +31,7 @@ class CategoryAlertDialog : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val gridView = view.findViewById(R.id.gridView) as GridView
-        gridView.adapter = CategoryDialogAdapter(context!!,callback)
+        gridView.adapter = CategoryDialogAdapter(context!!)
     }
 }
 
