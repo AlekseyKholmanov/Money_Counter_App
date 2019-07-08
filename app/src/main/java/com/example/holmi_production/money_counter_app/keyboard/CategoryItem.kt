@@ -13,14 +13,15 @@ import kotlinx.android.synthetic.main.dialog_category_item.view.*
 class CategoryItem @JvmOverloads constructor(
     color: Int,
     description: String,
-    image: Int,
+    capture: Int,
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
     init {
         val view = View.inflate(getContext(), R.layout.dialog_category_item, this)
         view.setBackgroundColor(color)
         text_category_dialog.text = description
-        image_category_dialog.setImageResource(image)
+        val image = view.findViewById(R.id.image_category_dialog) as ImageView
+        image.setImageResource(capture)
     }
 
 }
