@@ -11,7 +11,16 @@ enum class CategoryType(val id: Int, val isSpending: Boolean, val description: S
     TRANSPORT(5, true, "Транспорт", Color.parseColor("#D62B29")),
     WEAR(6, true, "Одежда", Color.parseColor("#E560BB")),
     NET(7, true, "Связь", Color.parseColor("#07659E")),
-    OTHER(8, true, "Другое", Color.parseColor("#E0E0E0"))
+    OTHER(8, true, "Другое", Color.parseColor("#E0E0E0")),
+    BEATY(9, true, "Красота", Color.MAGENTA),
+    SPORT(10, true, "Спорт", Color.MAGENTA),
+    EDUCATION(11, true, "Образование", Color.MAGENTA),
+    BOOKS(12, true, "Книги", Color.MAGENTA),
+    TRAVEL(13, true, "Путешествие", Color.MAGENTA),
+    FASTFOOD(14, true, "Фастфуд", Color.MAGENTA),
+    FUEL(15, true, "Топливо", Color.MAGENTA),
+    PETS(16, true, "Питомцы", Color.MAGENTA)
+
 }
 
 

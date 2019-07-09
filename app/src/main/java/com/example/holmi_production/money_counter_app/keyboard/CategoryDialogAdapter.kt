@@ -43,15 +43,23 @@ class CategoryDialogAdapter(context: Context,
 
     private fun getImage(categoryType: CategoryType): Int {
         return when (categoryType) {
-            CategoryType.SALARY -> R.drawable.icon_salary
-            CategoryType.HOME -> R.drawable.icon_home
-            CategoryType.ENTERTAINMENT -> R.drawable.icon_glass
-            CategoryType.FOOD -> R.drawable.icon_food
-            CategoryType.TRANSPORT -> R.drawable.icon_bus
-            CategoryType.WEAR -> R.drawable.icon_clothes_2
-            CategoryType.NET -> R.drawable.icon_network
-            CategoryType.BAR -> R.drawable.icon_bar
-            CategoryType.OTHER -> R.drawable.icon_other
+            CategoryType.SALARY -> R.drawable.ic_salary
+            CategoryType.HOME -> R.drawable.ic_home
+            CategoryType.ENTERTAINMENT -> R.drawable.ic_glass
+            CategoryType.FOOD -> R.drawable.ic_food
+            CategoryType.TRANSPORT -> R.drawable.ic_bus
+            CategoryType.WEAR -> R.drawable.ic_clothes_2
+            CategoryType.NET -> R.drawable.ic_network
+            CategoryType.BAR -> R.drawable.ic_bar
+            CategoryType.OTHER -> R.drawable.ic_other
+            CategoryType.BEATY -> R.drawable.ic_beauty
+            CategoryType.BOOKS -> R.drawable.ic_books
+            CategoryType.EDUCATION -> R.drawable.ic_education
+            CategoryType.FASTFOOD -> R.drawable.ic_fastfood
+            CategoryType.FUEL -> R.drawable.ic_fuel
+            CategoryType.PETS -> R.drawable.ic_pets
+            CategoryType.SPORT -> R.drawable.ic_sport
+            CategoryType.TRAVEL -> R.drawable.ic_travel
         }
     }
 }
