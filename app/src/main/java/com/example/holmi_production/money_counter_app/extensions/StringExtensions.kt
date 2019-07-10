@@ -15,7 +15,11 @@ fun DateTime.toRUformat(): String {
     val formatter = DateTimeFormat.forPattern("dd MMMM yyyy")
         .withLocale(Locale("ru"))
     return formatter.print(this)
+}
 
+fun Float.toDateFormat():String{
+    val date = DateTime().withDayOfYear(this.toInt())
+    return date.toRUformat()
 }
 
 fun Int.getDayAddition(): String {
