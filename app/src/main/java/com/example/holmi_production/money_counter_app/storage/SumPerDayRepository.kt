@@ -12,27 +12,27 @@ class SumPerDayRepository @Inject constructor(
     private val database: ExpenseDatabase
 ) {
     companion object {
-        val today = "TODAY_SUM"
-        val average = "AVERAGE_SUM"
+        const val TODAY = "TODAY_SUM"
+        const val AVERAGE = "AVERAGE_SUM"
     }
 
     private val dao = database.sumPerDayDao
 
     fun insertToday(todaySum: Double): Completable {
-        val sum = SumPerDay(today, todaySum)
+        val sum = SumPerDay(TODAY, todaySum)
         return Completable.fromCallable { dao.insert(sum) }
     }
 
     fun insertAverage(averageSum: Double): Completable {
-        val sum = SumPerDay(average, averageSum)
+        val sum = SumPerDay(AVERAGE, averageSum)
         return Completable.fromCallable { dao.insert(sum) }
     }
 
-    fun observeToday(): Flowable<SumPerDay> = dao.observeSum(today)
-    fun observeAverage(): Flowable<SumPerDay> = dao.observeSum(average)
+    fun observeToday(): Flowable<SumPerDay> = dao.observeSum(TODAY)
+    fun observeAverage(): Flowable<SumPerDay> = dao.observeSum(AVERAGE)
 
     fun getToday(): Single<SumPerDay> {
-        return Single.fromCallable { dao.getSum(today) }
+        return Single.fromCallable { dao.getSum(TODAY) }
     }
 
     fun getBoth(): Single<Pair<SumPerDay, SumPerDay>> {
@@ -40,6 +40,6 @@ class SumPerDayRepository @Inject constructor(
     }
 
     fun getAverage(): Single<SumPerDay> {
-        return Single.fromCallable { dao.getSum(average) }
+        return Single.fromCallable { dao.getSum(AVERAGE) }
     }
 }

@@ -25,7 +25,7 @@ class NotificationManager @Inject constructor(
     }
 
     fun setNotificationTime() {
-        val time = DateTime().withTimeAtStartOfDay().plusDays(1).plusHours(1).plusMinutes(0)
+        val time = DateTime().withTimeAtStartOfDay().plusHours(1).plusMinutes(0)
         val intent = Intent(application, NotificationAlarmReciever::class.java)
         val pi = PendingIntent.getBroadcast(application, 0, intent, 0)
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time.millis, AlarmManager.INTERVAL_DAY, pi)

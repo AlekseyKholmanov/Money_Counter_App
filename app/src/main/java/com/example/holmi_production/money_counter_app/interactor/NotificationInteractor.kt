@@ -21,7 +21,7 @@ class NotificationInteractor @Inject constructor(
                 val saved = it.first
                 val newToday = it.second
                 sumPerDayRepository.insertToday(newToday.inc(saved.sum).sum).complete()
-                notificationManager.notify(saved.sum, newToday.sum)
+                notificationManager.notify(saved.sum, newToday.sum + saved.sum)
             }
     }
 }
