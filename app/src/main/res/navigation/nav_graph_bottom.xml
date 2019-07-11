@@ -20,7 +20,7 @@
             android:id="@+id/chartFragment"
             android:name="com.example.holmi_production.money_counter_app.chart.ChartFragment"
             android:label="ChartFragment"
-            tool:layout="@layout/fragment__bottom_chart"
+            tool:layout="@layout/fragment_bottom_chart"
     />
     <fragment
             android:id="@+id/costsFragment"

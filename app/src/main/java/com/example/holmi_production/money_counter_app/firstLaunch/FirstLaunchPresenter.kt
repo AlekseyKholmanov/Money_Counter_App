@@ -55,5 +55,4 @@ class FirstLaunchPresenter @Inject constructor(
         settingRepository.saveEndDate(endPeriod)
         viewState.showMainScreen()
     }
-
 }

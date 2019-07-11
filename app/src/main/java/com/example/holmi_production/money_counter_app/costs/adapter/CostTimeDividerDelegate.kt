@@ -11,7 +11,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
 class CostTimeDividerDelegate : AdapterDelegate<List<ListItem>>() {
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_costs_date_divider, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.costs_list_date, parent, false)
         return ViewHolder(view as TextView)
     }
 

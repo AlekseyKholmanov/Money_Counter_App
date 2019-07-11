@@ -6,5 +6,4 @@ interface FirstLaunchView :MvpView{
     fun showDate(pickedDate:String, difference:String)
     fun showSumPerDay(sumPerDay:String)
     fun showMainScreen()
-
 }

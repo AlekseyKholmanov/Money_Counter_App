@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.keyboard.*
 import org.joda.time.DateTime
 
 class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
-    IKeyboardListener, IScrollCallback, ICategoryPickedListener, IDatePickerCallback {
+    IKeyboardListener, ICategoryPickedListener, IDatePickerCallback {
 
     private lateinit var dialog: CategoryPickerFragment
 
@@ -104,10 +104,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
 
     override fun showSpentSum(sum: String) {
         spent.text = sum
-    }
-
-    override fun callback(type: Int) {
-        presenter.setType(type)
     }
 
     override fun showMoney(money: String) {

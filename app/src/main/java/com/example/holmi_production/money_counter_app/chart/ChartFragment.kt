@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import kotlinx.android.synthetic.main.fragment__bottom_chart.*
+import kotlinx.android.synthetic.main.fragment_bottom_chart.*
 
 class ChartFragment : AndroidXMvpAppCompatFragment(){
     override fun onAttach(context: Context) {
@@ -37,7 +37,7 @@ class ChartFragment : AndroidXMvpAppCompatFragment(){
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment__bottom_chart,container,false)
+        return inflater.inflate(R.layout.fragment_bottom_chart,container,false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -22,7 +22,7 @@ class TimePickerDialog : DialogFragment(), DatePickerDialog.OnDateSetListener {
         }
     }
 
-    lateinit var callback: IDatePickerCallback
+    private lateinit var callback: IDatePickerCallback
     override fun onDateSet(picker: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
         val time = DateTime(picker.year, picker.month + 1, picker.dayOfMonth, 0, 0)
         callback.datePicked(time)
