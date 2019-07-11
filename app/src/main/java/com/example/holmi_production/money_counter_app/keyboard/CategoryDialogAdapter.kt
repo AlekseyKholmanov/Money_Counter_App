@@ -25,7 +25,7 @@ class CategoryDialogAdapter(
         val image = v.findViewById(R.id.image_category_dialog) as ImageView
         v.setBackgroundColor(type.color)
         text.text = type.description
-        image.setImageResource(getImage(type))
+        image.setImageResource(CategoryType.getImage(type))
         val bundle = bundleOf("categoryId" to type.id)
         v.setOnClickListener {
             parent!!.findNavController().navigate(R.id.action_categoryPickerFragment_to_mainFragment, bundle)
@@ -43,27 +43,5 @@ class CategoryDialogAdapter(
 
     override fun getCount(): Int {
         return types.count()
-    }
-
-    private fun getImage(categoryType: CategoryType): Int {
-        return when (categoryType) {
-            CategoryType.SALARY -> R.drawable.ic_salary
-            CategoryType.HOME -> R.drawable.ic_home
-            CategoryType.ENTERTAINMENT -> R.drawable.ic_glass
-            CategoryType.FOOD -> R.drawable.ic_food
-            CategoryType.TRANSPORT -> R.drawable.ic_bus
-            CategoryType.WEAR -> R.drawable.ic_clothes_2
-            CategoryType.NET -> R.drawable.ic_network
-            CategoryType.BAR -> R.drawable.ic_bar
-            CategoryType.OTHER -> R.drawable.ic_other
-            CategoryType.BEATY -> R.drawable.ic_beauty
-            CategoryType.BOOKS -> R.drawable.ic_books
-            CategoryType.EDUCATION -> R.drawable.ic_education
-            CategoryType.FASTFOOD -> R.drawable.ic_fastfood
-            CategoryType.FUEL -> R.drawable.ic_fuel
-            CategoryType.PETS -> R.drawable.ic_pets
-            CategoryType.SPORT -> R.drawable.ic_sport
-            CategoryType.TRAVEL -> R.drawable.ic_travel
-        }
     }
 }

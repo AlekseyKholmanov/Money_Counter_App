@@ -3,6 +3,7 @@ package com.example.holmi_production.money_counter_app.keyboard
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.holmi_production.money_counter_app.App
@@ -101,7 +102,7 @@ class Keyboard @JvmOverloads constructor(
     }
 
     fun setCategoryButtonValue(type: CategoryType) {
-        key_category.findViewById<TextView>(R.id.mainText).text = type.description
+        key_category.findViewById<ImageView>(R.id.categoryImage).setImageResource(CategoryType.getImage(type))
         key_category.setBackgroundColor(type.color)
     }
 
