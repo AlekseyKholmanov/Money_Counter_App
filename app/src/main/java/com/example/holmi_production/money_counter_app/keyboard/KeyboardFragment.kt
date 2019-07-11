@@ -132,6 +132,10 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
             dialog.setListener(this)
             dialog.show(childFragmentManager, "datePicker")
         }
+        if (arguments != null) {
+            val id = arguments!!.getInt("categoryId")
+            presenter.setType(id)
+        }
         presenter.getDaysLeft()
         presenter.getCategoryButtonValue()
         presenter.setObservers()

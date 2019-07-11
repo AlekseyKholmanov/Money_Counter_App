@@ -33,6 +33,11 @@
               android:label="CategoryPickerFragment">
         <action android:id="@+id/action_categoryPickerFragment_to_mainFragment" app:destination="@id/mainFragment"
                 app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
-                app:popUpToInclusive="false" app:popUpTo="@+id/nav_graph_bottom"/>
+                app:popUpToInclusive="false" app:popUpTo="@+id/nav_graph_bottom">
+            <argument
+                    android:name="categoryId"
+                    app:argType="integer"
+                    android:defaultValue="0"/>
+        </action>
     </fragment>
 </navigation>

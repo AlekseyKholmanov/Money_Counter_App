@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.CategoryType
 
-class CategoryDialogAdapter(context: Context,
-                            private var types:List<CategoryType>) : BaseAdapter() {
+class CategoryDialogAdapter(
+    context: Context,
+    private var types: List<CategoryType>) : BaseAdapter() {
 
-    var mInflater = LayoutInflater.from(context)
+    private var mInflater = LayoutInflater.from(context)
+
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         val type = types[position]
         val v = mInflater.inflate(R.layout.fragment_category_picker_item, parent, false)
@@ -23,8 +26,9 @@ class CategoryDialogAdapter(context: Context,
         v.setBackgroundColor(type.color)
         text.text = type.description
         image.setImageResource(getImage(type))
+        val bundle = bundleOf("categoryId" to type.id)
         v.setOnClickListener {
-            parent!!.findNavController().navigate(R.id.action_categoryPickerFragment_to_mainFragment)
+            parent!!.findNavController().navigate(R.id.action_categoryPickerFragment_to_mainFragment, bundle)
         }
         return v
     }
