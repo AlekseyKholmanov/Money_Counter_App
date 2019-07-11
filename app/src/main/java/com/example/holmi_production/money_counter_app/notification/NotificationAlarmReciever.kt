@@ -17,26 +17,14 @@ class NotificationAlarmReciever : BroadcastReceiver() {
     lateinit var settingRepository: SettingRepository
     @Inject
     lateinit var notificationInteractor: NotificationInteractor
-    //@Inject lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
-
-        Log.d("qwerty", "notification received")
         App.component.inject(this)
         val endDate = settingRepository.getTillEnd()
         if (endDate <= 0) {
             settingRepository.setIsEnd(true)
             return
         }
-        //send(context)
-
-        //alarmTriggred возвращает Disposabable. Во фрагментах presenters наследуются от BasePresenter куда собираются все подписки, здесь не очень понимаю как это можно сделать
         notificationInteractor.alarmTriggered()
-
-    }
-
-    private fun send(context: Context) {
-        val intent = Intent("custom-intent-filter")
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
     }
 }

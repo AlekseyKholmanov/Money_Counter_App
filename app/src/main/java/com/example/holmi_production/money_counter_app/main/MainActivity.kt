@@ -1,13 +1,7 @@
 package com.example.holmi_production.money_counter_app.main
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.findNavController
-import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
@@ -16,10 +10,7 @@ import com.example.holmi_production.money_counter_app.notification.NotificationM
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import javax.inject.Inject
 
-class MainActivity : AndroidXMvpAppCompatActivity(), MainView {
-
-    @InjectPresenter
-    lateinit var presenter: MainPresenter
+class MainActivity : AndroidXMvpAppCompatActivity(){
 
     @Inject
     lateinit var notificationManager: NotificationManager
@@ -32,9 +23,6 @@ class MainActivity : AndroidXMvpAppCompatActivity(), MainView {
         setContentView(R.layout.activity_main)
         App.component.inject(this)
         notificationManager.setNotificationTime()
-        LocalBroadcastManager.getInstance(this)
-            .registerReceiver(mDayChangedReciever, IntentFilter("custom-intent-filter"))
-
         val navController = findNavController(R.id.mainNavFragment)
         val graph = navController.graph
         if (!settingRepository.isOpened())
@@ -42,19 +30,6 @@ class MainActivity : AndroidXMvpAppCompatActivity(), MainView {
         else if (settingRepository.getIsEnd())
             graph.startDestination = R.id.navEndPeriod
         navController.graph = graph
-
     }
-
-    private val mDayChangedReciever: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            presenter.getNotification()
-        }
-    }
-
-    @ProvidePresenter
-    fun providePresenter() = App.component.getMainPresenter()
-
     override fun onSupportNavigateUp() = findNavController(R.id.mainNavFragment).navigateUp()
-
-    private val FIRST_OPEN = "FirstOpen"
 }

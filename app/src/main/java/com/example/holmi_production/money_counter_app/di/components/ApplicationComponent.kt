@@ -11,7 +11,6 @@ import com.example.holmi_production.money_counter_app.endPeriod.EndPeriodPresent
 import com.example.holmi_production.money_counter_app.firstLaunch.FirstLaunchPresenter
 import com.example.holmi_production.money_counter_app.keyboard.Keyboard
 import com.example.holmi_production.money_counter_app.keyboard.KeyboardFragmentPresenter
-import com.example.holmi_production.money_counter_app.main.MainPresenter
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
 import dagger.Component
 import javax.inject.Singleton
@@ -23,7 +22,6 @@ interface ApplicationComponent {
     fun getCostsPresenter(): CostsPresenter
     fun getFirstLaunchPresenter(): FirstLaunchPresenter
     fun getChartPresenter(): PieChartPresenter
-    fun getMainPresenter():MainPresenter
     fun getEndPeriodPresenter():EndPeriodPresenter
     fun getStackedPresenter():StackedPresenter
     fun inject(activity: MainActivity)
