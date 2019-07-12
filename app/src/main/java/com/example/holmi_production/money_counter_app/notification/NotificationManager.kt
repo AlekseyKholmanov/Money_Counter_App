@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.notification
 
 import android.app.*
 import android.app.NotificationManager
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -25,18 +26,20 @@ class NotificationManager @Inject constructor(
     }
 
     fun setNotificationTime() {
-        val time = DateTime().withTimeAtStartOfDay().plusHours(1).plusMinutes(0)
+        val time = DateTime().withTimeAtStartOfDay()
         val intent = Intent(application, NotificationAlarmReciever::class.java)
-        val pi = PendingIntent.getBroadcast(application, 0, intent, 0)
+        val pi = PendingIntent.getBroadcast(application, 0, intent, FLAG_UPDATE_CURRENT)
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time.millis, AlarmManager.INTERVAL_DAY, pi)
         Log.d("qwerty", "Notification time setted")
+
     }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+                CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT
+            )
             notificationManager.createNotificationChannel(channel)
             channel.description = "My channel description"
             channel.enableLights(true)
@@ -67,11 +70,10 @@ class NotificationManager @Inject constructor(
             .build()
     }
 
-    fun notify(savedSum:Double, newSumPerDay:Double){
+    fun notify(savedSum: Double, newSumPerDay: Double) {
         val notification = buildNotification(savedSum, newSumPerDay)
         sendNotification(notification)
     }
-
 
     private fun sendNotification(notification: Notification) {
         with(NotificationManagerCompat.from(application)) {
