@@ -11,8 +11,8 @@ data class SumPerDay(
     val id: String,
 
     var sum: Double
-):Serializable{
-    operator fun inc(inc:Double):SumPerDay{
-        return SumPerDay(id,sum + inc)
+) : Serializable {
+    operator fun inc(inc: Double): SumPerDay {
+        return SumPerDay(id, sum + inc)
     }
 }

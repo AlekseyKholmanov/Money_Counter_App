@@ -83,7 +83,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun showMoney(money: String) {
-//        expense.text = money
+//        expense.date = money
     }
 
     private lateinit var key: Keyboard

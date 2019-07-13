@@ -7,7 +7,6 @@ import org.joda.time.DateTime
 @Entity
 data class Period(
     @PrimaryKey(autoGenerate = false)
-    val id:String,
-
-    val date:DateTime
+    val id: String,
+    val date: DateTime
 )
