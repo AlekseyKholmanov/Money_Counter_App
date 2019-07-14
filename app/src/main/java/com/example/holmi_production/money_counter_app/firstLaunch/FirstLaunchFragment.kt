@@ -31,7 +31,7 @@ class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
         finish_activity.setOnClickListener {
             presenter.goToMainScreen()
         }
-        start_sum.addTextChangedListener(object : TextWatcher {
+        cost_item_sum.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -39,20 +39,20 @@ class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
 
             //TODO возможно объединить в один или вынести в презентер
             override fun afterTextChanged(s: Editable?) {
-                if (start_sum.text.isEmpty()) {
+                if (cost_item_sum.text.isEmpty()) {
                     finish_activity.isEnabled = false
                     sum_per_day.isVisible = false
                 } else {
                     sum_per_day.isVisible = true
                     presenter.getSum(s.toString().toDouble())
                 }
-                if (date.text.isNotEmpty()) {
+                if (cost_item_date.text.isNotEmpty()) {
                     presenter.getSumPerDay()
                     finish_activity.isEnabled = true
                 }
             }
         })
-        date.addTextChangedListener(object : TextWatcher {
+        cost_item_date.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -60,14 +60,14 @@ class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (start_sum.text.isNotEmpty()) {
+                if (cost_item_sum.text.isNotEmpty()) {
                     presenter.getSumPerDay()
                     finish_activity.isEnabled = true
                 } else
                     finish_activity.isEnabled = false
             }
         })
-        date.setOnClickListener {
+        cost_item_date.setOnClickListener {
             val time = DateTime()
             val picker = DatePickerDialog(
                 context,
@@ -91,7 +91,7 @@ class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
     }
 
     override fun showDate(pickedDate: String, difference: String) {
-        date.setText(pickedDate)
+        cost_item_date.setText(pickedDate)
         date_difference.text = difference
     }
 

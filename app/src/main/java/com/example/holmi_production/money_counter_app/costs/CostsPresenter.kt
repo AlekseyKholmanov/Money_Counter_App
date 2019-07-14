@@ -7,13 +7,10 @@ import androidx.annotation.RequiresApi
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
-import com.example.holmi_production.money_counter_app.model.CategoryType
-import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.extensions.sortedByDescending
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
-import com.example.holmi_production.money_counter_app.model.CostTimeDivider
-import com.example.holmi_production.money_counter_app.model.ListItem
+import com.example.holmi_production.money_counter_app.model.*
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
@@ -90,7 +87,7 @@ class CostsPresenter @Inject constructor(
         costs
             .groupBy { it.spendingDate.withTimeAtStartOfDay() }
             .forEach(BiConsumer { t, u ->
-                list.add(CostTimeDivider(t.toRUformat(), u.sumByDouble { it.sum }) as ListItem)
+                list.add(CostTimeDivider(t.toRUformat(), DailyExpenses.calculate(u)) as ListItem)
                 u.sortedByDescending { it.sum }
                 u.forEach { list.add(it as ListItem) }
             })
@@ -107,7 +104,7 @@ class CostsPresenter @Inject constructor(
                 group
                     .sortedByDescending { it.spendingDate }
                     .cast(ListItem::class.java)
-                    .startWith(CostTimeDivider(group.key!!.toString(DATE_FORMAT), 0.0))
+                    .startWith(CostTimeDivider(group.key!!.toString(DATE_FORMAT), DailyExpenses(0.0,false)))
             }
             .toList()
             .toFlowable()

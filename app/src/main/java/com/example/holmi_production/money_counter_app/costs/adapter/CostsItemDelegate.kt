@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.costs.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,23 +29,26 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         list: List<Any>) {
         if (holder is ViewHolder) {
             val item = items[position] as Spending
-            holder.category.setBackgroundColor(item.categoryTypes.color)
             holder.bind(item)
         }
     }
 
     class ViewHolder internal constructor(v: View) : RecyclerView.ViewHolder(v) {
 
-        private val date: AppCompatTextView = v.findViewById(R.id.date)
-        val category: AppCompatTextView = v.findViewById(R.id.category)
-        val sum: AppCompatTextView = v.findViewById(R.id.start_sum)
+        private val date: AppCompatTextView = v.findViewById(R.id.cost_item_date)
+        private val category: AppCompatTextView = v.findViewById(R.id.cost_item_category)
+        private val sum: AppCompatTextView = v.findViewById(R.id.cost_item_sum)
+        private val sign: AppCompatTextView = v.findViewById(R.id.cost_item_sign)
         fun bind(spending: Spending) {
+            val color = if (spending.categoryTypes.isSpending) Color.RED else Color.GREEN
+            val signText = if (spending.categoryTypes.isSpending) "-" else "+"
             category.text = spending.categoryTypes.description
+            category.setBackgroundColor(spending.categoryTypes.color)
             date.text = spending.spendingDate.toString("HH:mm")
             sum.text = spending.sum.toCurencyFormat()
-
+            sum.setTextColor(color)
+            sign.text = signText
+            sign.setTextColor(color)
         }
-
     }
-
 }

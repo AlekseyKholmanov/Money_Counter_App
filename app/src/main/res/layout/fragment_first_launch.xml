@@ -29,7 +29,7 @@
             android:text="СУММА"/>
 
     <EditText
-            android:id="@+id/start_sum"
+            android:id="@+id/cost_item_sum"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@id/start_sum_hint"
@@ -44,8 +44,8 @@
             android:id="@+id/sum_per_day_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="@id/start_sum"
-            app:layout_constraintTop_toBottomOf="@+id/start_sum"
+            app:layout_constraintLeft_toLeftOf="@id/cost_item_sum"
+            app:layout_constraintTop_toBottomOf="@+id/cost_item_sum"
             android:textSize="16sp"
             android:text="В День:"/>
 
@@ -53,7 +53,7 @@
             android:id="@+id/sum_per_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/start_sum"
+            app:layout_constraintTop_toBottomOf="@+id/cost_item_sum"
             app:layout_constraintLeft_toRightOf="@id/sum_per_day_hint"
             android:textSize="16sp"/>
 
@@ -69,7 +69,7 @@
             android:paddingStart="8dp"/>
 
     <EditText
-            android:id="@+id/date"
+            android:id="@+id/cost_item_date"
             android:layout_width="150sp"
             android:layout_height="wrap_content"
             app:layout_constraintBaseline_toBaselineOf="@id/date_hint"
@@ -82,8 +82,8 @@
             android:id="@+id/date_difference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/date"
-            app:layout_constraintTop_toBottomOf="@id/date"
+            app:layout_constraintStart_toStartOf="@id/cost_item_date"
+            app:layout_constraintTop_toBottomOf="@id/cost_item_date"
             android:hint="разница"/>
 
     <Button
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/date"
+            app:layout_constraintTop_toBottomOf="@id/cost_item_date"
             android:layout_marginTop="24dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

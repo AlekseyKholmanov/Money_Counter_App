@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.costs.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,18 +27,25 @@ class CostTimeDividerDelegate : AdapterDelegate<List<ListItem>>() {
         position: Int,
         holder: RecyclerView.ViewHolder,
         payloads: List<Any>) {
-        if (holder is ViewHolder){
-            val divider  = (items[position] as CostTimeDivider)
-        holder.bind(divider)}
+        if (holder is ViewHolder) {
+            val divider = (items[position] as CostTimeDivider)
+            holder.bind(divider)
+        }
     }
 
-    class ViewHolder internal constructor(v:View): RecyclerView.ViewHolder(v){
+    class ViewHolder internal constructor(v: View) : RecyclerView.ViewHolder(v) {
         private val date = v.findViewById(R.id.costs_divider_date) as TextView
         private val sum = v.findViewById(R.id.costs_divider_sum) as TextView
+        private val sign = v.findViewById(R.id.costs_divider_sign) as TextView
         fun bind(divider: CostTimeDivider) {
+            val isPositive = divider.sum.isPositive
+            val signText: String = if (isPositive) "+" else "-"
+            val color: Int = if (isPositive) Color.GREEN else Color.RED
             date.text = divider.date
-            sum.text = divider.sum.toCurencyFormat()
-
+            sum.text = divider.sum.sum.toCurencyFormat()
+            sum.setTextColor(color)
+            sign.text = signText
+            sign.setTextColor(color)
         }
     }
 
