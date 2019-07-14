@@ -82,7 +82,6 @@ class CostsPresenter @Inject constructor(
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun newTransform(costs: List<Spending>): ArrayList<ListItem> {
-
         val list = arrayListOf<ListItem>()
         costs
             .groupBy { it.spendingDate.withTimeAtStartOfDay() }
@@ -93,25 +92,5 @@ class CostsPresenter @Inject constructor(
                 mutable.forEach { list.add(it as ListItem) }
             })
         return list
-
-    }
-
-    private fun trasform(costs: List<Spending>): Flowable<List<ListItem>> {
-        return costs
-            .toObservable()
-            .groupBy { it.spendingDate.toLocalDate() }
-            .sortedByDescending { it.key!! }
-            .flatMap { group ->
-                group
-                    .sortedByDescending { it.spendingDate }
-                    .cast(ListItem::class.java)
-                    .startWith(CostTimeDivider(group.key!!.toString(DATE_FORMAT), DailyExpenses(0.0, false)))
-            }
-            .toList()
-            .toFlowable()
-    }
-
-    companion object {
-        private const val DATE_FORMAT = "dd MMMMM, yyyy"
     }
 }
