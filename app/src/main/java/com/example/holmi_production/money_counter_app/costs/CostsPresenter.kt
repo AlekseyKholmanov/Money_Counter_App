@@ -86,10 +86,11 @@ class CostsPresenter @Inject constructor(
         val list = arrayListOf<ListItem>()
         costs
             .groupBy { it.spendingDate.withTimeAtStartOfDay() }
+            .toSortedMap(Comparator { o1, o2 -> o2.compareTo(o1) })
             .forEach(BiConsumer { t, u ->
                 list.add(CostTimeDivider(t.toRUformat(), DailyExpenses.calculate(u)) as ListItem)
-                u.sortedByDescending { it.sum }
-                u.forEach { list.add(it as ListItem) }
+                val mutable = u.toMutableList().also { it -> it.sortByDescending { it.spendingDate } }
+                mutable.forEach { list.add(it as ListItem) }
             })
         return list
 
@@ -104,7 +105,7 @@ class CostsPresenter @Inject constructor(
                 group
                     .sortedByDescending { it.spendingDate }
                     .cast(ListItem::class.java)
-                    .startWith(CostTimeDivider(group.key!!.toString(DATE_FORMAT), DailyExpenses(0.0,false)))
+                    .startWith(CostTimeDivider(group.key!!.toString(DATE_FORMAT), DailyExpenses(0.0, false)))
             }
             .toList()
             .toFlowable()
