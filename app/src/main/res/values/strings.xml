@@ -3,4 +3,6 @@
     <string name="text_сosts">Расходы</string>
     <string name="text_main">Главная</string>
     <string name="text_chart">Аналитика</string>
+    <string name="arrow_up">\u02c4</string>
+    <string name="arrow_down">\u02c5</string>
 </resources>

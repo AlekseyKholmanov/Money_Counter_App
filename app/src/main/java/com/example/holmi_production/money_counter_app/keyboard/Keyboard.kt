@@ -40,7 +40,8 @@ class Keyboard @JvmOverloads constructor(
         key_9.setOnClickListener { pressed(ButtonTypes.NUMERIC, "9") }
         key_divider.setOnClickListener { pressed(ButtonTypes.DIVIDER, ".") }
         key_delete.setOnClickListener { pressed(ButtonTypes.DELETE) }
-        key_enter.setOnClickListener { pressed(ButtonTypes.ENTER) }
+        key_up.setOnClickListener { pressed(ButtonTypes.ENTER) }
+        key_down.setOnClickListener { pressed(ButtonTypes.ENTER) }
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
         purshace_sum_textview.text = purshaseSum
         App.component.inject(this)
