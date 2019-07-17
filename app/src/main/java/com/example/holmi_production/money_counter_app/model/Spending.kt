@@ -11,7 +11,9 @@ data class Spending(
 
     val sum: Double,
 
-    val categoryTypes: CategoryType,
+    val categoryType: Int,
+
+    val isSpending: Boolean,
 
     val spendingDate: DateTime
 
