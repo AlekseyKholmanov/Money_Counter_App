@@ -46,7 +46,7 @@ class FirstLaunchPresenter @Inject constructor(
 
     fun goToMainScreen() {
         spendingRepository.insert(
-            Spending(null,sum,CategoryType.SALARY,today)
+            Spending(null,sum, CategoryType.SALARY.id,false,today)
         ).async().subscribe().keep()
         sumPerDayRepository.insertAverage(sumPerDay).complete().keep()
         sumPerDayRepository.insertToday(sumPerDay).complete().keep()

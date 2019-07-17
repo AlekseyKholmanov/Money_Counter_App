@@ -38,8 +38,8 @@ class CostsPresenter @Inject constructor(
     }
 
     fun delete(spending: Spending) {
-        when (spending.categoryTypes) {
-            CategoryType.SALARY -> {
+        when (spending.isSpending) {
+            false -> {
                 sumPerDayRepository.getBoth()
                     .async()
                     .subscribe { sums ->

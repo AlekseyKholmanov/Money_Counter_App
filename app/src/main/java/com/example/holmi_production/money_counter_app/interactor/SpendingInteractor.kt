@@ -17,8 +17,8 @@ class SpendingInteractor @Inject constructor(
         return spendingRepository.getAll()
             .async()
             .map { list->
-                val income = list.toMutableList().filter { it.categoryTypes==CategoryType.SALARY }
-                val spending = list.toMutableList().filter { it.categoryTypes!=CategoryType.SALARY}
+                val income = list.toMutableList().filter { !it.isSpending }
+                val spending = list.toMutableList().filter { it.isSpending}
                 Pair(income,spending)
                 }
     }

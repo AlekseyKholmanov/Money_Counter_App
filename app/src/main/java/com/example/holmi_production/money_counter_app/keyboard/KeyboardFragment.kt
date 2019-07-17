@@ -58,9 +58,9 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         new_sum_per_day.text = sum
     }
 
-    override fun enterPressed(money: Double) {
+    override fun enterPressed(money: Double,isSpending:Boolean) {
         Log.d("qwerty", money.toString())
-        presenter.saveSpend(money)
+        presenter.saveSpend(money, isSpending)
     }
 
     override fun moneyUpdated(money: Double) {

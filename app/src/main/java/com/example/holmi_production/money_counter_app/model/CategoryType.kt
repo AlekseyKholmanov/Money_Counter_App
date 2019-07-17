@@ -45,6 +45,13 @@ enum class CategoryType(val id: Int, val spendingDirection: CategorySpendingDire
                 TRAVEL -> R.drawable.ic_travel
             }
         }
+        fun getDescription(id: Int): String {
+            return values()[id].description
+        }
+        fun getColor(typeId:Int): Int
+        {
+            return values()[typeId].color
+        }
     }
 }
 

@@ -33,9 +33,9 @@ class KeyboardFragmentPresenter @Inject constructor(
     private val contex: Context) :
     BasePresenter<KeyboardFragmnetView>() {
 
-    fun saveSpend(sum: Double) {
+    fun saveSpend(sum: Double,isSpending: Boolean) {
         val categoryType = settingRepository.getCategoryValue()
-        val spending = Spending(null, sum, getCategoryType(categoryType), DateTime())
+        val spending = Spending(null, sum, categoryType, isSpending, DateTime())
         spendingRepository.insert(spending).complete().keep()
 
         sumPerDayRepository.getBoth()
@@ -44,10 +44,10 @@ class KeyboardFragmentPresenter @Inject constructor(
                 val today = it.first.sum
                 val average = it.second.sum
                 //вычитаем сумму из текущего дня
-                if (today >= sum && spending.categoryTypes != CategoryType.SALARY)
+                if (today >= sum && spending.isSpending)
                     sumPerDayRepository.insertToday(today - sum).complete().keep()
                 //увеличиваем сумму у всех дней т.к. зарплата
-                else if (spending.categoryTypes == CategoryType.SALARY) {
+                else if (!spending.isSpending) {
                     val daysCount = settingRepository.getTillEnd()
                     val deltaAverage = sum / daysCount
                     sumPerDayRepository.insertAverage(average + deltaAverage).complete().keep()
@@ -69,8 +69,8 @@ class KeyboardFragmentPresenter @Inject constructor(
         spendingRepository.observeSpending()
             .async()
             .subscribe { list ->
-                val a = list.filter { it.categoryTypes.isSpending }.map { it.sum }
-                val b = list.filter { !it.categoryTypes.isSpending }.map { it.sum }
+                val a = list.filter { it.isSpending }.map { it.sum }
+                val b = list.filter { !it.isSpending }.map { it.sum }
                 viewState.showIncomeSum((b.sum() - a.sum()).toCurencyFormat())
                 viewState.showSpentSum(a.sum().toCurencyFormat())
             }
@@ -118,8 +118,8 @@ class KeyboardFragmentPresenter @Inject constructor(
         spendingRepository.getAll()
             .async()
             .subscribe { list ->
-                val spent = list.filter { it.categoryTypes.isSpending }.map { it.sum }.sum()
-                val income = list.filter { !it.categoryTypes.isSpending }.map { it.sum }.sum()
+                val spent = list.filter { it.isSpending }.map { it.sum }.sum()
+                val income = list.filter { !it.isSpending }.map { it.sum }.sum()
                 val period = (Days.daysBetween(DateTime.now(), endDate)).days + 1
                 val averageSum = (income - spent) / period
                 settingRepository.saveEndDate(endDate)
@@ -138,6 +138,4 @@ class KeyboardFragmentPresenter @Inject constructor(
         val diff = settingRepository.getTillEnd()
         viewState.showDaysLeft(" на ${diff.getDayAddition()}")
     }
-
-
 }

@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.TextView
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.Vibrator
@@ -40,8 +39,8 @@ class Keyboard @JvmOverloads constructor(
         key_9.setOnClickListener { pressed(ButtonTypes.NUMERIC, "9") }
         key_divider.setOnClickListener { pressed(ButtonTypes.DIVIDER, ".") }
         key_delete.setOnClickListener { pressed(ButtonTypes.DELETE) }
-        key_up.setOnClickListener { pressed(ButtonTypes.ENTER) }
-        key_down.setOnClickListener { pressed(ButtonTypes.ENTER) }
+        key_spending.setOnClickListener { pressed(ButtonTypes.ENTER_UP) }
+        key_income.setOnClickListener { pressed(ButtonTypes.ENTER_DOWN) }
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
         purshace_sum_textview.text = purshaseSum
         App.component.inject(this)
@@ -77,11 +76,20 @@ class Keyboard @JvmOverloads constructor(
                 else purshaseSum += value
 
             }
-            ButtonTypes.ENTER -> {
+            ButtonTypes.ENTER_UP -> {
                 when (purshaseSum) {
                     "0" -> return
                     else -> {
-                        mKeyboardListener.enterPressed(purshaseSum.toDouble())
+                        mKeyboardListener.enterPressed(purshaseSum.toDouble(),true)
+                        purshaseSum = "0"
+                    }
+                }
+            }
+            ButtonTypes.ENTER_DOWN -> {
+                when (purshaseSum) {
+                    "0" -> return
+                    else -> {
+                        mKeyboardListener.enterPressed(purshaseSum.toDouble(),false)
                         purshaseSum = "0"
                     }
                 }
@@ -113,7 +121,7 @@ class Keyboard @JvmOverloads constructor(
 }
 
 interface IKeyboardListener {
-    fun enterPressed(money: Double)
+    fun enterPressed(money: Double, isSpending:Boolean)
     fun moneyUpdated(money: Double)
     fun showCategoryDialog()
 }

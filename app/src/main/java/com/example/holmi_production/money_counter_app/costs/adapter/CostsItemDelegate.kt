@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
+import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
@@ -40,10 +41,10 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         private val sum: AppCompatTextView = v.findViewById(R.id.cost_item_sum)
         private val sign: AppCompatTextView = v.findViewById(R.id.cost_item_sign)
         fun bind(spending: Spending) {
-            val color = if (spending.categoryTypes.isSpending) Color.RED else Color.GREEN
-            val signText = if (spending.categoryTypes.isSpending) "-" else "+"
-            category.text = spending.categoryTypes.description
-            category.setBackgroundColor(spending.categoryTypes.color)
+            val color = if (spending.isSpending) Color.RED else Color.GREEN
+            val signText = if (spending.isSpending) "-" else "+"
+            category.text = CategoryType.getDescription(spending.categoryType)
+            category.setBackgroundColor(CategoryType.getColor(spending.categoryType))
             date.text = spending.spendingDate.toString("HH:mm")
             sum.text = spending.sum.toCurencyFormat()
             sum.setTextColor(color)
