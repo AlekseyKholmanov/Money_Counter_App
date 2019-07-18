@@ -36,7 +36,9 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
         costsGrid.adapter =
             CategoryDialogAdapter(context!!, list.filter { it.spendingDirection == CategorySpendingDirection.SPENDING })
         incomeGrid.adapter =
-            CategoryDialogAdapter(context!!, list.filter { it.spendingDirection == CategorySpendingDirection.INCOME })
+            CategoryDialogAdapter(
+                context!!,
+                list.filter { it.spendingDirection == CategorySpendingDirection.INCOME || it.spendingDirection == CategorySpendingDirection.BOTH })
     }
 }
 
