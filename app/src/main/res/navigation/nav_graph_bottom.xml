@@ -12,9 +12,10 @@
             tool:layout="@layout/fragment_bottom_keyboard"
     >
         <action android:id="@+id/action_mainFragment_to_categoryPickerFragment"
-                app:destination="@id/categoryPickerFragment" app:enterAnim="@anim/nav_default_pop_enter_anim"
-                app:exitAnim="@anim/nav_default_pop_exit_anim" app:popUpToInclusive="false"
-                app:popUpTo="@+id/mainFragment" app:launchSingleTop="true"/>
+                app:destination="@id/categoryPickerFragment" app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim" app:popUpToInclusive="false"
+                app:popUpTo="@+id/mainFragment" app:launchSingleTop="true"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
             android:id="@+id/chartFragment"
@@ -32,8 +33,9 @@
               android:name="com.example.holmi_production.money_counter_app.keyboard.CategoryPickerFragment"
               android:label="CategoryPickerFragment">
         <action android:id="@+id/action_categoryPickerFragment_to_mainFragment" app:destination="@id/mainFragment"
-                app:enterAnim="@anim/nav_default_pop_enter_anim" app:exitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpToInclusive="false" app:popUpTo="@+id/nav_graph_bottom">
+                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
+                app:popUpToInclusive="false" app:popUpTo="@+id/nav_graph_bottom"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim">
             <argument
                     android:name="categoryId"
                     app:argType="integer"
