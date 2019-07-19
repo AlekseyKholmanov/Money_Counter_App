@@ -18,6 +18,20 @@ class BottomHostFragment : AndroidXMvpAppCompatFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = Navigation.findNavController(requireActivity(), R.id.bottomNavFragment)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.categoryPickerFragment -> hideBottomNav()
+                else -> showBottomNav()
+            }
+        }
         bottom_navigation.setupWithNavController(navController)
+    }
+
+    private fun showBottomNav() {
+        bottom_navigation.visibility = View.VISIBLE
+    }
+
+    private fun hideBottomNav() {
+        bottom_navigation.visibility = View.GONE
     }
 }
