@@ -41,7 +41,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         private val sum: AppCompatTextView = v.findViewById(R.id.cost_item_sum)
         private val sign: AppCompatTextView = v.findViewById(R.id.cost_item_sign)
         fun bind(spending: Spending) {
-            val color = if (spending.isSpending) Color.RED else Color.GREEN
+            val color = if (spending.isSpending) Color.parseColor("#2e7d32") else Color.parseColor("#c62828")
             val signText = if (spending.isSpending) "-" else "+"
             category.text = CategoryType.getDescription(spending.categoryType)
             category.setBackgroundColor(CategoryType.getColor(spending.categoryType))
