@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
@@ -36,16 +37,22 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
 
     class ViewHolder internal constructor(v: View) : RecyclerView.ViewHolder(v) {
 
-        private val date: AppCompatTextView = v.findViewById(R.id.cost_item_date)
+        //private val date: AppCompatTextView = v.findViewById(R.id.cost_item_date)
         private val category: AppCompatTextView = v.findViewById(R.id.cost_item_category)
+        private val image:ImageView = v.findViewById(R.id.cost_item_image)
         private val sum: AppCompatTextView = v.findViewById(R.id.cost_item_sum)
         private val sign: AppCompatTextView = v.findViewById(R.id.cost_item_sign)
+        private val view = v
+
         fun bind(spending: Spending) {
-            val color = if (spending.isSpending) Color.RED else Color.GREEN
+            val color = if (spending.isSpending) Color.parseColor("#c62828") else  Color.parseColor("#2e7d32")
+
             val signText = if (spending.isSpending) "-" else "+"
             category.text = CategoryType.getDescription(spending.categoryType)
-            category.setBackgroundColor(CategoryType.getColor(spending.categoryType))
-            date.text = spending.spendingDate.toString("HH:mm")
+            view.setBackgroundColor(CategoryType.getColor(spending.categoryType))
+            view.background.alpha = 160
+            image.setImageResource(CategoryType.getImage(CategoryType.values()[spending.categoryType]))
+            //date.text = spending.spendingDate.toString("HH:mm")
             sum.text = spending.sum.toCurencyFormat()
             sum.setTextColor(color)
             sign.text = signText
