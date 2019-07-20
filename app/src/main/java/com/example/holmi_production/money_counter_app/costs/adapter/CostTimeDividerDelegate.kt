@@ -40,7 +40,7 @@ class CostTimeDividerDelegate : AdapterDelegate<List<ListItem>>() {
         fun bind(divider: CostTimeDivider) {
             val isPositive = divider.sum.isPositive
             val signText: String = if (isPositive) "+" else "-"
-            val color: Int = if (isPositive) Color.GREEN else Color.RED
+            val color: Int = if (isPositive) Color.parseColor("#2e7d32") else Color.parseColor("#c62828")
             date.text = divider.date
             sum.text = divider.sum.sum.toCurencyFormat()
             sum.setTextColor(color)
