@@ -35,12 +35,12 @@ class KeyboardFragmentPresenter @Inject constructor(
 
     fun saveSpend(sum: Double,isSpending: Boolean) {
         val categoryType = settingRepository.getCategoryValue()
-        val spending = Spending(null, sum, categoryType, isSpending, DateTime())
+        val spending = Spending(null, sum, categoryType, isSpending, "", DateTime())
         spendingRepository.insert(spending).complete().keep()
 
         sumPerDayRepository.getBoth()
             .async()
-            .subscribe { it ->
+            .subscribe ({ it ->
                 val today = it.first.sum
                 val average = it.second.sum
                 //вычитаем сумму из текущего дня
@@ -60,44 +60,43 @@ class KeyboardFragmentPresenter @Inject constructor(
                     sumPerDayRepository.insertAverage(average - deltaAverage).complete().keep()
                     sumPerDayRepository.insertToday(0.0).complete().keep()
                 }
-            }
+            },{Log.d("qwertry", "get both error")})
             .keep()
     }
 
     fun setObservers() {
-
         spendingRepository.observeSpending()
             .async()
-            .subscribe { list ->
+            .subscribe ({ list ->
                 val a = list.filter { it.isSpending }.map { it.sum }
                 val b = list.filter { !it.isSpending }.map { it.sum }
                 viewState.showIncomeSum((b.sum() - a.sum()).toCurencyFormat())
                 viewState.showSpentSum(a.sum().toCurencyFormat())
-            }
+            },{Log.d("qwertry", "observe spending error")})
             .keep()
         sumPerDayRepository.observeToday()
             .async()
-            .subscribe { today ->
+            .subscribe ({ today ->
                 viewState.showSumPerDay(today.sum.toCurencyFormat())
-            }
+            },{Log.d("qwertry", "observe today error")})
             .keep()
         sumPerDayRepository.observeAverage()
             .async()
-            .subscribe { average ->
+            .subscribe ({ average ->
                 viewState.showAverageSum(average.sum.toCurencyFormat(), average.sum >= 0.0)
-            }
+            },{Log.d("qwertry", "observe average error")})
             .keep()
         settingRepository.observeCategoryValue()
             .async()
-            .subscribe {
+            .subscribe ({
                 viewState.showCategoryButton(CategoryType.values()[it])
-            }
+            },{Log.d("qwertry", "observe category value error")})
             .keep()
         settingRepository.observeEndDate()
             .async()
-            .subscribe {
+            .subscribe ({
                 viewState.showDaysLeft(" на ${settingRepository.getTillEnd().getDayAddition()}")
-            }
+            },{Log.d("qwertry", "observe end date error")})
             .keep()
     }
 
@@ -117,7 +116,7 @@ class KeyboardFragmentPresenter @Inject constructor(
     fun recalculateAverageSum(endDate: DateTime) {
         spendingRepository.getAll()
             .async()
-            .subscribe { list ->
+            .subscribe ({ list ->
                 val spent = list.filter { it.isSpending }.map { it.sum }.sum()
                 val income = list.filter { !it.isSpending }.map { it.sum }.sum()
                 val period = (Days.daysBetween(DateTime.now(), endDate)).days + 1
@@ -126,7 +125,7 @@ class KeyboardFragmentPresenter @Inject constructor(
                 sumPerDayRepository.insertToday(averageSum).complete().keep()
                 sumPerDayRepository.insertAverage(averageSum).complete().keep()
                 viewState.showSnack("новая сумма: ${averageSum.toCurencyFormat()} на ${period.getDayAddition()}")
-            }
+            },{Log.d("qwertry", "recalculate average sum error")})
             .keep()
     }
 

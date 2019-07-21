@@ -42,6 +42,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         private val image:ImageView = v.findViewById(R.id.cost_item_image)
         private val sum: AppCompatTextView = v.findViewById(R.id.cost_item_sum)
         private val sign: AppCompatTextView = v.findViewById(R.id.cost_item_sign)
+        private val comment:AppCompatTextView = v.findViewById(R.id.cost_item_comment)
         private val view = v
 
         fun bind(spending: Spending) {
@@ -52,11 +53,13 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
             view.setBackgroundColor(CategoryType.getColor(spending.categoryType))
             view.background.alpha = 160
             image.setImageResource(CategoryType.getImage(CategoryType.values()[spending.categoryType]))
+            comment.text = spending.comment ?: ""
             //date.text = spending.spendingDate.toString("HH:mm")
             sum.text = spending.sum.toCurencyFormat()
             sum.setTextColor(color)
             sign.text = signText
             sign.setTextColor(color)
+
         }
     }
 }

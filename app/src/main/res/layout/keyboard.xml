@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
         android:id="@+id/numbers_keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,6 +37,18 @@
                 app:layout_constraintVertical_weight="1"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            tool:text="комментарий"
+            android:textSize="26sp"
+            android:textColor="@color/design_default_color_secondary"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:gravity="end|center_vertical"
+            android:hint="комментарий"
+    />
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
