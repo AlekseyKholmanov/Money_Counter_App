@@ -3,15 +3,16 @@ package com.example.holmi_production.money_counter_app.keyboard
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.Vibrator
+import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import kotlinx.android.synthetic.main.keyboard.view.*
-import org.w3c.dom.Comment
 import javax.inject.Inject
 
 class Keyboard @JvmOverloads constructor(
@@ -43,7 +44,11 @@ class Keyboard @JvmOverloads constructor(
         key_spending.setOnClickListener { pressed(ButtonTypes.ENTER_UP) }
         key_income.setOnClickListener { pressed(ButtonTypes.ENTER_DOWN) }
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
-
+        comment.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus){
+                comment.hideKeyboard()
+            }
+        }
         purshace_sum_textview.text = purshaseSum
         App.component.inject(this)
 

@@ -47,8 +47,10 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:gravity="end|center_vertical"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
             android:hint="комментарий"
-    />
+            android:focusable="true"/>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
