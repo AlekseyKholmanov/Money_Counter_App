@@ -25,7 +25,7 @@ class PieChartPresenter @Inject constructor(
                 viewState.showPie(it)
             },{
 
-                Log.d("qwerty","showPie error")
+                Log.d("qwerty",it.message)
             })
             .keep()
     }

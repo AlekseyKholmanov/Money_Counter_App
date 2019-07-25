@@ -60,7 +60,7 @@ class KeyboardFragmentPresenter @Inject constructor(
                     sumPerDayRepository.insertAverage(average - deltaAverage).complete().keep()
                     sumPerDayRepository.insertToday(0.0).complete().keep()
                 }
-            }, { Log.d("qwertry", "get both error") })
+            }, { Log.d("qwerty", it.message) })
             .keep()
     }
 
@@ -72,31 +72,31 @@ class KeyboardFragmentPresenter @Inject constructor(
                 val b = list.filter { !it.isSpending }.map { it.sum }
                 viewState.showIncomeSum((b.sum() - a.sum()).toCurencyFormat())
                 viewState.showSpentSum(a.sum().toCurencyFormat())
-            }, { Log.d("qwertry", "observe spending error") })
+            }, { Log.d("qwerty", it.message) })
             .keep()
         sumPerDayRepository.observeToday()
             .async()
             .subscribe({ today ->
                 viewState.showSumPerDay(today.sum.toCurencyFormat())
-            }, { Log.d("qwertry", "observe today error") })
+            }, { Log.d("qwerty", it.message) })
             .keep()
         sumPerDayRepository.observeAverage()
             .async()
             .subscribe({ average ->
                 viewState.showAverageSum(average.sum.toCurencyFormat(), average.sum >= 0.0)
-            }, { Log.d("qwertry", "observe average error") })
+            }, { Log.d("qwerty", it.message) })
             .keep()
         settingRepository.observeCategoryValue()
             .async()
             .subscribe({
                 viewState.showCategoryButton(CategoryType.values()[it])
-            }, { Log.d("qwertry", "observe category value error") })
+            }, { Log.d("qwerty", it.message) })
             .keep()
         settingRepository.observeEndDate()
             .async()
             .subscribe({
                 viewState.showDaysLeft(" на ${settingRepository.getTillEnd().getDayAddition()}")
-            }, { Log.d("qwertry", "observe end date error") })
+            }, { Log.d("qwerty", it.message) })
             .keep()
     }
 
@@ -125,7 +125,7 @@ class KeyboardFragmentPresenter @Inject constructor(
                 sumPerDayRepository.insertToday(averageSum).complete().keep()
                 sumPerDayRepository.insertAverage(averageSum).complete().keep()
                 viewState.showSnack("новая сумма: ${averageSum.toCurencyFormat()} на ${period.getDayAddition()}")
-            }, { Log.d("qwertry", "recalculate average sum error") })
+            }, { Log.d("qwerty", it.message) })
             .keep()
     }
 

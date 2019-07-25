@@ -21,7 +21,7 @@ class StackedPresenter @Inject constructor(private val spendingInteractor: Spend
             .subscribe({ list ->
                 viewState.showFraph(list)
             }, {
-                Log.d("qwerty", "get Datas error")
+                Log.d("qwerty", it.message)
             })
             .keep()
 

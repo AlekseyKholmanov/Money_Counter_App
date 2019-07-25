@@ -48,7 +48,7 @@ class FirstLaunchPresenter @Inject constructor(
         spendingRepository.insert(
             Spending(null, sum, CategoryType.SALARY.id, false, "", today)
         ).async()
-            .subscribe({},{ Log.d("qwerty","goToMainError")})
+            .subscribe({},{ Log.d("qwerty",it.message)})
             .keep()
         sumPerDayRepository.insertAverage(sumPerDay).complete().keep()
         sumPerDayRepository.insertToday(sumPerDay).complete().keep()

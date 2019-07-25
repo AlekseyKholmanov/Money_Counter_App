@@ -35,7 +35,7 @@ class CostsPresenter @Inject constructor(
             .subscribe({ item -> viewState.showSpending(item) },
                 { error ->
                     viewState.onError(error)
-                    Log.d("qwerty", "loadcosts error")
+                    Log.d("qwerty", error.message)
                 })
             .keep()
     }
@@ -52,7 +52,7 @@ class CostsPresenter @Inject constructor(
                         sumPerDayRepository.insertToday(today - deltaAverage).complete().keep()
                         sumPerDayRepository.insertAverage(average - deltaAverage).complete().keep()
                     }, {
-                        Log.d("qwerty", "delete false error")
+                        Log.d("qwerty", it.message)
                     })
                     .keep()
             }
@@ -66,7 +66,7 @@ class CostsPresenter @Inject constructor(
                                 sumPerDayRepository.insertToday(it.inc(spending.sum).sum).complete().keep()
                             },
                                 {
-                                    Log.d("qwerty", "Costs_getBoth when Error")
+                                    Log.d("qwerty", it.message)
                                 })
                             .keep()
                     }
@@ -80,7 +80,7 @@ class CostsPresenter @Inject constructor(
                                 sumPerDayRepository.insertToday(today + deltaAverage).complete().keep()
                                 sumPerDayRepository.insertAverage(average + deltaAverage).complete().keep()
                             }, {
-                                Log.d("qwerty", "Costs_getBoth when else Error")
+                                Log.d("qwerty", it.message)
                             })
                             .keep()
                     }
@@ -96,11 +96,11 @@ class CostsPresenter @Inject constructor(
         costs
             .groupBy { it.spendingDate.withTimeAtStartOfDay() }
             .toSortedMap(Comparator { o1, o2 -> o2.compareTo(o1) })
-            .forEach(BiConsumer { t, u ->
+            .forEach { (t, u) ->
                 list.add(CostTimeDivider(t.toRUformat(), DailyExpenses.calculate(u)) as ListItem)
                 val mutable = u.toMutableList().also { it -> it.sortByDescending { it.spendingDate } }
                 mutable.forEach { list.add(it as ListItem) }
-            })
+            }
         return list
     }
 }

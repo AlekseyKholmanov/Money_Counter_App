@@ -23,7 +23,7 @@ class NotificationInteractor @Inject constructor(
                 sumPerDayRepository.insertToday(newToday.inc(saved.sum).sum).complete()
                 notificationManager.notify(saved.sum, newToday.sum + saved.sum)
             }, {
-                Log.d("qwerty", "alarm triggered error")
+                Log.d("qwerty", it.message)
             })
     }
 }
