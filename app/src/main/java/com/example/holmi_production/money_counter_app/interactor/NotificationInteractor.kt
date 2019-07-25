@@ -17,11 +17,13 @@ class NotificationInteractor @Inject constructor(
         Log.d("qwert", "alarm triggered")
         return sumPerDayRepository.getBoth()
             .async()
-            .subscribe { it ->
+            .subscribe({ it ->
                 val saved = it.first
                 val newToday = it.second
                 sumPerDayRepository.insertToday(newToday.inc(saved.sum).sum).complete()
                 notificationManager.notify(saved.sum, newToday.sum + saved.sum)
-            }
+            }, {
+                Log.d("qwerty", "alarm triggered error")
+            })
     }
 }

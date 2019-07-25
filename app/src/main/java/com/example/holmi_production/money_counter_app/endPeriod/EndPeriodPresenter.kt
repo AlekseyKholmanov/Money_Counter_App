@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.endPeriod
 
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.toDateTime
@@ -30,7 +31,9 @@ class EndPeriodPresenter @Inject constructor(
                 viewState.showDatePeriod(startDate.toRUformat(),endDate.toRUformat())
                 viewState.ShowAverageSumForPeriod(averageRealSum.toCurencyFormat())
 
-            },{})
+            },{
+                Log.d("qwerty","endPeriodGetSumError")
+            })
             .keep()
     }
 

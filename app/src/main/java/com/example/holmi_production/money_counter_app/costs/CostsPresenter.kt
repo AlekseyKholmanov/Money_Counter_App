@@ -33,7 +33,10 @@ class CostsPresenter @Inject constructor(
             .async()
             .map { newTransform(it) }
             .subscribe({ item -> viewState.showSpending(item) },
-                { error -> viewState.onError(error) })
+                { error ->
+                    viewState.onError(error)
+                    Log.d("qwerty", "loadcosts error")
+                })
             .keep()
     }
 
@@ -42,13 +45,15 @@ class CostsPresenter @Inject constructor(
             false -> {
                 sumPerDayRepository.getBoth()
                     .async()
-                    .subscribe { sums ->
+                    .subscribe({ sums ->
                         val today = sums.first.sum
                         val average = sums.second.sum
                         val deltaAverage = spending.sum / settingRepository.getTillEnd()
                         sumPerDayRepository.insertToday(today - deltaAverage).complete().keep()
                         sumPerDayRepository.insertAverage(average - deltaAverage).complete().keep()
-                    }
+                    }, {
+                        Log.d("qwerty", "delete false error")
+                    })
                     .keep()
             }
             else -> {
@@ -57,21 +62,26 @@ class CostsPresenter @Inject constructor(
                         sumPerDayRepository.getToday()
                             .async()
                             .doOnError { t -> Log.d("qwerty", t.toString()) }
-                            .subscribe { it ->
+                            .subscribe({ it ->
                                 sumPerDayRepository.insertToday(it.inc(spending.sum).sum).complete().keep()
-                            }
+                            },
+                                {
+                                    Log.d("qwerty", "Costs_getBoth when Error")
+                                })
                             .keep()
                     }
                     else -> {
                         sumPerDayRepository.getBoth()
                             .async()
-                            .subscribe { sums ->
+                            .subscribe({ sums ->
                                 val today = sums.first.sum
                                 val average = sums.second.sum
                                 val deltaAverage = spending.sum / settingRepository.getTillEnd()
                                 sumPerDayRepository.insertToday(today + deltaAverage).complete().keep()
                                 sumPerDayRepository.insertAverage(average + deltaAverage).complete().keep()
-                            }
+                            }, {
+                                Log.d("qwerty", "Costs_getBoth when else Error")
+                            })
                             .keep()
                     }
                 }

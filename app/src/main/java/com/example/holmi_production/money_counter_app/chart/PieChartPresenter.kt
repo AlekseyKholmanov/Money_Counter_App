@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.chart
 
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.model.CategoryType
@@ -20,9 +21,12 @@ class PieChartPresenter @Inject constructor(
             .map { it ->
                 it.groupBy {CategoryType.values()[it.categoryType] }
             }
-            .subscribe { it ->
+            .subscribe ({ it ->
                 viewState.showPie(it)
-            }
+            },{
+
+                Log.d("qwerty","showPie error")
+            })
             .keep()
     }
 }
