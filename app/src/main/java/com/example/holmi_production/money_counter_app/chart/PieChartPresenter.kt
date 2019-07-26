@@ -19,13 +19,13 @@ class PieChartPresenter @Inject constructor(
             .async()
 
             .map { it ->
-                it.groupBy {CategoryType.values()[it.categoryType] }
+                it.groupBy { CategoryType.values()[it.categoryType] }
             }
-            .subscribe ({ it ->
+            .subscribe({ it ->
                 viewState.showPie(it)
-            },{
+            }, {
 
-                Log.d("qwerty",it.message)
+                Log.d("qwerty", it.message)
             })
             .keep()
     }
