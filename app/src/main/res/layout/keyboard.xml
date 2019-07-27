@@ -5,7 +5,9 @@
         android:id="@+id/numbers_keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants">
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

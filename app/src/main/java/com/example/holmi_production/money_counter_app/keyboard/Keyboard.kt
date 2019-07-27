@@ -46,7 +46,8 @@ class Keyboard @JvmOverloads constructor(
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
         comment.setOnFocusChangeListener { v, hasFocus ->
             if(!hasFocus){
-                comment.hideKeyboard()
+                comment.clearFocus()
+                comment.hideKeyboard()  
             }
         }
         purshace_sum_textview.text = purshaseSum

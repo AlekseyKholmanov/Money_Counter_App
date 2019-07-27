@@ -17,14 +17,12 @@ class PieChartPresenter @Inject constructor(
     fun getPieData() {
         spendingRepository.getSpent()
             .async()
-
             .map { it ->
                 it.groupBy { CategoryType.values()[it.categoryType] }
             }
             .subscribe({ it ->
                 viewState.showPie(it)
             }, {
-
                 Log.d("qwerty", it.message)
             })
             .keep()
