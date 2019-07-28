@@ -2,6 +2,8 @@ package com.example.holmi_production.money_counter_app.keyboard
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.widget.ImageView
@@ -47,7 +49,11 @@ class Keyboard @JvmOverloads constructor(
         comment.setOnFocusChangeListener { v, hasFocus ->
             if(!hasFocus){
                 comment.clearFocus()
-                comment.hideKeyboard()  
+                comment.hideKeyboard()
+                Log.d("qwerty","ledt")
+            }
+            else{
+                Log.d("qwerty","has")
             }
         }
         purshace_sum_textview.text = purshaseSum
