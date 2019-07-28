@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
@@ -13,11 +14,13 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import kotlinx.android.synthetic.main.keyboard.*
+import kotlinx.android.synthetic.main.keyboard.view.*
 import org.joda.time.DateTime
 
 class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
@@ -58,9 +61,9 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         new_sum_per_day.text = sum
     }
 
-    override fun enterPressed(money: Double,isSpending:Boolean) {
+    override fun enterPressed(money: Double, comment: String, isSpending: Boolean) {
         Log.d("qwerty", money.toString())
-        presenter.saveSpend(money, isSpending)
+        presenter.saveSpend(money, comment, isSpending)
     }
 
     override fun moneyUpdated(money: Double) {

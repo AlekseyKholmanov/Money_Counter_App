@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.firstLaunch
 
 import android.content.Context
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.*
 import com.example.holmi_production.money_counter_app.model.CategoryType
@@ -18,7 +19,7 @@ import javax.inject.Inject
 class FirstLaunchPresenter @Inject constructor(
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
-    private val settingRepository:SettingRepository,
+    private val settingRepository: SettingRepository,
     val context: Context) :
     BasePresenter<FirstLaunchView>() {
     private var sum: Double = 0.0
@@ -26,7 +27,6 @@ class FirstLaunchPresenter @Inject constructor(
     private lateinit var endPeriod: DateTime
     private lateinit var today: DateTime
     private var sumPerDay: Double = 0.0
-
 
     fun getSum(sum: Double) {
         this.sum = sum
@@ -46,8 +46,10 @@ class FirstLaunchPresenter @Inject constructor(
 
     fun goToMainScreen() {
         spendingRepository.insert(
-            Spending(null,sum, CategoryType.SALARY.id,false,today)
-        ).async().subscribe().keep()
+            Spending(null, sum, CategoryType.SALARY.id, false, "", today)
+        ).async()
+            .subscribe({},{ Log.d("qwerty",it.message)})
+            .keep()
         sumPerDayRepository.insertAverage(sumPerDay).complete().keep()
         sumPerDayRepository.insertToday(sumPerDay).complete().keep()
         settingRepository.setAppOpened()

@@ -15,6 +15,8 @@ data class Spending(
 
     val isSpending: Boolean,
 
+    val comment:String?,
+
     val spendingDate: DateTime
 
 ) : ListItem

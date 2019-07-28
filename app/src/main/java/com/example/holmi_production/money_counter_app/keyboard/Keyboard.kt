@@ -2,12 +2,16 @@ package com.example.holmi_production.money_counter_app.keyboard
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.Vibrator
+import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import kotlinx.android.synthetic.main.keyboard.view.*
@@ -42,6 +46,16 @@ class Keyboard @JvmOverloads constructor(
         key_spending.setOnClickListener { pressed(ButtonTypes.ENTER_UP) }
         key_income.setOnClickListener { pressed(ButtonTypes.ENTER_DOWN) }
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
+        comment.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus){
+                comment.clearFocus()
+                comment.hideKeyboard()
+                Log.d("qwerty","ledt")
+            }
+            else{
+                Log.d("qwerty","has")
+            }
+        }
         purshace_sum_textview.text = purshaseSum
         App.component.inject(this)
 
@@ -77,22 +91,10 @@ class Keyboard @JvmOverloads constructor(
 
             }
             ButtonTypes.ENTER_UP -> {
-                when (purshaseSum) {
-                    "0" -> return
-                    else -> {
-                        mKeyboardListener.enterPressed(purshaseSum.toDouble(),true)
-                        purshaseSum = "0"
-                    }
-                }
+                enterPressed(true)
             }
             ButtonTypes.ENTER_DOWN -> {
-                when (purshaseSum) {
-                    "0" -> return
-                    else -> {
-                        mKeyboardListener.enterPressed(purshaseSum.toDouble(),false)
-                        purshaseSum = "0"
-                    }
-                }
+                enterPressed(false)
             }
             ButtonTypes.NUMERIC -> {
                 if (purshaseSum == "0")
@@ -118,10 +120,24 @@ class Keyboard @JvmOverloads constructor(
     fun setListener(mKeyboardListener: IKeyboardListener) {
         this.mKeyboardListener = mKeyboardListener
     }
+    private fun clearcCommentField(){
+        comment.setText("")
+    }
+    private fun enterPressed(isSpending:Boolean){
+        when (purshaseSum) {
+            "0" -> return
+            else -> {
+                val text = comment.text.toString()
+                mKeyboardListener.enterPressed(purshaseSum.toDouble(), text,isSpending)
+                purshaseSum = "0"
+                clearcCommentField()
+            }
+        }
+    }
 }
 
 interface IKeyboardListener {
-    fun enterPressed(money: Double, isSpending:Boolean)
+    fun enterPressed(money: Double, comment: String, isSpending:Boolean)
     fun moneyUpdated(money: Double)
     fun showCategoryDialog()
 }

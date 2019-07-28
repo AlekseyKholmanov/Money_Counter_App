@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.chart
 
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.CategoryType
@@ -13,13 +14,15 @@ class StackedPresenter @Inject constructor(private val spendingInteractor: Spend
 
     fun getDatas() {
         spendingInteractor.getAll()
-            .map { it -> it.filter { it.isSpending} }
+            .map { it -> it.filter { it.isSpending } }
             .map { it -> it.filter { it.spendingDate >= DateTime().minusDays(5) } }
             .map { it -> it.sortedByDescending { it.sum } }
             .map { it -> it.groupBy { it.spendingDate.withTimeAtStartOfDay() } }
-            .subscribe { list ->
+            .subscribe({ list ->
                 viewState.showFraph(list)
-            }
+            }, {
+                Log.d("qwerty", it.message)
+            })
             .keep()
 
     }
