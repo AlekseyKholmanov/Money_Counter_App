@@ -1,23 +1,15 @@
 package com.example.holmi_production.money_counter_app.keyboard
 
-import android.app.Notification
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.util.Log
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.arellomobile.mvp.InjectViewState
-import com.example.holmi_production.money_counter_app.*
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
-import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
-import com.example.holmi_production.money_counter_app.notification.NotificationManager
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
@@ -32,6 +24,13 @@ class KeyboardFragmentPresenter @Inject constructor(
     private val settingRepository: SettingRepository,
     private val contex: Context) :
     BasePresenter<KeyboardFragmnetView>() {
+
+    fun undoAdding(spending: Spending) {
+        spendingRepository.delete(spending)
+            .async()
+            .subscribe({Log.d("qwerty", "delete")},{Log.d("qwerty","error" + it.message)})
+            .keep()
+    }
 
     fun saveSpend(sum: Double, comment: String, isSpending: Boolean) {
         val categoryType = settingRepository.getCategoryValue()
@@ -62,6 +61,7 @@ class KeyboardFragmentPresenter @Inject constructor(
                 }
             }, { Log.d("qwerty", it.message) })
             .keep()
+        viewState.showAfterAddingSnack(spending)
     }
 
     fun setObservers() {
@@ -124,7 +124,7 @@ class KeyboardFragmentPresenter @Inject constructor(
                 settingRepository.saveEndDate(endDate)
                 sumPerDayRepository.insertToday(averageSum).complete().keep()
                 sumPerDayRepository.insertAverage(averageSum).complete().keep()
-                viewState.showSnack("новая сумма: ${averageSum.toCurencyFormat()} на ${period.getDayAddition()}")
+                viewState.showNewSumSnack("новая сумма: ${averageSum.toCurencyFormat()} на ${period.getDayAddition()}")
             }, { Log.d("qwerty", it.message) })
             .keep()
     }

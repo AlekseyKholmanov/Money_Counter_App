@@ -1,30 +1,37 @@
 package com.example.holmi_production.money_counter_app.keyboard
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.model.CategoryType
+import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import kotlinx.android.synthetic.main.keyboard.*
-import kotlinx.android.synthetic.main.keyboard.view.*
 import org.joda.time.DateTime
 
 class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     IKeyboardListener, ICategoryPickedListener, IDatePickerCallback {
+    override fun showAfterAddingSnack(spending: Spending) {
+        val message = if (spending.isSpending)
+            "Расход. ${CategoryType.values()[spending.categoryType].description}. ${spending.sum} рублей"
+        else
+            "Доход. ${CategoryType.values()[spending.categoryType].description}. ${spending.sum} рублей"
+        val snack = Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
+        snack.setAction("Отмена") {
+            presenter.undoAdding(spending)
+        }
+        snack.show()
+    }
 
     private lateinit var dialog: CategoryPickerFragment
 
@@ -32,7 +39,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         keyboard.setCategoryButtonValue(categoryType)
     }
 
-    override fun showSnack(message: String) {
+    override fun showNewSumSnack(message: String) {
 
         Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
             .show()
