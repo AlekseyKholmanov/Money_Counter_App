@@ -11,6 +11,8 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.getDayAddition
+import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
@@ -21,6 +23,13 @@ import org.joda.time.DateTime
 
 class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     IKeyboardListener, ICategoryPickedListener, IDatePickerCallback {
+
+    override fun showNewSumSnack(sum: Double, days: Int) {
+        val message = "новая сумма: ${sum.toCurencyFormat()} на ${days.getDayAddition()}"
+        Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
+            .show()
+    }
+
     override fun showAfterAddingSnack(spending: Spending) {
         val message = if (spending.isSpending)
             "Расход. ${CategoryType.values()[spending.categoryType].description}. ${spending.sum} рублей"
@@ -37,12 +46,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
 
     override fun showCategoryButton(categoryType: CategoryType) {
         keyboard.setCategoryButtonValue(categoryType)
-    }
-
-    override fun showNewSumSnack(message: String) {
-
-        Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
-            .show()
     }
 
     override fun datePicked(date: DateTime) {

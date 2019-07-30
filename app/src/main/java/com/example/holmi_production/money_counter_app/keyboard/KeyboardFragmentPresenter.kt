@@ -7,6 +7,7 @@ import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
+import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
@@ -22,19 +23,19 @@ class KeyboardFragmentPresenter @Inject constructor(
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,
+    private val spendingInteractor: SpendingInteractor,
     private val contex: Context) :
     BasePresenter<KeyboardFragmnetView>() {
 
     fun undoAdding(spending: Spending) {
-        spendingRepository.delete(spending)
-            .async()
+        spendingInteractor.delete(spending)
             .subscribe({Log.d("qwerty", "delete")},{Log.d("qwerty","error" + it.message)})
             .keep()
     }
 
     fun saveSpend(sum: Double, comment: String, isSpending: Boolean) {
         val categoryType = settingRepository.getCategoryValue()
-        val spending = Spending(null, sum, categoryType, isSpending, comment, DateTime())
+        val spending = Spending(DateTime(), sum, categoryType, isSpending, comment, DateTime())
         spendingRepository.insert(spending).complete().keep()
 
         sumPerDayRepository.getBoth()
@@ -124,7 +125,7 @@ class KeyboardFragmentPresenter @Inject constructor(
                 settingRepository.saveEndDate(endDate)
                 sumPerDayRepository.insertToday(averageSum).complete().keep()
                 sumPerDayRepository.insertAverage(averageSum).complete().keep()
-                viewState.showNewSumSnack("новая сумма: ${averageSum.toCurencyFormat()} на ${period.getDayAddition()}")
+                viewState.showNewSumSnack(averageSum,period)
             }, { Log.d("qwerty", it.message) })
             .keep()
     }

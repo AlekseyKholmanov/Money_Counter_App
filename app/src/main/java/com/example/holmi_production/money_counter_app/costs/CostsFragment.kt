@@ -76,6 +76,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
         itemTouchHelper.attachToRecyclerView(spendingList)
     }
 
+    //target api 24 lvl. current 21
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         presenter.loadCosts()

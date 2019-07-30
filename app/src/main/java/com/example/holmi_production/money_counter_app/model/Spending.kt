@@ -6,8 +6,8 @@ import org.joda.time.DateTime
 
 @Entity
 data class Spending(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int?,
+    @PrimaryKey(autoGenerate = false)
+    val createdDate: DateTime,
 
     val sum: Double,
 
