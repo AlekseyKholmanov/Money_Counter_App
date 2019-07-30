@@ -9,6 +9,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.CategorySpendingDirection
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import leakcanary.AppWatcher
 
 class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
     companion object {
@@ -39,6 +40,11 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
             CategoryDialogAdapter(
                 context!!,
                 list.filter { it.spendingDirection == CategorySpendingDirection.INCOME || it.spendingDirection == CategorySpendingDirection.BOTH })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
     }
 }
 

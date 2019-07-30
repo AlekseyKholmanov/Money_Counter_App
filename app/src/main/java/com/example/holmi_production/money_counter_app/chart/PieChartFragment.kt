@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import kotlinx.android.synthetic.main.chart_pie_chart.*
+import leakcanary.AppWatcher
 
 class PieChartFragment: AndroidXMvpAppCompatFragment(),PieChartView{
 
@@ -58,5 +59,10 @@ class PieChartFragment: AndroidXMvpAppCompatFragment(),PieChartView{
         chart_pie.description.textSize = 25f
         chart_pie.animateXY(1000,1000)
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
     }
 }

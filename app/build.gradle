@@ -27,7 +27,7 @@ ext {
     dagger_version = "2.16"
     room_version = "1.1.1"
     work_version = "2.0.1"
-    nav_version = "2.1.0-alpha05"
+    nav_version = "2.1.0-beta02"
 }
 repositories {
     maven { url 'https://jitpack.io' }
@@ -35,6 +35,8 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-1'
 
     //navigations
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version" // For Kotlin use navigation-fragment-ktx

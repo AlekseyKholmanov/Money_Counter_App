@@ -19,6 +19,7 @@ import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_bottom_costs.*
+import leakcanary.AppWatcher
 
 class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
     override fun onAttach(context: Context) {
@@ -105,6 +106,11 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
     private fun showEmptyPlaceholder() {
         emptyPlaceholder.isVisible = true
         spendingList.isVisible = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
     }
 
 }

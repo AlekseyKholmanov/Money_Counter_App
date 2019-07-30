@@ -15,6 +15,7 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_first_launch.*
+import leakcanary.AppWatcher
 import org.joda.time.DateTime
 
 class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
@@ -93,6 +94,11 @@ class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
     override fun showDate(pickedDate: String, difference: String) {
         cost_item_date.setText(pickedDate)
         date_difference.text = difference
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
     }
 
     private var dateDialog: DatePickerDialog.OnDateSetListener =

@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import leakcanary.AppWatcher
 import org.joda.time.DateTime
 import kotlin.collections.ArrayList
 
@@ -94,6 +95,11 @@ class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
 
         presenter.getDatas()
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
     }
 
     @InjectPresenter
