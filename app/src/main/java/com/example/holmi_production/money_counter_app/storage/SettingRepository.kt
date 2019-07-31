@@ -96,9 +96,18 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return pref.getBoolean(IS_END, false)
     }
 
+    fun setNotificationTime(){
+        pref.edit().putBoolean(ARE_NOTIFY_TIME_SET, true).apply()
+    }
+
+    fun areNorificationTimeSetted(): Boolean {
+        return pref.getBoolean(ARE_NOTIFY_TIME_SET, false)
+    }
+
     private val FIRST_OPEN = "FirstOpen"
     private val START_PERIOD = "START_PERIOD"
     private val END_PERIOD = "END_PERIOD"
     private val IS_END = "IS_END"
     private val CATEGORY_VALUE = "Category_value"
+    private val ARE_NOTIFY_TIME_SET="Notification_Time"
 }

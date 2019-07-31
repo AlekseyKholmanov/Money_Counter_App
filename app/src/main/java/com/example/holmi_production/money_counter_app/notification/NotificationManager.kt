@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.main.MainActivity
+import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import org.joda.time.DateTime
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,18 +21,21 @@ import javax.inject.Singleton
 class NotificationManager @Inject constructor(
     private val notificationManager: NotificationManager,
     private val alarmManager: AlarmManager,
-    private val application: Application) {
+    private val application: Application,
+    private val settingRepository: SettingRepository) {
     init {
         createNotificationChannel()
     }
 
     fun setNotificationTime() {
-        val time = DateTime().withTimeAtStartOfDay()
-        val intent = Intent(application, NotificationAlarmReciever::class.java)
-        val pi = PendingIntent.getBroadcast(application, 0, intent, FLAG_UPDATE_CURRENT)
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time.millis, AlarmManager.INTERVAL_DAY, pi)
-        Log.d("qwerty", "Notification time setted")
-
+        if (!settingRepository.areNorificationTimeSetted()) {
+            val time = DateTime().withTimeAtStartOfDay()
+            val intent = Intent(application, NotificationAlarmReciever::class.java)
+            val pi = PendingIntent.getBroadcast(application, 0, intent, FLAG_UPDATE_CURRENT)
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time.millis, AlarmManager.INTERVAL_DAY, pi)
+            Log.d("qwerty", "Notification time setted")
+            settingRepository.setNotificationTime()
+        }
     }
 
     private fun createNotificationChannel() {
@@ -67,6 +71,7 @@ class NotificationManager @Inject constructor(
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pIntent)
+            .setAutoCancel(true)
             .build()
     }
 
