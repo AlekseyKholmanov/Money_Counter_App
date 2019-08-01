@@ -20,8 +20,18 @@ class BottomHostFragment : AndroidXMvpAppCompatFragment() {
         val navController = Navigation.findNavController(requireActivity(), R.id.bottomNavFragment)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.categoryPickerFragment -> hideBottomNav()
-                else -> showBottomNav()
+                R.id.categoryPickerFragment -> {
+                    hideBottomNav()
+                    hideTopbar()
+                }
+                R.id.mainFragment -> {
+                    hideTopbar()
+                    showBottomNav()
+                }
+                else -> {
+                    showBottomNav()
+                    showTopbar()
+                }
             }
         }
         bottom_navigation.setupWithNavController(navController)
@@ -33,5 +43,13 @@ class BottomHostFragment : AndroidXMvpAppCompatFragment() {
 
     private fun hideBottomNav() {
         bottom_navigation.visibility = View.GONE
+    }
+
+    private fun hideTopbar() {
+        topbar.visibility = View.GONE
+    }
+
+    private fun showTopbar() {
+        topbar.visibility = View.VISIBLE
     }
 }
