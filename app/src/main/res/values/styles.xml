@@ -10,11 +10,18 @@
         <item name="android:windowFullscreen">false</item>
     </style>
 
-    <style name="MyKeyboardButtons" parent="@style/Widget.MaterialComponents.Button">
+    <style name="MyKeyboardButtons" parent="Widget.MaterialComponents.Button" >
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">1dp</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:background">#838383</item>
+        <item name="android:colorBackground">@color/cardview_dark_background</item>
+        <item name="enforceMaterialTheme">true</item>
+        <item name="enforceTextAppearance">true</item>
+        <item name="android:textAppearance">?attr/textAppearanceButton</item>
+        <item name="android:textColor">@color/mtrl_btn_text_color_selector</item>
+        <item name="iconTint">@color/mtrl_btn_text_color_selector</item>
+        <item name="rippleColor">@color/mtrl_btn_ripple_color</item>
+        <item name="backgroundTint">@color/mtrl_btn_bg_color_selector</item>
 
     </style>
 
