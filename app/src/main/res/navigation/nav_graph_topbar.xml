@@ -4,6 +4,6 @@
             android:id="@+id/nav_graph_topbar.xml" app:startDestination="@id/topbarFragmnet3">
 
     <fragment android:id="@+id/topbarFragmnet3"
-              android:name="com.example.holmi_production.money_counter_app.main.TopbarFragmnet"
+              android:name="com.example.holmi_production.money_counter_app.topbar.Topbar"
               android:label="TopbarFragmnet"/>
 </navigation>

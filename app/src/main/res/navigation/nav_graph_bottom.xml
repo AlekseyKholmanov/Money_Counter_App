@@ -30,19 +30,15 @@
             tool:layout="@layout/fragment_bottom_costs"
     />
     <fragment android:id="@+id/categoryPickerFragment"
-              android:name="com.example.holmi_production.money_counter_app.keyboard.CategoryPickerFragment"
+              android:name="com.example.holmi_production.money_counter_app.categoryPicker.CategoryPickerFragment"
               android:label="CategoryPickerFragment">
         <action android:id="@+id/action_categoryPickerFragment_to_mainFragment" app:destination="@id/mainFragment"
                 app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
                 app:popUpToInclusive="false" app:popUpTo="@+id/nav_graph_bottom"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim">
-            <argument
-                    android:name="categoryId"
-                    app:argType="integer"
-                    android:defaultValue="0"/>
         </action>
     </fragment>
     <fragment android:id="@+id/topbarFragmnet2"
-              android:name="com.example.holmi_production.money_counter_app.main.TopbarFragmnet"
+              android:name="com.example.holmi_production.money_counter_app.topbar.Topbar"
               android:label="TopbarFragmnet"/>
 </navigation>

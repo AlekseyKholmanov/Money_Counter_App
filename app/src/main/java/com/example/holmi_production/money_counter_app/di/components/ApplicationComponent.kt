@@ -10,23 +10,23 @@ import com.example.holmi_production.money_counter_app.di.modules.PreferenceModul
 import com.example.holmi_production.money_counter_app.endPeriod.EndPeriodPresenter
 import com.example.holmi_production.money_counter_app.firstLaunch.FirstLaunchPresenter
 import com.example.holmi_production.money_counter_app.keyboard.Keyboard
-import com.example.holmi_production.money_counter_app.keyboard.KeyboardFragmentPresenter
-import com.example.holmi_production.money_counter_app.main.TopbarFragmnet
+import com.example.holmi_production.money_counter_app.keyboard.KeyboardPresenter
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
+import com.example.holmi_production.money_counter_app.topbar.TopbarPresenter
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [ContextModule::class, ApplicationModule::class, PreferenceModule::class])
 interface ApplicationComponent {
-    fun getKeyboardPresenter(): KeyboardFragmentPresenter
+    fun getKeyboardPresenter(): KeyboardPresenter
     fun getCostsPresenter(): CostsPresenter
     fun getFirstLaunchPresenter(): FirstLaunchPresenter
     fun getChartPresenter(): PieChartPresenter
     fun getEndPeriodPresenter():EndPeriodPresenter
     fun getStackedPresenter():StackedPresenter
+    fun getTopbarPresenter():TopbarPresenter
     fun inject(activity: MainActivity)
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
     fun inject(keyboard: Keyboard)
-    fun inject(topbar: TopbarFragmnet)
 }

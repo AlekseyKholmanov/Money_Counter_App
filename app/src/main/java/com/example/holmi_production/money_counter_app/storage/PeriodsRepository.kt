@@ -16,7 +16,7 @@ class PeriodsRepository @Inject constructor(
     private val dao = database.periodsDao
 
     fun insert(period: FilterPeriods): Completable {
-        return Completable.fromCallable { dao.insert(period.copy(id= key)) }
+        return Completable.fromCallable { dao.insert(period.copy(id = key)) }
     }
 
     fun getPeriod(): Single<FilterPeriods> {

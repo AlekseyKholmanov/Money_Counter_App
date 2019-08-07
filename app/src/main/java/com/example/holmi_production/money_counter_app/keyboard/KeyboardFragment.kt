@@ -99,12 +99,12 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     private lateinit var timePickerDialog: TimePickerDialog
 
     @InjectPresenter
-    lateinit var presenter: KeyboardFragmentPresenter
+    lateinit var presenter: KeyboardPresenter
 
     private lateinit var categoryPickerFragment: CategoryPickerFragment
 
     @ProvidePresenter
-    fun initPresenter(): KeyboardFragmentPresenter {
+    fun initPresenter(): KeyboardPresenter {
         return App.component.getKeyboardPresenter()
     }
 
@@ -131,12 +131,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         presenter.getDaysLeft()
         presenter.setObservers()
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("SUM", purshace_sum_textview.text.toString())
-        Log.d("M_KeyboardFragment", "saved")
-        super.onSaveInstanceState(outState)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
