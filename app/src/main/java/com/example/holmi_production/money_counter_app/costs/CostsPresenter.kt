@@ -34,6 +34,38 @@ class CostsPresenter @Inject constructor(
             .keep()
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun getSpending() {
+        spendingInteractor.getAllInPeriod()
+            .map { newTransform(it) }
+            .subscribe({ item -> viewState.showSpending(item) },
+                { error ->
+                    viewState.onError(error)
+                    Log.d("qwerty", error.message)
+                })
+            .keep()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun setObservers() {
+        observeSpendings()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun observeSpendings() {
+        spendingInteractor.observePeriods()
+            .map { newTransform(it) }
+            .subscribe({ item ->
+                viewState.showSpending(item)
+                Log.d("M_CostsPresenter","observe spending item" + item.count().toString())
+            },
+                { error ->
+                    viewState.onError(error)
+                    Log.d("M_CostsPresenter", error.message)
+                })
+            .keep()
+    }
+
     fun delete(spending: Spending) {
         spendingInteractor.delete(spending).subscribe().keep()
         this.spendingRepository.delete(spending).async().subscribe { viewState.updateList() }.keep()

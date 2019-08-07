@@ -78,16 +78,10 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
                 }
             }
         }
-//        topbar = activity!!.findViewById(R.id.topbarContainer )
-//        topbar.setListener(this)
+        presenter.getSpending()
+        presenter.setObservers()
         val itemTouchHelper = ItemTouchHelper(swipeHandle)
         itemTouchHelper.attachToRecyclerView(spendingList)
-    }
-
-    //target api 24 lvl. current 21
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        presenter.loadCosts()
     }
 
     override fun onError(error: Throwable) {
