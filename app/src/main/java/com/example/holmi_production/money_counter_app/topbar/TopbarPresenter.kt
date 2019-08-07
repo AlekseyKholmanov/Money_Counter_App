@@ -7,6 +7,7 @@ import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
 import org.joda.time.DateTime
 import org.joda.time.Duration
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @InjectViewState
@@ -49,8 +50,8 @@ class TopbarPresenter @Inject constructor(private val periodsRepository: Periods
             Duration(oldPeriod.rightBorder, oldPeriod.leftBorder).standardDays - 1
         return FilterPeriods(
             "",
-            oldPeriod.leftBorder.plusDays(difDays.toInt()),
-            oldPeriod.rightBorder.plusDays(difDays.toInt())
+            oldPeriod.leftBorder.plusDays(difDays.toInt()).withTimeAtStartOfDay(),
+            oldPeriod.rightBorder.plusDays(difDays.toInt()).withTime(23,59,59,59)
         )
 
     }
