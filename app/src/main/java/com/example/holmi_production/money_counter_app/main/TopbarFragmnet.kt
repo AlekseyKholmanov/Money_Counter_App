@@ -1,29 +1,31 @@
 package com.example.holmi_production.money_counter_app.main
 
-import android.content.Context
-import android.util.AttributeSet
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
+import android.view.ViewGroup
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toDateTime
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.model.FilterPeriods
+import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import kotlinx.android.synthetic.main.topbar.view.*
+import kotlinx.android.synthetic.main.topbar.*
 import org.joda.time.DateTime
 import org.joda.time.Duration
 import javax.inject.Inject
 
-class Topbar @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-    defStyleRes: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr, defStyleRes) {
-    init {
-        View.inflate(context, R.layout.topbar, this)
+class TopbarFragmnet : AndroidXMvpAppCompatFragment() {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.topbar, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         topbar_left.setOnClickListener {
             periodChanged(false)
         }
@@ -36,7 +38,6 @@ class Topbar @JvmOverloads constructor(
         App.component.inject(this)
         initializeDate()
     }
-
     private fun initializeDate() {
         val (start, end) = settingRepository.getTopbarDate()
         val text = "${start.toDateTime().toRUformat()} - ${end.toDateTime().toRUformat()}"
@@ -61,14 +62,15 @@ class Topbar @JvmOverloads constructor(
     }
 
     private fun saveDate(start: DateTime, end: DateTime) {
-        periodsRepository.insert(FilterPeriods("",start,end))
+        periodsRepository.insert(FilterPeriods("", start, end))
             .subscribe()
     }
 
     @Inject
     lateinit var settingRepository: SettingRepository
 
-    @Inject lateinit var periodsRepository: PeriodsRepository
+    @Inject
+    lateinit var periodsRepository: PeriodsRepository
 
     var mTopbarListener: ITopbarListener? = null
 

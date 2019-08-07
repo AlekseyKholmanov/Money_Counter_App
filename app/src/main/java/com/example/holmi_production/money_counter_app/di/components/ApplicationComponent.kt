@@ -11,7 +11,7 @@ import com.example.holmi_production.money_counter_app.endPeriod.EndPeriodPresent
 import com.example.holmi_production.money_counter_app.firstLaunch.FirstLaunchPresenter
 import com.example.holmi_production.money_counter_app.keyboard.Keyboard
 import com.example.holmi_production.money_counter_app.keyboard.KeyboardFragmentPresenter
-import com.example.holmi_production.money_counter_app.main.Topbar
+import com.example.holmi_production.money_counter_app.main.TopbarFragmnet
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
 import dagger.Component
 import javax.inject.Singleton
@@ -28,5 +28,5 @@ interface ApplicationComponent {
     fun inject(activity: MainActivity)
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
     fun inject(keyboard: Keyboard)
-    fun inject(topbar: Topbar)
+    fun inject(topbar: TopbarFragmnet)
 }

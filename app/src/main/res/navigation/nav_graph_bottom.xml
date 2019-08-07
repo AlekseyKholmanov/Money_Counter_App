@@ -42,4 +42,7 @@
                     android:defaultValue="0"/>
         </action>
     </fragment>
+    <fragment android:id="@+id/topbarFragmnet2"
+              android:name="com.example.holmi_production.money_counter_app.main.TopbarFragmnet"
+              android:label="TopbarFragmnet"/>
 </navigation>
