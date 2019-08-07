@@ -19,23 +19,12 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
         }
     }
 
-    private var callback: ICategoryPickedListener? = null
-
-    fun setListener(callback: ICategoryPickedListener) {
-        this.callback = callback
-    }
-
-    fun deleteListener(){
-        callback = null
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_category_picker, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val costsGrid = view.findViewById(R.id.costsGrid) as GridView
         val incomeGrid = view.findViewById(R.id.incomeGrid) as GridView
         val list = CategoryType.values().toList()
@@ -77,8 +66,4 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
         Log.d("M_CategoryPicker", "onDestroy")
         AppWatcher.objectWatcher.watch(this)
     }
-}
-
-interface ICategoryPickedListener {
-    fun categoryPicked(type: CategoryType)
 }

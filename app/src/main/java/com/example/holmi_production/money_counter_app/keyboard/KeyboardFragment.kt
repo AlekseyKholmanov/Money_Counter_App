@@ -19,12 +19,11 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import kotlinx.android.synthetic.main.keyboard.*
-import kotlinx.android.synthetic.main.keyboard.view.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
 
 class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
-    IKeyboardListener, ICategoryPickedListener, IDatePickerCallback {
+    IKeyboardListener, IDatePickerCallback {
 
     override fun showNewSumSnack(sum: Double, days: Int) {
         val message = "новая сумма: ${sum.toCurencyFormat()} на ${days.getDayAddition()}"
@@ -44,23 +43,19 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         snack.show()
     }
 
-    override fun showCategoryButton(categoryType: CategoryType) {
-        keyboard.setCategoryButtonValue(categoryType)
-    }
-
     override fun datePicked(date: DateTime) {
         presenter.recalculateAverageSum(date)
     }
 
-    override fun categoryPicked(type: CategoryType) {
-        key_category.setBackgroundColor(type.color)
-        key_category.findViewById<ImageView>(R.id.categoryImage).setImageResource(CategoryType.getImage(type))
-        presenter.setType(type.id)
+    override fun updateChooseCategoryButton(typeId: Int) {
+        val type = CategoryType.values()[typeId]
+        val container = key.findViewById<ViewGroup>(R.id.key_category)
+        container.setBackgroundColor(type.color)
+        container.findViewById<ImageView>(R.id.categoryImage).setImageResource(CategoryType.getImage(type))
     }
 
     override fun showCategoryDialog() {
         categoryPickerFragment = CategoryPickerFragment.newInstance()
-        categoryPickerFragment.setListener(this)
         findNavController().navigate(R.id.action_mainFragment_to_categoryPickerFragment)
     }
 
@@ -119,25 +114,20 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         key = view.findViewById(R.id.keyboard)
 
-        var savedSum = "0"
-        if (savedInstanceState != null)
-            savedSum = savedInstanceState.getString("SUM")
-
-        Log.d("M_KeyboardFragment", "getted$savedSum")
-        key.setSum(savedSum)
-
         key.setListener(this)
         left_days.setOnClickListener {
             timePickerDialog = TimePickerDialog.newInstance(withMinDate = true)
             timePickerDialog.setListener(this)
             timePickerDialog.show(childFragmentManager, "datePicker")
         }
-        if (arguments != null) {
-            val id = arguments!!.getInt("categoryId")
-            presenter.setType(id)
+        if (arguments == null)
+            presenter.getCategoryButtonValue()
+        else {
+            val categoryId = arguments!!.getInt("categoryId")
+            presenter.setCategoryButonType(categoryId)
         }
+
         presenter.getDaysLeft()
-        presenter.getCategoryButtonValue()
         presenter.setObservers()
         super.onViewCreated(view, savedInstanceState)
     }

@@ -20,10 +20,6 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         PublishSubject.create<Boolean>()
     }
 
-    private val categorySubject by lazy {
-        PublishSubject.create<Int>()
-    }
-
     fun setEndPeriod() {
         pref.edit().putBoolean(IS_END, true).apply()
         isEndSubject.onNext(true)
@@ -36,16 +32,10 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
 
     fun setCategoryButtonType(type: Int) {
         pref.edit().putInt(CATEGORY_VALUE, type).apply()
-        categorySubject.onNext(type)
     }
 
     fun getCategoryValue(): Int {
         return pref.getInt(CATEGORY_VALUE, 8)
-    }
-
-    fun observeCategoryValue(): Flowable<Int> {
-        return categorySubject.toFlowable(BackpressureStrategy.LATEST)
-            .distinctUntilChanged()
     }
 
     fun setAppOpened() {

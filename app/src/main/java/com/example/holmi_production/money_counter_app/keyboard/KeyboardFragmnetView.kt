@@ -12,6 +12,6 @@ interface KeyboardFragmnetView:MvpView{
     fun showDaysLeft(days:String)
     fun showAverageSum(sum:String, isDisplayed:Boolean)
     fun showNewSumSnack(sum:Double, days:Int)
-    fun showCategoryButton(categoryType: CategoryType)
     fun showAfterAddingSnack(spending: Spending)
+    fun updateChooseCategoryButton(typeId:Int)
 }

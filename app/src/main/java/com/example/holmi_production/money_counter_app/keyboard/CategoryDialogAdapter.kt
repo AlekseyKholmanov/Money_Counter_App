@@ -26,8 +26,8 @@ class CategoryDialogAdapter(
         v.setBackgroundColor(type.color)
         text.text = type.description
         image.setImageResource(CategoryType.getImage(type))
-        val bundle = bundleOf("categoryId" to type.id)
         v.setOnClickListener {
+            val bundle = bundleOf("categoryId" to type.id)
             parent!!.findNavController().navigate(R.id.action_categoryPickerFragment_to_mainFragment, bundle)
         }
         return v

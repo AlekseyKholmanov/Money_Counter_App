@@ -87,12 +87,6 @@ class KeyboardFragmentPresenter @Inject constructor(
                 viewState.showAverageSum(average.sum.toCurencyFormat(), average.sum >= 0.0)
             }, { Log.d("qwerty", it.message) })
             .keep()
-        settingRepository.observeCategoryValue()
-            .async()
-            .subscribe({
-                viewState.showCategoryButton(CategoryType.values()[it])
-            }, { Log.d("qwerty", it.message) })
-            .keep()
         settingRepository.observeEndDate()
             .async()
             .subscribe({
@@ -107,11 +101,13 @@ class KeyboardFragmentPresenter @Inject constructor(
 
     fun getCategoryButtonValue() {
         val type = settingRepository.getCategoryValue()
-        viewState.showCategoryButton(getCategoryType(type))
+        viewState.updateChooseCategoryButton(type)
     }
 
-    fun setType(type: Int) {
+    fun setCategoryButonType(type: Int) {
+        Log.d("M_KeyboardPresenter", "set type $type")
         settingRepository.setCategoryButtonType(type)
+        viewState.updateChooseCategoryButton(type)
     }
 
     fun recalculateAverageSum(endDate: DateTime) {
