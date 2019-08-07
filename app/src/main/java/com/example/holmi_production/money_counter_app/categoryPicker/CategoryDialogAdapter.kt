@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.keyboard
+package com.example.holmi_production.money_counter_app.categoryPicker
 
 import android.content.Context
 import android.view.LayoutInflater

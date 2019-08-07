@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.keyboard
+package com.example.holmi_production.money_counter_app.categoryPicker
 
 import android.os.Bundle
 import android.util.Log
@@ -29,7 +29,9 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
         val incomeGrid = view.findViewById(R.id.incomeGrid) as GridView
         val list = CategoryType.values().toList()
         costsGrid.adapter =
-            CategoryDialogAdapter(context!!, list.filter { it.spendingDirection == CategorySpendingDirection.SPENDING })
+            CategoryDialogAdapter(
+                context!!,
+                list.filter { it.spendingDirection == CategorySpendingDirection.SPENDING })
         incomeGrid.adapter =
             CategoryDialogAdapter(
                 context!!,

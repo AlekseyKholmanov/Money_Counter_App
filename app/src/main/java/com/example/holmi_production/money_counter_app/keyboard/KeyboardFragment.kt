@@ -11,6 +11,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.categoryPicker.CategoryPickerFragment
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.model.CategoryType
