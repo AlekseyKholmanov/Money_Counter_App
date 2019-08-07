@@ -35,7 +35,7 @@ class KeyboardPresenter @Inject constructor(
 
     fun saveSpend(sum: Double, comment: String, isSpending: Boolean) {
         val categoryType = settingRepository.getCategoryValue()
-        val spending = Spending(DateTime(), sum, categoryType, isSpending, comment, DateTime())
+        val spending = Spending(DateTime(), sum, categoryType, isSpending, comment)
         spendingRepository.insert(spending).complete().keep()
 
         sumPerDayRepository.getBoth()

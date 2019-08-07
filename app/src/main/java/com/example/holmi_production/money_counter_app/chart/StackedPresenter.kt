@@ -15,9 +15,9 @@ class StackedPresenter @Inject constructor(private val spendingInteractor: Spend
     fun getDatas() {
         spendingInteractor.getAll()
             .map { it -> it.filter { it.isSpending } }
-            .map { it -> it.filter { it.spendingDate >= DateTime().minusDays(5) } }
+            .map { it -> it.filter { it.createdDate >= DateTime().minusDays(5) } }
             .map { it -> it.sortedByDescending { it.sum } }
-            .map { it -> it.groupBy { it.spendingDate.withTimeAtStartOfDay() } }
+            .map { it -> it.groupBy { it.createdDate.withTimeAtStartOfDay() } }
             .subscribe({ list ->
                 viewState.showFraph(list)
             }, {

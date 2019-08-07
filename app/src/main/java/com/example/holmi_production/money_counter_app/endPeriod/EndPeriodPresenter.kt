@@ -25,7 +25,7 @@ class EndPeriodPresenter @Inject constructor(
                 val income = it.first
                 val spending = it.second
                 val leftSum = income.sumByDouble { it.sum } - spending.sumByDouble { it.sum }
-                val spendForPeriod = spending.filter { it.spendingDate >= startDate }.sumByDouble { it.sum }
+                val spendForPeriod = spending.filter { it.createdDate >= startDate }.sumByDouble { it.sum }
                 val averageRealSum = spendForPeriod / periodDays
                 viewState.showLeftSum(leftSum.toCurencyFormat())
                 viewState.showSpendedSum(spendForPeriod.toCurencyFormat())

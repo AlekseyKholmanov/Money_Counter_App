@@ -43,11 +43,11 @@ class CostsPresenter @Inject constructor(
     private fun newTransform(costs: List<Spending>): ArrayList<ListItem> {
         val list = arrayListOf<ListItem>()
         costs
-            .groupBy { it.spendingDate.withTimeAtStartOfDay() }
+            .groupBy { it.createdDate.withTimeAtStartOfDay() }
             .toSortedMap(Comparator { o1, o2 -> o2.compareTo(o1) })
             .forEach { (t, u) ->
                 list.add(CostTimeDivider(t.toRUformat(), DailyExpenses.calculate(u)) as ListItem)
-                val mutable = u.toMutableList().also { it -> it.sortByDescending { it.spendingDate } }
+                val mutable = u.toMutableList().also { it -> it.sortByDescending { it.createdDate } }
                 mutable.forEach { list.add(it as ListItem) }
             }
         return list

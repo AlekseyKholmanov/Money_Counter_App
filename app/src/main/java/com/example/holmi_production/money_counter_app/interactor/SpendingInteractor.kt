@@ -49,7 +49,7 @@ class SpendingInteractor @Inject constructor(
                     }
             }
             else -> {
-                when (spending.spendingDate.dayOfYear()) {
+                when (spending.createdDate.dayOfYear()) {
                     DateTime.now().dayOfYear() -> {
                         return sumPerDayRepository.getToday()
                             .async()

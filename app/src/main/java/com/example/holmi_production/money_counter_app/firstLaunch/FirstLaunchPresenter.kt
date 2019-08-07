@@ -46,7 +46,7 @@ class FirstLaunchPresenter @Inject constructor(
 
     fun goToMainScreen() {
         spendingRepository.insert(
-            Spending(DateTime(), sum, CategoryType.SALARY.id, false, "", today)
+            Spending(DateTime(), sum, CategoryType.SALARY.id, false, "")
         ).async()
             .subscribe({},{ Log.d("qwerty",it.message)})
             .keep()

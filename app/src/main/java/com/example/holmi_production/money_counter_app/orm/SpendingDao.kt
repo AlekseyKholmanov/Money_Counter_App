@@ -19,7 +19,7 @@ interface SpendingDao {
     @Query("SELECT * FROM Spending")
     fun getSpendings():List<Spending>
 
-    @Query("SELECT * FROM Spending WHERE spendingDate =:date")
+    @Query("SELECT * FROM Spending WHERE createdDate =:date")
     fun getSpending(date:DateTime): Maybe<Spending>
 
     @Insert(onConflict = REPLACE)
