@@ -104,6 +104,22 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return pref.getBoolean(ARE_NOTIFY_TIME_SET, false)
     }
 
+    fun setTopbarStartDate(date:Long){
+        pref.edit().putLong(TOPBAR_START_DATE,date).apply()
+    }
+
+    fun setTopbarEndDate(date:Long){
+        pref.edit().putLong(TOPBAR_END_DATE,date).apply()
+    }
+
+    fun getTopbarDate(): Pair<Long, Long> {
+        val start = pref.getLong(TOPBAR_START_DATE, DateTime.now().withTimeAtStartOfDay().minusDays(6).millis)
+        val end = pref.getLong(TOPBAR_END_DATE,DateTime.now().withTimeAtStartOfDay().millis)
+        return Pair(start,end)
+    }
+
+    private val TOPBAR_START_DATE="TopbarFirstDate"
+    private val TOPBAR_END_DATE="TopbarEndDate"
     private val FIRST_OPEN = "FirstOpen"
     private val START_PERIOD = "START_PERIOD"
     private val END_PERIOD = "END_PERIOD"

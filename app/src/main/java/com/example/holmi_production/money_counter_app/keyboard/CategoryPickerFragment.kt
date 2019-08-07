@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.keyboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +19,14 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
         }
     }
 
-    lateinit var callback: ICategoryPickedListener
+    private var callback: ICategoryPickedListener? = null
 
     fun setListener(callback: ICategoryPickedListener) {
         this.callback = callback
+    }
+
+    fun deleteListener(){
+        callback = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,8 +47,34 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
                 list.filter { it.spendingDirection == CategorySpendingDirection.INCOME || it.spendingDirection == CategorySpendingDirection.BOTH })
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("M_CategoryPicker","OnCreate")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("M_CategoryPicker","onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("M_CategoryPicker","onStop")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("M_CategoryPicker","onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("M_CategoryPicker","onResume")
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("M_CategoryPicker", "onDestroy")
         AppWatcher.objectWatcher.watch(this)
     }
 }

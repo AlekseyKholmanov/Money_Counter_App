@@ -23,16 +23,20 @@ class TimePickerDialog : DialogFragment(), DatePickerDialog.OnDateSetListener {
         }
     }
 
-    private lateinit var callback: IDatePickerCallback
+    private var callback: IDatePickerCallback? = null
     override fun onDateSet(picker: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
         val time = DateTime(picker.year, picker.month + 1, picker.dayOfMonth, 0, 0)
-        callback.datePicked(time)
+        callback?.datePicked(time)
         Log.d("qwerty", time.toString())
 
     }
 
     fun setListener(callback: IDatePickerCallback) {
         this.callback = callback
+    }
+
+    fun deleteListener(){
+        callback = null
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

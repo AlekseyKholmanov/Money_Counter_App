@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,40 +16,60 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.costs.adapter.CostsAdapter
+import com.example.holmi_production.money_counter_app.main.ITopbarListener
+import com.example.holmi_production.money_counter_app.main.Topbar
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_bottom_costs.*
 import leakcanary.AppWatcher
+import org.joda.time.DateTime
 
-class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
+class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView, ITopbarListener {
+    override fun leftPressed(start: DateTime, end: DateTime) {
+
+        Toast.makeText(context, "leftPressed", Toast.LENGTH_SHORT).show()
+        //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun rightPressed(start: DateTime, end: DateTime) {
+        Toast.makeText(context, "rightPressed", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun chooseDatePressed() {
+        Toast.makeText(context, "chooseDatePressed", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("qwerty","cost attached")
+        Log.d("qwerty", "cost attached")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d("qwerty","cost stopped")
+        Log.d("qwerty", "cost stopped")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("qwerty","cost view destroyed")
+        Log.d("qwerty", "cost view destroyed")
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.d("qwerty","cost detached")
+        Log.d("qwerty", "cost detached")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("qwerty","cost resumed")
+        Log.d("qwerty", "cost resumed")
     }
+
     private lateinit var adapter: CostsAdapter
     @InjectPresenter
     lateinit var presenter: CostsPresenter
+
+    lateinit var topbar: Topbar
 
     @ProvidePresenter
     fun providePresenter() = App.component.getCostsPresenter()
@@ -73,6 +94,8 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
                 }
             }
         }
+        topbar = activity!!.findViewById(R.id.topbar)
+        topbar.setListener(this)
         val itemTouchHelper = ItemTouchHelper(swipeHandle)
         itemTouchHelper.attachToRecyclerView(spendingList)
     }
@@ -110,6 +133,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
 
     override fun onDestroy() {
         super.onDestroy()
+        topbar.setListener(null)
         AppWatcher.objectWatcher.watch(this)
     }
 

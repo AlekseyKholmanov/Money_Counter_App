@@ -61,6 +61,8 @@ class Keyboard @JvmOverloads constructor(
 
     }
 
+
+
     private fun pressed(type: ButtonTypes, value: String? = null) {
         vibrator.vibrate(50)
 
@@ -120,6 +122,12 @@ class Keyboard @JvmOverloads constructor(
     fun setListener(mKeyboardListener: IKeyboardListener) {
         this.mKeyboardListener = mKeyboardListener
     }
+
+    fun setSum(sum:String){
+        purshaseSum = sum
+        purshace_sum_textview. text = purshaseSum
+    }
+
     private fun clearcCommentField(){
         comment.setText("")
     }

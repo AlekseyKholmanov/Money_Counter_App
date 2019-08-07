@@ -19,6 +19,7 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import kotlinx.android.synthetic.main.keyboard.*
+import kotlinx.android.synthetic.main.keyboard.view.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
 
@@ -43,8 +44,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         snack.show()
     }
 
-    private lateinit var dialog: CategoryPickerFragment
-
     override fun showCategoryButton(categoryType: CategoryType) {
         keyboard.setCategoryButtonValue(categoryType)
     }
@@ -60,8 +59,8 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun showCategoryDialog() {
-        dialog = CategoryPickerFragment.newInstance()
-        dialog.setListener(this)
+        categoryPickerFragment = CategoryPickerFragment.newInstance()
+        categoryPickerFragment.setListener(this)
         findNavController().navigate(R.id.action_mainFragment_to_categoryPickerFragment)
     }
 
@@ -101,9 +100,12 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     private lateinit var key: Keyboard
+    private lateinit var timePickerDialog: TimePickerDialog
 
     @InjectPresenter
     lateinit var presenter: KeyboardFragmentPresenter
+
+    private lateinit var categoryPickerFragment: CategoryPickerFragment
 
     @ProvidePresenter
     fun initPresenter(): KeyboardFragmentPresenter {
@@ -116,11 +118,19 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         key = view.findViewById(R.id.keyboard)
+
+        var savedSum = "0"
+        if (savedInstanceState != null)
+            savedSum = savedInstanceState.getString("SUM")
+
+        Log.d("M_KeyboardFragment", "getted$savedSum")
+        key.setSum(savedSum)
+
         key.setListener(this)
         left_days.setOnClickListener {
-            val dialog = TimePickerDialog.newInstance(withMinDate = true)
-            dialog.setListener(this)
-            dialog.show(childFragmentManager, "datePicker")
+            timePickerDialog = TimePickerDialog.newInstance(withMinDate = true)
+            timePickerDialog.setListener(this)
+            timePickerDialog.show(childFragmentManager, "datePicker")
         }
         if (arguments != null) {
             val id = arguments!!.getInt("categoryId")
@@ -132,7 +142,45 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("SUM", purshace_sum_textview.text.toString())
+        Log.d("M_KeyboardFragment", "saved")
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("M_KeyboardFragment", "onCreate")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("M_KeyboardFragment", "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("M_KeyboardFragment", "onResume")
+    }
+
+    override fun onDestroyView() {
+        Log.d("qwerty", "keyboard destroy view")
+        left_days.setOnClickListener(null)
+        super.onDestroyView()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("M_KeyboardFragment", "OnPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("M_KeyboardFragment", "onStop")
+    }
+
     override fun onDestroy() {
+        Log.d("M_KeyboardFragment", "onDestroy")
         super.onDestroy()
         AppWatcher.objectWatcher.watch(this)
     }
