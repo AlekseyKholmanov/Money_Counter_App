@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.topbar
 
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.model.FilterPeriods
@@ -24,10 +25,7 @@ class TopbarPresenter @Inject constructor(private val periodsRepository: Periods
                 viewState.showDate(newPeriod.leftBorder, newPeriod.rightBorder)
                 periodsRepository.insert(newPeriod).async().subscribe().keep()
             }, {
-                val period = FilterPeriods("", DateTime().minusDays(6), DateTime())
-                val newPeriod = getNewPeriod(period, isRightDirection)
-                viewState.showDate(newPeriod.leftBorder, newPeriod.rightBorder)
-                periodsRepository.insert(newPeriod).async().subscribe().keep()
+                Log.d("M_TopbarPresenter","set period error")
             })
             .keep()
     }
@@ -38,7 +36,7 @@ class TopbarPresenter @Inject constructor(private val periodsRepository: Periods
             .subscribe({ period ->
                 viewState.showDate(period.leftBorder, period.rightBorder)
             }) {
-                viewState.showDate(DateTime().withTimeAtStartOfDay().minusDays(6), DateTime().withTimeAtStartOfDay())
+                Log.d("M_TopbarPresenter","get period error")
             }
             .keep()
     }
