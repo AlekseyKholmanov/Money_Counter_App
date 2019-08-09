@@ -1,11 +1,14 @@
 package com.example.holmi_production.money_counter_app.firstLaunch
 
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.FOCUSABLE
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
@@ -13,8 +16,10 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_first_launch.*
+import kotlinx.android.synthetic.main.keyboard.view.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
 
@@ -40,19 +45,28 @@ class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
 
             //TODO возможно объединить в один или вынести в презентер
             override fun afterTextChanged(s: Editable?) {
-                if (cost_item_sum.text.isEmpty()) {
+                if (cost_item_sum.text!!.isEmpty()) {
                     finish_activity.isEnabled = false
                     sum_per_day.isVisible = false
                 } else {
                     sum_per_day.isVisible = true
                     presenter.getSum(s.toString().toDouble())
                 }
-                if (cost_item_date.text.isNotEmpty()) {
+                if (cost_item_date.text!!.isNotEmpty()) {
                     presenter.getSumPerDay()
                     finish_activity.isEnabled = true
                 }
             }
         })
+
+        cost_item_sum.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus){
+                v.clearFocus()
+                v.hideKeyboard()
+                Log.d("qwerty","ledt")
+            }
+        }
+
         cost_item_date.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -61,7 +75,7 @@ class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (cost_item_sum.text.isNotEmpty()) {
+                if (cost_item_sum.text!!.isNotEmpty()) {
                     presenter.getSumPerDay()
                     finish_activity.isEnabled = true
                 } else
@@ -69,6 +83,7 @@ class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
             }
         })
         cost_item_date.setOnClickListener {
+            it.hideKeyboard()
             val time = DateTime()
             val picker = DatePickerDialog(
                 context,

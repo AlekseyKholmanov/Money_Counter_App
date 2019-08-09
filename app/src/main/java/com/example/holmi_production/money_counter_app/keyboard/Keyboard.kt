@@ -75,7 +75,6 @@ class Keyboard @JvmOverloads constructor(
                     if (purshaseSum.isEmpty())
                         purshaseSum = "0"
                 }
-
             }
             ButtonTypes.DIVIDER -> {
                 when {
