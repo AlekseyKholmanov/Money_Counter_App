@@ -6,14 +6,15 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
+import leakcanary.AppWatcher
 import org.joda.time.DateTime
 
 class TimePickerDialog : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     companion object {
-        fun newInstance(startDate: DateTime = DateTime(),withMinDate:Boolean): TimePickerDialog {
+        fun newInstance(startDate: DateTime = DateTime(), withMinDate: Boolean): TimePickerDialog {
             val dialog = TimePickerDialog()
-            if(withMinDate) {
+            if (withMinDate) {
                 val args = Bundle()
                 args.putLong("startDate", startDate.millis)
                 dialog.arguments = args
@@ -22,16 +23,20 @@ class TimePickerDialog : DialogFragment(), DatePickerDialog.OnDateSetListener {
         }
     }
 
-    private lateinit var callback: IDatePickerCallback
+    private var callback: IDatePickerCallback? = null
     override fun onDateSet(picker: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
         val time = DateTime(picker.year, picker.month + 1, picker.dayOfMonth, 0, 0)
-        callback.datePicked(time)
+        callback?.datePicked(time)
         Log.d("qwerty", time.toString())
 
     }
 
     fun setListener(callback: IDatePickerCallback) {
         this.callback = callback
+    }
+
+    fun deleteListener(){
+        callback = null
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -42,6 +47,10 @@ class TimePickerDialog : DialogFragment(), DatePickerDialog.OnDateSetListener {
         return dialog
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
+    }
 }
 
 interface IDatePickerCallback {

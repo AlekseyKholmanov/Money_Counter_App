@@ -58,8 +58,8 @@ class Keyboard @JvmOverloads constructor(
         }
         purshace_sum_textview.text = purshaseSum
         App.component.inject(this)
-
     }
+
 
     private fun pressed(type: ButtonTypes, value: String? = null) {
         vibrator.vibrate(50)
@@ -75,7 +75,6 @@ class Keyboard @JvmOverloads constructor(
                     if (purshaseSum.isEmpty())
                         purshaseSum = "0"
                 }
-
             }
             ButtonTypes.DIVIDER -> {
                 when {
@@ -112,14 +111,10 @@ class Keyboard @JvmOverloads constructor(
         mKeyboardListener.moneyUpdated(purshaseSum.toDouble())
     }
 
-    fun setCategoryButtonValue(type: CategoryType) {
-        key_category.findViewById<ImageView>(R.id.categoryImage).setImageResource(CategoryType.getImage(type))
-        key_category.setBackgroundColor(type.color)
-    }
-
     fun setListener(mKeyboardListener: IKeyboardListener) {
         this.mKeyboardListener = mKeyboardListener
     }
+
     private fun clearcCommentField(){
         comment.setText("")
     }

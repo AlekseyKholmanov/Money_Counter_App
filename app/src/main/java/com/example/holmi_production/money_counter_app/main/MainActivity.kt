@@ -8,6 +8,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatActivity
 import com.example.holmi_production.money_counter_app.notification.NotificationManager
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
+import leakcanary.AppWatcher
 import javax.inject.Inject
 
 class MainActivity : AndroidXMvpAppCompatActivity(){
@@ -32,4 +33,9 @@ class MainActivity : AndroidXMvpAppCompatActivity(){
         navController.graph = graph
     }
     override fun onSupportNavigateUp() = findNavController(R.id.mainNavFragment).navigateUp()
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
+    }
 }

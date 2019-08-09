@@ -2,99 +2,102 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/first_launch_activity"
+        android:id="@+id/first_launch_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <TextView
-            android:id="@+id/welcome_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="24dp"
-            android:textSize="30sp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:gravity="center"
-            android:text="WELCOME"/>
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:clickable="true"
+        android:focusableInTouchMode="true">
+        <TextView
+                android:id="@+id/welcome_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="24dp"
+                android:textSize="30sp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:gravity="center"
+                android:text="WELCOME"/>
 
-    <TextView
-            android:id="@+id/start_sum_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/welcome_text"
-            android:layout_marginTop="75dp"
-            android:textSize="16sp"
-            android:paddingStart="8dp"
-            android:text="СУММА"/>
+        <TextView
+                android:id="@+id/start_sum_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/welcome_text"
+                android:layout_marginTop="75dp"
+                android:textSize="16sp"
+                android:paddingStart="8dp"
+                android:text="СУММА"/>
 
-    <EditText
-            android:id="@+id/cost_item_sum"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/start_sum_hint"
-            app:layout_constraintTop_toBottomOf="@id/welcome_text"
-            app:layout_constraintBaseline_toBaselineOf="@id/start_sum_hint"
-            android:hint="введите сумму"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:inputType="number"/>
+        <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/cost_item_sum"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/start_sum_hint"
+                app:layout_constraintTop_toBottomOf="@id/welcome_text"
+                app:layout_constraintBaseline_toBaselineOf="@id/start_sum_hint"
+                android:hint="введите сумму"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:inputType="number"/>
 
-    <TextView
-            android:id="@+id/sum_per_day_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="@id/cost_item_sum"
-            app:layout_constraintTop_toBottomOf="@+id/cost_item_sum"
-            android:textSize="16sp"
-            android:text="В День:"/>
+        <TextView
+                android:id="@+id/sum_per_day_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/cost_item_sum"
+                app:layout_constraintTop_toBottomOf="@+id/cost_item_sum"
+                android:textSize="16sp"
+                android:text="В День:"/>
 
-    <TextView
-            android:id="@+id/sum_per_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/cost_item_sum"
-            app:layout_constraintLeft_toRightOf="@id/sum_per_day_hint"
-            android:textSize="16sp"/>
+        <TextView
+                android:id="@+id/sum_per_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/cost_item_sum"
+                app:layout_constraintLeft_toRightOf="@id/sum_per_day_hint"
+                android:textSize="16sp"/>
 
 
-    <TextView
-            android:id="@+id/date_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/start_sum_hint"
-            android:layout_marginTop="100dp"
-            android:text="ДО:"
-            android:paddingStart="8dp"/>
+        <TextView
+                android:id="@+id/date_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/start_sum_hint"
+                android:layout_marginTop="100dp"
+                android:text="ДО:"
+                android:paddingStart="8dp"/>
 
-    <EditText
-            android:id="@+id/cost_item_date"
-            android:layout_width="150sp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBaseline_toBaselineOf="@id/date_hint"
-            app:layout_constraintLeft_toRightOf="@id/date_hint"
-            android:inputType="date"
-            android:hint="введите дату"
-            android:layout_marginStart="8dp"
-            android:focusable="false"/>
-    <TextView
-            android:id="@+id/date_difference"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/cost_item_date"
-            app:layout_constraintTop_toBottomOf="@id/cost_item_date"
-            android:hint="разница"/>
+        <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/cost_item_date"
+                android:layout_width="150sp"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                app:layout_constraintBaseline_toBaselineOf="@id/date_hint"
+                app:layout_constraintLeft_toRightOf="@id/date_hint"
+                android:hint="введите дату"
+                android:layout_marginStart="8dp"
+                android:focusable="false"/>
+        <TextView
+                android:id="@+id/date_difference"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/cost_item_date"
+                app:layout_constraintTop_toBottomOf="@id/cost_item_date"
+                android:text="разница"/>
 
-    <Button
-            android:id="@+id/finish_activity"
-            android:text="Finish"
-            android:enabled="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cost_item_date"
-            android:layout_marginTop="24dp"/>
+        <Button
+                android:id="@+id/finish_activity"
+                android:text="Finish"
+                android:enabled="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cost_item_date"
+                android:layout_marginTop="24dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

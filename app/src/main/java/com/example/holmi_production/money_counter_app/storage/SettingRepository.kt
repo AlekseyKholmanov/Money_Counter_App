@@ -20,10 +20,6 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         PublishSubject.create<Boolean>()
     }
 
-    private val categorySubject by lazy {
-        PublishSubject.create<Int>()
-    }
-
     fun setEndPeriod() {
         pref.edit().putBoolean(IS_END, true).apply()
         isEndSubject.onNext(true)
@@ -36,16 +32,10 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
 
     fun setCategoryButtonType(type: Int) {
         pref.edit().putInt(CATEGORY_VALUE, type).apply()
-        categorySubject.onNext(type)
     }
 
     fun getCategoryValue(): Int {
         return pref.getInt(CATEGORY_VALUE, 8)
-    }
-
-    fun observeCategoryValue(): Flowable<Int> {
-        return categorySubject.toFlowable(BackpressureStrategy.LATEST)
-            .distinctUntilChanged()
     }
 
     fun setAppOpened() {
@@ -96,9 +86,34 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return pref.getBoolean(IS_END, false)
     }
 
+    fun setNotificationTime(){
+        pref.edit().putBoolean(ARE_NOTIFY_TIME_SET, true).apply()
+    }
+
+    fun areNorificationTimeSetted(): Boolean {
+        return pref.getBoolean(ARE_NOTIFY_TIME_SET, false)
+    }
+
+    fun setTopbarStartDate(date:Long){
+        pref.edit().putLong(TOPBAR_START_DATE,date).apply()
+    }
+
+    fun setTopbarEndDate(date:Long){
+        pref.edit().putLong(TOPBAR_END_DATE,date).apply()
+    }
+
+    fun getTopbarDate(): Pair<Long, Long> {
+        val start = pref.getLong(TOPBAR_START_DATE, DateTime.now().withTimeAtStartOfDay().minusDays(6).millis)
+        val end = pref.getLong(TOPBAR_END_DATE,DateTime.now().withTimeAtStartOfDay().millis)
+        return Pair(start,end)
+    }
+
+    private val TOPBAR_START_DATE="TopbarFirstDate"
+    private val TOPBAR_END_DATE="TopbarEndDate"
     private val FIRST_OPEN = "FirstOpen"
     private val START_PERIOD = "START_PERIOD"
     private val END_PERIOD = "END_PERIOD"
     private val IS_END = "IS_END"
     private val CATEGORY_VALUE = "Category_value"
+    private val ARE_NOTIFY_TIME_SET="Notification_Time"
 }

@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.keyboard
 
 import com.arellomobile.mvp.MvpView
 import com.example.holmi_production.money_counter_app.model.CategoryType
+import com.example.holmi_production.money_counter_app.model.Spending
 
 interface KeyboardFragmnetView:MvpView{
     fun showMoney(money:String)
@@ -10,6 +11,7 @@ interface KeyboardFragmnetView:MvpView{
     fun showSumPerDay(money:String)
     fun showDaysLeft(days:String)
     fun showAverageSum(sum:String, isDisplayed:Boolean)
-    fun showSnack(message: String)
-    fun showCategoryButton(categoryType: CategoryType)
+    fun showNewSumSnack(sum:Double, days:Int)
+    fun showAfterAddingSnack(spending: Spending)
+    fun updateChooseCategoryButton(typeId:Int)
 }

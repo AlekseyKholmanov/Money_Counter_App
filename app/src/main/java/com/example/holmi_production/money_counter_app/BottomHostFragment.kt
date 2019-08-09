@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_bottom_container.*
 
 class BottomHostFragment : AndroidXMvpAppCompatFragment() {
@@ -20,8 +21,18 @@ class BottomHostFragment : AndroidXMvpAppCompatFragment() {
         val navController = Navigation.findNavController(requireActivity(), R.id.bottomNavFragment)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.categoryPickerFragment -> hideBottomNav()
-                else -> showBottomNav()
+                R.id.categoryPickerFragment -> {
+                    hideBottomNav()
+                    hideTopbar()
+                }
+                R.id.mainFragment -> {
+                    hideTopbar()
+                    showBottomNav()
+                }
+                else -> {
+                    showBottomNav()
+                    showTopbar()
+                }
             }
         }
         bottom_navigation.setupWithNavController(navController)
@@ -33,5 +44,13 @@ class BottomHostFragment : AndroidXMvpAppCompatFragment() {
 
     private fun hideBottomNav() {
         bottom_navigation.visibility = View.GONE
+    }
+
+    private fun hideTopbar() {
+        activity!!.topbarContainer.visibility = View.GONE
+    }
+
+    private fun showTopbar() {
+        activity!!.topbarContainer.visibility = View.VISIBLE
     }
 }

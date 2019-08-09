@@ -3,12 +3,9 @@ package com.example.holmi_production.money_counter_app.notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.interactor.NotificationInteractor
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class NotificationAlarmReciever : BroadcastReceiver() {

@@ -1,23 +1,16 @@
 package com.example.holmi_production.money_counter_app.keyboard
 
-import android.app.Notification
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.util.Log
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.arellomobile.mvp.InjectViewState
-import com.example.holmi_production.money_counter_app.*
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
-import com.example.holmi_production.money_counter_app.main.MainActivity
+import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
-import com.example.holmi_production.money_counter_app.notification.NotificationManager
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
@@ -26,16 +19,23 @@ import org.joda.time.Days
 import javax.inject.Inject
 
 @InjectViewState
-class KeyboardFragmentPresenter @Inject constructor(
+class KeyboardPresenter @Inject constructor(
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,
+    private val spendingInteractor: SpendingInteractor,
     private val contex: Context) :
     BasePresenter<KeyboardFragmnetView>() {
 
+    fun undoAdding(spending: Spending) {
+        spendingInteractor.delete(spending)
+            .subscribe({Log.d("qwerty", "delete")},{Log.d("qwerty","error" + it.message)})
+            .keep()
+    }
+
     fun saveSpend(sum: Double, comment: String, isSpending: Boolean) {
         val categoryType = settingRepository.getCategoryValue()
-        val spending = Spending(null, sum, categoryType, isSpending, comment, DateTime())
+        val spending = Spending(DateTime(), sum, categoryType, isSpending, comment)
         spendingRepository.insert(spending).complete().keep()
 
         sumPerDayRepository.getBoth()
@@ -62,6 +62,7 @@ class KeyboardFragmentPresenter @Inject constructor(
                 }
             }, { Log.d("qwerty", it.message) })
             .keep()
+        viewState.showAfterAddingSnack(spending)
     }
 
     fun setObservers() {
@@ -86,12 +87,6 @@ class KeyboardFragmentPresenter @Inject constructor(
                 viewState.showAverageSum(average.sum.toCurencyFormat(), average.sum >= 0.0)
             }, { Log.d("qwerty", it.message) })
             .keep()
-        settingRepository.observeCategoryValue()
-            .async()
-            .subscribe({
-                viewState.showCategoryButton(CategoryType.values()[it])
-            }, { Log.d("qwerty", it.message) })
-            .keep()
         settingRepository.observeEndDate()
             .async()
             .subscribe({
@@ -106,11 +101,13 @@ class KeyboardFragmentPresenter @Inject constructor(
 
     fun getCategoryButtonValue() {
         val type = settingRepository.getCategoryValue()
-        viewState.showCategoryButton(getCategoryType(type))
+        viewState.updateChooseCategoryButton(type)
     }
 
-    fun setType(type: Int) {
+    fun setCategoryButonType(type: Int) {
+        Log.d("M_KeyboardPresenter", "set type $type")
         settingRepository.setCategoryButtonType(type)
+        viewState.updateChooseCategoryButton(type)
     }
 
     fun recalculateAverageSum(endDate: DateTime) {
@@ -124,7 +121,7 @@ class KeyboardFragmentPresenter @Inject constructor(
                 settingRepository.saveEndDate(endDate)
                 sumPerDayRepository.insertToday(averageSum).complete().keep()
                 sumPerDayRepository.insertAverage(averageSum).complete().keep()
-                viewState.showSnack("новая сумма: ${averageSum.toCurencyFormat()} на ${period.getDayAddition()}")
+                viewState.showNewSumSnack(averageSum,period)
             }, { Log.d("qwerty", it.message) })
             .keep()
     }
