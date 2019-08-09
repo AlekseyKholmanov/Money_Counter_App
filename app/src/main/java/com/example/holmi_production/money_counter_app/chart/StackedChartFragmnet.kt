@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
@@ -19,50 +20,72 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import kotlinx.android.synthetic.main.chart_bar.*
+import kotlinx.android.synthetic.main.chart_pie.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
 import kotlin.collections.ArrayList
 
 class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
+    override fun showError() {
+        showEmptyPlaceholder()
+    }
+
+    private fun showEmptyPlaceholder() {
+        emptyPlaceholder_bar.isVisible = true
+        chart_bar.isVisible = false
+    }
+
+    private fun hidePlaceholder() {
+        emptyPlaceholder_bar.isVisible = false
+        chart_bar.isVisible = true
+    }
 
     lateinit var chart: BarChart
 
     override fun showFraph(list: Map<DateTime, List<Spending>>) {
-        val keys = list.keys.toTypedArray()
+        if (list.isEmpty()) {
+            showEmptyPlaceholder()
+        } else {
+            hidePlaceholder()
+            val keys = list.keys.toTypedArray()
 
-        val dataSets = ArrayList<IBarDataSet>()
-        val labels = ArrayList<String>()
-        for (i in 0 until list.count()) {
-            val groupedSpending = list.getValue(keys[i]).groupBy { CategoryType.values()[it.categoryType] }
-            val sums = ArrayList<Pair<Float, CategoryType>>()
-            groupedSpending.forEach { (type, spendings) ->
-                sums.add(Pair(spendings.sumByDouble { it.sum }.toFloat(), type))
+            val dataSets = ArrayList<IBarDataSet>()
+            val labels = ArrayList<String>()
+            for (i in 0 until list.count()) {
+                val groupedSpending = list.getValue(keys[i]).groupBy { CategoryType.values()[it.categoryType] }
+                val sums = ArrayList<Pair<Float, CategoryType>>()
+                groupedSpending.forEach { (type, spendings) ->
+                    sums.add(Pair(spendings.sumByDouble { it.sum }.toFloat(), type))
 
-                val entry = BarEntry(keys[i].dayOfYear().get().toFloat(), sums.map { it.first }.toFloatArray())
-                val barDataSet = BarDataSet(listOf(entry), i.toString())
-                barDataSet.valueFormatter = MyValueFormater()
+                    val entry = BarEntry(keys[i].dayOfYear().get().toFloat(), sums.map { it.first }.toFloatArray())
+                    val barDataSet = BarDataSet(listOf(entry), i.toString())
+                    barDataSet.valueFormatter = MyValueFormater()
 
-                barDataSet.colors = sums.map { it.second.color }
-                dataSets.add(barDataSet)
-                labels.add(keys[i].toRUformat())
+                    barDataSet.colors = sums.map { it.second.color }
+                    dataSets.add(barDataSet)
+                    labels.add(keys[i].toRUformat())
+                }
+                val data = BarData(dataSets)
+
+                chart.data = data
+                chart.barData.setValueTextSize(18f)
+
+                chart.xAxis.labelCount = list.count()
+                chart.notifyDataSetChanged()
             }
-            val data = BarData(dataSets)
-
-            chart.data = data
-            chart.barData.setValueTextSize(18f)
-
-            chart.xAxis.labelCount = list.count()
-            chart.notifyDataSetChanged()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.chart_graph, container, false)
+        return inflater.inflate(R.layout.chart_bar, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        chart = view.findViewById(R.id.barChart)
+        presenter.getDatas()
+        presenter.observeDatas()
+        chart = view.findViewById(R.id.chart_bar)
         chart.setPinchZoom(false)
 
         chart.setDrawGridBackground(false)
@@ -92,9 +115,6 @@ class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
         l.formToTextSpace = 4f
         l.xEntrySpace = 6f
         l.textSize = 25f
-
-        presenter.getDatas()
-
     }
 
     override fun onDestroy() {

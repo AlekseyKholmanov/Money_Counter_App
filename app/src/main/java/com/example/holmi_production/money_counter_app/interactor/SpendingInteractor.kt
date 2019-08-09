@@ -42,9 +42,7 @@ class SpendingInteractor @Inject constructor(
             .map { (period, list) ->
                 Log.d("M_SpendingInteractor","listcount ${list.count()}")
                 Log.d("M_SpendingInteractor","left border ${period.leftBorder}  right border ${period.rightBorder}")
-
-                val filteredList = list.filter { it.createdDate >= period.leftBorder && it.createdDate <= period.rightBorder }
-                return@map filteredList
+                list.filter { it.createdDate >= period.leftBorder && it.createdDate <= period.rightBorder }
             }
     }
 

@@ -94,7 +94,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
         if (spending.isEmpty())
             showEmptyPlaceholder()
         else {
-            emptyPlaceholder.isVisible = false
+            emptyPlaceholder_costs.isVisible = false
             spendingList.isVisible = true
             adapter.notifyDataSetChanged()
         }
@@ -105,7 +105,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
     }
 
     private fun showEmptyPlaceholder() {
-        emptyPlaceholder.isVisible = true
+        emptyPlaceholder_costs.isVisible = true
         spendingList.isVisible = false
     }
 

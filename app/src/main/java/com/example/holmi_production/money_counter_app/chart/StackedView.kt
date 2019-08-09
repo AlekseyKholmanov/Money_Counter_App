@@ -6,4 +6,5 @@ import org.joda.time.DateTime
 
 interface StackedView:MvpView {
     fun showFraph(list: Map<DateTime, List<Spending>>)
+    fun showError()
 }

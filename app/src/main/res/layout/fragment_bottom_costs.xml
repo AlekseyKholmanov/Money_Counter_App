@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/fragment_cost"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <LinearLayout
-                android:id="@+id/emptyPlaceholder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:visibility="gone">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimary"
-                    android:text="Данные отсутствуют"/>
-        </LinearLayout>
+        <TextView
+                android:id="@+id/emptyPlaceholder_costs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:text="Данные отсутствуют"
+                android:visibility="gone"/>
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/spendingList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#fff">
-
         </androidx.recyclerview.widget.RecyclerView>
 
     </FrameLayout>

@@ -3,28 +3,48 @@ package com.example.holmi_production.money_counter_app.chart
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
+import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.CategoryType
+import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
-import com.example.holmi_production.money_counter_app.storage.SpendingRepository
-import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import javax.inject.Inject
 
 @InjectViewState
 class PieChartPresenter @Inject constructor(
-    private val spendingRepository: SpendingRepository,
-    private val sumPerDayRepository: SumPerDayRepository
+    private val spendingInteractor: SpendingInteractor
 ) : BasePresenter<PieChartView>() {
     fun getPieData() {
-        spendingRepository.getSpent()
+        spendingInteractor.getAllInPeriod()
             .async()
-            .map { it ->
-                it.groupBy { CategoryType.values()[it.categoryType] }
+            .map {
+                filterIncome((it))
             }
-            .subscribe({ it ->
+            .subscribe({
                 viewState.showPie(it)
             }, {
+                viewState.showError()
                 Log.d("qwerty", it.message)
             })
             .keep()
+    }
+
+    fun observeData() {
+        spendingInteractor.observePeriods()
+            .async()
+            .map {
+                filterIncome((it))
+            }
+            .subscribe({
+                viewState.showPie(it)
+            }, {
+                viewState.showError()
+                Log.d("qwerty", it.message)
+            })
+            .keep()
+    }
+
+    private fun filterIncome(list: List<Spending>): Map<CategoryType, List<Spending>> {
+        val nList = list.filter { it.isSpending }
+        return nList.groupBy { CategoryType.values()[it.categoryType] }
     }
 }
