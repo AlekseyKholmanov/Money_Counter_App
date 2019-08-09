@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.chart
+package com.example.holmi_production.money_counter_app.chart.bar
 
 import com.arellomobile.mvp.MvpView
 import com.example.holmi_production.money_counter_app.model.Spending

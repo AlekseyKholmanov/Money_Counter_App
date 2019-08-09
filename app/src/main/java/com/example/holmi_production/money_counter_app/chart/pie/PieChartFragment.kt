@@ -1,6 +1,7 @@
-package com.example.holmi_production.money_counter_app.chart
+package com.example.holmi_production.money_counter_app.chart.pie
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.chart.ChartFragment
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
@@ -16,10 +18,17 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import kotlinx.android.synthetic.main.chart_pie.*
-import kotlinx.android.synthetic.main.fragment_bottom_costs.*
 import leakcanary.AppWatcher
 
-class PieChartFragment : AndroidXMvpAppCompatFragment(), PieChartView {
+class PieChartFragment : AndroidXMvpAppCompatFragment(),
+    PieChartView {
+
+    companion object {
+        fun newInstance(): PieChartFragment {
+            return PieChartFragment()
+        }
+    }
+
     override fun showError() {
         showEmptyPlaceholder()
     }
@@ -45,6 +54,7 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(), PieChartView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("M_PieChartFragment", "pie view created")
         super.onViewCreated(view, savedInstanceState)
         presenter.getPieData()
         presenter.observeData()
@@ -77,6 +87,7 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(), PieChartView {
             chart_pie.data = pieData
             chart_pie.description.textSize = 25f
             chart_pie.animateXY(1000, 1000)
+            chart_pie.notifyDataSetChanged()
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.chart
+package com.example.holmi_production.money_counter_app.chart.pie
 
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
@@ -17,7 +17,7 @@ class PieChartPresenter @Inject constructor(
         spendingInteractor.getAllInPeriod()
             .async()
             .map {
-                filterIncome((it))
+                filterList((it))
             }
             .subscribe({
                 viewState.showPie(it)
@@ -32,7 +32,7 @@ class PieChartPresenter @Inject constructor(
         spendingInteractor.observePeriods()
             .async()
             .map {
-                filterIncome((it))
+                filterList((it))
             }
             .subscribe({
                 viewState.showPie(it)
@@ -43,7 +43,7 @@ class PieChartPresenter @Inject constructor(
             .keep()
     }
 
-    private fun filterIncome(list: List<Spending>): Map<CategoryType, List<Spending>> {
+    private fun filterList(list: List<Spending>): Map<CategoryType, List<Spending>> {
         val nList = list.filter { it.isSpending }
         return nList.groupBy { CategoryType.values()[it.categoryType] }
     }

@@ -38,7 +38,4 @@
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim">
         </action>
     </fragment>
-    <fragment android:id="@+id/topbarFragmnet2"
-              android:name="com.example.holmi_production.money_counter_app.topbar.Topbar"
-              android:label="TopbarFragmnet"/>
 </navigation>

@@ -1,8 +1,8 @@
 package com.example.holmi_production.money_counter_app.di.components
 
 import com.example.holmi_production.money_counter_app.main.MainActivity
-import com.example.holmi_production.money_counter_app.chart.PieChartPresenter
-import com.example.holmi_production.money_counter_app.chart.StackedPresenter
+import com.example.holmi_production.money_counter_app.chart.pie.PieChartPresenter
+import com.example.holmi_production.money_counter_app.chart.bar.StackedPresenter
 import com.example.holmi_production.money_counter_app.costs.CostsPresenter
 import com.example.holmi_production.money_counter_app.di.modules.ApplicationModule
 import com.example.holmi_production.money_counter_app.di.modules.ContextModule
@@ -24,7 +24,7 @@ interface ApplicationComponent {
     fun getFirstLaunchPresenter(): FirstLaunchPresenter
     fun getChartPresenter(): PieChartPresenter
     fun getEndPeriodPresenter():EndPeriodPresenter
-    fun getStackedPresenter():StackedPresenter
+    fun getStackedPresenter(): StackedPresenter
     fun getTopbarPresenter():TopbarPresenter
     fun inject(activity: MainActivity)
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)

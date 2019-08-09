@@ -1,9 +1,8 @@
-package com.example.holmi_production.money_counter_app.chart
+package com.example.holmi_production.money_counter_app.chart.bar
 
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import org.joda.time.DateTime
@@ -15,7 +14,7 @@ class StackedPresenter @Inject constructor(private val spendingInteractor: Spend
 
     fun getDatas() {
         spendingInteractor.getAllInPeriod()
-            .map { prepareDatas(it)}
+            .map { prepareDatas(it) }
             .subscribe({ list ->
                 viewState.showFraph(list)
             }, {
@@ -25,9 +24,9 @@ class StackedPresenter @Inject constructor(private val spendingInteractor: Spend
             .keep()
     }
 
-    fun observeDatas(){
+    fun observeDatas() {
         spendingInteractor.observePeriods()
-            .map { prepareDatas(it)}
+            .map { prepareDatas(it) }
             .subscribe({ list ->
                 viewState.showFraph(list)
             }, {
@@ -38,9 +37,9 @@ class StackedPresenter @Inject constructor(private val spendingInteractor: Spend
 
     }
 
-    private fun prepareDatas(spendings:List<Spending>): Map<DateTime, List<Spending>> {
-        return spendings.filter { it.isSpending }
-            .filter { it.createdDate >= DateTime().minusDays(5) }
+    private fun prepareDatas(spendings: List<Spending>): Map<DateTime, List<Spending>> {
+        return spendings
+            .filter { it.isSpending }
             .sortedByDescending { it.sum }
             .groupBy { it.createdDate.withTimeAtStartOfDay() }
     }

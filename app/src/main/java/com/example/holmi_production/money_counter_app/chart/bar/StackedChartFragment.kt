@@ -1,6 +1,7 @@
-package com.example.holmi_production.money_counter_app.chart
+package com.example.holmi_production.money_counter_app.chart.bar
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,12 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.chart.ChartFragment
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -21,12 +24,18 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import kotlinx.android.synthetic.main.chart_bar.*
-import kotlinx.android.synthetic.main.chart_pie.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
 import kotlin.collections.ArrayList
 
-class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
+class StackedChartFragment : AndroidXMvpAppCompatFragment(),
+    StackedView {
+    companion object {
+        fun newInstance(): StackedChartFragment {
+            return StackedChartFragment()
+        }
+    }
+
     override fun showError() {
         showEmptyPlaceholder()
     }
@@ -60,7 +69,6 @@ class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
 
                     val entry = BarEntry(keys[i].dayOfYear().get().toFloat(), sums.map { it.first }.toFloatArray())
                     val barDataSet = BarDataSet(listOf(entry), i.toString())
-                    barDataSet.valueFormatter = MyValueFormater()
 
                     barDataSet.colors = sums.map { it.second.color }
                     dataSets.add(barDataSet)
@@ -72,7 +80,8 @@ class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
                 chart.barData.setValueTextSize(18f)
 
                 chart.xAxis.labelCount = list.count()
-                chart.notifyDataSetChanged()
+                chart.animateY(2000, Easing.EaseInOutBack)
+                chart.invalidate()
             }
         }
     }
@@ -83,6 +92,7 @@ class StackedChartFragmnet : AndroidXMvpAppCompatFragment(), StackedView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("M_PieChartFragment", "pie bar created")
         presenter.getDatas()
         presenter.observeDatas()
         chart = view.findViewById(R.id.chart_bar)
