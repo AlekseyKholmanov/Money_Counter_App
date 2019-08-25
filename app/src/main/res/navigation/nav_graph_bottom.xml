@@ -7,7 +7,7 @@
         app:startDestination="@id/mainFragment">
     <fragment
             android:id="@+id/mainFragment"
-            android:name="com.example.holmi_production.money_counter_app.keyboard.KeyboardFragment"
+            android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardFragment"
             android:label="MainFragment"
             tool:layout="@layout/fragment_bottom_keyboard"
     >
@@ -19,18 +19,18 @@
     </fragment>
     <fragment
             android:id="@+id/chartFragment"
-            android:name="com.example.holmi_production.money_counter_app.chart.ChartFragment"
+            android:name="com.example.holmi_production.money_counter_app.ui.charts_fragments.ChartFragment"
             android:label="ChartFragment"
             tool:layout="@layout/fragment_bottom_chart"
     />
     <fragment
             android:id="@+id/costsFragment"
-            android:name="com.example.holmi_production.money_counter_app.costs.CostsFragment"
+            android:name="com.example.holmi_production.money_counter_app.ui.costs_fragment.CostsFragment"
             android:label="CostsFragment"
             tool:layout="@layout/fragment_bottom_costs"
     />
     <fragment android:id="@+id/categoryPickerFragment"
-              android:name="com.example.holmi_production.money_counter_app.categoryPicker.CategoryPickerFragment"
+              android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPicker.CategoryPickerFragment"
               android:label="CategoryPickerFragment">
         <action android:id="@+id/action_categoryPickerFragment_to_mainFragment" app:destination="@id/mainFragment"
                 app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"

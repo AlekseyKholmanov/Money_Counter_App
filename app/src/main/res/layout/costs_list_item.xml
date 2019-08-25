@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/spending_item">
-    <com.example.holmi_production.money_counter_app.keyboard.SquareImageView
+    <com.example.holmi_production.money_counter_app.model.SquareImageView
             android:id="@+id/cost_item_image"
             android:layout_width="55dp"
             android:layout_height="match_parent"

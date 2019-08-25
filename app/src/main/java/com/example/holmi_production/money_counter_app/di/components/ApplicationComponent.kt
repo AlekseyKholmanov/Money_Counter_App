@@ -1,18 +1,18 @@
 package com.example.holmi_production.money_counter_app.di.components
 
 import com.example.holmi_production.money_counter_app.main.MainActivity
-import com.example.holmi_production.money_counter_app.chart.pie.PieChartPresenter
-import com.example.holmi_production.money_counter_app.chart.bar.StackedPresenter
-import com.example.holmi_production.money_counter_app.costs.CostsPresenter
+import com.example.holmi_production.money_counter_app.ui.charts_fragments.pie.PieChartPresenter
+import com.example.holmi_production.money_counter_app.ui.charts_fragments.bar.StackedPresenter
+import com.example.holmi_production.money_counter_app.ui.costs_fragment.CostsPresenter
 import com.example.holmi_production.money_counter_app.di.modules.ApplicationModule
 import com.example.holmi_production.money_counter_app.di.modules.ContextModule
 import com.example.holmi_production.money_counter_app.di.modules.PreferenceModule
-import com.example.holmi_production.money_counter_app.endPeriod.EndPeriodPresenter
-import com.example.holmi_production.money_counter_app.firstLaunch.FirstLaunchPresenter
-import com.example.holmi_production.money_counter_app.keyboard.Keyboard
-import com.example.holmi_production.money_counter_app.keyboard.KeyboardPresenter
+import com.example.holmi_production.money_counter_app.ui.end_period_fragment.EndPeriodPresenter
+import com.example.holmi_production.money_counter_app.ui.first_launch_fragment.FirstLaunchPresenter
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.Keyboard
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardPresenter
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
-import com.example.holmi_production.money_counter_app.topbar.TopbarPresenter
+import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarPresenter
 import dagger.Component
 import javax.inject.Singleton
 

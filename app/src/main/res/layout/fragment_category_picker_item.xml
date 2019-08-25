@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
-    <com.example.holmi_production.money_counter_app.keyboard.SquareImageView
+    <com.example.holmi_production.money_counter_app.model.SquareImageView
             android:id="@+id/image_category_dialog"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_foreground"
