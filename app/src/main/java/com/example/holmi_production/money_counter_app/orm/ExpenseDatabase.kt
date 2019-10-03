@@ -7,18 +7,17 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.holmi_production.money_counter_app.model.FilterPeriods
-import com.example.holmi_production.money_counter_app.model.Spending
-import com.example.holmi_production.money_counter_app.model.SumPerDay
+import com.example.holmi_production.money_counter_app.model.entity.FilterPeriods
+import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingCategory
+import com.example.holmi_production.money_counter_app.model.entity.SumPerDay
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
-import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import org.joda.time.DateTime
-import org.joda.time.LocalTime
 import java.util.concurrent.Executors
 
 @TypeConverters(Converters::class)
 @Database(
-    entities = [Spending::class, SumPerDay::class, FilterPeriods::class],
+    entities = [Spending::class, SumPerDay::class, FilterPeriods::class, SpendingCategory::class],
     version = 15,
     exportSchema = false
 )

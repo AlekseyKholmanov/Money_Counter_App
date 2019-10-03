@@ -1,7 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
 import com.arellomobile.mvp.MvpView
-import com.example.holmi_production.money_counter_app.model.Spending
+import com.example.holmi_production.money_counter_app.model.entity.Spending
 
 interface KeyboardFragmnetView:MvpView{
     fun showMoney(money:String)

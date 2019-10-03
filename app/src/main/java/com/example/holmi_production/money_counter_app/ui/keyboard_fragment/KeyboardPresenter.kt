@@ -9,7 +9,7 @@ import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.CategoryType
-import com.example.holmi_production.money_counter_app.model.Spending
+import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
@@ -35,7 +35,13 @@ class KeyboardPresenter @Inject constructor(
 
     fun saveSpend(sum: Double, comment: String, isSpending: Boolean) {
         val categoryType = settingRepository.getCategoryValue()
-        val spending = Spending(DateTime(), sum, categoryType, isSpending, comment)
+        val spending = Spending(
+            DateTime(),
+            sum,
+            categoryType,
+            isSpending,
+            comment
+        )
         spendingRepository.insert(spending).complete().keep()
 
         sumPerDayRepository.getBoth()

@@ -4,10 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.holmi_production.money_counter_app.model.SumPerDay
+import com.example.holmi_production.money_counter_app.model.entity.SumPerDay
 import io.reactivex.Flowable
-import io.reactivex.Single
-import org.joda.time.DateTime
 
 @Dao
 interface SumPerDayDao {

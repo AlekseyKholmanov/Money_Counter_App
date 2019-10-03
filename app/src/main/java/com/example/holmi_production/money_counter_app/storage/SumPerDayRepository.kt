@@ -1,6 +1,6 @@
 package com.example.holmi_production.money_counter_app.storage
 
-import com.example.holmi_production.money_counter_app.model.SumPerDay
+import com.example.holmi_production.money_counter_app.model.entity.SumPerDay
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable

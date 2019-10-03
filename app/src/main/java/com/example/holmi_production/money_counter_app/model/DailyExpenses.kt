@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.model
 
+import com.example.holmi_production.money_counter_app.model.entity.Spending
 import kotlin.math.abs
 
 class DailyExpenses(val sum: Double, val isPositive: Boolean) {

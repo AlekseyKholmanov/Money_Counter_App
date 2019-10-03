@@ -11,7 +11,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.model.CategoryType
-import com.example.holmi_production.money_counter_app.model.Spending
+import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
 class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {

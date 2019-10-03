@@ -5,10 +5,9 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import com.example.holmi_production.money_counter_app.model.Spending
+import com.example.holmi_production.money_counter_app.model.entity.Spending
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.Single
 import org.joda.time.DateTime
 
 @Dao

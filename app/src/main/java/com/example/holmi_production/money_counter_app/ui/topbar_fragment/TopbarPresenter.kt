@@ -3,7 +3,7 @@ package com.example.holmi_production.money_counter_app.ui.topbar_fragment
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
-import com.example.holmi_production.money_counter_app.model.FilterPeriods
+import com.example.holmi_production.money_counter_app.model.entity.FilterPeriods
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
 import org.joda.time.Duration
@@ -47,7 +47,7 @@ class TopbarPresenter @Inject constructor(private val periodsRepository: Periods
         return FilterPeriods(
             "",
             oldPeriod.leftBorder.plusDays(difDays.toInt()).withTimeAtStartOfDay(),
-            oldPeriod.rightBorder.plusDays(difDays.toInt()).withTime(23,59,59,59)
+            oldPeriod.rightBorder.plusDays(difDays.toInt()).withTime(23, 59, 59, 59)
         )
 
     }

@@ -3,7 +3,7 @@ package com.example.holmi_production.money_counter_app.ui.charts_fragments.bar
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.model.Spending
+import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import org.joda.time.DateTime
 import javax.inject.Inject

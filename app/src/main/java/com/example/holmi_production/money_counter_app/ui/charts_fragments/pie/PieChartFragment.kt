@@ -11,7 +11,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.CategoryType
-import com.example.holmi_production.money_counter_app.model.Spending
+import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet

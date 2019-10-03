@@ -4,9 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import com.example.holmi_production.money_counter_app.model.FilterPeriods
+import com.example.holmi_production.money_counter_app.model.entity.FilterPeriods
 import io.reactivex.Flowable
-import io.reactivex.Single
 
 @Dao
 interface PeriodsDao {
@@ -17,6 +16,6 @@ interface PeriodsDao {
     fun getPeriod(key:String): FilterPeriods
 
     @Insert(onConflict = REPLACE)
-    fun insert(date:FilterPeriods)
+    fun insert(date: FilterPeriods)
 }
 

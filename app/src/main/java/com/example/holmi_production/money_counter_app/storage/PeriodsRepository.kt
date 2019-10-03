@@ -1,6 +1,6 @@
 package com.example.holmi_production.money_counter_app.storage
 
-import com.example.holmi_production.money_counter_app.model.FilterPeriods
+import com.example.holmi_production.money_counter_app.model.entity.FilterPeriods
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable

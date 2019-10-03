@@ -15,7 +15,7 @@ import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categ
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.model.CategoryType
-import com.example.holmi_production.money_counter_app.model.Spending
+import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*

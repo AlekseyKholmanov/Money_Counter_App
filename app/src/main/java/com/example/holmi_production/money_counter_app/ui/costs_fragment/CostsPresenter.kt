@@ -10,7 +10,7 @@ import com.example.holmi_production.money_counter_app.interactor.SpendingInterac
 import com.example.holmi_production.money_counter_app.model.CostTimeDivider
 import com.example.holmi_production.money_counter_app.model.DailyExpenses
 import com.example.holmi_production.money_counter_app.model.ListItem
-import com.example.holmi_production.money_counter_app.model.Spending
+import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import javax.inject.Inject

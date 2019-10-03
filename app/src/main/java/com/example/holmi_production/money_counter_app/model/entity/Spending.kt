@@ -1,7 +1,8 @@
-package com.example.holmi_production.money_counter_app.model
+package com.example.holmi_production.money_counter_app.model.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.holmi_production.money_counter_app.model.ListItem
 import org.joda.time.DateTime
 
 @Entity
