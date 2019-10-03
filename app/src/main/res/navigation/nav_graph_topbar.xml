@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/nav_graph_topbar.xml" app:startDestination="@id/topbarFragmnet3">
 
     <fragment android:id="@+id/topbarFragmnet3"
               android:name="com.example.holmi_production.money_counter_app.ui.topbar_fragment.Topbar"
-              android:label="TopbarFragmnet"/>
+              android:label="TopbarFragmnet"
+              tools:layout="@layout/topbar"/>
 </navigation>

@@ -36,4 +36,8 @@ class SpendingRepository @Inject constructor(
         return Completable.fromCallable { dao.delete(spending) }
     }
 
+    fun deleteAll():Completable{
+        return Completable.fromCallable { dao.deleteAll() }
+
+    }
 }

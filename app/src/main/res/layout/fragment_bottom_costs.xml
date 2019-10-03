@@ -4,9 +4,6 @@
         android:id="@+id/fragment_cost"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
         <TextView
                 android:id="@+id/emptyPlaceholder_costs"
                 android:layout_width="match_parent"
@@ -21,7 +18,5 @@
                 android:layout_height="match_parent"
                 android:background="#fff">
         </androidx.recyclerview.widget.RecyclerView>
-
-    </FrameLayout>
 
 </RelativeLayout>

@@ -29,6 +29,10 @@ class BottomHostFragment : AndroidXMvpAppCompatFragment() {
                     hideTopbar()
                     showBottomNav()
                 }
+                R.id.settingsFragment ->{
+                    showBottomNav()
+                    hideTopbar()
+                }
                 else -> {
                     showBottomNav()
                     showTopbar()

@@ -12,6 +12,7 @@ import com.example.holmi_production.money_counter_app.ui.first_launch_fragment.F
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.Keyboard
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardPresenter
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
+import com.example.holmi_production.money_counter_app.ui.settings.SettingsPresenter
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarPresenter
 import dagger.Component
 import javax.inject.Singleton
@@ -21,6 +22,7 @@ import javax.inject.Singleton
 interface ApplicationComponent {
     fun getKeyboardPresenter(): KeyboardPresenter
     fun getCostsPresenter(): CostsPresenter
+    fun getSettingsPresenter():SettingsPresenter
     fun getFirstLaunchPresenter(): FirstLaunchPresenter
     fun getChartPresenter(): PieChartPresenter
     fun getEndPeriodPresenter():EndPeriodPresenter

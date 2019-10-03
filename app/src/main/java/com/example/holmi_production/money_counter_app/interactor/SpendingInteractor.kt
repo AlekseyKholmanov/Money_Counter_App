@@ -8,6 +8,7 @@ import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
@@ -98,5 +99,9 @@ class SpendingInteractor @Inject constructor(
                 }
             }
         }
+    }
+
+    fun deleteAll(): Completable {
+        return spendingRepository.deleteAll().async()
     }
 }

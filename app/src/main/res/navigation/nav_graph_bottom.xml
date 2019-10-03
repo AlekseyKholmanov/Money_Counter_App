@@ -9,8 +9,7 @@
             android:id="@+id/mainFragment"
             android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardFragment"
             android:label="MainFragment"
-            tool:layout="@layout/fragment_bottom_keyboard"
-    >
+            tool:layout="@layout/fragment_bottom_keyboard">
         <action android:id="@+id/action_mainFragment_to_categoryPickerFragment"
                 app:destination="@id/categoryPickerFragment" app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim" app:popUpToInclusive="false"
@@ -21,14 +20,12 @@
             android:id="@+id/chartFragment"
             android:name="com.example.holmi_production.money_counter_app.ui.charts_fragments.ChartFragment"
             android:label="ChartFragment"
-            tool:layout="@layout/fragment_bottom_chart"
-    />
+            tool:layout="@layout/fragment_bottom_chart"/>
     <fragment
             android:id="@+id/costsFragment"
             android:name="com.example.holmi_production.money_counter_app.ui.costs_fragment.CostsFragment"
             android:label="CostsFragment"
-            tool:layout="@layout/fragment_bottom_costs"
-    />
+            tool:layout="@layout/fragment_bottom_costs"/>
     <fragment android:id="@+id/categoryPickerFragment"
               android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPicker.CategoryPickerFragment"
               android:label="CategoryPickerFragment">
@@ -38,4 +35,9 @@
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim">
         </action>
     </fragment>
+    <fragment
+            android:id="@+id/settingsFragment"
+            android:name="com.example.holmi_production.money_counter_app.ui.settings.SettingsFragment"
+            android:label="SettingsFragment"
+            tool:layout="@layout/frament_settings"/>
 </navigation>

@@ -33,4 +33,7 @@ interface SpendingDao {
 
     @Delete
     fun delete(spending: Spending)
+
+    @Query("DELETE FROM Spending")
+    fun deleteAll()
 }

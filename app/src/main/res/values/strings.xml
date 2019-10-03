@@ -5,4 +5,7 @@
     <string name="text_chart">Аналитика</string>
     <string name="arrow_up">\u02c4</string>
     <string name="arrow_down">\u02c5</string>
+    <string name="text_settings">Настройки</string>
+    <string name="settings_btn_clear_data">clear data</string>
+    <string name="settings_message_clear_success">Данные успешно удалены</string>
 </resources>
