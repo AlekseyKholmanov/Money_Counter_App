@@ -18,8 +18,7 @@ import javax.inject.Inject
 class FirstLaunchPresenter @Inject constructor(
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
-    private val settingRepository: SettingRepository,
-    val context: Context) :
+    private val settingRepository: SettingRepository) :
     BasePresenter<FirstLaunchView>() {
     private var sum: Double = 0.0
     private var dif: Int = 0

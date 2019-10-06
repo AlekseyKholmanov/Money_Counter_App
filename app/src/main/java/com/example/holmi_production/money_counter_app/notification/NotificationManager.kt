@@ -28,14 +28,12 @@ class NotificationManager @Inject constructor(
     }
 
     fun setNotificationTime() {
-        if (!settingRepository.areNorificationTimeSetted()) {
-            val time = DateTime().withTimeAtStartOfDay()
-            val intent = Intent(application, NotificationAlarmReciever::class.java)
-            val pi = PendingIntent.getBroadcast(application, 0, intent, FLAG_UPDATE_CURRENT)
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time.millis, AlarmManager.INTERVAL_DAY, pi)
-            Log.d("qwerty", "Notification time setted")
-            settingRepository.setNotificationTime()
-        }
+        val time = DateTime().withTimeAtStartOfDay()
+        val intent = Intent(application, NotificationAlarmReciever::class.java)
+        val pi = PendingIntent.getBroadcast(application, 0, intent, FLAG_UPDATE_CURRENT)
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time.millis, AlarmManager.INTERVAL_DAY, pi)
+        Log.d("qwerty", "Notification time setted")
+        settingRepository.setNotificationTime()
     }
 
     private fun createNotificationChannel() {
@@ -50,14 +48,13 @@ class NotificationManager @Inject constructor(
             channel.lightColor = Color.RED
             channel.enableVibration(false)
             notificationManager.createNotificationChannel(channel)
-
             Log.d("qwerty", "initialize channel")
         }
     }
 
     private fun buildNotification(saveSum: Double, newSum: Double): Notification {
         val intent = Intent(application, MainActivity::class.java).apply {
-            PendingIntent.FLAG_UPDATE_CURRENT
+            FLAG_UPDATE_CURRENT
         }
         val pIntent = PendingIntent.getActivity(application, 0, intent, 0)
         return NotificationCompat.Builder(application, CHANNEL_ID)

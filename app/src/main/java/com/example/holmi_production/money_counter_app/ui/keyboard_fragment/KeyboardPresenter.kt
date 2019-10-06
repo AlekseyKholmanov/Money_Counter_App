@@ -23,8 +23,7 @@ class KeyboardPresenter @Inject constructor(
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,
-    private val spendingInteractor: SpendingInteractor,
-    private val contex: Context) :
+    private val spendingInteractor: SpendingInteractor) :
     BasePresenter<KeyboardFragmnetView>() {
 
     fun undoAdding(spending: Spending) {

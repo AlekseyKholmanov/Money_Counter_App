@@ -17,7 +17,7 @@ import java.util.concurrent.Executors
 
 @TypeConverters(Converters::class)
 @Database(
-    entities = [Spending::class, SumPerDay::class, FilterPeriods::class, SpendingCategory::class],
+    entities = [Spending::class, SumPerDay::class, FilterPeriods::class],
     version = 15,
     exportSchema = false
 )
