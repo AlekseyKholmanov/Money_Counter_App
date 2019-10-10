@@ -11,7 +11,7 @@ data class SpendingCategory(
     val spendingDirection: CategorySpendingDirection,
     val description: String,
     val color: Int?,
-    val imageId: Int? = null
-
+    val imageId: Int? = null,
+    val usageCount:Int = 0
 )
 

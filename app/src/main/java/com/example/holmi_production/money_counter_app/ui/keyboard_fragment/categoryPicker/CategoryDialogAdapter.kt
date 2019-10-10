@@ -20,7 +20,7 @@ class CategoryDialogAdapter(
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         val type = types[position]
-        val v = mInflater.inflate(R.layout.fragment_category_picker_item, parent, false)
+        val v = mInflater.inflate(R.layout.category_picker_item, parent, false)
         val text = v.findViewById<TextView>(R.id.text_category_dialog)
         val image = v.findViewById(R.id.image_category_dialog) as ImageView
         v.setBackgroundColor(type.color)

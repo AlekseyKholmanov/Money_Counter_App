@@ -2,33 +2,34 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:orientation="horizontal">
         <ImageButton
-                android:id="@+id/topbar_left"
+                android:id="@+id/btn_topbar_left"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:contentDescription="LEFT"
+                android:contentDescription="@string/txt_topbar_left"
                 android:src="@drawable/ic_keyboard_left"/>
         <TextView
-                android:id="@+id/topbar_date"
+                android:id="@+id/tv_topbar_text"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_horizontal"
                 android:textSize="18sp"
-                android:text="26 ИЮЛЯ - 1 Августа 2019"/>
+                tools:text="26 ИЮЛЯ - 1 Августа 2019"/>
         <ImageButton
-                android:id="@+id/topbar_right"
+                android:id="@+id/btn_topbar_right"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:src="@drawable/ic_keyboard_right"
-                android:contentDescription="RIGHT"/>
+                android:contentDescription="@string/txt_topbar_right"/>
     </LinearLayout>
 </LinearLayout>

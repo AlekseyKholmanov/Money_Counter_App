@@ -14,9 +14,10 @@ import kotlinx.android.synthetic.main.topbar.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
 
-class Topbar : AndroidXMvpAppCompatFragment(), TopbarView {
+class Topbar : AndroidXMvpAppCompatFragment(), TopbarView, ITopbarDatePickerCallback {
+
     override fun showDate(leftBorder: DateTime, rightBorder: DateTime) {
-        topbar_date.text = " ${leftBorder.toRUformat()} - ${rightBorder.toRUformat()}"
+        tv_topbar_text.text = " ${leftBorder.toRUformat()} - ${rightBorder.toRUformat()}"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -26,15 +27,22 @@ class Topbar : AndroidXMvpAppCompatFragment(), TopbarView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        topbar_left.setOnClickListener {
+        btn_topbar_left.setOnClickListener {
             presenter.setNewPeriod(false)
         }
-        topbar_right.setOnClickListener {
+        btn_topbar_right.setOnClickListener {
             presenter.setNewPeriod(true)
         }
-        topbar_date.setOnClickListener {
+        tv_topbar_text.setOnClickListener {
+            val dialog = TopbarDatePickerDialog.newInstance()
+            dialog.setListener(this)
+            dialog.show(childFragmentManager, "TopbarDatePicker")
         }
         presenter.getPeriod()
+    }
+
+    override fun datePicked(left: DateTime, right: DateTime) {
+        presenter.setPeriod(left, right)
     }
 
     override fun onDestroy() {

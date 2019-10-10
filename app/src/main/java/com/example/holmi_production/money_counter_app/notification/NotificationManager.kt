@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.notification
 
 import android.app.*
 import android.app.NotificationManager
+import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Intent
 import android.graphics.Color
@@ -13,7 +14,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import org.joda.time.DateTime
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,10 +29,14 @@ class NotificationManager @Inject constructor(
     }
 
     fun setNotificationTime() {
-        val time = DateTime().withTimeAtStartOfDay()
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY,23)
+        calendar.set(Calendar.MINUTE,59)
+
         val intent = Intent(application, NotificationAlarmReciever::class.java)
-        val pi = PendingIntent.getBroadcast(application, 0, intent, FLAG_UPDATE_CURRENT)
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time.millis, AlarmManager.INTERVAL_DAY, pi)
+        intent.action = "MY_NOTIFICATION_MESSAGE"
+        val pIntent = PendingIntent.getBroadcast(application, 100, intent, FLAG_ONE_SHOT)
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pIntent)
         Log.d("qwerty", "Notification time setted")
         settingRepository.setNotificationTime()
     }

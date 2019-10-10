@@ -17,13 +17,15 @@ class NotificationAlarmReciever : BroadcastReceiver() {
     lateinit var notificationInteractor: NotificationInteractor
 
     override fun onReceive(context: Context, intent: Intent) {
-        App.component.inject(this)
-        Log.d("M_NotAlarmRecivr","recieve notification intent")
-        val endDate = settingRepository.getTillEnd()
-        if (endDate <= 0) {
-            settingRepository.setIsEnd(true)
-            return
+        Log.d("M_NotAlarmRecivr", "recieve notification intent")
+        if (intent.action == "MY_NOTIFICATION_MESSAGE") {
+            App.component.inject(this)
+            val endDate = settingRepository.getTillEnd()
+            if (endDate <= 0) {
+                settingRepository.setIsEnd(true)
+                return
+            }
+            notificationInteractor.alarmTriggered()
         }
-        notificationInteractor.alarmTriggered()
     }
 }

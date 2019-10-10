@@ -39,11 +39,15 @@ class SpendingInteractor @Inject constructor(
     }
 
     fun observePeriods(): Flowable<List<Spending>> {
-        return Flowables.combineLatest(periodsRepository.observePeriod(),spendingRepository.observeSpending()).async()
+        return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpending()).async()
             .map { (period, list) ->
-                Log.d("M_SpendingInteractor","listcount ${list.count()}")
-                Log.d("M_SpendingInteractor","left border ${period.leftBorder}  right border ${period.rightBorder}")
-                list.filter { it.createdDate >= period.leftBorder && it.createdDate <= period.rightBorder }
+                Log.d("M_SpendingInteractor", "listcount ${list.count()}")
+                Log.d("M_SpendingInteractor", "left border ${period.leftBorder}  right border ${period.rightBorder}")
+                if (period.leftBorder == period.rightBorder) {
+                    list.filter { it.createdDate == period.leftBorder }
+                } else {
+                    list.filter { it.createdDate >= period.leftBorder && it.createdDate <= period.rightBorder }
+                }
             }
     }
 

@@ -6,7 +6,9 @@ import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriods
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
+import org.joda.time.DateTime
 import org.joda.time.Duration
+import org.xml.sax.DTDHandler
 import javax.inject.Inject
 
 @InjectViewState
@@ -23,9 +25,16 @@ class TopbarPresenter @Inject constructor(private val periodsRepository: Periods
                 viewState.showDate(newPeriod.leftBorder, newPeriod.rightBorder)
                 periodsRepository.insert(newPeriod).async().subscribe().keep()
             }, {
-                Log.d("M_TopbarPresenter","set period error")
+                Log.d("M_TopbarPresenter", "set period error")
             })
             .keep()
+    }
+
+    fun setPeriod(left:DateTime, right:DateTime) {
+        val fPeriod = FilterPeriods("", left, right)
+        periodsRepository.insert(fPeriod).async().subscribe {
+            viewState.showDate(left,right)
+        }.keep()
     }
 
     fun getPeriod() {
@@ -34,7 +43,7 @@ class TopbarPresenter @Inject constructor(private val periodsRepository: Periods
             .subscribe({ period ->
                 viewState.showDate(period.leftBorder, period.rightBorder)
             }) {
-                Log.d("M_TopbarPresenter","get period error")
+                Log.d("M_TopbarPresenter", "get period error")
             }
             .keep()
     }

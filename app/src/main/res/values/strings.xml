@@ -8,4 +8,10 @@
     <string name="text_settings">Настройки</string>
     <string name="settings_btn_clear_data">clear data</string>
     <string name="settings_message_clear_success">Данные успешно удалены</string>
+    <string name="month">месяц</string>
+    <string name="day">день</string>
+    <string name="week">неделя</string>
+    <string name="txt_set_custom_date">Выбрать дату</string>
+    <string name="txt_topbar_right">RIGHT</string>
+    <string name="txt_topbar_left">LEFT</string>
 </resources>
