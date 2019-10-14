@@ -19,7 +19,7 @@
               android:textStyle="bold"
               android:layout_marginStart="8dp"
               android:textSize="18sp"/>
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/incomeGrid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,13 +35,9 @@
               android:textStyle="bold"
               android:layout_marginStart="8dp"
               android:textSize="18sp"/>
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/costsGrid"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:verticalSpacing="0dp"
-            android:horizontalSpacing="0dp"
-            android:stretchMode="columnWidth"
-            android:numColumns="4"/>
+            android:layout_height="match_parent"/>
 
 </LinearLayout>

@@ -1,22 +1,26 @@
 package com.example.holmi_production.money_counter_app.ui.topbar_fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.example.holmi_production.money_counter_app.R
+import com.appeaser.sublimepickerlibrary.datepicker.SublimeDatePicker
 import kotlinx.android.synthetic.main.dialog_date_picker.*
 import org.joda.time.DateTime
+import java.util.*
 
 class TopbarDatePickerDialog : DialogFragment(){
+
+
     companion object {
         fun newInstance() = TopbarDatePickerDialog()
     }
 
     private var callback: ITopbarDatePickerCallback? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_date_picker,container,false)
+        return inflater.inflate(com.example.holmi_production.money_counter_app.R.layout.dialog_date_picker,container,false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,6 +44,9 @@ class TopbarDatePickerDialog : DialogFragment(){
             dismiss()
         }
         btn_custom_date.setOnClickListener{
+            val time = DateTime.now()
+            val now = Calendar.getInstance()
+            val dialog = SublimeDatePicker(context)
 
         }
     }

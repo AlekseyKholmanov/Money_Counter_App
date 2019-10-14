@@ -1,7 +1,7 @@
 package com.example.holmi_production.money_counter_app.orm
 
 import androidx.room.TypeConverter
-import com.example.holmi_production.money_counter_app.model.CategorySpendingDirection
+import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import org.joda.time.DateTime
 
@@ -27,13 +27,13 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromCategoryDirection(direction: CategorySpendingDirection): Int {
+    fun fromCategoryDirection(direction: SpDirection): Int {
         return direction.id
     }
 
     @TypeConverter
-    fun toCategoryDirection(direction: Int): CategorySpendingDirection {
-        return CategorySpendingDirection.values()[direction]
+    fun toCategoryDirection(direction: Int): SpDirection {
+        return SpDirection.values()[direction]
     }
 
 }

@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.CategorySpendingDirection
+import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import leakcanary.AppWatcher
+import kotlin.math.cos
 
 class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
     companion object {
@@ -25,17 +27,16 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val costsGrid = view.findViewById(R.id.costsGrid) as GridView
-        val incomeGrid = view.findViewById(R.id.incomeGrid) as GridView
+        val costsGrid = view.findViewById(R.id.costsGrid) as RecyclerView
+        val incomeGrid = view.findViewById(R.id.incomeGrid) as RecyclerView
         val list = CategoryType.values().toList()
-        costsGrid.adapter =
-            CategoryDialogAdapter(
-                context!!,
-                list.filter { it.spendingDirection == CategorySpendingDirection.SPENDING })
-        incomeGrid.adapter =
-            CategoryDialogAdapter(
-                context!!,
-                list.filter { it.spendingDirection == CategorySpendingDirection.INCOME || it.spendingDirection == CategorySpendingDirection.BOTH })
+        val manager = GridLayoutManager(context,3)
+        val manager2 = GridLayoutManager(context,3)
+        costsGrid.layoutManager = manager
+        incomeGrid.layoutManager = manager2
+        costsGrid.adapter =CategoryDialogAdapter(list.filter { it.spendingDirection == SpDirection.SPENDING }.toMutableList())
+        incomeGrid.adapter = CategoryDialogAdapter(list.filter { it.spendingDirection == SpDirection.INCOME
+                        || it.spendingDirection == SpDirection.BOTH }.toMutableList())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
