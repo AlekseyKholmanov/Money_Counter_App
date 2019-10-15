@@ -58,7 +58,7 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
             showEmptyPlaceholder()
         } else {
             hidePlaceholder()
-            chart_pie.description.text = "Расходы"
+            chart_pie.description.text = ""
             chart_pie.description.textSize = 20f
             chart_pie.holeRadius = 40f
             chart_pie.isRotationEnabled = false
@@ -75,10 +75,13 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
             val pieSet = PieDataSet(first.toList(), null)
             val pieData = PieData(pieSet)
             pieSet.valueTextSize = 20f
-            pieSet.sliceSpace = 2f
+            pieSet.sliceSpace = 3f
             pieSet.colors = colors
+            pieSet.setDrawValues(false)
             chart_pie.data = pieData
             chart_pie.description.textSize = 25f
+            chart_pie.setDrawEntryLabels(false)
+            chart_pie.legend.textSize = 35f
             chart_pie.animateXY(1000, 1000)
             chart_pie.notifyDataSetChanged()
         }
