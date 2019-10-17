@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
 import com.appeaser.sublimepickerlibrary.datepicker.SublimeDatePicker
 import kotlinx.android.synthetic.main.dialog_date_picker.*
 import org.joda.time.DateTime
 import java.util.*
 
-class TopbarDatePickerDialog : DialogFragment(){
+class TopbarDatePickerDialog : DialogFragment(),SublimeDatePicker.OnDateChangedListener{
+    override fun onDateChanged(view: SublimeDatePicker?, selectedDate: SelectedDate?) {
 
+    }
 
     companion object {
         fun newInstance() = TopbarDatePickerDialog()
@@ -44,9 +47,11 @@ class TopbarDatePickerDialog : DialogFragment(){
             dismiss()
         }
         btn_custom_date.setOnClickListener{
-            val time = DateTime.now()
-            val now = Calendar.getInstance()
-            val dialog = SublimeDatePicker(context)
+//            val time = DateTime.now()
+//            val now = Calendar.getInstance()
+//            val dialog = SublimeDatePicker(context)
+//
+//            dialog.init(SelectedDate(Calendar.getInstance()),true, this)
 
         }
     }

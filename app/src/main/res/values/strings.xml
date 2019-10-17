@@ -14,4 +14,7 @@
     <string name="txt_set_custom_date">Выбрать дату</string>
     <string name="txt_topbar_right">RIGHT</string>
     <string name="txt_topbar_left">LEFT</string>
+    <string name="txt_add_category">добавить категорию</string>
+    <string name="validation_empty_categories">Отсутствуют добавленные категории</string>
+    <string name="empty_list">Данные отсутствуют</string>
 </resources>

@@ -13,10 +13,10 @@ import com.example.holmi_production.money_counter_app.model.CategoryType
 
 class CategoryDialogAdapter(
     private var types: MutableList<CategoryType>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    override fun getItemCount(): Int  = types.count()
+    override fun getItemCount(): Int = types.count()
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(holder is CategoryHolder){
+        if (holder is CategoryHolder) {
             val type = types[position]
             holder.bind(type)
         }
@@ -28,17 +28,17 @@ class CategoryDialogAdapter(
         return CategoryHolder(item, parent)
     }
 
-    fun setCategory(categories:MutableList<CategoryType>){
+    fun setCategory(categories: MutableList<CategoryType>) {
         types.clear()
         types.addAll(categories)
         notifyDataSetChanged()
     }
 
-    class CategoryHolder(var v: View, var parent: ViewGroup?):RecyclerView.ViewHolder(v){
+    inner class CategoryHolder(var v: View, var parent: ViewGroup?) : RecyclerView.ViewHolder(v) {
         val image = v.findViewById(R.id.image_category_dialog) as ImageView
         val text = v.findViewById<TextView>(R.id.text_category_dialog)
 
-        fun bind(type:CategoryType){
+        fun bind(type: CategoryType) {
             image.setImageResource(CategoryType.getImage(type))
             v.setBackgroundColor(type.color)
             text.text = type.description

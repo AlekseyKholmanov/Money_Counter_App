@@ -13,20 +13,6 @@ import javax.inject.Inject
 class PieChartPresenter @Inject constructor(
     private val spendingInteractor: SpendingInteractor
 ) : BasePresenter<PieChartView>() {
-    fun getPieData() {
-        spendingInteractor.getAllInPeriod()
-            .async()
-            .map {
-                filterList((it))
-            }
-            .subscribe({
-                viewState.showPie(it)
-            }, {
-                viewState.showError()
-                Log.d("qwerty", it.message)
-            })
-            .keep()
-    }
 
     fun observeData() {
         spendingInteractor.observePeriods()
@@ -36,6 +22,7 @@ class PieChartPresenter @Inject constructor(
             }
             .subscribe({
                 viewState.showPie(it)
+                viewState.showChips(it)
             }, {
                 viewState.showError()
                 Log.d("qwerty", it.message)
@@ -44,7 +31,8 @@ class PieChartPresenter @Inject constructor(
     }
 
     private fun filterList(list: List<Spending>): Map<CategoryType, List<Spending>> {
-        val nList = list.filter { it.isSpending }
-        return nList.groupBy { CategoryType.values()[it.categoryType] }
+        return list
+            .filter { it.isSpending }
+            .groupBy { CategoryType.values()[it.categoryType] }
     }
 }

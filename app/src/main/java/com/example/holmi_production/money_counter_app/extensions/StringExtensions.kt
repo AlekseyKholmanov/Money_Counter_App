@@ -37,3 +37,7 @@ fun Int.getDayAddition(): String {
             "дней"
     return "$this $end"
 }
+
+fun String.withRubleSign():String{
+    return "${this} \u20BD"
+}
