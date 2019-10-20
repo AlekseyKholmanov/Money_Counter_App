@@ -45,14 +45,14 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
         showEmptyPlaceholder()
     }
 
-    override fun showChips(data: Map<CategoryType, List<Spending>>) {
+    override fun showChips(data: List<Pair<CategoryType, List<Spending>>>) {
         chip_group.removeAllViews()
         data.forEach { (category, spendings) ->
             chip_group.addView(buildChip(category, spendings.sumByDouble { it.sum }))
         }
     }
 
-    override fun showPie(data: Map<CategoryType, List<Spending>>) {
+    override fun showPie(data: List<Pair<CategoryType, List<Spending>>>) {
         if (data.isEmpty()) {
             showEmptyPlaceholder()
         } else {
@@ -64,12 +64,13 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
             val first = arrayListOf<PieEntry>()
             val second = arrayListOf<String>()
             val colors = arrayListOf<Int>()
-
+            var allMoney = 0.0
             data.forEach { (category, spendings) ->
                 val sum = spendings.sumByDouble { it.sum }
                 first.add(PieEntry(sum.toFloat(), category.description))
                 second.add(category.description)
                 colors.add(category.color)
+                allMoney+= sum
             }
             val pieSet = PieDataSet(first.toList(), null)
             val pieData = PieData(pieSet)
@@ -78,8 +79,8 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
             pieSet.colors = colors
             pieSet.setDrawValues(false)
             chart_pie.data = pieData
+            chart_pie.centerText = allMoney.toCurencyFormat().withRubleSign()
             chart_pie.description.textSize = 25f
-            chart_pie.setDrawEntryLabels(false)
             chart_pie.legend.isEnabled = false
             chart_pie.minAngleForSlices = 5f
             chart_pie.animateXY(1000, 1000)

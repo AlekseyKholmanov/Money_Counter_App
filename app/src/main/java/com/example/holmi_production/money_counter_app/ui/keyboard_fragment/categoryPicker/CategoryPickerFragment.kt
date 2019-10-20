@@ -34,7 +34,7 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment() {
         val manager2 = GridLayoutManager(context,3)
         costsGrid.layoutManager = manager
         incomeGrid.layoutManager = manager2
-        costsGrid.adapter =CategoryDialogAdapter(list.filter { it.spendingDirection == SpDirection.SPENDING }.toMutableList())
+        costsGrid.adapter = CategoryDialogAdapter(list.filter { it.spendingDirection == SpDirection.SPENDING }.toMutableList())
         incomeGrid.adapter = CategoryDialogAdapter(list.filter { it.spendingDirection == SpDirection.INCOME
                         || it.spendingDirection == SpDirection.BOTH }.toMutableList())
     }

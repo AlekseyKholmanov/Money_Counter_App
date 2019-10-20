@@ -4,10 +4,7 @@ import android.util.Log
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.model.entity.Spending
-import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
-import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import com.example.holmi_production.money_counter_app.storage.SpendingRepository
-import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
+import com.example.holmi_production.money_counter_app.storage.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single

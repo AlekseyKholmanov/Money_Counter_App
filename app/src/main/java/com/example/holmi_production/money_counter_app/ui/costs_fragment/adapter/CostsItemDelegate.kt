@@ -54,7 +54,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
             view.background.alpha = 160
             image.setImageResource(CategoryType.getImage(CategoryType.values()[spending.categoryType]))
             comment.text = spending.comment ?: ""
-            //date.text = spending.spendingDate.toString("HH:mm")
+            //date.tv = spending.spendingDate.toString("HH:mm")
             sum.text = spending.sum.toCurencyFormat()
             sum.setTextColor(color)
             sign.text = signText

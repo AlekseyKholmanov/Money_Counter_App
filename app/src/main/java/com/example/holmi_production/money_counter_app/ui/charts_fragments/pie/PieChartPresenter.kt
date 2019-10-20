@@ -30,9 +30,10 @@ class PieChartPresenter @Inject constructor(
             .keep()
     }
 
-    private fun filterList(list: List<Spending>): Map<CategoryType, List<Spending>> {
+    private fun filterList(list: List<Spending>):List<Pair<CategoryType,List<Spending>>> {
         return list
             .filter { it.isSpending }
             .groupBy { CategoryType.values()[it.categoryType] }
+            .map { it.toPair() }
     }
 }

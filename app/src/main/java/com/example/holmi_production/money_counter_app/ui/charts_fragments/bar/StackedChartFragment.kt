@@ -42,7 +42,6 @@ class StackedChartFragment : AndroidXMvpAppCompatFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("M_PieChartFragment", "pie bar created")
-        presenter.getDatas()
         presenter.observeDatas()
         chart = view.findViewById(R.id.chart_bar)
         chart.setPinchZoom(false)

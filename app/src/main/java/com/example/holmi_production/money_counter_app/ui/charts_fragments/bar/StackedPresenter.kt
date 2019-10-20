@@ -12,18 +12,6 @@ import javax.inject.Inject
 class StackedPresenter @Inject constructor(private val spendingInteractor: SpendingInteractor) :
     BasePresenter<StackedView>() {
 
-    fun getDatas() {
-        spendingInteractor.getAllInPeriod()
-            .map { prepareDatas(it) }
-            .subscribe({ list ->
-                viewState.showFraph(list)
-            }, {
-                Log.d("qwerty", it.message)
-                viewState.showError()
-            })
-            .keep()
-    }
-
     fun observeDatas() {
         spendingInteractor.observePeriods()
             .map { prepareDatas(it) }
