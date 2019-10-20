@@ -9,20 +9,26 @@ import com.example.holmi_production.money_counter_app.storage.SubCategoryReposit
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class CategoryInteractor @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val subCategoryRepository: SubCategoryRepository) {
 
-    fun insert(name: String, types: List<SpDirection>): Completable {
+    fun insert(name: String, types: List<SpDirection>, color: Int? = null): Completable {
 
         val category = Category(
             description = name,
             imageId = R.drawable.ic_launcher_foreground,
-            color = ColorUtils.getColor(),
+            color = color ?: ColorUtils.getColor(),
             spendingDirection = types
         )
+        return insert(category)
+    }
+
+    fun insert(category: Category): Completable {
         return categoryRepository.insert(category).async()
     }
 
@@ -31,6 +37,19 @@ class CategoryInteractor @Inject constructor(
             .async()
             .map { it.sortedBy { it.usageCount } }
             .map { it.toMutableList() }
+
+    }
+
+    fun getCategory(id: Int): Single<Category> {
+        return categoryRepository.getCategory(id).async()
+    }
+
+    fun updateUsageCount(categoryId: Int): Disposable {
+        return getCategory(categoryId)
+            .map { it.copy(usageCount = it.usageCount.plus(1)) }
+            .subscribe({
+                insert(it).async().subscribe()
+            }, {})
 
     }
 }

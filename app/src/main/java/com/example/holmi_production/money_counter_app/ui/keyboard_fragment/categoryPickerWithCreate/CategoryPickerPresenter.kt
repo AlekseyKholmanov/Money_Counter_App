@@ -24,8 +24,8 @@ class CategoryPickerPresenter @Inject constructor(private val interactor: Catego
             }).keep()
     }
 
-    fun createCategory(categoryName: String, categoryTypes: List<SpDirection>, isSubCategory: Boolean) {
-        interactor.insert(name = categoryName, types = categoryTypes)
+    fun createCategory(categoryName: String, categoryTypes: List<SpDirection>,color:Int?, isSubCategory: Boolean) {
+        interactor.insert(name = categoryName, types = categoryTypes, color = color)
             .subscribe()
             .keep()
     }

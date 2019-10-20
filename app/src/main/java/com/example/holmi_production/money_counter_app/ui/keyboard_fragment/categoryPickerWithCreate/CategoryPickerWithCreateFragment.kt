@@ -55,8 +55,8 @@ class CategoryPickerWithCreateFragment : AndroidXMvpAppCompatFragment(), ICatego
             tv_empty_categories.text = getString(messageResId)
     }
 
-    override fun categoryCreated(categoryName: String, categoryType: List<SpDirection>, isSubCategory: Boolean) {
-        presenter.createCategory(categoryName, categoryType, isSubCategory)
+    override fun categoryCreated(categoryName: String, categoryType: List<SpDirection>, color:Int?, isSubCategory: Boolean) {
+        presenter.createCategory(categoryName, categoryType, color, isSubCategory)
     }
 
     @ProvidePresenter
