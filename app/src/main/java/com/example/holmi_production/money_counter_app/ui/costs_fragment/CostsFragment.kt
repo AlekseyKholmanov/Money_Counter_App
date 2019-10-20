@@ -14,6 +14,8 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
+import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.ui.costs_fragment.adapter.CostsAdapter
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.entity.Spending
@@ -22,7 +24,6 @@ import kotlinx.android.synthetic.main.fragment_bottom_costs.*
 import leakcanary.AppWatcher
 
 class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_bottom_costs, container, false)
     }
@@ -88,6 +89,21 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
             spendingList.isVisible = true
             adapter.notifyDataSetChanged()
         }
+    }
+
+    override fun showSumByDirection(spending: Double, income: Double) {
+        val incomeText =
+            if (income == 0.0)
+                "+ ${"0".withRubleSign()}"
+            else
+                "+ ${income.toCurencyFormat().withRubleSign()}"
+        val spendingText = if (spending == 0.0)
+            "- ${"0".withRubleSign()}"
+        else
+            "- ${spending.toCurencyFormat().withRubleSign()}"
+        tv_costs_income.text = incomeText
+        tv_costs_spending.text = spendingText
+
     }
 
     override fun updateList() {

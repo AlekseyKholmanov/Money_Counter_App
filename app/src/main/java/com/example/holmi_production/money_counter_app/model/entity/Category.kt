@@ -12,6 +12,6 @@ data class Category(
     val description: String,
     val color: Int?,
     val imageId: Int? = null,
-    val usageCount:Int = 0
+    var usageCount:Int = 0
 )
 

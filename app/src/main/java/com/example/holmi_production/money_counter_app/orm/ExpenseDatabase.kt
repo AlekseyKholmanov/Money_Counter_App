@@ -15,7 +15,7 @@ import java.util.concurrent.Executors
 @TypeConverters(Converters::class)
 @Database(
     entities = [Spending::class, SumPerDay::class, FilterPeriods::class, Category::class, SubCategory::class],
-    version = 18,
+    version = 19,
     exportSchema = false
 )
 abstract class ExpenseDatabase : RoomDatabase() {

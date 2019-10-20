@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
+import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
@@ -55,7 +56,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
             image.setImageResource(CategoryType.getImage(CategoryType.values()[spending.categoryType]))
             comment.text = spending.comment ?: ""
             //date.tv = spending.spendingDate.toString("HH:mm")
-            sum.text = spending.sum.toCurencyFormat()
+            sum.text = spending.sum.toCurencyFormat().withRubleSign()
             sum.setTextColor(color)
             sign.text = signText
             sign.setTextColor(color)

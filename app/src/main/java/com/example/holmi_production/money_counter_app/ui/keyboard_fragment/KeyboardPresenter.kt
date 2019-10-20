@@ -1,12 +1,12 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
-import android.content.Context
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
+import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.Spending
@@ -23,7 +23,8 @@ class KeyboardPresenter @Inject constructor(
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,
-    private val spendingInteractor: SpendingInteractor) :
+    private val spendingInteractor: SpendingInteractor,
+    private val categoryInteractor: CategoryInteractor) :
     BasePresenter<KeyboardFragmnetView>() {
 
     fun undoAdding(spending: Spending) {
@@ -65,6 +66,9 @@ class KeyboardPresenter @Inject constructor(
                     sumPerDayRepository.insertAverage(average - deltaAverage).complete().keep()
                     sumPerDayRepository.insertToday(0.0).complete().keep()
                 }
+                categoryInteractor
+                    .updateUsageCount(categoryType)
+                    .keep()
             }, { Log.d("qwerty", it.message) })
             .keep()
         viewState.showAfterAddingSnack(spending)
@@ -106,13 +110,21 @@ class KeyboardPresenter @Inject constructor(
 
     fun getCategoryButtonValue() {
         val type = settingRepository.getCategoryValue()
-        viewState.updateChooseCategoryButton(type)
+        categoryInteractor.getCategory(type)
+            .subscribe {it ->
+                viewState.updateCategoryPickerButton(it)
+            }
+            .keep()
     }
 
-    fun setCategoryButonType(type: Int) {
-        Log.d("M_KeyboardPresenter", "set type $type")
-        settingRepository.setCategoryButtonType(type)
-        viewState.updateChooseCategoryButton(type)
+    fun setCategoryButonType(id: Int) {
+        Log.d("M_KeyboardPresenter", "set type $id")
+        settingRepository.setCategoryButtonType(id)
+        categoryInteractor.getCategory(id)
+            .subscribe({
+            viewState.updateCategoryPickerButton(it)
+        },{}).keep()
+
     }
 
     fun recalculateAverageSum(endDate: DateTime) {

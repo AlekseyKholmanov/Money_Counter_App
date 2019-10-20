@@ -7,6 +7,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
+import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.CostTimeDivider
 import com.example.holmi_production.money_counter_app.model.DailyExpenses
 import com.example.holmi_production.money_counter_app.model.ListItem
@@ -54,10 +55,17 @@ class CostsPresenter @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.N)
     private fun observeSpendings() {
         spendingInteractor.observePeriods()
-            .map { newTransform(it) }
+            .map { list ->
+                Triple(
+                    newTransform(list),
+                    list.filter { it.isSpending }.sumByDouble { it.sum },
+                    list.filter { !it.isSpending }.sumByDouble { it.sum })
+            }
             .subscribe({ item ->
-                viewState.showSpending(item)
-                Log.d("M_CostsPresenter","observe spending item" + item.count().toString())
+                viewState.showSpending(item.first)
+                val positive =
+                    viewState.showSumByDirection(item.second,item.third)
+                Log.d("M_CostsPresenter", "observe spending item" + item.first.count().toString())
             },
                 { error ->
                     viewState.onError(error)

@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui.charts_fragments.pie
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -74,13 +75,13 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
             }
             val pieSet = PieDataSet(first.toList(), null)
             val pieData = PieData(pieSet)
-            pieSet.valueTextSize = 20f
             pieSet.sliceSpace = 3f
             pieSet.colors = colors
             pieSet.setDrawValues(false)
+            chart_pie.setDrawEntryLabels(false)
             chart_pie.data = pieData
+            chart_pie.setCenterTextSize(35f)
             chart_pie.centerText = allMoney.toCurencyFormat().withRubleSign()
-            chart_pie.description.textSize = 25f
             chart_pie.legend.isEnabled = false
             chart_pie.minAngleForSlices = 5f
             chart_pie.animateXY(1000, 1000)

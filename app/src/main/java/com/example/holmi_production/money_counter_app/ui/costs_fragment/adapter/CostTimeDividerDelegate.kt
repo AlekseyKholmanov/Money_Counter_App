@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
+import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.CostTimeDivider
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
@@ -39,13 +40,13 @@ class CostTimeDividerDelegate : AdapterDelegate<List<ListItem>>() {
         private val sign = v.findViewById(R.id.costs_divider_sign) as TextView
         fun bind(divider: CostTimeDivider) {
             val isPositive = divider.sum.isPositive
-            val signText: String = if (isPositive) "+" else "-"
+            val sign: String = if (isPositive) "+" else "-"
             val color: Int = if (isPositive) Color.parseColor("#2e7d32") else Color.parseColor("#c62828")
             date.text = divider.date
-            sum.text = divider.sum.sum.toCurencyFormat()
+            sum.text = divider.sum.sum.toCurencyFormat().withRubleSign()
             sum.setTextColor(color)
-            sign.text = signText
-            sign.setTextColor(color)
+            this.sign.text = sign
+            this.sign.setTextColor(color)
         }
     }
 

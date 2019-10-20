@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categ
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.model.CategoryType
+import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.CategoryPickerWithCreateFragment
@@ -116,11 +118,10 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         presenter.recalculateAverageSum(date)
     }
 
-    override fun updateChooseCategoryButton(typeId: Int) {
-        val type = CategoryType.values()[typeId]
+    override fun updateCategoryPickerButton(category: Category) {
         val container = key.findViewById<ViewGroup>(R.id.key_category)
-        container.setBackgroundColor(type.color)
-        container.findViewById<ImageView>(R.id.categoryImage).setImageResource(CategoryType.getImage(type))
+        container.setBackgroundColor(category.color ?: Color.TRANSPARENT)
+        container.findViewById<ImageView>(R.id.categoryImage).setImageResource(category.imageId!!)
     }
 
     override fun showCategoryDialog() {
