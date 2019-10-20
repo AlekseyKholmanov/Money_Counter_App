@@ -16,5 +16,7 @@
     <string name="txt_topbar_left">LEFT</string>
     <string name="txt_add_category">добавить категорию</string>
     <string name="validation_empty_categories">Отсутствуют добавленные категории</string>
-    <string name="empty_list">Данные отсутствуют</string>
+    <string name="information_empty_list">Данные отсутствуют</string>
+
+    <string name="error_list">Произошла ошибка</string>
 </resources>

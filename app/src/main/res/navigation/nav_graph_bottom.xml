@@ -15,6 +15,9 @@
                 app:exitAnim="@anim/nav_default_exit_anim" app:popUpToInclusive="false"
                 app:popUpTo="@+id/mainFragment" app:launchSingleTop="true"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action android:id="@+id/action_mainFragment_to_categoryPickerWithCreateFragment"
+                app:destination="@id/categoryPickerWithCreateFragment" app:launchSingleTop="true"
+                app:popUpTo="@+id/mainFragment"/>
     </fragment>
     <fragment
             android:id="@+id/chartFragment"
@@ -40,4 +43,15 @@
             android:name="com.example.holmi_production.money_counter_app.ui.settings.SettingsFragment"
             android:label="SettingsFragment"
             tool:layout="@layout/frament_settings"/>
+    <fragment android:id="@+id/categoryPickerWithCreateFragment"
+              android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.CategoryPickerWithCreateFragment"
+              android:label="CategoryPickerWithCreateFragment">
+        <action android:id="@+id/action_categoryPickerWithCreateFragment_to_mainFragment"
+                app:destination="@id/mainFragment" app:launchSingleTop="true" app:popUpTo="@+id/nav_graph_bottom"/>
+        <action android:id="@+id/action_categoryPickerWithCreateFragment_to_dialogCategoryCreate2"
+                app:destination="@id/dialogCategoryCreate2"/>
+    </fragment>
+    <dialog android:id="@+id/dialogCategoryCreate2"
+            android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.DialogCategoryCreate"
+            android:label="DialogCategoryCreate"/>
 </navigation>

@@ -36,4 +36,20 @@ class Converters {
         return SpDirection.values()[direction]
     }
 
+    @TypeConverter
+    fun fromListDirection(directions: List<SpDirection>): String {
+        var string = ""
+        directions.forEach {
+            string += "${it.name} "
+        }
+        return string
+    }
+
+    @TypeConverter
+    fun toListDirection(direction: String): List<SpDirection> {
+        val list = direction.split(" ")
+        return list.filter { it.isNotBlank() }
+            .map { SpDirection.valueOf(it) }
+    }
+
 }

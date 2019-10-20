@@ -50,3 +50,6 @@ class CategoryDialogAdapter(
 
     }
 }
+interface ICategoryPicker{
+    fun categoryPicked(categoryId:Int)
+}

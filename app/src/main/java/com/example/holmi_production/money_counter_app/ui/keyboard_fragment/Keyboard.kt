@@ -20,7 +20,7 @@ class Keyboard @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : RelativeLayout(context, attrs, defStyle, defStyleRes) {
 
-    private lateinit var mKeyboardListener: IKeyboardListener
+    private var mKeyboardListener: IKeyboardListener? = null
     private var purshaseSum = "0"
     @Inject
     lateinit var vibrator: Vibrator
@@ -99,15 +99,15 @@ class Keyboard @JvmOverloads constructor(
                 purshaseSum += value
             }
             ButtonTypes.CATEGORY -> {
-                mKeyboardListener.showCategoryDialog()
+                mKeyboardListener!!.showCategoryDialog()
             }
         }
 
         purshace_sum_textview.text = purshaseSum
-        mKeyboardListener.moneyUpdated(purshaseSum.toDouble())
+        mKeyboardListener!!.moneyUpdated(purshaseSum.toDouble())
     }
 
-    fun setListener(mKeyboardListener: IKeyboardListener) {
+    fun setListener(mKeyboardListener: IKeyboardListener?) {
         this.mKeyboardListener = mKeyboardListener
     }
 
@@ -119,7 +119,7 @@ class Keyboard @JvmOverloads constructor(
             "0" -> return
             else -> {
                 val text = comment.text.toString()
-                mKeyboardListener.enterPressed(purshaseSum.toDouble(), text,isSpending)
+                mKeyboardListener!!.enterPressed(purshaseSum.toDouble(), text,isSpending)
                 purshaseSum = "0"
                 clearcCommentField()
             }

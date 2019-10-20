@@ -17,6 +17,7 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.CategoryPickerWithCreateFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import leakcanary.AppWatcher
@@ -123,8 +124,8 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun showCategoryDialog() {
-        categoryPickerFragment = CategoryPickerFragment.newInstance()
-        findNavController().navigate(R.id.action_mainFragment_to_categoryPickerFragment)
+        withCreate = CategoryPickerWithCreateFragment.newInstance()
+        findNavController().navigate(R.id.action_mainFragment_to_categoryPickerWithCreateFragment)
     }
 
     override fun showAverageSum(sum: String, isDisplayed: Boolean) {
@@ -165,6 +166,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     private lateinit var key: Keyboard
     private lateinit var timePickerDialog: TimePickerDialog
     private lateinit var categoryPickerFragment: CategoryPickerFragment
+    private lateinit var withCreate:CategoryPickerWithCreateFragment
     @InjectPresenter
     lateinit var presenter: KeyboardPresenter
 }

@@ -7,18 +7,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.holmi_production.money_counter_app.model.entity.FilterPeriods
-import com.example.holmi_production.money_counter_app.model.entity.Spending
-import com.example.holmi_production.money_counter_app.model.entity.SpendingCategory
-import com.example.holmi_production.money_counter_app.model.entity.SumPerDay
+import com.example.holmi_production.money_counter_app.model.entity.*
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
 import org.joda.time.DateTime
 import java.util.concurrent.Executors
 
 @TypeConverters(Converters::class)
 @Database(
-    entities = [Spending::class, SumPerDay::class, FilterPeriods::class],
-    version = 15,
+    entities = [Spending::class, SumPerDay::class, FilterPeriods::class, Category::class, SubCategory::class],
+    version = 18,
     exportSchema = false
 )
 abstract class ExpenseDatabase : RoomDatabase() {
@@ -41,6 +38,7 @@ abstract class ExpenseDatabase : RoomDatabase() {
                     object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
+                            Log.d("M_ExpenseDatabase","start execution")
                             Executors.newSingleThreadScheduledExecutor()
                                 .execute {
                                     getInstance(context)!!.periodsDao.insert(
@@ -63,5 +61,6 @@ abstract class ExpenseDatabase : RoomDatabase() {
     abstract val spendingDao: SpendingDao
     abstract val sumPerDayDao: SumPerDayDao
     abstract val periodsDao: PeriodsDao
-
+    abstract val categoryDao: CategoryDao
+    abstract val subCategoryDao:SubcategoryDao
 }

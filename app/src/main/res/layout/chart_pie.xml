@@ -13,14 +13,15 @@
     <TextView
             android:id="@+id/emptyPlaceholder_pie"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
-            android:text="@string/empty_list"
+            android:text="@string/information_empty_list"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@+id/chart_pie" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
     <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/chart_pie"
             android:layout_width="match_parent"

@@ -69,6 +69,26 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="categoryPickerWithCreateFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_categoryPickerWithCreateFragment_to_dialogCategoryCreate2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_categoryPickerWithCreateFragment_to_mainFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="chartFragment">
                     <value>
                       <LayoutPositions />
@@ -79,12 +99,22 @@
                       <LayoutPositions />
                     </value>
                   </entry>
+                  <entry key="dialogCategoryCreate2">
+                    <value>
+                      <LayoutPositions />
+                    </value>
+                  </entry>
                   <entry key="mainFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPositions">
                           <map>
                             <entry key="action_mainFragment_to_categoryPickerFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_mainFragment_to_categoryPickerWithCreateFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -112,6 +142,12 @@
                   <entry key="navEndPeriod">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_navEndPeriod_to_navMain">
@@ -127,6 +163,12 @@
                   <entry key="navFirstLaunch">
                     <value>
                       <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="368" />
+                          </Point>
+                        </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_navFirstLaunch_to_navMain">
@@ -141,7 +183,14 @@
                   </entry>
                   <entry key="navMain">
                     <value>
-                      <LayoutPositions />
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="256" />
+                            <option name="y" value="54" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
                     </value>
                   </entry>
                 </map>
@@ -156,14 +205,7 @@
                 <map>
                   <entry key="topbarFragmnet3">
                     <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="12" />
-                            <option name="y" value="12" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
+                      <LayoutPositions />
                     </value>
                   </entry>
                 </map>
