@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import com.example.holmi_production.money_counter_app.storage.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -18,7 +19,8 @@ class SpendingInteractor @Inject constructor(
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,
-    private val periodsRepository: PeriodsRepository) {
+    private val periodsRepository: PeriodsRepository,
+    private val categoryInteractor: CategoryInteractor) {
 
     fun getAllSeparated(): Single<Pair<List<Spending>, List<Spending>>> {
         return spendingRepository.getAll()
@@ -34,6 +36,22 @@ class SpendingInteractor @Inject constructor(
         return spendingRepository.getAll()
             .async()
     }
+
+    fun observePeiodWithType():Flowable<List<SpendingWithCategory>>{
+        return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpendingWithCategory()).async()
+            .map { (period, list) ->
+                Log.d("M_SpendingInteractor", "listcount ${list.count()}")
+                Log.d("M_SpendingInteractor", "left border ${period.leftBorder}  right border ${period.rightBorder}")
+                if (period.leftBorder == period.rightBorder) {
+                    list.filter { it.spending.createdDate == period.leftBorder }
+                } else {
+                    list.filter { it.spending.createdDate >= period.leftBorder && it.spending.createdDate <= period.rightBorder }
+                }
+            }
+    }
+
+
+
 
     fun observePeriods(): Flowable<List<Spending>> {
         return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpending()).async()

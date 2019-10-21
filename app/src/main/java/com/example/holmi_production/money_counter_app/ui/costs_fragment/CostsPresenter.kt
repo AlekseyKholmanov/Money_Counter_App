@@ -12,6 +12,7 @@ import com.example.holmi_production.money_counter_app.model.CostTimeDivider
 import com.example.holmi_production.money_counter_app.model.DailyExpenses
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import javax.inject.Inject
@@ -23,47 +24,21 @@ class CostsPresenter @Inject constructor(
 ) : BasePresenter<CostsView>() {
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun loadCosts() {
-        spendingRepository.observeSpending()
-            .async()
-            .map { newTransform(it) }
-            .subscribe({ item -> viewState.showSpending(item) },
-                { error ->
-                    viewState.onError(error)
-                    Log.d("qwerty", error.message)
-                })
-            .keep()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N)
-    fun getSpending() {
-        spendingInteractor.getAllInPeriod()
-            .map { newTransform(it) }
-            .subscribe({ item -> viewState.showSpending(item) },
-                { error ->
-                    viewState.onError(error)
-                    Log.d("qwerty", error.message)
-                })
-            .keep()
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N)
     fun setObservers() {
-        observeSpendings()
+        observeSp()
     }
 
+
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun observeSpendings() {
-        spendingInteractor.observePeriods()
-            .map { list ->
-                Triple(
-                    newTransform(list),
-                    list.filter { it.isSpending }.sumByDouble { it.sum },
-                    list.filter { !it.isSpending }.sumByDouble { it.sum })
-            }
+    private fun observeSp(){
+        spendingInteractor.observePeiodWithType().map { list ->
+            Triple(
+                newTransform(list),
+                list.filter { it.spending.isSpending }.sumByDouble { it.spending.sum },
+                list.filter { !it.spending.isSpending }.sumByDouble { it.spending.sum })
+        }
             .subscribe({ item ->
                 viewState.showSpending(item.first)
-                val positive =
                     viewState.showSumByDirection(item.second,item.third)
                 Log.d("M_CostsPresenter", "observe spending item" + item.first.count().toString())
             },
@@ -74,20 +49,21 @@ class CostsPresenter @Inject constructor(
             .keep()
     }
 
-    fun delete(spending: Spending) {
-        spendingInteractor.delete(spending).subscribe().keep()
-        this.spendingRepository.delete(spending).async().subscribe { viewState.updateList() }.keep()
+
+
+    fun delete(spending: SpendingWithCategory) {
+        spendingInteractor.delete(spending.spending).subscribe ({ viewState.updateList() },{}).keep()
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun newTransform(costs: List<Spending>): ArrayList<ListItem> {
+    private fun newTransform(costs: List<SpendingWithCategory>): ArrayList<ListItem> {
         val list = arrayListOf<ListItem>()
         costs
-            .groupBy { it.createdDate.withTimeAtStartOfDay() }
+            .groupBy { it.spending.createdDate.withTimeAtStartOfDay() }
             .toSortedMap(Comparator { o1, o2 -> o2.compareTo(o1) })
             .forEach { (t, u) ->
                 list.add(CostTimeDivider(t.toRUformat(), DailyExpenses.calculate(u)) as ListItem)
-                val mutable = u.toMutableList().also { it -> it.sortByDescending { it.createdDate } }
+                val mutable = u.toMutableList().also { it -> it.sortByDescending { it.spending.createdDate } }
                 mutable.forEach { list.add(it as ListItem) }
             }
         return list

@@ -13,6 +13,7 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
 class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
@@ -22,7 +23,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
     }
 
     override fun isForViewType(items: List<ListItem>, position: Int): Boolean {
-        return items[position] is Spending
+        return items[position] is SpendingWithCategory
     }
 
     override fun onBindViewHolder(
@@ -31,7 +32,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         holder: RecyclerView.ViewHolder,
         list: List<Any>) {
         if (holder is ViewHolder) {
-            val item = items[position] as Spending
+            val item = items[position] as SpendingWithCategory
             holder.bind(item)
         }
     }
@@ -46,16 +47,16 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         private val comment:AppCompatTextView = v.findViewById(R.id.cost_item_comment)
         private val view = v
 
-        fun bind(spending: Spending) {
+        fun bind(spendingWithCAtegory: SpendingWithCategory) {
+            val spending = spendingWithCAtegory.spending
+            val category = spendingWithCAtegory.category[0]
             val color = if (spending.isSpending) Color.parseColor("#c62828") else  Color.parseColor("#2e7d32")
 
             val signText = if (spending.isSpending) "-" else "+"
-            category.text = CategoryType.getDescription(spending.categoryType)
-            view.setBackgroundColor(CategoryType.getColor(spending.categoryType))
+            view.setBackgroundColor(category.color ?: Color.TRANSPARENT)
             view.background.alpha = 160
-            image.setImageResource(CategoryType.getImage(CategoryType.values()[spending.categoryType]))
+            image.setImageResource(category.imageId ?: R.drawable.ic_launcher_foreground)
             comment.text = spending.comment ?: ""
-            //date.tv = spending.spendingDate.toString("HH:mm")
             sum.text = spending.sum.toCurencyFormat().withRubleSign()
             sum.setTextColor(color)
             sign.text = signText

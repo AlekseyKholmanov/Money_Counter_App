@@ -6,8 +6,10 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import io.reactivex.Flowable
 import io.reactivex.Maybe
+import org.intellij.lang.annotations.Flow
 import org.joda.time.DateTime
 
 @Dao
@@ -17,6 +19,9 @@ interface SpendingDao {
 
     @Query("SELECT * FROM Spending")
     fun getSpendings():List<Spending>
+
+    @Query("Select * From Spending")
+    fun observeSpendingWithCategory():List<SpendingWithCategory>
 
     @Query("SELECT * FROM Spending WHERE createdDate =:date")
     fun getSpending(date:DateTime): Maybe<Spending>

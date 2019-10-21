@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.model.entity
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.example.holmi_production.money_counter_app.model.SpDirection
 
@@ -12,6 +13,6 @@ data class Category(
     val description: String,
     val color: Int?,
     val imageId: Int? = null,
-    var usageCount:Int = 0
+    var usageCount: Int = 0
 )
 

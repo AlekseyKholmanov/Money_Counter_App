@@ -19,6 +19,7 @@ import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.ui.costs_fragment.adapter.CostsAdapter
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_bottom_costs.*
 import leakcanary.AppWatcher
@@ -37,14 +38,13 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
         val swipeHandle = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val item = adapter.items[viewHolder.adapterPosition]
-                if (item is Spending) {
+                if (item is SpendingWithCategory) {
                     adapter.notifyItemRemoved(viewHolder.adapterPosition)
                     adapter.notifyDataSetChanged()
                     presenter.delete(item)
                 }
             }
         }
-        presenter.getSpending()
         presenter.setObservers()
         val itemTouchHelper = ItemTouchHelper(swipeHandle)
         itemTouchHelper.attachToRecyclerView(spendingList)
