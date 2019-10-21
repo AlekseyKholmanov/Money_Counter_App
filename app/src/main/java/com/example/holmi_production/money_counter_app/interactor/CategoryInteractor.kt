@@ -35,7 +35,7 @@ class CategoryInteractor @Inject constructor(
     fun observeCategories(): Flowable<MutableList<Category>> {
         return categoryRepository.observePeriod()
             .async()
-            .map { it.sortedBy { it.usageCount } }
+            .map { it.sortedByDescending { it.usageCount } }
             .map { it.toMutableList() }
 
     }
