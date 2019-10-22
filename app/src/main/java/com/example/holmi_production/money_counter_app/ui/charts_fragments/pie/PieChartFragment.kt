@@ -1,7 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.charts_fragments.pie
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,7 +14,8 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.CategoryType
-import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.Category
+import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -46,14 +46,14 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
         showEmptyPlaceholder()
     }
 
-    override fun showChips(data: List<Pair<CategoryType, List<Spending>>>) {
+    override fun showChips(data: List<Pair<Category, List<SpendingWithCategory>>>) {
         chip_group.removeAllViews()
         data.forEach { (category, spendings) ->
-            chip_group.addView(buildChip(category, spendings.sumByDouble { it.sum }))
+            chip_group.addView(buildChip(category, spendings.sumByDouble { it.spending.sum }))
         }
     }
 
-    override fun showPie(data: List<Pair<CategoryType, List<Spending>>>) {
+    override fun showPie(data: List<Pair<Category, List<SpendingWithCategory>>>) {
         if (data.isEmpty()) {
             showEmptyPlaceholder()
         } else {
@@ -67,10 +67,10 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
             val colors = arrayListOf<Int>()
             var allMoney = 0.0
             data.forEach { (category, spendings) ->
-                val sum = spendings.sumByDouble { it.sum }
+                val sum = spendings.sumByDouble { it.spending.sum }
                 first.add(PieEntry(sum.toFloat(), category.description))
                 second.add(category.description)
-                colors.add(category.color)
+                colors.add(category.color!!)
                 allMoney+= sum
             }
             val pieSet = PieDataSet(first.toList(), null)
@@ -89,11 +89,11 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
         }
     }
 
-    private fun buildChip(type: CategoryType, sum: Double): Chip {
+    private fun buildChip(type: Category, sum: Double): Chip {
         val chip = Chip(context)
         val text = "${type.description} ${sum.toCurencyFormat().withRubleSign()}"
         chip.text = text
-        chip.chipBackgroundColor= ColorStateList.valueOf(type.color)
+        chip.chipBackgroundColor= ColorStateList.valueOf(type.color!!)
         chip.textSize = 20f
         return chip
     }
