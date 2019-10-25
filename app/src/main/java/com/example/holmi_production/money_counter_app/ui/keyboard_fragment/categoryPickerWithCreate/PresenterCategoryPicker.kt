@@ -8,8 +8,8 @@ import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import javax.inject.Inject
 
 @InjectViewState
-class CategoryPickerPresenter @Inject constructor(private val interactor: CategoryInteractor) :
-    BasePresenter<CategoryPickerView>() {
+class PresenterCategoryPicker @Inject constructor(private val interactor: CategoryInteractor) :
+    BasePresenter<ViewCategoryPicker>() {
     fun observeCategories() {
         interactor.observeCategories()
             .subscribe ({

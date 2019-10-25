@@ -44,7 +44,7 @@
             android:label="SettingsFragment"
             tool:layout="@layout/frament_settings"/>
     <fragment android:id="@+id/categoryPickerWithCreateFragment"
-              android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.CategoryPickerWithCreateFragment"
+              android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker"
               android:label="CategoryPickerWithCreateFragment">
         <action android:id="@+id/action_categoryPickerWithCreateFragment_to_mainFragment"
                 app:destination="@id/mainFragment" app:launchSingleTop="true" app:popUpTo="@+id/nav_graph_bottom"/>
@@ -52,6 +52,6 @@
                 app:destination="@id/dialogCategoryCreate2"/>
     </fragment>
     <dialog android:id="@+id/dialogCategoryCreate2"
-            android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.DialogCategoryCreate"
+            android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.DialogFragmentTabContainer"
             android:label="DialogCategoryCreate"/>
 </navigation>

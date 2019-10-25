@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content">
     <EditText
             android:id="@+id/et_category_name"
             android:minWidth="200dp"
@@ -16,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:layout_margin="8dp"
             android:text="@string/text_choose_type"/>
     <CheckedTextView
             android:id="@+id/ch_income"
@@ -23,6 +23,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="@string/text_income"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center_vertical"
             android:layout_margin="8dp"/>
     <CheckedTextView
             android:id="@+id/ch_spending"
@@ -30,12 +31,14 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="@string/text_spending"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center_vertical"
             android:layout_margin="8dp"/>
 
     <CheckedTextView
             android:id="@+id/ch_accumulation"
             android:checked="false"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:text="@string/text_accumulation"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:layout_margin="8dp"/>
@@ -70,6 +73,7 @@
             android:id="@+id/btn_create_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:enabled="false"
             android:layout_margin="8dp"
             android:text="@string/text_save"/>

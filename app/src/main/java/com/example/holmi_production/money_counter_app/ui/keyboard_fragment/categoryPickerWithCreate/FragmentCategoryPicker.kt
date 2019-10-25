@@ -14,9 +14,12 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.DialogFragmentTabContainer
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.ICategoryCreateCallback
 import kotlinx.android.synthetic.main.fragment_category_picker_with_create.*
 
-class CategoryPickerWithCreateFragment : AndroidXMvpAppCompatFragment(), ICategoryCreateCallback, CategoryPickerView,
+class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
+    ICategoryCreateCallback, ViewCategoryPicker,
     ICategoryPickerCallback {
     override fun categoryPicked(categoryId: Int) {
         val bundle = bundleOf("categoryId" to categoryId)
@@ -37,8 +40,8 @@ class CategoryPickerWithCreateFragment : AndroidXMvpAppCompatFragment(), ICatego
         rv_categoryList.adapter = adapter
 
         btn_add_category.setOnClickListener {
-            val dialog = DialogCategoryCreate.newInstance()
-            dialog.setCallback(this)
+            val dialog = DialogFragmentTabContainer.newInstance()
+            //dialog.setCallback(this)
             dialog.show(childFragmentManager,"createCategoryDialog")
         }
         presenter.observeCategories()
@@ -60,17 +63,17 @@ class CategoryPickerWithCreateFragment : AndroidXMvpAppCompatFragment(), ICatego
     }
 
     @ProvidePresenter
-    fun initPresenter(): CategoryPickerPresenter {
+    fun initPresenter(): PresenterCategoryPicker {
         return App.component.getCategoryPickerPresenter()
     }
 
     @InjectPresenter
-    lateinit var presenter: CategoryPickerPresenter
+    lateinit var presenter: PresenterCategoryPicker
     lateinit var adapter: CategoryPickerAdapter
 
     companion object {
-        fun newInstance(): CategoryPickerWithCreateFragment {
-            return CategoryPickerWithCreateFragment()
+        fun newInstance(): FragmentCategoryPicker {
+            return FragmentCategoryPicker()
         }
     }
 

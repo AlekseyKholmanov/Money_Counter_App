@@ -19,8 +19,8 @@ class ChartFragment : AndroidXMvpAppCompatFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tabs.setupWithViewPager(viewPager)
-        viewPager.adapter = ChartFragmentAdapter(childFragmentManager)
+        chart_tabs.setupWithViewPager(chart_viewPager)
+        chart_viewPager.adapter = ChartFragmentAdapter(childFragmentManager)
     }
 
     override fun onAttach(context: Context) {

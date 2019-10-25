@@ -3,7 +3,7 @@ package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.cate
 import com.arellomobile.mvp.MvpView
 import com.example.holmi_production.money_counter_app.model.entity.Category
 
-interface CategoryPickerView:MvpView {
+interface ViewCategoryPicker:MvpView {
     fun showCategories(categories: MutableList<Category>)
     fun showMessage(show:Boolean, messageResId:Int? = null)
 }

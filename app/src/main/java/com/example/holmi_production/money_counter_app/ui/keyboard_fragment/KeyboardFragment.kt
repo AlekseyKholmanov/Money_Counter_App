@@ -19,7 +19,7 @@ import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.CategoryPickerWithCreateFragment
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import leakcanary.AppWatcher
@@ -125,7 +125,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun showCategoryDialog() {
-        withCreate = CategoryPickerWithCreateFragment.newInstance()
+        withCreate = FragmentCategoryPicker.newInstance()
         findNavController().navigate(R.id.action_mainFragment_to_categoryPickerWithCreateFragment)
     }
 
@@ -167,7 +167,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     private lateinit var key: Keyboard
     private lateinit var timePickerDialog: TimePickerDialog
     private lateinit var categoryPickerFragment: CategoryPickerFragment
-    private lateinit var withCreate:CategoryPickerWithCreateFragment
+    private lateinit var withCreate:FragmentCategoryPicker
     @InjectPresenter
     lateinit var presenter: KeyboardPresenter
 }
