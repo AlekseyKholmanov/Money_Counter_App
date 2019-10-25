@@ -2,10 +2,7 @@ package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
-import com.example.holmi_production.money_counter_app.extensions.async
-import com.example.holmi_production.money_counter_app.extensions.complete
-import com.example.holmi_production.money_counter_app.extensions.getDayAddition
-import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
+import com.example.holmi_production.money_counter_app.extensions.*
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.CategoryType
@@ -80,20 +77,19 @@ class KeyboardPresenter @Inject constructor(
             .subscribe({ list ->
                 val a = list.filter { it.isSpending }.map { it.sum }
                 val b = list.filter { !it.isSpending }.map { it.sum }
-                viewState.showIncomeSum((b.sum() - a.sum()).toCurencyFormat())
-                viewState.showSpentSum(a.sum().toCurencyFormat())
+                viewState.showIncomeSum((b.sum() - a.sum()).toCurencyFormat().withRubleSign())
             }, { Log.d("qwerty", it.message) })
             .keep()
         sumPerDayRepository.observeToday()
             .async()
             .subscribe({ today ->
-                viewState.showSumPerDay(today.sum.toCurencyFormat())
+                viewState.showSumPerDay(today.sum.toCurencyFormat().withRubleSign())
             }, { Log.d("qwerty", it.message) })
             .keep()
         sumPerDayRepository.observeAverage()
             .async()
             .subscribe({ average ->
-                viewState.showAverageSum(average.sum.toCurencyFormat(), average.sum >= 0.0)
+                viewState.showAverageSum(average.sum.toCurencyFormat().withRubleSign(), average.sum >= 0.0)
             }, { Log.d("qwerty", it.message) })
             .keep()
         settingRepository.observeEndDate()

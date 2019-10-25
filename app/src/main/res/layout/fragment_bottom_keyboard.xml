@@ -8,62 +8,67 @@
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true">
-    <TextView
-            android:id="@+id/spent_text"
+    <LinearLayout
+            android:id="@+id/sum_per_day_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:paddingLeft="16dp"
-            android:hint="Потрачено:"/>
-    <TextView
-            android:id="@+id/spent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+        <TextView
+                android:id="@+id/sum_per_day_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="НА СЕГОДНЯ:"
+                android:layout_margin="8dp"/>
+
+        <TextView
+                android:id="@+id/sum_per_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="500 p"
+                android:textSize="30sp"
+                android:layout_margin="8dp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/left_sum_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/spent_text"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:textSize="26dp"
-            android:hint="сумма"
-            android:paddingStart="16dp"/>
-    <TextView
-            android:id="@+id/sum_per_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/spent"
-            app:layout_constraintLeft_toLeftOf="@id/spent"
-            android:paddingStart="16dp"/>
-    <TextView
-            android:id="@+id/sum_per_day_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/sum_per_day"
-            app:layout_constraintLeft_toRightOf="@id/sum_per_day"
-            android:text="НА СЕГОДНЯ"
-            android:paddingStart="16dp"/>
-    <TextView
-            android:id="@+id/left_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sum_per_day_container"
             app:layout_constraintRight_toRightOf="parent"
-            android:paddingRight="16dp"
-            android:hint="Доступно"/>
-    <TextView
-            android:id="@+id/left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/left_text"
-            app:layout_constraintRight_toRightOf="parent"
-            android:textSize="26dp"
-            android:hint="сумма"
-            android:paddingLeft="16dp"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+        <TextView
+                android:id="@+id/left_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:textSize="20sp"
+                android:layout_margin="8dp"
+                android:text="Всего осталось:"/>
+        <TextView
+                android:id="@+id/left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/left_text"
+                app:layout_constraintBaseline_toBaselineOf="@id/left_text"
+                app:layout_constraintLeft_toRightOf="@id/left_text"
+                android:layout_margin="8dp"
+                android:textSize="28sp"
+                tools:text="1000 P"/>
+    </LinearLayout>
 
     <TextView
             android:id="@+id/left_days"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/left"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintEnd_toEndOf="@id/left_sum_container"
+            app:layout_constraintTop_toBottomOf="@id/left_sum_container"
             android:hint=" на n дней"/>
     <TextView
             android:id="@+id/new_sum_per_day_text"

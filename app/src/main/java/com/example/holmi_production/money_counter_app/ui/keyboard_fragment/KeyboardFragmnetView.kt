@@ -6,7 +6,6 @@ import com.example.holmi_production.money_counter_app.model.entity.Spending
 
 interface KeyboardFragmnetView:MvpView{
     fun showMoney(money:String)
-    fun showSpentSum(sum:String)
     fun showIncomeSum(money:String)
     fun showSumPerDay(money:String)
     fun showDaysLeft(days:String)

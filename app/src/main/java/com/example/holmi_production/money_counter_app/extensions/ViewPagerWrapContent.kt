@@ -40,31 +40,4 @@ class WrapContentHeightViewPager : ViewPager {
         super.onMeasure(widthMeasureSpec, height)
     }
 
-    /**
-     * Determines the height of this view
-     *
-     * @param measureSpec A measureSpec packed into an int
-     * @param view the base view with already measured height
-     *
-     * @return The height of the view, honoring constraints from measureSpec
-     */
-    private fun measureHeight(measureSpec: Int, view: View?): Int {
-        var result = 0
-        val specMode = MeasureSpec.getMode(measureSpec)
-        val specSize = MeasureSpec.getSize(measureSpec)
-
-        if (specMode == MeasureSpec.EXACTLY) {
-            result = specSize
-        } else {
-            // set the height from the base view if available
-            if (view != null) {
-                result = view.measuredHeight
-            }
-            if (specMode == MeasureSpec.AT_MOST) {
-                result = min(result, specSize)
-            }
-        }
-        return result
-    }
-
 }

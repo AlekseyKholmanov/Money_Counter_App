@@ -15,6 +15,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPicker.CategoryPickerFragment
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
+import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
@@ -156,9 +157,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         left.text = money
     }
 
-    override fun showSpentSum(sum: String) {
-        spent.text = sum
-    }
 
     override fun showMoney(money: String) {
 //        expense.date = money
