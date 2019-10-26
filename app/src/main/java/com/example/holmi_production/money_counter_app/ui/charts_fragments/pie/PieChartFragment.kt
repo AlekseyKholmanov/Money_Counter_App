@@ -40,6 +40,7 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
     override fun onDestroy() {
         super.onDestroy()
         AppWatcher.objectWatcher.watch(this)
+        Log.d("M_PieChartFragment","destroy")
     }
 
     override fun showError() {

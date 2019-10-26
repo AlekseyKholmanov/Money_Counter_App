@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.holmi_production.money_counter_app.ui.charts_fragments.ChartType
 
-class CategoryFragmentManager(
+class CreateCategoryAdapter(
     fm: FragmentManager,
     behavior: Int = BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
     val subcategoryCallback: ISubcategoryCreateCallback,

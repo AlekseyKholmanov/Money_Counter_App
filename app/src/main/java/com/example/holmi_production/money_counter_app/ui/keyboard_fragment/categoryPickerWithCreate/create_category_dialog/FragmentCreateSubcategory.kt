@@ -5,12 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import leakcanary.AppWatcher
 
-class FragmentCreateSubcategory : Fragment(){
+class FragmentCreateSubcategory : AndroidXMvpAppCompatFragment(){
 
     companion object{
         fun newInstance(): FragmentCreateSubcategory {

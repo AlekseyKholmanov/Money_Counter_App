@@ -35,10 +35,6 @@ class TimePickerDialog : DialogFragment(), DatePickerDialog.OnDateSetListener {
         this.callback = callback
     }
 
-    fun deleteListener(){
-        callback = null
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val time = DateTime()
         val startDate: Long = arguments?.getLong("startDate") ?: DateTime().minusMonths(1).millis
@@ -49,6 +45,7 @@ class TimePickerDialog : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        callback = null
         AppWatcher.objectWatcher.watch(this)
     }
 }

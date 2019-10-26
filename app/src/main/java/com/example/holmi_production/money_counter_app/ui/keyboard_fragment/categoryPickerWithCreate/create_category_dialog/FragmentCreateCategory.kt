@@ -6,14 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import kotlinx.android.synthetic.main.dialog_create_category.*
 import leakcanary.AppWatcher
 
-class CategoryCreateFragment: Fragment(){
+class CategoryCreateFragment: AndroidXMvpAppCompatFragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_create_category, container, false)
     }

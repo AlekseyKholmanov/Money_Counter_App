@@ -9,7 +9,8 @@
             android:id="@+id/mainFragment"
             android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardFragment"
             android:label="MainFragment"
-            tool:layout="@layout/fragment_bottom_keyboard">
+            tool:layout="@layout/fragment_bottom_keyboard"
+    >
         <action android:id="@+id/action_mainFragment_to_categoryPickerFragment"
                 app:destination="@id/categoryPickerFragment" app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim" app:popUpToInclusive="false"
@@ -44,7 +45,7 @@
             android:label="SettingsFragment"
             tool:layout="@layout/frament_settings"/>
     <fragment android:id="@+id/categoryPickerWithCreateFragment"
-              android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker"
+              android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.FragmentCategoryPicker"
               android:label="CategoryPickerWithCreateFragment">
         <action android:id="@+id/action_categoryPickerWithCreateFragment_to_mainFragment"
                 app:destination="@id/mainFragment" app:launchSingleTop="true" app:popUpTo="@+id/nav_graph_bottom"/>

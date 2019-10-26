@@ -33,7 +33,7 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcat
         super.onViewCreated(view, savedInstanceState)
         category_create_tabs.setupWithViewPager(category_create_viewPager)
         category_create_viewPager.adapter =
-            CategoryFragmentManager(fm = childFragmentManager, categoryCallback = this, subcategoryCallback = this)
+            CreateCategoryAdapter(fm = childFragmentManager, categoryCallback = this, subcategoryCallback = this)
     }
 
     override fun subcategoryCreated() {

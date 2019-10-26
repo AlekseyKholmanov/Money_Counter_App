@@ -148,10 +148,6 @@ class KeyboardPresenter @Inject constructor(
             .keep()
     }
 
-    private fun getCategoryType(type: Int): CategoryType {
-        return CategoryType.values()[type]
-    }
-
     private fun updateDayLeft() {
         val diff = settingRepository.getTillEnd()
         viewState.showDaysLeft(" на ${diff.getDayAddition()}")

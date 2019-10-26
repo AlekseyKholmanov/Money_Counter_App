@@ -117,6 +117,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
     override fun onDestroy() {
         super.onDestroy()
         AppWatcher.objectWatcher.watch(this)
+        Log.d("M_CostsFragment","destroy")
     }
 
     @ProvidePresenter

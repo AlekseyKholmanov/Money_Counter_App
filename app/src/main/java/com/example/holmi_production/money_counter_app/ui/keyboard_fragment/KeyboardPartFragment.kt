@@ -1,32 +1,34 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
-import android.content.Context
-import android.util.AttributeSet
+import android.graphics.Color
+import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.RelativeLayout
+import android.view.ViewGroup
+import android.widget.ImageView
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.Vibrator
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
-import kotlinx.android.synthetic.main.keyboard.view.*
+import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import kotlinx.android.synthetic.main.keyboard.*
 import javax.inject.Inject
 
-class Keyboard @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyle: Int = 0,
-    defStyleRes: Int = 0
-) : RelativeLayout(context, attrs, defStyle, defStyleRes) {
+class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
+    companion object {
+        fun newInstance(): KeyboardPartFragment {
+            return KeyboardPartFragment()
+        }
+    }
 
-    private var mKeyboardListener: IKeyboardListener? = null
-    private var purshaseSum = "0"
-    @Inject
-    lateinit var vibrator: Vibrator
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.keyboard, container, false)
+    }
 
-    init {
-        View.inflate(context, R.layout.keyboard, this)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         key_0.setOnClickListener { pressed(ButtonTypes.ZERO, "0") }
         key_1.setOnClickListener { pressed(ButtonTypes.NUMERIC, "1") }
         key_2.setOnClickListener { pressed(ButtonTypes.NUMERIC, "2") }
@@ -43,19 +45,27 @@ class Keyboard @JvmOverloads constructor(
         key_income.setOnClickListener { pressed(ButtonTypes.ENTER_DOWN) }
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
         comment.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus){
+            if (!hasFocus) {
                 comment.clearFocus()
                 comment.hideKeyboard()
-                Log.d("qwerty","ledt")
-            }
-            else{
-                Log.d("qwerty","has")
+                Log.d("qwerty", "ledt")
+            } else {
+                Log.d("qwerty", "has")
             }
         }
         purshace_sum_textview.text = purshaseSum
         App.component.inject(this)
     }
 
+    fun setListener(mKeyboardListener: IKeyboardListener?) {
+        this.mKeyboardListener = mKeyboardListener
+    }
+
+    fun updateCategoryButton(color: Int?, imageId: Int?) {
+        key_category.setBackgroundColor(color ?: Color.TRANSPARENT)
+        key_category.findViewById<ImageView>(R.id.categoryImage)
+            .setImageResource(imageId ?: R.drawable.ic_launcher_foreground)
+    }
 
     private fun pressed(type: ButtonTypes, value: String? = null) {
         vibrator.vibrate(50)
@@ -107,24 +117,32 @@ class Keyboard @JvmOverloads constructor(
         mKeyboardListener!!.moneyUpdated(purshaseSum.toDouble())
     }
 
-    fun setListener(mKeyboardListener: IKeyboardListener?) {
-        this.mKeyboardListener = mKeyboardListener
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("M_KeyboardPart", "onDestroy")
+        super.onDestroy()
     }
 
-    private fun clearcCommentField(){
-        comment.setText("")
-    }
-    private fun enterPressed(isSpending:Boolean){
+    private fun enterPressed(isSpending: Boolean) {
         when (purshaseSum) {
             "0" -> return
             else -> {
                 val text = comment.text.toString()
-                mKeyboardListener!!.enterPressed(purshaseSum.toDouble(), text,isSpending)
+                mKeyboardListener!!.enterPressed(purshaseSum.toDouble(), text, isSpending)
                 purshaseSum = "0"
-                clearcCommentField()
+                clearCommentField()
             }
         }
     }
+
+    private fun clearCommentField() {
+        comment.setText("")
+    }
+
+    @Inject
+    lateinit var vibrator:Vibrator
+    private var purshaseSum = "0"
+    private var mKeyboardListener: IKeyboardListener? = null
 }
 
 interface IKeyboardListener {

@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate
+package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,11 +11,13 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.CategoryPickerAdapter
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.ICategoryPickerCallback
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.PresenterCategoryPicker
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.ViewCategoryPicker
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.DialogFragmentTabContainer
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.ICategoryCreateCallback
 import kotlinx.android.synthetic.main.fragment_category_picker_with_create.*
 import leakcanary.AppWatcher
 
@@ -33,9 +35,10 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CategoryPickerAdapter(
-            mutableListOf(), this
-        )
+        adapter =
+            CategoryPickerAdapter(
+                mutableListOf(), this
+            )
         val layoutManager = GridLayoutManager(context, 3)
         rv_categoryList.layoutManager = layoutManager
         rv_categoryList.adapter = adapter

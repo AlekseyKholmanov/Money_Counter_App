@@ -1,26 +1,21 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPicker.CategoryPickerFragment
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
-import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import leakcanary.AppWatcher
@@ -35,9 +30,12 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        key = view.findViewById(R.id.keyboard)
-
-        key.setListener(this)
+        keybaordPart = KeyboardPartFragment.newInstance()
+        keybaordPart.setListener(this)
+        childFragmentManager.beginTransaction().apply {
+            add(R.id.keyboard,keybaordPart)
+            commit()
+        }
         left_days.setOnClickListener {
             timePickerDialog = TimePickerDialog.newInstance(withMinDate = true)
             timePickerDialog.setListener(this)
@@ -49,7 +47,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
             val categoryId = arguments!!.getInt("categoryId")
             presenter.setCategoryButonType(categoryId)
         }
-
         presenter.getDaysLeft()
         presenter.setObservers()
         super.onViewCreated(view, savedInstanceState)
@@ -120,9 +117,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun updateCategoryPickerButton(category: Category) {
-        val container = key.findViewById<ViewGroup>(R.id.key_category)
-        container.setBackgroundColor(category.color ?: Color.TRANSPARENT)
-        container.findViewById<ImageView>(R.id.categoryImage).setImageResource(category.imageId!!)
+        keybaordPart.updateCategoryButton(color = category.color, imageId = category.imageId)
     }
 
     override fun showCategoryDialog() {
@@ -162,10 +157,9 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
 //        expense.date = money
     }
 
-    private lateinit var key: Keyboard
     private lateinit var timePickerDialog: TimePickerDialog
-    private lateinit var categoryPickerFragment: CategoryPickerFragment
-    private lateinit var withCreate:FragmentCategoryPicker
+    private lateinit var withCreate: FragmentCategoryPicker
+    private lateinit var keybaordPart:KeyboardPartFragment
     @InjectPresenter
     lateinit var presenter: KeyboardPresenter
 }
