@@ -13,6 +13,7 @@ import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.Keybo
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardPresenter
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.PresenterCategoryPicker
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.PresenterCreateCategory
 import com.example.holmi_production.money_counter_app.ui.settings.SettingsPresenter
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarPresenter
 import dagger.Component
@@ -33,4 +34,5 @@ interface ApplicationComponent {
     fun inject(activity: MainActivity)
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
     fun inject(keyboard: Keyboard)
+    fun getCategoryCreatePresenter(): PresenterCreateCategory
 }

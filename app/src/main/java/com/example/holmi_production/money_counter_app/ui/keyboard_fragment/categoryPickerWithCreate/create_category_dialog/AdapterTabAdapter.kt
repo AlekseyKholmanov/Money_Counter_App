@@ -5,12 +5,24 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.holmi_production.money_counter_app.ui.charts_fragments.ChartType
 
-class CategoryFragmentManager(fm: FragmentManager, behavior: Int = BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT):
+class CategoryFragmentManager(
+    fm: FragmentManager,
+    behavior: Int = BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
+    val subcategoryCallback: ISubcategoryCreateCallback,
+    val categoryCallback: ICategoryCreateCallback) :
     FragmentPagerAdapter(fm, behavior) {
     override fun getItem(position: Int): Fragment {
-        return when (CategoryCreateDialogType.values()[position]){
-            CategoryCreateDialogType.CATEGORY -> CategoryCreateFragment.newInstance()
-            CategoryCreateDialogType.SUBCATEGORY -> FragmentCreateSubcategory.newInstance()
+         return when (CategoryCreateDialogType.values()[position]) {
+            CategoryCreateDialogType.CATEGORY -> {
+                val instance = CategoryCreateFragment.newInstance()
+                instance.setCallback(categoryCallback)
+                instance
+            }
+            CategoryCreateDialogType.SUBCATEGORY -> {
+                val instance = FragmentCreateSubcategory.newInstance()
+                instance.setCallback(subcategoryCallback)
+                instance
+            }
         }
     }
 
@@ -24,7 +36,7 @@ class CategoryFragmentManager(fm: FragmentManager, behavior: Int = BEHAVIOR_RESU
     }
 }
 
-enum class CategoryCreateDialogType (val number:Int){
+enum class CategoryCreateDialogType(val number: Int) {
     CATEGORY(0),
     SUBCATEGORY(1)
 }

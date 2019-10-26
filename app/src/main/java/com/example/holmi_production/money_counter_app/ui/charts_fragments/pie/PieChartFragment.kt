@@ -60,7 +60,7 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
             hidePlaceholder()
             chart_pie.description.text = ""
             chart_pie.description.textSize = 20f
-            chart_pie.holeRadius = 40f
+            chart_pie.holeRadius = 45f
             chart_pie.isRotationEnabled = false
             val first = arrayListOf<PieEntry>()
             val second = arrayListOf<String>()

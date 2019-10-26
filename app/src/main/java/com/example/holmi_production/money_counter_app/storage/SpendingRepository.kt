@@ -6,6 +6,7 @@ import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 class SpendingRepository @Inject constructor(
@@ -27,6 +28,10 @@ class SpendingRepository @Inject constructor(
 
     fun observeSpendingWithCategory(): Flowable<List<SpendingWithCategory>> {
         return Flowable.fromCallable { dao.observeSpendingWithCategory() }
+    }
+
+    fun getSpendingWitCategory(id:DateTime): Single<SpendingWithCategory> {
+        return Single.fromCallable { dao.getSpendingWithCategory(id)}
     }
 
     fun delete(spending: Spending): Completable {

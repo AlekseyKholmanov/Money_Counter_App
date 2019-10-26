@@ -17,9 +17,10 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.DialogFragmentTabContainer
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.ICategoryCreateCallback
 import kotlinx.android.synthetic.main.fragment_category_picker_with_create.*
+import leakcanary.AppWatcher
 
 class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
-    ICategoryCreateCallback, ViewCategoryPicker,
+    ViewCategoryPicker,
     ICategoryPickerCallback {
     override fun categoryPicked(categoryId: Int) {
         val bundle = bundleOf("categoryId" to categoryId)
@@ -41,10 +42,14 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
 
         btn_add_category.setOnClickListener {
             val dialog = DialogFragmentTabContainer.newInstance()
-            //dialog.setCallback(this)
-            dialog.show(childFragmentManager,"createCategoryDialog")
+            dialog.show(childFragmentManager, "createCategoryDialog")
         }
         presenter.observeCategories()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
     }
 
     override fun showCategories(categories: MutableList<Category>) {
@@ -54,12 +59,8 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
     override fun showMessage(show: Boolean, messageResId: Int?) {
         rv_categoryList.visibility = if (show) View.INVISIBLE else View.VISIBLE
         tv_empty_categories.visibility = if (show) View.VISIBLE else View.GONE
-        if (show && messageResId!=null)
+        if (show && messageResId != null)
             tv_empty_categories.text = getString(messageResId)
-    }
-
-    override fun categoryCreated(categoryName: String, categoryType: List<SpDirection>, color:Int?, isSubCategory: Boolean) {
-        presenter.createCategory(categoryName, categoryType, color, isSubCategory)
     }
 
     @ProvidePresenter

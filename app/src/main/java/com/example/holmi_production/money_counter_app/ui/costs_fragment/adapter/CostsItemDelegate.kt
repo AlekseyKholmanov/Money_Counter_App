@@ -40,7 +40,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
     class ViewHolder internal constructor(v: View) : RecyclerView.ViewHolder(v) {
 
         //private val date: AppCompatTextView = v.findViewById(R.createdDate.cost_item_date)
-        private val category: AppCompatTextView = v.findViewById(R.id.cost_item_category)
+        private val mCategory: AppCompatTextView = v.findViewById(R.id.cost_item_category)
         private val image:ImageView = v.findViewById(R.id.cost_item_image)
         private val sum: AppCompatTextView = v.findViewById(R.id.cost_item_sum)
         private val sign: AppCompatTextView = v.findViewById(R.id.cost_item_sign)
@@ -61,7 +61,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
             sum.setTextColor(color)
             sign.text = signText
             sign.setTextColor(color)
-
+            mCategory.text = category.description
         }
     }
 }

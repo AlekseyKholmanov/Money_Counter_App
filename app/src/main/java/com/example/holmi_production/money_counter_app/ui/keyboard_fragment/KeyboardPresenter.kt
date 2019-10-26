@@ -26,7 +26,7 @@ class KeyboardPresenter @Inject constructor(
 
     fun undoAdding(spending: Spending) {
         spendingInteractor.delete(spending)
-            .subscribe({Log.d("qwerty", "delete")},{Log.d("qwerty","error" + it.message)})
+            .subscribe({ Log.d("qwerty", "delete") }, { Log.d("qwerty", "error" + it.message) })
             .keep()
     }
 
@@ -39,7 +39,16 @@ class KeyboardPresenter @Inject constructor(
             isSpending,
             comment
         )
-        spendingRepository.insert(spending).complete().keep()
+        spendingRepository.insert(spending).doAfterTerminate {
+            spendingRepository.getSpendingWitCategory(spending.createdDate)
+                .async()
+                .subscribe({
+                    viewState.showSnack(it)
+                }, {})
+                .keep()
+        }
+            .complete()
+            .keep()
 
         sumPerDayRepository.getBoth()
             .async()
@@ -68,7 +77,7 @@ class KeyboardPresenter @Inject constructor(
                     .keep()
             }, { Log.d("qwerty", it.message) })
             .keep()
-        viewState.showAfterAddingSnack(spending)
+
     }
 
     fun setObservers() {
@@ -107,7 +116,7 @@ class KeyboardPresenter @Inject constructor(
     fun getCategoryButtonValue() {
         val type = settingRepository.getCategoryValue()
         categoryInteractor.getCategory(type)
-            .subscribe {it ->
+            .subscribe { it ->
                 viewState.updateCategoryPickerButton(it)
             }
             .keep()
@@ -118,8 +127,8 @@ class KeyboardPresenter @Inject constructor(
         settingRepository.setCategoryButtonType(id)
         categoryInteractor.getCategory(id)
             .subscribe({
-            viewState.updateCategoryPickerButton(it)
-        },{}).keep()
+                viewState.updateCategoryPickerButton(it)
+            }, {}).keep()
 
     }
 
@@ -134,7 +143,7 @@ class KeyboardPresenter @Inject constructor(
                 settingRepository.saveEndDate(endDate)
                 sumPerDayRepository.insertToday(averageSum).complete().keep()
                 sumPerDayRepository.insertAverage(averageSum).complete().keep()
-                viewState.showNewSumSnack(averageSum,period)
+                viewState.showNewSumSnack(averageSum, period)
             }, { Log.d("qwerty", it.message) })
             .keep()
     }

@@ -23,6 +23,10 @@ interface SpendingDao {
     @Query("Select * From Spending")
     fun observeSpendingWithCategory():List<SpendingWithCategory>
 
+
+    @Query("SELECT * FROM Spending WHERE createdDate=:id")
+    fun getSpendingWithCategory(id:DateTime):SpendingWithCategory
+
     @Query("SELECT * FROM Spending WHERE createdDate =:date")
     fun getSpending(date:DateTime): Maybe<Spending>
 

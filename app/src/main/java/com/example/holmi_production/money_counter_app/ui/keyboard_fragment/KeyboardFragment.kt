@@ -18,7 +18,7 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker
 import com.google.android.material.snackbar.Snackbar
@@ -103,14 +103,14 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
             .show()
     }
 
-    override fun showAfterAddingSnack(spending: Spending) {
-        val message = if (spending.isSpending)
-            "Расход. ${CategoryType.values()[spending.categoryType].description}. ${spending.sum} рублей"
+    override fun showSnack(spending: SpendingWithCategory) {
+        val message = if (spending.spending.isSpending)
+            "Расход. ${spending.category[0].description}. ${spending.spending.sum.toCurencyFormat().withRubleSign()}"
         else
-            "Доход. ${CategoryType.values()[spending.categoryType].description}. ${spending.sum} рублей"
+            "Доход. ${spending.category[0].description}. ${spending.spending.sum.toCurencyFormat().withRubleSign()}"
         val snack = Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
         snack.setAction("Отмена") {
-            presenter.undoAdding(spending)
+            presenter.undoAdding(spending.spending)
         }
         snack.show()
     }

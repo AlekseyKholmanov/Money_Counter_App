@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.cate
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import kotlinx.android.synthetic.main.dialog_create_category.*
+import leakcanary.AppWatcher
 
 class CategoryCreateFragment: Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,9 +37,9 @@ class CategoryCreateFragment: Fragment(){
             v_color_container.setBackgroundColor(color)
         }
         btn_create_category.setOnClickListener {
-            val color = v_color_container.background
-            callback!!.categoryCreated(et_category_name.text.toString(), listOf(), (color as ColorDrawable).color, false)
-            callback = null
+            val background = v_color_container.background
+            val color:ColorDrawable? = background as? ColorDrawable
+            callback!!.categoryCreated(et_category_name.text.toString(), listOf(), color)
         }
     }
 
@@ -56,8 +58,23 @@ class CategoryCreateFragment: Fragment(){
             return CategoryCreateFragment()
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("M_FragmentCategory","Paused")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("M_FragmentCategory","stopped")
+    }
 }
 
 interface ICategoryCreateCallback {
-    fun categoryCreated(categoryName: String, categoryType: List<SpDirection>, color:Int?, isSubCategory: Boolean)
+    fun categoryCreated(categoryName: String, categoryType: List<SpDirection>, color: ColorDrawable?)
 }

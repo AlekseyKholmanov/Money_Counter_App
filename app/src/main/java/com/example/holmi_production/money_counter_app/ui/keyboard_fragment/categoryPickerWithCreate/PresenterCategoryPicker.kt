@@ -23,10 +23,4 @@ class PresenterCategoryPicker @Inject constructor(private val interactor: Catego
                 viewState.showMessage(true, R.string.error_list)
             }).keep()
     }
-
-    fun createCategory(categoryName: String, categoryTypes: List<SpDirection>,color:Int?, isSubCategory: Boolean) {
-        interactor.insert(name = categoryName, types = categoryTypes, color = color)
-            .subscribe()
-            .keep()
-    }
 }

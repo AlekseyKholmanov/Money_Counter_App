@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.interactor
 
+import android.graphics.drawable.ColorDrawable
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.model.SpDirection
@@ -17,12 +18,12 @@ class CategoryInteractor @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val subCategoryRepository: SubCategoryRepository) {
 
-    fun insert(name: String, types: List<SpDirection>, color: Int? = null): Completable {
+    fun insert(name: String, types: List<SpDirection>, color: ColorDrawable?): Completable {
 
         val category = Category(
             description = name,
             imageId = R.drawable.ic_launcher_foreground,
-            color = color ?: ColorUtils.getColor(),
+            color = color?.color ?: ColorUtils.getColor(),
             spendingDirection = types
         )
         return insert(category)

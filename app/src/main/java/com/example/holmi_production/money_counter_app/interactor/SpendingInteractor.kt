@@ -50,8 +50,9 @@ class SpendingInteractor @Inject constructor(
             }
     }
 
-
-
+    fun getSpendingWithType(id:DateTime): Single<SpendingWithCategory> {
+        return spendingRepository.getSpendingWitCategory(id)
+    }
 
     fun observePeriods(): Flowable<List<Spending>> {
         return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpending()).async()

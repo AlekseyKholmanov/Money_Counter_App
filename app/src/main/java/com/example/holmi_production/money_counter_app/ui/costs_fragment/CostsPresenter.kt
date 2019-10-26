@@ -19,7 +19,6 @@ import javax.inject.Inject
 
 @InjectViewState
 class CostsPresenter @Inject constructor(
-    private val spendingRepository: SpendingRepository,
     private val spendingInteractor: SpendingInteractor
 ) : BasePresenter<CostsView>() {
 

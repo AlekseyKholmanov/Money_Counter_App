@@ -40,7 +40,6 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
                 val item = adapter.items[viewHolder.adapterPosition]
                 if (item is SpendingWithCategory) {
                     adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                    adapter.notifyDataSetChanged()
                     presenter.delete(item)
                 }
             }
