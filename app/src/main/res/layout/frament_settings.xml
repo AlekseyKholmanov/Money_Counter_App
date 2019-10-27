@@ -4,10 +4,17 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <Button
-            android:id="@+id/settings_btn_clear_data"
+            android:id="@+id/btn_clear_spending"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="@string/settings_btn_clear_data"/>
+            android:text="@string/settings_btn_clear_spending"/>
+
+    <Button
+            android:id="@+id/btn_clear_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/settings_btn_clear_category"/>
 
 </LinearLayout>

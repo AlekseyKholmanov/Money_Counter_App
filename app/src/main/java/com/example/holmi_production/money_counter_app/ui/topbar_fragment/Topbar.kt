@@ -10,7 +10,7 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import kotlinx.android.synthetic.main.topbar.*
+import kotlinx.android.synthetic.main.fragment_topbar.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
 
@@ -21,7 +21,7 @@ class Topbar : AndroidXMvpAppCompatFragment(), TopbarView, ITopbarDatePickerCall
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.topbar, container, false)
+        return inflater.inflate(R.layout.fragment_topbar, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

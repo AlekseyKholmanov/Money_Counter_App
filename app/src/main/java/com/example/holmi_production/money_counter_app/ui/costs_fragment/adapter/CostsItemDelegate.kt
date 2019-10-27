@@ -12,6 +12,7 @@ import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.CategoryType
+import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
@@ -47,21 +48,22 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         private val comment:AppCompatTextView = v.findViewById(R.id.cost_item_comment)
         private val view = v
 
-        fun bind(spendingWithCAtegory: SpendingWithCategory) {
-            val spending = spendingWithCAtegory.spending
-            val category = spendingWithCAtegory.category[0]
+        fun bind(spendingWithCategory: SpendingWithCategory) {
+            //TODO баг при первом вызове когда категорий нет
+            val spending = spendingWithCategory.spending
+            val category: Category? = if(spendingWithCategory.category.isNullOrEmpty()) null else spendingWithCategory.category[0]
             val color = if (spending.isSpending) Color.parseColor("#c62828") else  Color.parseColor("#2e7d32")
 
             val signText = if (spending.isSpending) "-" else "+"
-            view.setBackgroundColor(category.color ?: Color.TRANSPARENT)
+            view.setBackgroundColor(category?.color ?: Color.TRANSPARENT)
             view.background.alpha = 160
-            image.setImageResource(category.imageId ?: R.drawable.ic_launcher_foreground)
+            image.setImageResource(category?.imageId ?: R.drawable.ic_launcher_foreground)
             comment.text = spending.comment ?: ""
             sum.text = spending.sum.toCurencyFormat().withRubleSign()
             sum.setTextColor(color)
             sign.text = signText
             sign.setTextColor(color)
-            mCategory.text = category.description
+            mCategory.text = category?.description
         }
     }
 }

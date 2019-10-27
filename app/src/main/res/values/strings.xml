@@ -6,7 +6,8 @@
     <string name="arrow_up">\u02c4</string>
     <string name="arrow_down">\u02c5</string>
     <string name="text_settings">Настройки</string>
-    <string name="settings_btn_clear_data">clear data</string>
+    <string name="settings_btn_clear_spending">clear spending</string>
+    <string name="settings_btn_clear_category">clear category</string>
     <string name="settings_message_clear_success">Данные успешно удалены</string>
     <string name="month">месяц</string>
     <string name="day">день</string>
@@ -27,4 +28,5 @@
     <string name="text_spending">Расходы</string>
     <string name="text_accumulation">Накопления</string>
     <string name="text_save">Сохранить</string>
+    <string name="et_text_enter_subcategory_name">Введите название подкатегории</string>
 </resources>

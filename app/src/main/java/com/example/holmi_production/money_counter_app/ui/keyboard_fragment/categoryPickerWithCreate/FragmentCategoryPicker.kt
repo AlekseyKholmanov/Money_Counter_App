@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
+package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,10 +13,6 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.CategoryPickerAdapter
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.ICategoryPickerCallback
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.PresenterCategoryPicker
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.ViewCategoryPicker
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.DialogFragmentTabContainer
 import kotlinx.android.synthetic.main.fragment_category_picker_with_create.*
 import leakcanary.AppWatcher
@@ -24,6 +20,13 @@ import leakcanary.AppWatcher
 class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
     ViewCategoryPicker,
     ICategoryPickerCallback {
+    override fun showCreateDialog(it: Array<Category>) {
+        val bundle = Bundle()
+        bundle.putParcelableArray("categories",it)
+        val dialog = DialogFragmentTabContainer.newInstance(args = bundle)
+        dialog.show(childFragmentManager, "createCategoryDialog")
+    }
+
     override fun categoryPicked(categoryId: Int) {
         val bundle = bundleOf("categoryId" to categoryId)
         findNavController().navigate(R.id.action_categoryPickerWithCreateFragment_to_mainFragment, bundle)
@@ -44,8 +47,7 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
         rv_categoryList.adapter = adapter
 
         btn_add_category.setOnClickListener {
-            val dialog = DialogFragmentTabContainer.newInstance()
-            dialog.show(childFragmentManager, "createCategoryDialog")
+            presenter.getDialogData()
         }
         presenter.observeCategories()
     }

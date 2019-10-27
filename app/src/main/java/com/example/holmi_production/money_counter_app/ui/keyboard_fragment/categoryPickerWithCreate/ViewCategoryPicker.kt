@@ -6,4 +6,5 @@ import com.example.holmi_production.money_counter_app.model.entity.Category
 interface ViewCategoryPicker:MvpView {
     fun showCategories(categories: MutableList<Category>)
     fun showMessage(show:Boolean, messageResId:Int? = null)
+     fun showCreateDialog(it: Array<Category>)
 }

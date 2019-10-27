@@ -3,11 +3,13 @@ package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.cate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.ui.charts_fragments.ChartType
 
 class CreateCategoryAdapter(
     fm: FragmentManager,
     behavior: Int = BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
+    val categories: Array<Category>,
     val subcategoryCallback: ISubcategoryCreateCallback,
     val categoryCallback: ICategoryCreateCallback) :
     FragmentPagerAdapter(fm, behavior) {
@@ -19,7 +21,7 @@ class CreateCategoryAdapter(
                 instance
             }
             CategoryCreateDialogType.SUBCATEGORY -> {
-                val instance = FragmentCreateSubcategory.newInstance()
+                val instance = FragmentCreateSubcategory.newInstance(categories)
                 instance.setCallback(subcategoryCallback)
                 instance
             }

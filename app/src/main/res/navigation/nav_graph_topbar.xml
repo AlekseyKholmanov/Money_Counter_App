@@ -6,5 +6,5 @@
     <fragment android:id="@+id/topbarFragmnet3"
               android:name="com.example.holmi_production.money_counter_app.ui.topbar_fragment.Topbar"
               android:label="TopbarFragmnet"
-              tools:layout="@layout/topbar"/>
+              tools:layout="@layout/fragment_topbar"/>
 </navigation>

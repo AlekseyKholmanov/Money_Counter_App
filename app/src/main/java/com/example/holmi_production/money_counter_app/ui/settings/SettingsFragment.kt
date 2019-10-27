@@ -21,8 +21,11 @@ class SettingsFragment : AndroidXMvpAppCompatFragment(), SettingsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        settings_btn_clear_data.setOnClickListener {
+        btn_clear_spending.setOnClickListener {
             presenter.deleteData()
+        }
+        btn_clear_spending.setOnClickListener {
+            presenter.deleteCategory()
         }
     }
 

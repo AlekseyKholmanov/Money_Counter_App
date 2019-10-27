@@ -45,7 +45,7 @@
             android:label="SettingsFragment"
             tool:layout="@layout/frament_settings"/>
     <fragment android:id="@+id/categoryPickerWithCreateFragment"
-              android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.FragmentCategoryPicker"
+              android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker"
               android:label="CategoryPickerWithCreateFragment">
         <action android:id="@+id/action_categoryPickerWithCreateFragment_to_mainFragment"
                 app:destination="@id/mainFragment" app:launchSingleTop="true" app:popUpTo="@+id/nav_graph_bottom"/>

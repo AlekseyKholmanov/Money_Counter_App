@@ -25,6 +25,10 @@ class CategoryRepository @Inject constructor(
         return  Single.fromCallable{dao.getCategory(id)}
     }
 
+    fun getCategories():Single<List<Category>>{
+        return Single.fromCallable { dao.getCategories() }
+    }
+
     fun observePeriod(): Flowable<List<Category>> {
         return dao.observeCategories()
     }

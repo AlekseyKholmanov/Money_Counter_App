@@ -16,6 +16,7 @@ import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import leakcanary.AppWatcher
@@ -68,7 +69,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun onDestroyView() {
-        Log.d("qwerty", "keyboard destroy view")
+        Log.d("qwerty", "fragment_keyboard_part destroy view")
         left_days.setOnClickListener(null)
         super.onDestroyView()
     }
@@ -116,8 +117,8 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         presenter.recalculateAverageSum(date)
     }
 
-    override fun updateCategoryPickerButton(category: Category) {
-        keybaordPart.updateCategoryButton(color = category.color, imageId = category.imageId)
+    override fun updateCategoryPickerButton(category: Category?) {
+        keybaordPart.updateCategoryButton(category = category)
     }
 
     override fun showCategoryDialog() {

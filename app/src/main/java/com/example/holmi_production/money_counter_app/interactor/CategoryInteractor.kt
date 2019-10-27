@@ -38,7 +38,12 @@ class CategoryInteractor @Inject constructor(
             .async()
             .map { it.sortedByDescending { it.usageCount } }
             .map { it.toMutableList() }
+    }
 
+    fun getCategories():Single<Array<Category>>{
+        return categoryRepository.getCategories().map {
+            it.toTypedArray()
+        }
     }
 
     fun getCategory(id: Int): Single<Category> {
@@ -52,5 +57,9 @@ class CategoryInteractor @Inject constructor(
                 insert(it).async().subscribe()
             }, {})
 
+    }
+
+    fun deleteAll(): Completable {
+        return categoryRepository.clear()
     }
 }
