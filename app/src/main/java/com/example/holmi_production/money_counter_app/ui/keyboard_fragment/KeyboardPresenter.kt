@@ -116,6 +116,7 @@ class KeyboardPresenter @Inject constructor(
     fun getCategoryButtonValue() {
         val type = settingRepository.getCategoryValue()
         categoryInteractor.getCategory(type)
+            .async()
             .subscribe ({ it ->
                 viewState.updateCategoryPickerButton(it)
             },{

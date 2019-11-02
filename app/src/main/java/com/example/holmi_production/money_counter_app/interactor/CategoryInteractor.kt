@@ -47,7 +47,7 @@ class CategoryInteractor @Inject constructor(
     }
 
     fun getCategory(id: Int): Single<Category> {
-        return categoryRepository.getCategory(id).async()
+        return categoryRepository.getCategory(id)
     }
 
     fun updateUsageCount(categoryId: Int): Disposable {

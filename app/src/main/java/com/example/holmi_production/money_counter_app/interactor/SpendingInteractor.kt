@@ -5,13 +5,13 @@ import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
+import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.storage.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.Flowables
-import io.reactivex.rxkotlin.Singles
 import org.joda.time.DateTime
 import javax.inject.Inject
 
@@ -32,16 +32,11 @@ class SpendingInteractor @Inject constructor(
             }
     }
 
-    fun getAll(): Single<List<Spending>> {
-        return spendingRepository.getAll()
-            .async()
-    }
-
     fun observePeiodWithType():Flowable<List<SpendingWithCategory>>{
-        return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpendingWithCategory()).async()
+        return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpendingWithCategory())
             .map { (period, list) ->
-                Log.d("M_SpendingInteractor", "listcount ${list.count()}")
-                Log.d("M_SpendingInteractor", "left border ${period.leftBorder}  right border ${period.rightBorder}")
+                Log.d("M_SpendingInteractor", "listcount with type  ${list.count()}")
+                Log.d("M_SpendingInteractor", "left border with type  ${period.leftBorder}  right border ${period.rightBorder}")
                 if (period.leftBorder == period.rightBorder) {
                     list.filter { it.spending.createdDate == period.leftBorder }
                 } else {
@@ -50,12 +45,19 @@ class SpendingInteractor @Inject constructor(
             }
     }
 
-    fun getSpendingWithType(id:DateTime): Single<SpendingWithCategory> {
-        return spendingRepository.getSpendingWitCategory(id)
+    fun observeSpendingWithType(): Flowable<MutableList<SpendingListItem>> {
+        return Flowables.combineLatest(observePeriods(),categoryInteractor.observeCategories())
+            .map {(spendings, categories) ->
+                val muList = mutableListOf<SpendingListItem>()
+                for (s in spendings){
+                    muList.add(SpendingListItem(s, categories.first { it.id == s.categoryType }))
+                }
+                return@map muList
+            }
     }
 
     fun observePeriods(): Flowable<List<Spending>> {
-        return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpending()).async()
+        return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpending())
             .map { (period, list) ->
                 Log.d("M_SpendingInteractor", "listcount ${list.count()}")
                 Log.d("M_SpendingInteractor", "left border ${period.leftBorder}  right border ${period.rightBorder}")
@@ -64,14 +66,6 @@ class SpendingInteractor @Inject constructor(
                 } else {
                     list.filter { it.createdDate >= period.leftBorder && it.createdDate <= period.rightBorder }
                 }
-            }
-    }
-
-    fun getAllInPeriod(): Single<List<Spending>> {
-        return Singles.zip(periodsRepository.getPeriod(), spendingRepository.getAll())
-            .async()
-            .map { (period, list) ->
-                list.filter { it.createdDate >= period.leftBorder && it.createdDate <= period.rightBorder }
             }
     }
 

@@ -7,5 +7,4 @@ interface CostsView :MvpView{
     fun onError(error:Throwable)
     fun showSpending(spending: List<ListItem>)
     fun showSumByDirection(spending:Double, income:Double)
-    fun updateList()
 }

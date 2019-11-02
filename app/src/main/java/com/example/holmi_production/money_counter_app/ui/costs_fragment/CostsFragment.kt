@@ -18,13 +18,13 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.ui.costs_fragment.adapter.CostsAdapter
 import com.example.holmi_production.money_counter_app.model.ListItem
-import com.example.holmi_production.money_counter_app.model.entity.Spending
-import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
+import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_bottom_costs.*
 import leakcanary.AppWatcher
 
 class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_bottom_costs, container, false)
     }
@@ -32,19 +32,19 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = CostsAdapter()
+        presenter.observeSpengings()
         spendingList.layoutManager = LinearLayoutManager(requireContext())
 
         spendingList.adapter = adapter
         val swipeHandle = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val item = adapter.items[viewHolder.adapterPosition]
-                if (item is SpendingWithCategory) {
+                if (item is SpendingListItem) {
                     adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                    presenter.delete(item)
+                    presenter.delete(item.spending)
                 }
             }
         }
-        presenter.setObservers()
         val itemTouchHelper = ItemTouchHelper(swipeHandle)
         itemTouchHelper.attachToRecyclerView(spendingList)
     }
@@ -75,18 +75,16 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
     }
 
     override fun onError(error: Throwable) {
-        if (adapter.itemCount == 0)
-            showEmptyPlaceholder()
+        showEmptyPlaceholder(show = true)
     }
 
     override fun showSpending(spending: List<ListItem>) {
         adapter.items = spending
+        adapter.notifyDataSetChanged()
         if (spending.isEmpty())
-            showEmptyPlaceholder()
+            showEmptyPlaceholder(show = true)
         else {
-            emptyPlaceholder_costs.isVisible = false
-            spendingList.isVisible = true
-            adapter.notifyDataSetChanged()
+            showEmptyPlaceholder(show = false)
         }
     }
 
@@ -105,19 +103,15 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
 
     }
 
-    override fun updateList() {
-        adapter.notifyDataSetChanged()
-    }
-
-    private fun showEmptyPlaceholder() {
-        emptyPlaceholder_costs.isVisible = true
-        spendingList.isVisible = false
+    private fun showEmptyPlaceholder(show: Boolean) {
+        emptyPlaceholder_costs.isVisible = show
+        spendingList.isVisible = !show
     }
 
     override fun onDestroy() {
         super.onDestroy()
         AppWatcher.objectWatcher.watch(this)
-        Log.d("M_CostsFragment","destroy")
+        Log.d("M_CostsFragment", "destroy")
     }
 
     @ProvidePresenter
