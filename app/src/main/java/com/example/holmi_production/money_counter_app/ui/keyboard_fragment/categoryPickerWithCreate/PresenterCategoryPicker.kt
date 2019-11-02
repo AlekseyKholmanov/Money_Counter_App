@@ -12,7 +12,8 @@ import javax.inject.Inject
 class PresenterCategoryPicker @Inject constructor(private val interactor: CategoryInteractor) :
     BasePresenter<ViewCategoryPicker>() {
     fun observeCategories() {
-        interactor.observeCategories()
+        interactor.observeCategoriesAndSubCategories()
+            .async()
             .subscribe ({
                 if(it.size==0)
                     viewState.showMessage(true, R.string.information_empty_list)
@@ -21,6 +22,7 @@ class PresenterCategoryPicker @Inject constructor(private val interactor: Catego
                     viewState.showCategories(it)
                 }
             },{
+                Log.d("M_PresenterCategPicker","${it.message}")
                 viewState.showMessage(true, R.string.error_list)
             }).keep()
     }

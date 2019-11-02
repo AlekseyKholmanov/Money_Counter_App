@@ -12,6 +12,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.entity.Category
+import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.DialogFragmentTabContainer
 import kotlinx.android.synthetic.main.fragment_category_picker_with_create.*
@@ -38,10 +39,7 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter =
-            CategoryPickerAdapter(
-                mutableListOf(), this
-            )
+        adapter = CategoryPickerAdapter( callback = this)
         val layoutManager = GridLayoutManager(context, 3)
         rv_categoryList.layoutManager = layoutManager
         rv_categoryList.adapter = adapter
@@ -57,8 +55,9 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
         AppWatcher.objectWatcher.watch(this)
     }
 
-    override fun showCategories(categories: MutableList<Category>) {
+    override fun showCategories(categories: ArrayList<Pair<Category, List<SubCategory>>>) {
         adapter.setCategory(categories)
+        adapter.notifyDataSetChanged()
     }
 
     override fun showMessage(show: Boolean, messageResId: Int?) {

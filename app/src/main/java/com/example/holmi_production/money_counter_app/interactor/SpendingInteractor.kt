@@ -118,4 +118,5 @@ class SpendingInteractor @Inject constructor(
     fun deleteAll(): Completable {
         return spendingRepository.deleteAll().async()
     }
+
 }

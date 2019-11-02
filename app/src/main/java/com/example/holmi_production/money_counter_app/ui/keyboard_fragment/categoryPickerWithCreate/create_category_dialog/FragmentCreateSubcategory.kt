@@ -75,12 +75,12 @@ class FragmentCreateSubcategory : AndroidXMvpAppCompatFragment() {
         }
         btn_create_subcategory.setOnClickListener {
             val pickedCategory = spinner_parentCategory.selectedItem as Category
-            callback!!.subcategoryCreated(et_subcategory_name.text.toString(),pickedCategory)
+            callback!!.subcategoryCreated(et_subcategory_name.text.toString(),pickedCategory.id)
         }
     }
 
 }
 
 interface ISubcategoryCreateCallback {
-    fun subcategoryCreated(categoryName:String, parentCategory:Category)
+    fun subcategoryCreated(categoryName:String, parentId:Int)
 }

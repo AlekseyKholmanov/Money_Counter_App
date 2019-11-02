@@ -15,6 +15,7 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
+import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker
 import com.google.android.material.snackbar.Snackbar
@@ -24,8 +25,6 @@ import org.joda.time.DateTime
 
 class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     IKeyboardListener, IDatePickerCallback {
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_bottom_keyboard, container, false)
     }
@@ -99,6 +98,10 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         val message = "новая сумма: ${sum.toCurencyFormat()} на ${days.getDayAddition()}"
         Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
             .show()
+    }
+
+    override fun showSubcategoryMenu(subcategories: List<SubCategory>) {
+        keybaordPart.showChipsContainer(subcategories)
     }
 
     override fun showSnack(spending: SpendingWithCategory) {

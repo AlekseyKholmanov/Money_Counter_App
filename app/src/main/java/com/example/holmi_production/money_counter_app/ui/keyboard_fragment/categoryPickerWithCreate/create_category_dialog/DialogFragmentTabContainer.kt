@@ -49,8 +49,8 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcat
             )
     }
 
-    override fun subcategoryCreated(categoryName: String, parentCategory: Category) {
-        Toast.makeText(context,"$categoryName parent:${parentCategory.description}", Toast.LENGTH_SHORT).show()
+    override fun subcategoryCreated(categoryName: String, parentId: Int) {
+        presenter.createSubCategory(categoryName,parentId)
         dismiss()
     }
 

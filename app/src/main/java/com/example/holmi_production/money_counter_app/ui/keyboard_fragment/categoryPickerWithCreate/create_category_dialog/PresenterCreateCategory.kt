@@ -5,6 +5,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import javax.inject.Inject
 
@@ -23,7 +24,13 @@ class PresenterCreateCategory @Inject constructor(private val interactor: Catego
             .keep()
     }
 
-    fun createSubCategory(){
-        viewState.dismissDialog()
+    fun createSubCategory(name:String, parentId:Int){
+        val subCategory = SubCategory(parentId = parentId, description = name)
+        interactor.insert(subCategory)
+            .async()
+            .subscribe{
+                viewState.dismissDialog()
+            }
+            .keep()
     }
 }

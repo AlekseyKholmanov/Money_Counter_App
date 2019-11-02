@@ -13,6 +13,7 @@ import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.model.SquareImageView
 import com.example.holmi_production.money_counter_app.model.entity.Category
+import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_keyboard_part.*
 import javax.inject.Inject
@@ -79,8 +80,8 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         }
     }
 
-    fun showChipsContainer(show: Boolean) {
-        container_chips.visibility = if (show) View.VISIBLE else View.GONE
+    fun showChipsContainer(subcategories: List<SubCategory>) {
+        container_chips.visibility = if (subcategories.isNullOrEmpty()) View.GONE else View.VISIBLE
     }
 
     private fun pressed(type: ButtonTypes, value: String? = null) {

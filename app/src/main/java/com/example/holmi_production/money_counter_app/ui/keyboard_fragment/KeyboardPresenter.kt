@@ -115,10 +115,11 @@ class KeyboardPresenter @Inject constructor(
 
     fun getCategoryButtonValue() {
         val type = settingRepository.getCategoryValue()
-        categoryInteractor.getCategory(type)
+        categoryInteractor.getCategoryWithSub(type)
             .async()
-            .subscribe ({ it ->
-                viewState.updateCategoryPickerButton(it)
+            .subscribe ({ pair ->
+                viewState.updateCategoryPickerButton(pair.first)
+                viewState.showSubcategoryMenu(pair.second)
             },{
                 Log.d("M_KeyboardPresenter",it.message)
                 viewState.updateCategoryPickerButton(null)
@@ -129,10 +130,11 @@ class KeyboardPresenter @Inject constructor(
     fun setCategoryButonType(id: Int) {
         Log.d("M_KeyboardPresenter", "set type $id")
         settingRepository.setCategoryButtonType(id)
-        categoryInteractor.getCategory(id)
+        categoryInteractor.getCategoryWithSub(id)
             .async()
             .subscribe({
-                viewState.updateCategoryPickerButton(it)
+                viewState.updateCategoryPickerButton(it.first)
+                viewState.showSubcategoryMenu(it.second)
             }, {}).keep()
 
     }

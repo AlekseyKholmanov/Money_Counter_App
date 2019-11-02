@@ -9,8 +9,8 @@ interface SubcategoryDao  {
     @Query("SELECT * FROM SubCategory")
     fun observeCategories(): Flowable<List<SubCategory>>
 
-    @Query("SELECT * FROM SubCategory WHERE parentId=:parentId")
-    fun getCategories(parentId:Int):List<SubCategory>
+    @Query("SELECT * FROM SubCategory")
+    fun getCategories():List<SubCategory>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(category: SubCategory)

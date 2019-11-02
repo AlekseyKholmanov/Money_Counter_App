@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class SubCategoryRepository @Inject constructor(
     val database: ExpenseDatabase
-){
+) {
 
     private val dao = database.subCategoryDao
 
@@ -17,11 +17,22 @@ class SubCategoryRepository @Inject constructor(
         return Completable.fromCallable { dao.insert(category) }
     }
 
-    fun getSubcategoriesWithParentId(parentId:Int): Single<List<SubCategory>> {
-        return Single.fromCallable { dao.getCategories(parentId)}
+    fun getSubCategories(): Single<List<SubCategory>> {
+        return Single.fromCallable { dao.getCategories() }
     }
 
-    fun clear():Completable{
-        return  Completable.fromCallable{dao.deleteAll()}
+    fun observeSubCategories(): Flowable<List<SubCategory>> {
+        return dao.observeCategories()
+    }
+
+    fun getSubcategoriesWithParentId(parentId: Int): Single<List<SubCategory>> {
+        return Single.fromCallable {
+            dao.getCategories()
+                .filter { sub -> sub.parentId == parentId }
+        }
+    }
+
+    fun clear(): Completable {
+        return Completable.fromCallable { dao.deleteAll() }
     }
 }
