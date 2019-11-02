@@ -48,15 +48,15 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
             val directionColor = if (spending.isSpending) Color.parseColor("#c62828") else  Color.parseColor("#2e7d32")
 
             val signText = if (spending.isSpending) "-" else "+"
-            v.setBackgroundColor(item.category.color?: Color.TRANSPARENT)
+            v.setBackgroundColor(item.category?.color?: Color.TRANSPARENT)
             v.background.alpha = 160
-            image.setImageResource(item.category.imageId ?: R.drawable.ic_launcher_foreground)
+            image.setImageResource(item.category?.imageId ?: R.drawable.ic_launcher_foreground)
             comment.text = spending.comment ?: ""
             sum.text = spending.sum.toCurencyFormat().withRubleSign()
             sum.setTextColor(directionColor)
             sign.text = signText
             sign.setTextColor(directionColor)
-            categoryText.text = item.category.description
+            categoryText.text = item.category?.description ?: ""
         }
     }
 }

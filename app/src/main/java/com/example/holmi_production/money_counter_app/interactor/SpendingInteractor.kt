@@ -50,7 +50,7 @@ class SpendingInteractor @Inject constructor(
             .map {(spendings, categories) ->
                 val muList = mutableListOf<SpendingListItem>()
                 for (s in spendings){
-                    muList.add(SpendingListItem(s, categories.first { it.id == s.categoryType }))
+                    muList.add(SpendingListItem(s, categories.firstOrNull { it.id == s.categoryType }))
                 }
                 return@map muList
             }

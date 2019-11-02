@@ -130,6 +130,7 @@ class KeyboardPresenter @Inject constructor(
         Log.d("M_KeyboardPresenter", "set type $id")
         settingRepository.setCategoryButtonType(id)
         categoryInteractor.getCategory(id)
+            .async()
             .subscribe({
                 viewState.updateCategoryPickerButton(it)
             }, {}).keep()

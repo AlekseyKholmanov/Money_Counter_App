@@ -12,4 +12,4 @@ class SpendingWithCategory:ListItem {
     lateinit var category: List<Category>
 }
 
-class SpendingListItem(val spending: Spending, val category: Category):ListItem
+class SpendingListItem(val spending: Spending, val category: Category?):ListItem
