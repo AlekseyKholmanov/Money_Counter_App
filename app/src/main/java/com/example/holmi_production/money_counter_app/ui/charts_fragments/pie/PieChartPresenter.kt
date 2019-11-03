@@ -17,10 +17,10 @@ class PieChartPresenter @Inject constructor(
 
     fun observeData() {
         spendingInteractor.observePeiodWithType()
-            .async()
             .map {
                 filterList((it))
             }
+            .async()
             .subscribe({
                 viewState.showPie(it)
                 viewState.showChips(it)

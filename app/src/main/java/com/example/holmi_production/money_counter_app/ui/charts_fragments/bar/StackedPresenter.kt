@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.ui.charts_fragments.bar
 
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
+import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
@@ -15,6 +16,7 @@ class StackedPresenter @Inject constructor(private val spendingInteractor: Spend
     fun observeDatas() {
         spendingInteractor.observePeriods()
             .map { prepareDatas(it) }
+            .async()
             .subscribe({ list ->
                 viewState.showFraph(list)
             }, {
