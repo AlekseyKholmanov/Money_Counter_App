@@ -4,9 +4,11 @@ import android.util.Log
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.model.entity.Spending
-import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
-import com.example.holmi_production.money_counter_app.storage.*
+import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
+import com.example.holmi_production.money_counter_app.storage.SettingRepository
+import com.example.holmi_production.money_counter_app.storage.SpendingRepository
+import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -22,6 +24,15 @@ class SpendingInteractor @Inject constructor(
     private val periodsRepository: PeriodsRepository,
     private val categoryInteractor: CategoryInteractor) {
 
+    fun insert(spending: Spending): Completable {
+        return spendingRepository.insert(spending)
+            .doOnComplete {
+                categoryInteractor.getCategory(spending.categoryId).doOnSuccess {
+                    categoryInteractor.insert(it.copy(usageCount = it.usageCount.plus(1))).subscribe()
+                }.subscribe()
+            }
+    }
+
     fun getIncomesAndSpendings(): Single<Pair<List<Spending>, List<Spending>>> {
         return spendingRepository.getAll()
             .async()
@@ -33,18 +44,21 @@ class SpendingInteractor @Inject constructor(
     }
 
     fun observeSpendingWithType(): Flowable<MutableList<SpendingListItem>> {
-        return Flowables.combineLatest(observePeriods(),categoryInteractor.observeCategories(), categoryInteractor.observeSubcategories())
-            .map {(spendings, categories, subcategories) ->
+        return Flowables.combineLatest(
+            observePeriods(),
+            categoryInteractor.observeCategories(),
+            categoryInteractor.observeSubcategories()
+        )
+            .map { (spendings, categories, subcategories) ->
                 val muList = mutableListOf<SpendingListItem>()
-                for (s in spendings){
+                for (s in spendings) {
                     val categoryId = categories.firstOrNull { it.id == s.categoryId }
-                    val subcat =  subcategories.firstOrNull{it.id == s.subcategoryId}
+                    val subcat = subcategories.firstOrNull { it.id == s.subcategoryId }
                     muList.add(SpendingListItem(s, categoryId, subcat))
                 }
                 return@map muList
             }
     }
-
 
     fun observePeriods(): Flowable<List<Spending>> {
         return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpending())

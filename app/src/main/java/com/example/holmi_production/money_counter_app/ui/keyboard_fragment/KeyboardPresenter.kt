@@ -17,11 +17,11 @@ import javax.inject.Inject
 
 @InjectViewState
 class KeyboardPresenter @Inject constructor(
-    private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,
     private val spendingInteractor: SpendingInteractor,
-    private val categoryInteractor: CategoryInteractor) :
+    private val categoryInteractor: CategoryInteractor,
+    private val spendingRepository: SpendingRepository) :
     BasePresenter<KeyboardFragmnetView>() {
 
     fun undoAdding(spending: Spending) {
@@ -40,15 +40,7 @@ class KeyboardPresenter @Inject constructor(
             isSpending,
             comment
         )
-        spendingRepository.insert(spending)
-            .doOnComplete {
-            spendingRepository.getSpendingWitCategory(spending.createdDate)
-                .async()
-                .subscribe({
-                    viewState.showSnack(it)
-                }, {})
-                .keep()
-        }
+        spendingInteractor.insert(spending)
             .complete()
             .keep()
 

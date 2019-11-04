@@ -36,5 +36,6 @@ class PieChartPresenter @Inject constructor(
             .filter { it.spending.isSpending }
             .groupBy { it.category}
             .map { Pair(it.key, it.value.map { it.spending }) }
+            .sortedByDescending { it.second.sumByDouble { it.sum } }
     }
 }

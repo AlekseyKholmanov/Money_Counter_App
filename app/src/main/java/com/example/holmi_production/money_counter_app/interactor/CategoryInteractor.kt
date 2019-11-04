@@ -55,7 +55,8 @@ class CategoryInteractor @Inject constructor(
         return Flowables.combineLatest(categoryRepository.observePeriod(), subCategoryRepository.observeSubCategories())
             .map { (categories, subCategories) ->
                 val zipList = arrayListOf<Pair<Category, List<SubCategory>>>()
-                categories.forEach { category ->
+                val sortedlist = categories.sortedByDescending { it.usageCount }
+                sortedlist.forEach { category ->
                     zipList.add(Pair(category, subCategories.filter { it.parentId == category.id }))
                 }
                 return@map zipList
