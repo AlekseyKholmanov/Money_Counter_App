@@ -187,8 +187,13 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
                 mKeyboardListener!!.enterPressed(purshaseSum.toDouble(), text, isSpending , tag)
                 purshaseSum = "0"
                 clearCommentField()
+                uncheckingChips()
             }
         }
+    }
+
+    private fun uncheckingChips() {
+        cg_subcategory_group.clearCheck()
     }
 
     private fun clearCommentField() {
