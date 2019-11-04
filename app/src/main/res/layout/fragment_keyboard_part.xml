@@ -48,16 +48,20 @@
                 android:id="@+id/cg_subcategory_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:chipSpacing="8dp"
-                app:singleSelection="true" />
+                android:padding="8dp"
+                app:singleSelection="true"
+                app:chipSpacingVertical="8dp"/>
     </HorizontalScrollView>
+    <View android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/design_default_color_primary_dark"/>
     <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/comment"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             tool:text="комментарий"
             android:textSize="26sp"
-            android:textColor="@color/design_default_color_secondary"
+            android:textColor="@color/design_default_color_primary_dark"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:gravity="end|center_vertical"

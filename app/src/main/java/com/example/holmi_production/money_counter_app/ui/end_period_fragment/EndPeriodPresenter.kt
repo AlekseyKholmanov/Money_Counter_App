@@ -20,7 +20,7 @@ class EndPeriodPresenter @Inject constructor(
         val startDate = settingRepository.getStartDate().toDateTime()
         val endDate = settingRepository.getEndPeriod().toDateTime()
         val periodDays = settingRepository.getTillEnd()
-        spendingInteractor.getAllSeparated()
+        spendingInteractor.getIncomesAndSpendings()
             .subscribe({ it ->
                 val income = it.first
                 val spending = it.second

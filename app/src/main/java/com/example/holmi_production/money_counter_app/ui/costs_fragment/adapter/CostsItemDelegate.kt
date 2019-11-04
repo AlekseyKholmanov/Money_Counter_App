@@ -37,26 +37,30 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
 
     class ViewHolder internal constructor(private val v: View) : RecyclerView.ViewHolder(v) {
 
-        private val categoryText: AppCompatTextView = v.findViewById(R.id.tv_cost_item_category)
-        private val image:ImageView = v.findViewById(R.id.cost_item_image)
-        private val sum: AppCompatTextView = v.findViewById(R.id.cost_item_sum)
-        private val sign: AppCompatTextView = v.findViewById(R.id.cost_item_sign)
-        private val comment:AppCompatTextView = v.findViewById(R.id.tv_cost_item_comment)
+        private val mCategoryText: AppCompatTextView = v.findViewById(R.id.tv_cost_item_category)
+        private val mImage: ImageView = v.findViewById(R.id.cost_item_image)
+        private val mSum: AppCompatTextView = v.findViewById(R.id.cost_item_sum)
+        private val mSign: AppCompatTextView = v.findViewById(R.id.cost_item_sign)
+        private val mComment: AppCompatTextView = v.findViewById(R.id.tv_cost_item_comment)
 
         fun bind(item: SpendingListItem) {
             val spending = item.spending
-            val directionColor = if (spending.isSpending) Color.parseColor("#c62828") else  Color.parseColor("#2e7d32")
-
+            val subcategory = item.subCategory
+            val category = item.category
             val signText = if (spending.isSpending) "-" else "+"
-            v.setBackgroundColor(item.category?.color?: Color.TRANSPARENT)
+            val directionColor = if (spending.isSpending) Color.parseColor("#c62828") else Color.parseColor("#2e7d32")
+            val subcategoryText = if (subcategory == null) "" else " \u2799 ${subcategory.description}"
+            val categoryText = category?.description ?: ""
+
+            v.setBackgroundColor(category?.color ?: Color.TRANSPARENT)
             v.background.alpha = 160
-            image.setImageResource(item.category?.imageId ?: R.drawable.ic_launcher_foreground)
-            comment.text = spending.comment ?: ""
-            sum.text = spending.sum.toCurencyFormat().withRubleSign()
-            sum.setTextColor(directionColor)
-            sign.text = signText
-            sign.setTextColor(directionColor)
-            categoryText.text = item.category?.description ?: ""
+            mImage.setImageResource(category?.imageId ?: R.drawable.ic_launcher_foreground)
+            mSum.text = spending.sum.toCurencyFormat().withRubleSign()
+            mSum.setTextColor(directionColor)
+            mSign.text = signText
+            mSign.setTextColor(directionColor)
+            mCategoryText.text = categoryText + subcategoryText
+            mComment.text = spending.comment ?: ""
         }
     }
 }

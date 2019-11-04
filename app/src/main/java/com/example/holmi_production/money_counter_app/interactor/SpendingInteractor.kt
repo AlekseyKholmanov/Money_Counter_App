@@ -22,7 +22,7 @@ class SpendingInteractor @Inject constructor(
     private val periodsRepository: PeriodsRepository,
     private val categoryInteractor: CategoryInteractor) {
 
-    fun getAllSeparated(): Single<Pair<List<Spending>, List<Spending>>> {
+    fun getIncomesAndSpendings(): Single<Pair<List<Spending>, List<Spending>>> {
         return spendingRepository.getAll()
             .async()
             .map { list ->
@@ -32,29 +32,19 @@ class SpendingInteractor @Inject constructor(
             }
     }
 
-    fun observePeiodWithType():Flowable<List<SpendingWithCategory>>{
-        return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpendingWithCategory())
-            .map { (period, list) ->
-                Log.d("M_SpendingInteractor", "listcount with type  ${list.count()}")
-                Log.d("M_SpendingInteractor", "left border with type  ${period.leftBorder}  right border ${period.rightBorder}")
-                if (period.leftBorder == period.rightBorder) {
-                    list.filter { it.spending.createdDate == period.leftBorder }
-                } else {
-                    list.filter { it.spending.createdDate >= period.leftBorder && it.spending.createdDate <= period.rightBorder }
-                }
-            }
-    }
-
     fun observeSpendingWithType(): Flowable<MutableList<SpendingListItem>> {
-        return Flowables.combineLatest(observePeriods(),categoryInteractor.observeCategories())
-            .map {(spendings, categories) ->
+        return Flowables.combineLatest(observePeriods(),categoryInteractor.observeCategories(), categoryInteractor.observeSubcategories())
+            .map {(spendings, categories, subcategories) ->
                 val muList = mutableListOf<SpendingListItem>()
                 for (s in spendings){
-                    muList.add(SpendingListItem(s, categories.firstOrNull { it.id == s.categoryType }))
+                    val categoryId = categories.firstOrNull { it.id == s.categoryId }
+                    val subcat =  subcategories.firstOrNull{it.id == s.subcategoryId}
+                    muList.add(SpendingListItem(s, categoryId, subcat))
                 }
                 return@map muList
             }
     }
+
 
     fun observePeriods(): Flowable<List<Spending>> {
         return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpending())

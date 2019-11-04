@@ -12,8 +12,10 @@ data class Spending(
     val createdDate: DateTime,
 
     val sum: Double,
-    @ColumnInfo(name = "categoryType")
-    val categoryType: Int,
+    @ColumnInfo(name = "categoryId")
+    val categoryId: Int,
+
+    val subcategoryId:Int?,
 
     val isSpending: Boolean,
 

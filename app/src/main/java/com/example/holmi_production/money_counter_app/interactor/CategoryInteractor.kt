@@ -47,6 +47,10 @@ class CategoryInteractor @Inject constructor(
             .map { it.toMutableList() }
     }
 
+    fun observeSubcategories():Flowable<List<SubCategory>>{
+        return subCategoryRepository.observeSubCategories()
+    }
+
     fun observeCategoriesAndSubCategories(): Flowable<ArrayList<Pair<Category, List<SubCategory>>>> {
         return Flowables.combineLatest(categoryRepository.observePeriod(), subCategoryRepository.observeSubCategories())
             .map { (categories, subCategories) ->

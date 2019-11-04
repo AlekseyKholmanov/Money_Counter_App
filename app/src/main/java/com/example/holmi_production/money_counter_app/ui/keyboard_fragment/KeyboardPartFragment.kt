@@ -1,11 +1,15 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.get
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.Vibrator
@@ -15,6 +19,7 @@ import com.example.holmi_production.money_counter_app.model.SquareImageView
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_keyboard_part.*
 import javax.inject.Inject
 
@@ -47,15 +52,15 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         key_income.setOnClickListener { pressed(ButtonTypes.ENTER_DOWN) }
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
         comment.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                comment.clearFocus()
-                comment.hideKeyboard()
-                Log.d("qwerty", "ledt")
-            } else {
-                Log.d("qwerty", "has")
-            }
+//            if (!hasFocus) {
+//                comment.hideKeyboard()
+//                Log.d("qwerty", "ledt")
+//            } else {
+//                Log.d("qwerty", "has")
+//            }
         }
         purshace_sum_textview.text = purshaseSum
+        cg_subcategory_group.clearCheck()
         App.component.inject(this)
     }
 
@@ -80,8 +85,35 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         }
     }
 
-    fun showChipsContainer(subcategories: List<SubCategory>) {
-        container_chips.visibility = if (subcategories.isNullOrEmpty()) View.GONE else View.VISIBLE
+    fun showChipsContainer(subcategories: List<SubCategory>, color:Int) {
+        if(subcategories.isNullOrEmpty()){
+            container_chips.visibility = View.GONE
+        }
+        else{
+            container_chips.visibility = View.VISIBLE
+            for(i in 0 until subcategories.size){
+                val alpha = 255 - (i+1)*35
+                cg_subcategory_group.addView(buildChip(subcategories[i], color, alpha) as View)
+            }
+            cg_subcategory_group.setOnCheckedChangeListener { group, checkedId ->
+                val checkedChips = cg_subcategory_group.findViewById<Chip?>(checkedId)
+
+                Toast.makeText(context,"${checkedChips?.text} ${checkedChips?.tag}",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
+    private fun buildChip(subcategory:SubCategory, color: Int, alpha:Int): Chip {
+        val chip = Chip(context)
+        chip.isCheckable = true
+        chip.isClickable = true
+        chip.text = subcategory.description
+        chip.background.alpha = alpha
+        chip.chipBackgroundColor = ColorStateList.valueOf(color)
+        chip.textSize = 20f
+        chip.tag = subcategory.id
+        return chip
     }
 
     private fun pressed(type: ButtonTypes, value: String? = null) {
@@ -145,7 +177,14 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
             "0" -> return
             else -> {
                 val text = comment.text.toString()
-                mKeyboardListener!!.enterPressed(purshaseSum.toDouble(), text, isSpending)
+                val checkedId = cg_subcategory_group.checkedChipId
+                var tag:Int? = null
+                if(checkedId != View.NO_ID){
+                    val chips = cg_subcategory_group.findViewById<Chip>(checkedId)
+                    tag = chips.tag as Int
+                }
+
+                mKeyboardListener!!.enterPressed(purshaseSum.toDouble(), text, isSpending , tag)
                 purshaseSum = "0"
                 clearCommentField()
             }
@@ -163,7 +202,7 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
 }
 
 interface IKeyboardListener {
-    fun enterPressed(money: Double, comment: String, isSpending: Boolean)
+    fun enterPressed(money: Double, comment: String, isSpending: Boolean , subcategoryId:Int?)
     fun moneyUpdated(money: Double)
     fun showCategoryDialog()
 }

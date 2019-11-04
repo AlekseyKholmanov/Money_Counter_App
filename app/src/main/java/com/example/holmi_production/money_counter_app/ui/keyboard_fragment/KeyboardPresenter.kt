@@ -1,11 +1,11 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
+import android.graphics.Color
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.*
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
@@ -30,16 +30,18 @@ class KeyboardPresenter @Inject constructor(
             .keep()
     }
 
-    fun saveSpend(sum: Double, comment: String, isSpending: Boolean) {
-        val categoryType = settingRepository.getCategoryValue()
+    fun saveSpend(sum: Double, comment: String, isSpending: Boolean, subCategoryId:Int?) {
+        val categoryId = settingRepository.getCategoryValue()
         val spending = Spending(
             DateTime(),
             sum,
-            categoryType,
+            categoryId,
+            subCategoryId,
             isSpending,
             comment
         )
-        spendingRepository.insert(spending).doAfterTerminate {
+        spendingRepository.insert(spending)
+            .doOnComplete {
             spendingRepository.getSpendingWitCategory(spending.createdDate)
                 .async()
                 .subscribe({
@@ -73,7 +75,7 @@ class KeyboardPresenter @Inject constructor(
                     sumPerDayRepository.insertToday(0.0).complete().keep()
                 }
                 categoryInteractor
-                    .updateUsageCount(categoryType)
+                    .updateUsageCount(categoryId)
                     .keep()
             }, { Log.d("qwerty", it.message) })
             .keep()
@@ -119,7 +121,7 @@ class KeyboardPresenter @Inject constructor(
             .async()
             .subscribe ({ pair ->
                 viewState.updateCategoryPickerButton(pair.first)
-                viewState.showSubcategoryMenu(pair.second)
+                viewState.showSubcategoryMenu(pair.second, pair.first.color ?: Color.BLACK)
             },{
                 Log.d("M_KeyboardPresenter",it.message)
                 viewState.updateCategoryPickerButton(null)
@@ -134,7 +136,7 @@ class KeyboardPresenter @Inject constructor(
             .async()
             .subscribe({
                 viewState.updateCategoryPickerButton(it.first)
-                viewState.showSubcategoryMenu(it.second)
+                viewState.showSubcategoryMenu(it.second, it.first.color ?: Color.BLACK)
             }, {}).keep()
 
     }

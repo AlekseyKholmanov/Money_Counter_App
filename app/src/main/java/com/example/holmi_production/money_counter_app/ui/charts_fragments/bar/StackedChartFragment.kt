@@ -94,7 +94,7 @@ class StackedChartFragment : AndroidXMvpAppCompatFragment(),
             val dataSets = ArrayList<IBarDataSet>()
             val labels = ArrayList<String>()
             for (i in 0 until list.count()) {
-                val groupedSpending = list.getValue(keys[i]).groupBy { CategoryType.values()[it.categoryType] }
+                val groupedSpending = list.getValue(keys[i]).groupBy { CategoryType.values()[it.categoryId] }
                 val sums = ArrayList<Pair<Float, CategoryType>>()
                 groupedSpending.forEach { (type, spendings) ->
                     sums.add(Pair(spendings.sumByDouble { it.sum }.toFloat(), type))

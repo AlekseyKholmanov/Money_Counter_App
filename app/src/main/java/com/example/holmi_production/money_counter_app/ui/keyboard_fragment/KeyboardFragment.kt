@@ -18,6 +18,7 @@ import com.example.holmi_production.money_counter_app.model.entity.SpendingWithC
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.FragmentCreateSubcategory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import leakcanary.AppWatcher
@@ -100,8 +101,8 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
             .show()
     }
 
-    override fun showSubcategoryMenu(subcategories: List<SubCategory>) {
-        keybaordPart.showChipsContainer(subcategories)
+    override fun showSubcategoryMenu(subcategories: List<SubCategory>, color:Int) {
+        keybaordPart.showChipsContainer(subcategories, color)
     }
 
     override fun showSnack(spending: SpendingWithCategory) {
@@ -136,9 +137,9 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         new_sum_per_day.text = sum
     }
 
-    override fun enterPressed(money: Double, comment: String, isSpending: Boolean) {
+    override fun enterPressed(money: Double, comment: String, isSpending: Boolean , subcategoryId:Int?) {
         Log.d("qwerty", money.toString())
-        presenter.saveSpend(money, comment, isSpending)
+        presenter.saveSpend(money, comment, isSpending, subcategoryId)
     }
 
     override fun moneyUpdated(money: Double) {

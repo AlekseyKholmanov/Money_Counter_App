@@ -8,8 +8,8 @@ class SpendingWithCategory:ListItem {
     @Embedded
     lateinit var spending: Spending
 
-    @Relation(parentColumn = "categoryType", entity = Category::class, entityColumn = "id")
+    @Relation(parentColumn = "categoryId", entity = Category::class, entityColumn = "id")
     lateinit var category: List<Category>
 }
 
-class SpendingListItem(val spending: Spending, val category: Category?):ListItem
+class SpendingListItem(val spending: Spending, val category: Category?, val subCategory: SubCategory?):ListItem
