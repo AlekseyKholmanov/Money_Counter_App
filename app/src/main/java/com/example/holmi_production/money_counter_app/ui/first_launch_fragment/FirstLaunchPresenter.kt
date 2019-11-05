@@ -47,7 +47,7 @@ class FirstLaunchPresenter @Inject constructor(
             Spending(
                 DateTime(),
                 sum,
-                CategoryType.SALARY.id,
+                0,
                 null,
                 false,
                 ""

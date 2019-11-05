@@ -15,6 +15,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.Vibrator
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
+import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.SquareImageView
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
@@ -101,6 +102,12 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
                 Toast.makeText(context,"${checkedChips?.text} ${checkedChips?.tag}",Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun showActionButtons(directions:List<SpDirection>){
+        key_income.visibility = if(directions.contains(SpDirection.INCOME)) View.VISIBLE else View.GONE
+        key_spending.visibility = if(directions.contains(SpDirection.SPENDING)) View.VISIBLE else View.GONE
+        key_accumulation.visibility = if(directions.contains(SpDirection.ACCUMULATION)) View.VISIBLE else View.GONE
 
     }
 

@@ -13,12 +13,12 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
+import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.FragmentCreateSubcategory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import leakcanary.AppWatcher
@@ -99,6 +99,10 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         val message = "новая сумма: ${sum.toCurencyFormat()} на ${days.getDayAddition()}"
         Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
             .show()
+    }
+
+    override fun showActionButtons(directions: List<SpDirection>) {
+        keybaordPart.showActionButtons(directions)
     }
 
     override fun showSubcategoryMenu(subcategories: List<SubCategory>, color:Int) {

@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
 import com.arellomobile.mvp.MvpView
+import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
@@ -16,4 +17,5 @@ interface KeyboardFragmnetView:MvpView{
     fun showSnack(spending: SpendingWithCategory)
     fun updateCategoryPickerButton(category: Category?)
     fun showSubcategoryMenu(subcategories:List<SubCategory>, color:Int)
+    fun showActionButtons(directions:List<SpDirection>)
 }

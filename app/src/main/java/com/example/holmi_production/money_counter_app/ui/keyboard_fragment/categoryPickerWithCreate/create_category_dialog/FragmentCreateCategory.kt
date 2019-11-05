@@ -39,24 +39,12 @@ class CategoryCreateFragment: AndroidXMvpAppCompatFragment(){
         btn_create_category.setOnClickListener {
             val background = v_color_container.background
             val color:ColorDrawable? = background as? ColorDrawable
-            callback!!.categoryCreated(et_category_name.text.toString(), listOf(), color)
+            callback!!.categoryCreated(et_category_name.text.toString(), getDirections(), color)
         }
     }
 
     fun setCallback(callback: ICategoryCreateCallback) {
         this.callback = callback
-    }
-
-    private fun isCheckboxesChecked(): Boolean {
-        return (ch_income.isChecked or ch_accumulation.isChecked or ch_spending.isChecked) and et_category_name.text.isNotBlank()
-    }
-
-    private var callback: ICategoryCreateCallback? = null
-
-    companion object {
-        fun newInstance(): CategoryCreateFragment {
-            return CategoryCreateFragment()
-        }
     }
 
     override fun onDestroy() {
@@ -73,8 +61,31 @@ class CategoryCreateFragment: AndroidXMvpAppCompatFragment(){
         super.onStop()
         Log.d("M_FragmentCategory","stopped")
     }
+
+    private var callback: ICategoryCreateCallback? = null
+
+    private fun isCheckboxesChecked(): Boolean {
+        return (ch_income.isChecked or ch_accumulation.isChecked or ch_spending.isChecked) and et_category_name.text.isNotBlank()
+    }
+
+    private fun getDirections():Collection<SpDirection>{
+        val directions = mutableListOf<SpDirection>()
+        if(ch_income.isChecked)
+            directions.add(SpDirection.INCOME)
+        if(ch_accumulation.isChecked)
+            directions.add(SpDirection.ACCUMULATION)
+        if(ch_spending.isChecked)
+            directions.add(SpDirection.SPENDING)
+        return directions
+    }
+
+    companion object {
+        fun newInstance(): CategoryCreateFragment {
+            return CategoryCreateFragment()
+        }
+    }
 }
 
 interface ICategoryCreateCallback {
-    fun categoryCreated(categoryName: String, categoryType: List<SpDirection>, color: ColorDrawable?)
+    fun categoryCreated(categoryName: String, categoryType: Collection<SpDirection>, color: ColorDrawable?)
 }

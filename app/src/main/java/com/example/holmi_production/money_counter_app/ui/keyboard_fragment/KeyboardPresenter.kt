@@ -108,29 +108,14 @@ class KeyboardPresenter @Inject constructor(
     }
 
     fun getCategoryButtonValue() {
-        val type = settingRepository.getCategoryValue()
-        categoryInteractor.getCategoryWithSub(type)
-            .async()
-            .subscribe ({ pair ->
-                viewState.updateCategoryPickerButton(pair.first)
-                viewState.showSubcategoryMenu(pair.second, pair.first.color ?: Color.BLACK)
-            },{
-                Log.d("M_KeyboardPresenter",it.message)
-                viewState.updateCategoryPickerButton(null)
-            })
-            .keep()
+        val categoryId = settingRepository.getCategoryValue()
+        updateKeyboardUI(categoryId)
     }
 
     fun setCategoryButonType(id: Int) {
         Log.d("M_KeyboardPresenter", "set type $id")
         settingRepository.setCategoryButtonType(id)
-        categoryInteractor.getCategoryWithSub(id)
-            .async()
-            .subscribe({
-                viewState.updateCategoryPickerButton(it.first)
-                viewState.showSubcategoryMenu(it.second, it.first.color ?: Color.BLACK)
-            }, {}).keep()
-
+        updateKeyboardUI(id)
     }
 
     fun recalculateAverageSum(endDate: DateTime) {
@@ -146,6 +131,20 @@ class KeyboardPresenter @Inject constructor(
                 sumPerDayRepository.insertAverage(averageSum).complete().keep()
                 viewState.showNewSumSnack(averageSum, period)
             }, { Log.d("qwerty", it.message) })
+            .keep()
+    }
+
+    private fun updateKeyboardUI(categoryId:Int){
+        categoryInteractor.getCategoryWithSub(categoryId)
+            .async()
+            .subscribe ({ pair ->
+                viewState.updateCategoryPickerButton(category = pair.first)
+                viewState.showSubcategoryMenu(subcategories = pair.second, color = pair.first.color ?: Color.BLACK)
+                viewState.showActionButtons(directions = pair.first.spendingDirection)
+            },{
+                Log.d("M_KeyboardPresenter",it.message)
+                viewState.updateCategoryPickerButton(null)
+            })
             .keep()
     }
 

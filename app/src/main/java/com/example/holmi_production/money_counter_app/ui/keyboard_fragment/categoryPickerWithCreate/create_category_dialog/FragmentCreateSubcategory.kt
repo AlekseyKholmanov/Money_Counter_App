@@ -1,21 +1,16 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog
 
-import android.content.Context
-import android.database.DataSetObserver
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.SpinnerAdapter
 import android.widget.Toast
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.dialog_create_subcategory.*
-import kotlinx.android.synthetic.main.fragment_create_subcategory.*
 import leakcanary.AppWatcher
 
 class FragmentCreateSubcategory : AndroidXMvpAppCompatFragment() {
