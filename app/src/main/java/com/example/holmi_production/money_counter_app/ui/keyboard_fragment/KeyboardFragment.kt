@@ -110,7 +110,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun showSnack(spending: SpendingWithCategory) {
-        val message = if (spending.spending.isSpending)
+        val message = if (spending.spending.isSpending == SpDirection.SPENDING)
             "Расход. ${spending.category[0].description}. ${spending.spending.sum.toCurencyFormat().withRubleSign()}"
         else
             "Доход. ${spending.category[0].description}. ${spending.spending.sum.toCurencyFormat().withRubleSign()}"
@@ -141,7 +141,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         new_sum_per_day.text = sum
     }
 
-    override fun enterPressed(money: Double, comment: String, isSpending: Boolean , subcategoryId:Int?) {
+    override fun enterPressed(money: Double, comment: String, isSpending: SpDirection , subcategoryId:Int?) {
         Log.d("qwerty", money.toString())
         presenter.saveSpend(money, comment, isSpending, subcategoryId)
     }

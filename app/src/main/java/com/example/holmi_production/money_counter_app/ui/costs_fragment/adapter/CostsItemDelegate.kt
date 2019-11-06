@@ -11,6 +11,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
+import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
@@ -47,8 +48,8 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
             val spending = item.spending
             val subcategory = item.subCategory
             val category = item.category
-            val signText = if (spending.isSpending) "-" else "+"
-            val directionColor = if (spending.isSpending) Color.parseColor("#c62828") else Color.parseColor("#2e7d32")
+            val signText = if (spending.isSpending == SpDirection.SPENDING) "-" else "+"
+            val directionColor = if (spending.isSpending == SpDirection.SPENDING) Color.parseColor("#c62828") else Color.parseColor("#2e7d32")
             val subcategoryText = if (subcategory == null) "" else " \u2799 ${subcategory.description}"
             val categoryText = category?.description ?: ""
 

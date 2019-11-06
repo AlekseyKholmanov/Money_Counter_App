@@ -15,7 +15,7 @@ class NotificationInteractor @Inject constructor(
     //TODO observer на изменение дня
     fun alarmTriggered(): Disposable {
         Log.d("qwert", "alarm triggered")
-        return sumPerDayRepository.getBoth()
+        return sumPerDayRepository.getTodayAndAverage()
             .async()
             .subscribe({ it ->
                 val saved = it.first

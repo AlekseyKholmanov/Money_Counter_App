@@ -15,5 +15,6 @@ data class Category(
     val description: String,
     val color: Int?,
     val imageId: Int? = null,
-    var usageCount: Int = 0
+    var usageCount: Int = 0,
+    var isDelete:Boolean = false
 ) : Parcelable

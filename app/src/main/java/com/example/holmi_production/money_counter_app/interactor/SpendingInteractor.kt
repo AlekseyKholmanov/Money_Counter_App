@@ -3,6 +3,7 @@ package com.example.holmi_production.money_counter_app.interactor
 import android.util.Log
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
+import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
@@ -15,6 +16,7 @@ import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.Flowables
 import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import javax.inject.Inject
 
 class SpendingInteractor @Inject constructor(
@@ -37,8 +39,8 @@ class SpendingInteractor @Inject constructor(
         return spendingRepository.getAll()
             .async()
             .map { list ->
-                val income = list.toMutableList().filter { !it.isSpending }
-                val spending = list.toMutableList().filter { it.isSpending }
+                val income = list.toMutableList().filter { it.isSpending == SpDirection.INCOME }
+                val spending = list.toMutableList().filter { it.isSpending == SpDirection.SPENDING }
                 Pair(income, spending)
             }
     }
@@ -75,8 +77,8 @@ class SpendingInteractor @Inject constructor(
 
     fun delete(spending: Spending): Single<Disposable> {
         when (spending.isSpending) {
-            false -> {
-                return sumPerDayRepository.getBoth()
+            SpDirection.INCOME -> {
+                return sumPerDayRepository.getTodayAndAverage()
                     .async()
                     .map { sums ->
                         val today = sums.first.sum
@@ -89,7 +91,7 @@ class SpendingInteractor @Inject constructor(
                         spendingRepository.delete(spending).complete()
                     }
             }
-            else -> {
+            else-> {
                 when (spending.createdDate.dayOfYear()) {
                     DateTime.now().dayOfYear() -> {
                         return sumPerDayRepository.getToday()
@@ -101,7 +103,7 @@ class SpendingInteractor @Inject constructor(
                             }
                     }
                     else -> {
-                        return sumPerDayRepository.getBoth()
+                        return sumPerDayRepository.getTodayAndAverage()
                             .async()
                             .map { sums ->
                                 val today = sums.first.sum

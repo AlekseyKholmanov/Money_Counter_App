@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.holmi_production.money_counter_app.model.ListItem
+import com.example.holmi_production.money_counter_app.model.SpDirection
 import org.joda.time.DateTime
 
 @Entity
@@ -17,7 +18,7 @@ data class Spending(
 
     val subcategoryId:Int?,
 
-    val isSpending: Boolean,
+    val isSpending: SpDirection,
 
     val comment:String?
 

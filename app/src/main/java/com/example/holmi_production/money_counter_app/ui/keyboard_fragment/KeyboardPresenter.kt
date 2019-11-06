@@ -6,6 +6,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.*
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
+import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
@@ -30,7 +31,7 @@ class KeyboardPresenter @Inject constructor(
             .keep()
     }
 
-    fun saveSpend(sum: Double, comment: String, isSpending: Boolean, subCategoryId:Int?) {
+    fun saveSpend(sum: Double, comment: String, isSpending: SpDirection, subCategoryId:Int?) {
         val categoryId = settingRepository.getCategoryValue()
         val spending = Spending(
             DateTime(),
@@ -44,16 +45,16 @@ class KeyboardPresenter @Inject constructor(
             .complete()
             .keep()
 
-        sumPerDayRepository.getBoth()
+        sumPerDayRepository.getTodayAndAverage()
             .async()
             .subscribe({ it ->
                 val today = it.first.sum
                 val average = it.second.sum
                 //вычитаем сумму из текущего дня
-                if (today >= sum && spending.isSpending)
+                if (today >= sum && spending.isSpending == SpDirection.SPENDING)
                     sumPerDayRepository.insertToday(today - sum).complete().keep()
                 //увеличиваем сумму у всех дней т.к. зарплата
-                else if (!spending.isSpending) {
+                else if (spending.isSpending == SpDirection.INCOME) {
                     val daysCount = settingRepository.getTillEnd()
                     val deltaAverage = sum / daysCount
                     sumPerDayRepository.insertAverage(average + deltaAverage).complete().keep()
@@ -78,8 +79,8 @@ class KeyboardPresenter @Inject constructor(
         spendingRepository.observeSpending()
             .async()
             .subscribe({ list ->
-                val a = list.filter { it.isSpending }.map { it.sum }
-                val b = list.filter { !it.isSpending }.map { it.sum }
+                val a = list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }
+                val b = list.filter { it.isSpending == SpDirection.INCOME }.map { it.sum }
                 viewState.showIncomeSum((b.sum() - a.sum()).toCurencyFormat().withRubleSign())
             }, { Log.d("qwerty", it.message) })
             .keep()
@@ -122,8 +123,8 @@ class KeyboardPresenter @Inject constructor(
         spendingRepository.getAll()
             .async()
             .subscribe({ list ->
-                val spent = list.filter { it.isSpending }.map { it.sum }.sum()
-                val income = list.filter { !it.isSpending }.map { it.sum }.sum()
+                val spent = list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }.sum()
+                val income = list.filter { it.isSpending == SpDirection.INCOME}.map { it.sum }.sum()
                 val period = (Days.daysBetween(DateTime.now(), endDate)).days + 1
                 val averageSum = (income - spent) / period
                 settingRepository.saveEndDate(endDate)

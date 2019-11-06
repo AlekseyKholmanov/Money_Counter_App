@@ -35,7 +35,7 @@ class SumPerDayRepository @Inject constructor(
         return Single.fromCallable { dao.getSum(TODAY) }
     }
 
-    fun getBoth(): Single<Pair<SumPerDay, SumPerDay>> {
+    fun getTodayAndAverage(): Single<Pair<SumPerDay, SumPerDay>> {
         return Singles.zip(getToday(),getAverage())
     }
 

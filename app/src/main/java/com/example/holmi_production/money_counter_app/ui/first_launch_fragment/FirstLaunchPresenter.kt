@@ -1,10 +1,9 @@
 package com.example.holmi_production.money_counter_app.ui.first_launch_fragment
 
-import android.content.Context
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.*
-import com.example.holmi_production.money_counter_app.model.CategoryType
+import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
@@ -49,7 +48,7 @@ class FirstLaunchPresenter @Inject constructor(
                 sum,
                 0,
                 null,
-                false,
+                SpDirection.INCOME,
                 ""
             )
         ).async()

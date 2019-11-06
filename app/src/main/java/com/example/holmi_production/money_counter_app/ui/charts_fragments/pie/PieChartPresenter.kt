@@ -4,6 +4,7 @@ import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
+import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
@@ -33,7 +34,7 @@ class PieChartPresenter @Inject constructor(
 
     private fun filterList(list: List<SpendingListItem>): List<Pair<Category?, List<Spending>>> {
         return list
-            .filter { it.spending.isSpending }
+            .filter { it.spending.isSpending  == SpDirection.SPENDING}
             .groupBy { it.category}
             .map { Pair(it.key, it.value.map { it.spending }) }
             .sortedByDescending { it.second.sumByDouble { it.sum } }

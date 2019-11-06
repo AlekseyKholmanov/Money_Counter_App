@@ -9,7 +9,7 @@ class DailyExpenses(val sum: Double, val isPositive: Boolean) {
         fun calculate(list: List<SpendingListItem>): DailyExpenses {
             var sum = 0.0
             for (spending in list)
-                if (spending.spending.isSpending) sum -= spending.spending.sum else sum += spending.spending.sum
+                if (spending.spending.isSpending == SpDirection.SPENDING) sum -= spending.spending.sum else sum += spending.spending.sum
             return(DailyExpenses(abs(sum),sum>=0.0))
         }
     }

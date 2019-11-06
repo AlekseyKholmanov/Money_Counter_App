@@ -1,19 +1,15 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.get
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.Vibrator
-import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.SquareImageView
@@ -96,11 +92,6 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
                 val alpha = 255 - (i+1)*35
                 cg_subcategory_group.addView(buildChip(subcategories[i], color, alpha) as View)
             }
-            cg_subcategory_group.setOnCheckedChangeListener { group, checkedId ->
-                val checkedChips = cg_subcategory_group.findViewById<Chip?>(checkedId)
-
-                Toast.makeText(context,"${checkedChips?.text} ${checkedChips?.tag}",Toast.LENGTH_SHORT).show()
-            }
         }
     }
 
@@ -152,10 +143,10 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
 
             }
             ButtonTypes.ENTER_UP -> {
-                enterPressed(true)
+                enterPressed(SpDirection.SPENDING)
             }
             ButtonTypes.ENTER_DOWN -> {
-                enterPressed(false)
+                enterPressed(SpDirection.INCOME)
             }
             ButtonTypes.NUMERIC -> {
                 if (purshaseSum == "0")
@@ -179,7 +170,7 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         super.onDestroy()
     }
 
-    private fun enterPressed(isSpending: Boolean) {
+    private fun enterPressed(isSpending: SpDirection) {
         when (purshaseSum) {
             "0" -> return
             else -> {
@@ -194,12 +185,12 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
                 mKeyboardListener!!.enterPressed(purshaseSum.toDouble(), text, isSpending , tag)
                 purshaseSum = "0"
                 clearCommentField()
-                uncheckingChips()
+                uncheckChips()
             }
         }
     }
 
-    private fun uncheckingChips() {
+    private fun uncheckChips() {
         cg_subcategory_group.clearCheck()
     }
 
@@ -214,7 +205,7 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
 }
 
 interface IKeyboardListener {
-    fun enterPressed(money: Double, comment: String, isSpending: Boolean , subcategoryId:Int?)
+    fun enterPressed(money: Double, comment: String, isSpending: SpDirection , subcategoryId:Int?)
     fun moneyUpdated(money: Double)
     fun showCategoryDialog()
 }
