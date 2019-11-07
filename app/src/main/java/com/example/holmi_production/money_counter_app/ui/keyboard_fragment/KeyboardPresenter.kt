@@ -42,6 +42,16 @@ class KeyboardPresenter @Inject constructor(
             comment
         )
         spendingInteractor.insert(spending)
+            .doOnComplete{
+                categoryInteractor.getCategoryWithSub(spending.categoryId)
+                    .async()
+                    .subscribe({
+                        viewState.showSnack(it, spending)
+                    }, {
+                        Log.d("M_KeyboardPresenter","error ${it.message}")
+                    })
+                    .keep()
+            }
             .complete()
             .keep()
 

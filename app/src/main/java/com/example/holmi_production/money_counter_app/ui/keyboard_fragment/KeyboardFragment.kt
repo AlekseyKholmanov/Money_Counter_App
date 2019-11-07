@@ -15,7 +15,7 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.SpendingWithCategory
+import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker
@@ -31,14 +31,15 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        keybaordPart = KeyboardPartFragment.newInstance()
-        keybaordPart.setListener(this)
+        super.onViewCreated(view, savedInstanceState)
+        keyboardPart = KeyboardPartFragment.newInstance()
+        keyboardPart.setListener(this)
         childFragmentManager.beginTransaction().apply {
-            add(R.id.keyboard,keybaordPart)
+            add(R.id.keyboard,keyboardPart)
             commit()
         }
         left_days.setOnClickListener {
-            timePickerDialog = TimePickerDialog.newInstance(withMinDate = true)
+            val timePickerDialog = TimePickerDialog.newInstance(withMinDate = true)
             timePickerDialog.setListener(this)
             timePickerDialog.show(childFragmentManager, "datePicker")
         }
@@ -50,7 +51,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         }
         presenter.getDaysLeft()
         presenter.setObservers()
-        super.onViewCreated(view, savedInstanceState)
+        Log.d("M_FragmentCategoryPickr","View Created")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,21 +103,23 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun showActionButtons(directions: List<SpDirection>) {
-        keybaordPart.showActionButtons(directions)
+        keyboardPart.showActionButtons(directions)
     }
 
     override fun showSubcategoryMenu(subcategories: List<SubCategory>, color:Int) {
-        keybaordPart.showChipsContainer(subcategories, color)
+        keyboardPart.showChipsContainer(subcategories, color)
     }
 
-    override fun showSnack(spending: SpendingWithCategory) {
-        val message = if (spending.spending.isSpending == SpDirection.SPENDING)
-            "Расход. ${spending.category[0].description}. ${spending.spending.sum.toCurencyFormat().withRubleSign()}"
+    override fun showSnack(
+        category: Pair<Category, List<SubCategory>>,
+        spending: Spending) {
+        val message = if (spending.isSpending == SpDirection.SPENDING)
+            "Расход. ${category.first.description}. ${spending.sum.toCurencyFormat().withRubleSign()}"
         else
-            "Доход. ${spending.category[0].description}. ${spending.spending.sum.toCurencyFormat().withRubleSign()}"
+            "Доход. ${category.first.description}. ${spending.sum.toCurencyFormat().withRubleSign()}"
         val snack = Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
         snack.setAction("Отмена") {
-            presenter.undoAdding(spending.spending)
+            presenter.undoAdding(spending)
         }
         snack.show()
     }
@@ -126,7 +129,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun updateCategoryPickerButton(category: Category?) {
-        keybaordPart.updateCategoryButton(category = category)
+        keyboardPart.updateCategoryButton(category = category)
     }
 
     override fun showCategoryDialog() {
@@ -166,9 +169,8 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
 //        expense.date = money
     }
 
-    private lateinit var timePickerDialog: TimePickerDialog
     private lateinit var withCreate: FragmentCategoryPicker
-    private lateinit var keybaordPart:KeyboardPartFragment
+    private lateinit var keyboardPart:KeyboardPartFragment
     @InjectPresenter
     lateinit var presenter: KeyboardPresenter
 }
