@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,7 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("M_FragmentCatPicker","CAtegoryPicker Destroyed")
         AppWatcher.objectWatcher.watch(this)
     }
 

@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:clickable="true"
+              android:focusable="true"
+              android:focusableInTouchMode="true">
 
     <EditText
             android:id="@+id/et_subcategory_name"
@@ -10,7 +13,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/et_text_enter_subcategory_name"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:inputType="text"
+            android:imeOptions="actionDone"/>
 
     <Spinner
             android:id="@+id/spinner_parentCategory"

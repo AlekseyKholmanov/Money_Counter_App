@@ -6,7 +6,6 @@ import com.example.holmi_production.money_counter_app.di.components.DaggerApplic
 import com.example.holmi_production.money_counter_app.di.modules.ApplicationModule
 import com.example.holmi_production.money_counter_app.di.modules.ContextModule
 import com.example.holmi_production.money_counter_app.di.modules.PreferenceModule
-import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
 
 class App:Application(){
     companion object{

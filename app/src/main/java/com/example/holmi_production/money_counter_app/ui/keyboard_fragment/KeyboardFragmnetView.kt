@@ -13,9 +13,12 @@ interface KeyboardFragmnetView : MvpView {
     fun showDaysLeft(days: String)
     fun showAverageSum(sum: String, isDisplayed: Boolean)
     fun showNewSumSnack(sum: Double, days: Int)
+
     fun showSnack(
         category: Pair<Category, List<SubCategory>>,
         spending: Spending)
+
+    @StateStrategyType(SkipStrategy::class)
     fun updateCategoryPickerButton(category: Category?)
 
     @StateStrategyType(SkipStrategy::class)

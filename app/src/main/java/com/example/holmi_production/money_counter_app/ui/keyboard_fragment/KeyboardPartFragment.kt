@@ -3,13 +3,18 @@ package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.Vibrator
+import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
+import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
+import com.example.holmi_production.money_counter_app.extensions.isKeyboardClosed
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.SquareImageView
@@ -48,13 +53,18 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         key_spending.setOnClickListener { pressed(ButtonTypes.ENTER_UP) }
         key_income.setOnClickListener { pressed(ButtonTypes.ENTER_DOWN) }
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
-        comment.setOnFocusChangeListener { v, hasFocus ->
-//            if (!hasFocus) {
-//                comment.hideKeyboard()
-//                Log.d("qwerty", "ledt")
-//            } else {
-//                Log.d("qwerty", "has")
-//            }
+        comment.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            var handled = false
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                comment?.hideKeyboardFrom(context!!)
+                handled = true
+            }
+            return@OnEditorActionListener handled
+        })
+        comment.setOnFocusChangeListener { _, hasFocus ->
+            if(!hasFocus){
+                comment?.hideKeyboardFrom(context!!)
+            }
         }
         purshace_sum_textview.text = purshaseSum
         cg_subcategory_group.clearCheck()

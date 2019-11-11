@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
@@ -56,9 +55,9 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcat
 
     override fun categoryCreated(
         categoryName: String,
-        directions: Collection<SpDirection>,
+        categoryTypes: Collection<SpDirection>,
         color: ColorDrawable?) {
-        presenter.createCategory(categoryName, directions.toList(), color)
+        presenter.createCategory(categoryName, categoryTypes.toList(), color)
     }
 
     @ProvidePresenter

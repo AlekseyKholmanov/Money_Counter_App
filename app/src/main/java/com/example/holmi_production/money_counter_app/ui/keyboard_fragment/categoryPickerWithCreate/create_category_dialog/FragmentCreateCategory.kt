@@ -6,7 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
+import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
@@ -40,6 +44,18 @@ class CategoryCreateFragment: AndroidXMvpAppCompatFragment(){
             val background = v_color_container.background
             val color:ColorDrawable? = background as? ColorDrawable
             callback!!.categoryCreated(et_category_name.text.toString(), getDirections(), color)
+        }
+        et_category_name.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            var handled = false
+            if(actionId == EditorInfo.IME_ACTION_DONE){
+                et_category_name?.hideKeyboardFrom(context!!)
+                handled = true
+            }
+            return@OnEditorActionListener handled
+        })
+        et_category_name.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus)
+                et_category_name?.hideKeyboardFrom(context!!)
         }
     }
 
@@ -87,5 +103,5 @@ class CategoryCreateFragment: AndroidXMvpAppCompatFragment(){
 }
 
 interface ICategoryCreateCallback {
-    fun categoryCreated(categoryName: String, categoryType: Collection<SpDirection>, color: ColorDrawable?)
+    fun categoryCreated(categoryName: String, categoryTypes: Collection<SpDirection>, color: ColorDrawable?)
 }
