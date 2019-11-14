@@ -13,6 +13,7 @@ class CreateCategoryAdapter(
     val subcategoryCallback: ISubcategoryCreateCallback,
     val categoryCallback: ICategoryCreateCallback) :
     FragmentPagerAdapter(fm, behavior) {
+
     override fun getItem(position: Int): Fragment {
          return when (CategoryCreateDialogType.values()[position]) {
             CategoryCreateDialogType.CATEGORY -> {
@@ -28,7 +29,7 @@ class CreateCategoryAdapter(
         }
     }
 
-    override fun getCount(): Int = ChartType.values().count()
+    override fun getCount(): Int = CategoryCreateDialogType.values().count()
 
     override fun getPageTitle(position: Int): CharSequence {
         return when (CategoryCreateDialogType.values()[position]) {

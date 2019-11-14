@@ -19,7 +19,7 @@ class StackedPresenter @Inject constructor(private val spendingInteractor: Spend
             .map { prepareDatas(it) }
             .async()
             .subscribe({ list ->
-                viewState.showFraph(list)
+                viewState.showGraph(list)
             }, {
                 Log.d("qwerty", it.message)
                 viewState.showError()

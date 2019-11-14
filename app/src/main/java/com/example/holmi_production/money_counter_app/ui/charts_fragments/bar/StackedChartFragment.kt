@@ -84,7 +84,7 @@ class StackedChartFragment : AndroidXMvpAppCompatFragment(),
         showEmptyPlaceholder()
     }
 
-    override fun showFraph(list: Map<DateTime, List<Spending>>) {
+    override fun showGraph(list: Map<DateTime, List<Spending>>) {
         if (list.isEmpty()) {
             showEmptyPlaceholder()
         } else {

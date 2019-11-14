@@ -10,7 +10,6 @@ import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment

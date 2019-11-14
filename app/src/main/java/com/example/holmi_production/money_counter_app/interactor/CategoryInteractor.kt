@@ -41,7 +41,7 @@ class CategoryInteractor @Inject constructor(
     }
 
     fun observeCategories(): Flowable<MutableList<Category>> {
-        return categoryRepository.observePeriod()
+        return categoryRepository.observeCategories()
             .async()
             .map { it.sortedByDescending { it.usageCount } }
             .map { it.toMutableList() }
@@ -52,7 +52,7 @@ class CategoryInteractor @Inject constructor(
     }
 
     fun observeCategoriesAndSubCategories(): Flowable<ArrayList<Pair<Category, List<SubCategory>>>> {
-        return Flowables.combineLatest(categoryRepository.observePeriod(), subCategoryRepository.observeSubCategories())
+        return Flowables.combineLatest(categoryRepository.observeCategories(), subCategoryRepository.observeSubCategories())
             .map { (categories, subCategories) ->
                 val zipList = arrayListOf<Pair<Category, List<SubCategory>>>()
                 val sortedlist = categories.sortedByDescending { it.usageCount }
