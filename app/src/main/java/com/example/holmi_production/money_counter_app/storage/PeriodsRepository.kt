@@ -24,6 +24,6 @@ class PeriodsRepository @Inject constructor(
     }
 
     fun observePeriod(): Flowable<FilterPeriods> {
-        return dao.observePeriod(key)
+        return dao.observePeriod(key).distinctUntilChanged()
     }
 }

@@ -23,15 +23,7 @@ class SpendingRepository @Inject constructor(
     }
 
     fun observeSpending(): Flowable<List<Spending>> {
-        return dao.observeSpending()
-    }
-
-    fun observeSpendingWithCategory(): Flowable<List<SpendingWithCategory>> {
-        return Flowable.fromCallable { dao.observeSpendingWithCategory() }
-    }
-
-    fun getSpendingWitCategory(id:DateTime): Single<SpendingWithCategory> {
-        return Single.fromCallable { dao.getSpendingWithCategory(id)}
+        return dao.observeSpending().distinctUntilChanged()
     }
 
     fun delete(spending: Spending): Completable {

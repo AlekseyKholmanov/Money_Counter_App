@@ -17,10 +17,6 @@ class CategoryRepository @Inject constructor(
         return Completable.fromCallable { dao.insert(category) }
     }
 
-    fun getPeriod(): Single<List<Category>> {
-        return Single.fromCallable { dao.getCategories()}
-    }
-
     fun getCategory(id:Int) :Single<Category>{
         return  Single.fromCallable{dao.getCategory(id)}
     }
@@ -29,8 +25,8 @@ class CategoryRepository @Inject constructor(
         return Single.fromCallable { dao.getCategories() }
     }
 
-    fun observePeriod(): Flowable<List<Category>> {
-        return dao.observeCategories()
+    fun observeCategories(): Flowable<List<Category>> {
+        return dao.observeCategories().distinctUntilChanged()
     }
 
     fun clear():Completable{

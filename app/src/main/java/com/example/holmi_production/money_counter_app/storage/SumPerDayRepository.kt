@@ -28,8 +28,8 @@ class SumPerDayRepository @Inject constructor(
         return Completable.fromCallable { dao.insert(sum) }
     }
 
-    fun observeToday(): Flowable<SumPerDay> = dao.observeSum(TODAY)
-    fun observeAverage(): Flowable<SumPerDay> = dao.observeSum(AVERAGE)
+    fun observeToday(): Flowable<SumPerDay> = dao.observeSum(TODAY).distinctUntilChanged()
+    fun observeAverage(): Flowable<SumPerDay> = dao.observeSum(AVERAGE).distinctUntilChanged()
 
     fun getToday(): Single<SumPerDay> {
         return Single.fromCallable { dao.getSum(TODAY) }

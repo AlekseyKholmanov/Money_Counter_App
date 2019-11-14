@@ -22,7 +22,7 @@ class SubCategoryRepository @Inject constructor(
     }
 
     fun observeSubCategories(): Flowable<List<SubCategory>> {
-        return dao.observeCategories()
+        return dao.observeCategories().distinctUntilChanged()
     }
 
     fun getSubcategoriesWithParentId(parentId: Int): Single<List<SubCategory>> {
