@@ -27,6 +27,7 @@ class MainActivity : AndroidXMvpAppCompatActivity(){
         navController.graph = graph
 
         WorkerManager.cancelAll()
+        WorkerManager.startBalanceWorker()
         WorkerManager.startNotificationWorker()
     }
     override fun onSupportNavigateUp() = findNavController(R.id.mainNavFragment).navigateUp()
