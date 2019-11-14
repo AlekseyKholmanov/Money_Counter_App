@@ -14,7 +14,7 @@ import java.util.concurrent.Executors
 
 @TypeConverters(Converters::class)
 @Database(
-    entities = [Spending::class, SumPerDay::class, FilterPeriods::class, Category::class, SubCategory::class],
+    entities = [Spending::class, SumPerDay::class, FilterPeriods::class, Category::class, SubCategory::class, Balance::class],
     version = 19,
     exportSchema = false
 )
@@ -63,4 +63,5 @@ abstract class ExpenseDatabase : RoomDatabase() {
     abstract val periodsDao: PeriodsDao
     abstract val categoryDao: CategoryDao
     abstract val subCategoryDao:SubcategoryDao
+    abstract val balanceDao: BalanceDao
 }

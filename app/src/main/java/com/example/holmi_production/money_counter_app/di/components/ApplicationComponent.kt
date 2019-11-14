@@ -15,6 +15,7 @@ import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.Keybo
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.PresenterCategoryPicker
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.PresenterCreateCategory
 import com.example.holmi_production.money_counter_app.ui.settings.SettingsPresenter
+import com.example.holmi_production.money_counter_app.ui.charts_fragments.balance.BalancePresenter
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarPresenter
 import dagger.Component
 import javax.inject.Singleton
@@ -29,6 +30,7 @@ interface ApplicationComponent {
     fun getChartPresenter(): PieChartPresenter
     fun getEndPeriodPresenter(): EndPeriodPresenter
     fun getStackedPresenter(): StackedPresenter
+    fun getBalancePresenter():BalancePresenter
     fun getTopbarPresenter(): TopbarPresenter
     fun getCategoryPickerPresenter(): PresenterCategoryPicker
     fun inject(activity: MainActivity)
