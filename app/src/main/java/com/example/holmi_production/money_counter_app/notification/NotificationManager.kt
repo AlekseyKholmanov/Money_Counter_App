@@ -2,7 +2,6 @@ package com.example.holmi_production.money_counter_app.notification
 
 import android.app.*
 import android.app.NotificationManager
-import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Intent
 import android.graphics.Color
@@ -13,33 +12,18 @@ import androidx.core.app.NotificationManagerCompat
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.main.MainActivity
-import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class NotificationManager @Inject constructor(
     private val notificationManager: NotificationManager,
-    private val alarmManager: AlarmManager,
-    private val application: Application,
-    private val settingRepository: SettingRepository) {
+    private val application: Application) {
+
     init {
         createNotificationChannel()
     }
 
-    fun setNotificationTime() {
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY,23)
-        calendar.set(Calendar.MINUTE,59)
-
-        val intent = Intent(application, NotificationAlarmReciever::class.java)
-        intent.action = "MY_NOTIFICATION_MESSAGE"
-        val pIntent = PendingIntent.getBroadcast(application, 100, intent, FLAG_ONE_SHOT)
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pIntent)
-        Log.d("qwerty", "Notification time setted")
-        settingRepository.setNotificationTime()
-    }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
