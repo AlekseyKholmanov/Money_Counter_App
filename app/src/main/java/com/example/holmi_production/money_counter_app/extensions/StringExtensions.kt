@@ -1,25 +1,38 @@
 package com.example.holmi_production.money_counter_app.extensions
 
 import org.joda.time.DateTime
+import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
+import java.lang.Exception
 import java.util.*
 
 fun Number.toCurencyFormat(): String {
     return if (this.toString().takeLast(2) == ".0")
         (this.toString().dropLast(2))
     else
-        String.format(Locale.ROOT,"%.1f", this)
+        String.format(Locale.ROOT, "%.1f", this)
+}
+
+fun DateTime.getNameDayOfWeek(): String {
+    return when (this.dayOfWeek().get()) {
+        1 -> "Понедельник"
+        2 -> "Вторник"
+        3 -> "Среда"
+        4 -> "Четверг"
+        5 -> "Пятница"
+        6 -> "Суббота"
+        7 -> "Воскресенье"
+        else ->{
+            throw Exception("некорректная дата ")
+        }
+    }
+
 }
 
 fun DateTime.toRUformat(): String {
     val formatter = DateTimeFormat.forPattern("dd MMMM yyyy")
         .withLocale(Locale("ru"))
     return formatter.print(this)
-}
-
-fun Float.toDateFormat():String{
-    val date = DateTime().withDayOfYear(this.toInt())
-    return date.toRUformat()
 }
 
 fun Int.getDayAddition(): String {
@@ -38,6 +51,6 @@ fun Int.getDayAddition(): String {
     return "$this $end"
 }
 
-fun String.withRubleSign():String{
+fun String.withRubleSign(): String {
     return "${this} \u20BD"
 }
