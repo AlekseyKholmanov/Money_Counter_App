@@ -21,7 +21,7 @@ fun DateTime.getNameDayOfWeek(): String {
         4 -> "Четверг"
         5 -> "Пятница"
         6 -> "Суббота"
-        7 -> "Воскресенье"
+        7 -> "Воскресение"
         else ->{
             throw Exception("некорректная дата ")
         }

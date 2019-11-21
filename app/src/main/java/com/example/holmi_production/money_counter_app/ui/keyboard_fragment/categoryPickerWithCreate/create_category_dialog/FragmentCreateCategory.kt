@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
@@ -24,6 +23,14 @@ class CategoryCreateFragment: AndroidXMvpAppCompatFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        iv_category_image.setOnClickListener {
+//            val ft = fragmentManager!!.beginTransaction()
+//            val dialog = ImageCategoryPicker()
+//            ft.add(dialog,"images")
+//            ft.commit()
+        }
+
         ch_accumulation.setOnClickListener {
             ch_accumulation.isChecked = !ch_accumulation.isChecked
             btn_create_category.isEnabled = isCheckboxesChecked()
@@ -42,7 +49,7 @@ class CategoryCreateFragment: AndroidXMvpAppCompatFragment(){
         }
         btn_create_category.setOnClickListener {
             val background = v_color_container.background
-            val color:ColorDrawable? = background as? ColorDrawable
+            val color: ColorDrawable? = background as? ColorDrawable
             callback!!.categoryCreated(et_category_name.text.toString(), getDirections(), color)
         }
         et_category_name.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->

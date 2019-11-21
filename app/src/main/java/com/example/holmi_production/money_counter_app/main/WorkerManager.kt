@@ -11,8 +11,8 @@ class WorkerManager {
         val NOTIFICATION_WORK_TAG = "NOTIFICATION_TASK"
         val BALANCE_WORK_TAG = "BALANCE_WORK_TAG"
         fun startNotificationWorker() {
-            val diff = Time.getDiffToNextDay(addMinutes = 11)
-            Log.d("M_WorkerManager", "$diff is diff, notification wor execute")
+            val diff = Time.getDiffToNextDay(addMinutes = 1)
+            Log.d("M_WorkerManager", "notification work wiil be ${diff/(1000*60*60*24)} day ${diff/(1000*60*60)} hours ${diff/1000%60} minutes")
             val work = OneTimeWorkRequest.Builder(NotificationTask::class.java)
                 .setInitialDelay(diff, TimeUnit.MILLISECONDS)
                 .addTag(NOTIFICATION_WORK_TAG)
@@ -22,8 +22,9 @@ class WorkerManager {
         }
 
         fun startBalanceWorker() {
-            val diff =Time.getDiffToNextDay(addMinutes = 10)
+            val diff =Time.getDiffToNextDay(addMinutes = 2)
             Log.d("M_WorkerManager","balance work execute")
+            Log.d("M_WorkerManager", "balance work wiil be ${diff/(1000*60*60*24)} day ${diff/(1000*60*60)} hours ${diff/1000%60} minutes")
             val work = OneTimeWorkRequest.Builder(SaveBalanceTask::class.java)
                 .setInitialDelay(diff, TimeUnit.MILLISECONDS)
                 .addTag(BALANCE_WORK_TAG)

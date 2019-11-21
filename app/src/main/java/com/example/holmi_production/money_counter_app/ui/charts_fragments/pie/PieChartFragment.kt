@@ -15,16 +15,36 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.chart_pie.*
 import leakcanary.AppWatcher
 
 class PieChartFragment : AndroidXMvpAppCompatFragment(),
-    PieChartView {
+    PieChartView, OnChartValueSelectedListener {
+    override fun showDetails(items: Array<SpendingListItem>) {
+        val bundle = Bundle()
+        bundle.putParcelableArray("SPENDINGS", items)
+        val fr = PieDialogFragment.newInstance(bundle)
+        fr.show(childFragmentManager,"Spending dialog")
+    }
+
+    override fun onNothingSelected() {
+
+    }
+
+    override fun onValueSelected(e: Entry?, h: Highlight?) {
+        val categoryId = e!!.data as Int
+        presenter.getSpending(categoryId)
+        Log.d("M_PieChartFragment","index $categoryId")
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.chart_pie, container, false)
@@ -33,6 +53,7 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("M_PieChartFragment", "pie view created")
         super.onViewCreated(view, savedInstanceState)
+        chart_pie.setOnChartValueSelectedListener(this)
         presenter.observeData()
     }
 
@@ -68,10 +89,11 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
             var allMoney = 0.0
             data.forEach { (category, spendings) ->
                 val sum = spendings.sumByDouble { it.sum }
-                first.add(PieEntry(sum.toFloat(), category!!.description))
+                first.add(PieEntry(sum.toFloat(), category!!.description, category.id))
                 second.add(category.description)
                 colors.add(category.color!!)
                 allMoney+= sum
+                Log.d("M_PieChartFragment","index ${category.id} name ${category.description}")
             }
             val pieSet = PieDataSet(first.toList(), null)
             val pieData = PieData(pieSet)

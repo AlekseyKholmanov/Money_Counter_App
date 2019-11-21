@@ -32,6 +32,21 @@ class PieChartPresenter @Inject constructor(
             .keep()
     }
 
+    fun getSpending(categoryId:Int){
+        spendingInteractor.observeSpendingWithType().singleOrError()
+            .map { list ->
+                Log.d("M_PieChartPresenter","${list.size}")
+                return@map list.filter { it.spending.categoryId == categoryId }.toTypedArray() }
+            .async()
+            .subscribe ({
+                Log.d("M_PieChartPresenter","size: ${it.size}")
+                viewState.showDetails(it)
+            },{
+                Log.d("M_PieChartPresenter",it.localizedMessage)
+            })
+            .keep()
+    }
+
     private fun filterList(list: List<SpendingListItem>): List<Pair<Category?, List<Spending>>> {
         return list
             .filter { it.spending.isSpending  == SpDirection.SPENDING}

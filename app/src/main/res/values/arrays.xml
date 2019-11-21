@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="images">
+        <item>@drawable/ic_bar</item>
+        <item>@drawable/ic_beauty</item>
+        <item>@drawable/ic_books</item>
+        <item>@drawable/ic_bus</item>
+        <item>@drawable/ic_clothes</item>
+        <item>@drawable/ic_clothes_2</item>
+        <item>@drawable/ic_education</item>
+        <item>@drawable/ic_fastfood</item>
+        <item>@drawable/ic_food</item>
+        <item>@drawable/ic_fuel</item>
+        <item>@drawable/ic_glass</item>
+        <item>@drawable/ic_health</item>
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_network</item>
+        <item>@drawable/ic_other</item>
+        <item>@drawable/ic_pets</item>
+        <item>@drawable/ic_salary</item>
+        <item>@drawable/ic_sport</item>
+        <item>@drawable/ic_travel</item>
+    </integer-array>
+</resources>

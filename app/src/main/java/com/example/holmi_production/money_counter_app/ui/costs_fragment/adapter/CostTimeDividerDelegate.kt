@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.getNameDayOfWeek
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
+import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.CostTimeDivider
 import com.example.holmi_production.money_counter_app.model.ListItem
@@ -42,7 +44,8 @@ class CostTimeDividerDelegate : AdapterDelegate<List<ListItem>>() {
             val isPositive = divider.sum.isPositive
             val sign: String = if (isPositive) "+" else "-"
             val color: Int = if (isPositive) Color.parseColor("#2e7d32") else Color.parseColor("#c62828")
-            date.text = divider.date
+            val header = "${divider.date.toRUformat()}, ${divider.date.getNameDayOfWeek()}"
+            date.text = header
             sum.text = divider.sum.sum.toCurencyFormat().withRubleSign()
             sum.setTextColor(color)
             this.sign.text = sign

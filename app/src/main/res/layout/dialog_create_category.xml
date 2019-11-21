@@ -6,6 +6,14 @@
               android:clickable="true"
               android:focusable="true"
               android:focusableInTouchMode="true">
+    <com.example.holmi_production.money_counter_app.model.SquareImageView
+            android:id="@+id/iv_category_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_add_24dp"
+            android:scaleType="centerCrop"
+            />
     <EditText
             android:id="@+id/et_category_name"
             android:minWidth="200dp"

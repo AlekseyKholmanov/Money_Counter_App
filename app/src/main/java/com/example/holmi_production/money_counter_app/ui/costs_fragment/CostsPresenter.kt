@@ -31,7 +31,7 @@ class CostsPresenter @Inject constructor(
             .async()
             .subscribe({ item ->
                 viewState.showSpending(item.first)
-                viewState.showSumByDirection(item.second, item.third)
+                    viewState.showSumByDirection(item.second, item.third)
                 Log.d("M_CostsPresenter", "observe spending item " + item.first.count().toString())
             }, {})
             .keep()
@@ -50,7 +50,7 @@ class CostsPresenter @Inject constructor(
                 it.spending.createdDate.withTimeAtStartOfDay()
             }
             .forEach { (time, test) ->
-                array.add(CostTimeDivider(time.toRUformat(), DailyExpenses.calculate(test)) as ListItem)
+                array.add(CostTimeDivider(time, DailyExpenses.calculate(test)) as ListItem)
                 test.forEach {
                     array.add(it as ListItem)
                 }
