@@ -13,6 +13,7 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_add_24dp"
             android:scaleType="centerCrop"
+            android:layout_margin="4dp"
             />
     <EditText
             android:id="@+id/et_category_name"

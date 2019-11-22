@@ -56,8 +56,9 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcat
     override fun categoryCreated(
         categoryName: String,
         categoryTypes: Collection<SpDirection>,
-        color: ColorDrawable?) {
-        presenter.createCategory(categoryName, categoryTypes.toList(), color)
+        color: ColorDrawable?,
+        imageId:Int) {
+        presenter.createCategory(categoryName, categoryTypes.toList(), color, imageId)
     }
 
     @ProvidePresenter

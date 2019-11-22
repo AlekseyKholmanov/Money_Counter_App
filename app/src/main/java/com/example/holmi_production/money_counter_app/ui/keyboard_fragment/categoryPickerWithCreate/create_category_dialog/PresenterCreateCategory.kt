@@ -14,8 +14,8 @@ class PresenterCreateCategory @Inject constructor(private val interactor: Catego
 
 
 
-    fun createCategory(categoryName: String, categoryTypes: List<SpDirection>, color:ColorDrawable?) {
-        interactor.insert(name = categoryName, types = categoryTypes, color = color)
+    fun createCategory(categoryName: String, categoryTypes: List<SpDirection>, color:ColorDrawable?, imageId:Int) {
+        interactor.insert(name = categoryName, types = categoryTypes, color = color, imageId = imageId)
             .async()
             .doAfterTerminate {
                 viewState.dismissDialog()

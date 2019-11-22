@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.model.SquareImageView
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 
@@ -36,6 +37,7 @@ class CategoryPickerAdapter(val callback:ICategoryPickerCallback):RecyclerView.A
         private val v: View,
         private val callback: ICategoryPickerCallback): RecyclerView.ViewHolder(v){
         private val tv:TextView = v.findViewById(R.id.text_category_dialog)
+        private val image:SquareImageView = v.findViewById(R.id.image_category_dialog)
         private val subCategoryIndicator:ImageView = v.findViewById(R.id.image_subcategory_indicator)
 
 
@@ -50,6 +52,7 @@ class CategoryPickerAdapter(val callback:ICategoryPickerCallback):RecyclerView.A
                 subCategoryIndicator.visibility = View.VISIBLE
             else
                 subCategoryIndicator.visibility = View.GONE
+            image.setImageResource(category.imageId ?: R.drawable.ic_launcher_foreground)
 
         }
     }
