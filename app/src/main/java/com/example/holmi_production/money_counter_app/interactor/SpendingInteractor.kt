@@ -52,13 +52,14 @@ class SpendingInteractor @Inject constructor(
             categoryInteractor.observeSubcategories()
         )
             .map { (spendings, categories, subcategories) ->
+                Log.d("M_SpendingInteractor","${spendings.size}")
                 val muList = mutableListOf<SpendingListItem>()
                 for (s in spendings) {
                     val categoryId = categories.firstOrNull { it.id == s.categoryId }
                     val subcat = subcategories.firstOrNull { it.id == s.subcategoryId }
                     muList.add(SpendingListItem(s, categoryId, subcat))
                 }
-                return@map muList
+                muList
             }
     }
 

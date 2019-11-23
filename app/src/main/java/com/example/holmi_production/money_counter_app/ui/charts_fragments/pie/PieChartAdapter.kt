@@ -13,7 +13,7 @@ import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 
-class PieChartAdapter(private val items: Array<SpendingListItem>) :
+class PieChartAdapter(private val spendings: Array<SpendingListItem>) :
     RecyclerView.Adapter<PieChartAdapter.PieChartHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PieChartHolder {
@@ -22,10 +22,10 @@ class PieChartAdapter(private val items: Array<SpendingListItem>) :
         return PieChartHolder(item)
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = spendings.size
 
     override fun onBindViewHolder(holder: PieChartHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(spendings[position])
     }
 
     inner class PieChartHolder(val v: View) : RecyclerView.ViewHolder(v) {
@@ -44,8 +44,6 @@ class PieChartAdapter(private val items: Array<SpendingListItem>) :
             val subcategoryText = if (subcategory == null) "" else " \u2799 ${subcategory.description}"
             val categoryText = category?.description ?: ""
             mImage.visibility = View.GONE
-            v.setBackgroundColor(category?.color ?: Color.TRANSPARENT)
-            v.background.alpha = 160
             mSum.text = spending.sum.toCurencyFormat().withRubleSign()
             mSum.setTextColor(directionColor)
             mSign.text = signText

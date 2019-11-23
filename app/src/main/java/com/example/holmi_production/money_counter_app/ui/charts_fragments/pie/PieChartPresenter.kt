@@ -9,6 +9,9 @@ import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
+import io.reactivex.Observable
+import io.reactivex.Single
+import java.util.stream.Collectors
 import javax.inject.Inject
 
 @InjectViewState
@@ -33,14 +36,19 @@ class PieChartPresenter @Inject constructor(
     }
 
     fun getSpending(categoryId:Int){
-        spendingInteractor.observeSpendingWithType().singleOrError()
-            .map { list ->
-                Log.d("M_PieChartPresenter","${list.size}")
-                return@map list.filter { it.spending.categoryId == categoryId }.toTypedArray() }
+        spendingInteractor.observeSpendingWithType()
+            .map {
+                val l = mutableListOf<SpendingListItem>()
+                for (item in it){
+                    if (item.category?.id == categoryId)
+                        l.add(item)
+                }
+                l
+            }
             .async()
             .subscribe ({
                 Log.d("M_PieChartPresenter","size: ${it.size}")
-                viewState.showDetails(it)
+                viewState.showDetails(it.toTypedArray())
             },{
                 Log.d("M_PieChartPresenter",it.localizedMessage)
             })

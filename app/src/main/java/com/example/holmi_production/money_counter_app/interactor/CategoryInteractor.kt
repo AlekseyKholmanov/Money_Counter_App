@@ -21,11 +21,11 @@ class CategoryInteractor @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val subCategoryRepository: SubCategoryRepository) {
 
-    fun insert(name: String, types: List<SpDirection>, color: ColorDrawable?): Completable {
+    fun insert(name: String, types: List<SpDirection>, color: ColorDrawable?, imageId:Int): Completable {
 
         val category = Category(
             description = name,
-            imageId = R.drawable.ic_launcher_foreground,
+            imageId = imageId,
             color = color?.color ?: ColorUtils.getColor(),
             spendingDirection = types
         )
