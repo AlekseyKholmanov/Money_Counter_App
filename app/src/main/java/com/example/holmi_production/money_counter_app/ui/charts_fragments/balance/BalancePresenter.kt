@@ -20,7 +20,7 @@ class BalancePresenter @Inject constructor(private val balanceInteractor: Balanc
                 if (it.count() < 2) {
                     viewState.showError()
                 } else {
-                    viewState.showChart(getTestObj())
+                    viewState.showChart(it)
                 }
             }, {
                 viewState.showError()

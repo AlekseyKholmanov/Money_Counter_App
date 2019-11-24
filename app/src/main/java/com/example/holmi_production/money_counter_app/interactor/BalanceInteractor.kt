@@ -30,6 +30,11 @@ class BalanceInteractor @Inject constructor(
             }
             .async().subscribe()
     }
+
+    fun insert(balance: Balance){
+        balanceRepository.insert(balance)
+            .async().subscribe()
+    }
     fun observeBalances(): Flowable<List<Balance>> {
         return Flowables.combineLatest(balanceRepository.observeBalances(), periodsRepository.observePeriod())
             .map { (balances, period) ->

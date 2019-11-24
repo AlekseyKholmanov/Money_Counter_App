@@ -36,13 +36,17 @@ class SpendingInteractor @Inject constructor(
     }
 
     fun getIncomesAndSpendings(): Single<Pair<List<Spending>, List<Spending>>> {
-        return spendingRepository.getAll()
+        return getAll()
             .async()
             .map { list ->
                 val income = list.toMutableList().filter { it.isSpending == SpDirection.INCOME }
                 val spending = list.toMutableList().filter { it.isSpending == SpDirection.SPENDING }
                 Pair(income, spending)
             }
+    }
+
+    fun getAll():Single<List<Spending>>{
+        return spendingRepository.getAll()
     }
 
     fun observeSpendingWithType(): Flowable<MutableList<SpendingListItem>> {

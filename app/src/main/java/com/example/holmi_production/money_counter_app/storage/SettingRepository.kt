@@ -16,20 +16,6 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         PublishSubject.create<Long>()
     }
 
-    private val isEndSubject by lazy {
-        PublishSubject.create<Boolean>()
-    }
-
-    fun setEndPeriod() {
-        pref.edit().putBoolean(IS_END, true).apply()
-        isEndSubject.onNext(true)
-    }
-
-    fun unsetEndPeriod() {
-        pref.edit().putBoolean(IS_END, false).apply()
-        isEndSubject.onNext(false)
-    }
-
     fun setCategoryButtonType(type: Int) {
         pref.edit().putInt(CATEGORY_VALUE, type).apply()
     }
@@ -69,10 +55,6 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(endDate)).days
     }
 
-    fun observeEndPeriod(): Flowable<Boolean> {
-        return isEndSubject.toFlowable(BackpressureStrategy.LATEST)
-    }
-
     fun observeEndDate(): Flowable<Long> {
         Log.d("qwerty", "observe end date")
         return settingSubject.toFlowable(BackpressureStrategy.LATEST)
@@ -86,34 +68,19 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return pref.getBoolean(IS_END, false)
     }
 
-    fun setNotificationTime(){
-        pref.edit().putBoolean(ARE_NOTIFY_TIME_SET, true).apply()
+
+    fun getBalancePopulatedStatus(): Boolean {
+        return pref.getBoolean(BALANCE_MIGRATION_TAG,false)
     }
 
-    fun areNorificationTimeSetted(): Boolean {
-        return pref.getBoolean(ARE_NOTIFY_TIME_SET, false)
+    fun setBalancePopulated(){
+        pref.edit().putBoolean(BALANCE_MIGRATION_TAG, true).apply()
     }
 
-    fun setTopbarStartDate(date:Long){
-        pref.edit().putLong(TOPBAR_START_DATE,date).apply()
-    }
-
-    fun setTopbarEndDate(date:Long){
-        pref.edit().putLong(TOPBAR_END_DATE,date).apply()
-    }
-
-    fun getTopbarDate(): Pair<Long, Long> {
-        val start = pref.getLong(TOPBAR_START_DATE, DateTime.now().withTimeAtStartOfDay().minusDays(6).millis)
-        val end = pref.getLong(TOPBAR_END_DATE,DateTime.now().withTimeAtStartOfDay().millis)
-        return Pair(start,end)
-    }
-
-    private val TOPBAR_START_DATE="TopbarFirstDate"
-    private val TOPBAR_END_DATE="TopbarEndDate"
     private val FIRST_OPEN = "FirstOpen"
     private val START_PERIOD = "START_PERIOD"
     private val END_PERIOD = "END_PERIOD"
     private val IS_END = "IS_END"
     private val CATEGORY_VALUE = "Category_value"
-    private val ARE_NOTIFY_TIME_SET="Notification_Time"
+    private val BALANCE_MIGRATION_TAG = "BALANCE_POPULATED"
 }

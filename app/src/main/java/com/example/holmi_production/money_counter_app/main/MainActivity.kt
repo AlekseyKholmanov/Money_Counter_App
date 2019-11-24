@@ -25,7 +25,8 @@ class MainActivity : AndroidXMvpAppCompatActivity(){
         else if (settingRepository.getIsEnd())
             graph.startDestination = R.id.navEndPeriod
         navController.graph = graph
-
+        if(!settingRepository.getBalancePopulatedStatus())
+            WorkerManager.balancePopulateWork()
         WorkerManager.cancelAll()
         WorkerManager.startBalanceWorker()
         WorkerManager.startNotificationWorker()
