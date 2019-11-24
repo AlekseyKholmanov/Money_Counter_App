@@ -26,5 +26,7 @@
     <string name="text_spending">Расходы</string>
     <string name="text_accumulation">Накопления</string>
     <string name="text_save">Сохранить</string>
-    <string name="et_text_enter_subcategory_name">Введите название подкатегории</string>
+    <string name="et_text_enter_subcategory_name">название подкатегории</string>
+    <string name="text_update">Обновить</string>
+    <string name="txt_add_subcategory">Добавить подкатегорию</string>
 </resources>

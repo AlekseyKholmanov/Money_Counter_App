@@ -48,6 +48,10 @@ class CategoryPickerAdapter(val callback:ICategoryPickerCallback):RecyclerView.A
             v.setOnClickListener {
                 callback.categoryPicked(category.id)
             }
+            v.setOnLongClickListener {
+                callback.categoryEdited(pair)
+                return@setOnLongClickListener true
+            }
             if(subcategories.isNotEmpty())
                 subCategoryIndicator.visibility = View.VISIBLE
             else
@@ -59,4 +63,5 @@ class CategoryPickerAdapter(val callback:ICategoryPickerCallback):RecyclerView.A
 }
 interface ICategoryPickerCallback{
     fun categoryPicked(categoryId:Int)
+    fun categoryEdited(pair: Pair<Category, List<SubCategory>>)
 }

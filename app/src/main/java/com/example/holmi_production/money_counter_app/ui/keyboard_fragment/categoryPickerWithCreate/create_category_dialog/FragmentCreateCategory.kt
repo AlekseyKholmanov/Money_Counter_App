@@ -14,6 +14,7 @@ import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFro
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
+import kotlinx.android.synthetic.main.container_category_detail.*
 import kotlinx.android.synthetic.main.dialog_create_category.*
 import leakcanary.AppWatcher
 

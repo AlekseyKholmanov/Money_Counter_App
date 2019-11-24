@@ -25,7 +25,7 @@ import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_keyboard_part.*
 import javax.inject.Inject
 
-class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
+class KeyboardPartFragment private constructor(): AndroidXMvpAppCompatFragment() {
     companion object {
         fun newInstance(): KeyboardPartFragment {
             return KeyboardPartFragment()

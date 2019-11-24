@@ -16,12 +16,36 @@ import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.DialogFragmentTabContainer
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.edit_category_dialog.EditCategoryDialog
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.edit_category_dialog.EditCategoryDialog.ICategoryEditor
 import kotlinx.android.synthetic.main.fragment_category_picker_with_create.*
 import leakcanary.AppWatcher
 
 class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
     ViewCategoryPicker,
-    ICategoryPickerCallback {
+    ICategoryPickerCallback, ICategoryEditor
+{
+    override fun addSubcategory(subcategory: SubCategory) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun deleteSubcategory(subcategory: SubCategory) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun updateCategory(category: Category) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun categoryEdited(pair: Pair<Category, List<SubCategory>>) {
+        val bundle = Bundle()
+        bundle.putParcelable("category",pair.first)
+        bundle.putParcelableArray("subcategories", pair.second.toTypedArray())
+        val dialog = EditCategoryDialog.newInstance(args = bundle)
+        dialog.setListener(this)
+        dialog.show(childFragmentManager, "editCategoryDialog")
+    }
+
     override fun showCreateDialog(it: Array<Category>) {
         val bundle = Bundle()
         bundle.putParcelableArray("categories",it)
