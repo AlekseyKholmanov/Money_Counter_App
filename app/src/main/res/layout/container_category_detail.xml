@@ -8,6 +8,7 @@
         android:focusableInTouchMode="true">
     <com.example.holmi_production.money_counter_app.model.SquareImageView
             android:id="@+id/iv_category_image"
+            android:padding="12dp"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
