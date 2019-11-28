@@ -8,4 +8,5 @@ interface ViewCategoryPicker:MvpView {
     fun showCategories(categories: ArrayList<Pair<Category, List<SubCategory>>>)
     fun showMessage(show:Boolean, messageResId:Int? = null)
      fun showCreateDialog(it: Array<Category>)
+    fun showToast(text:String)
 }

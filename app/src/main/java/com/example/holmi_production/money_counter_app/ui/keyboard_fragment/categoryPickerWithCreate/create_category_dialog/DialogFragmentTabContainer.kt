@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog
 
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +8,12 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Category
+import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppComaptDialogFragment
-import kotlinx.android.synthetic.main.base_category_create_dialog.*
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.edit_category_dialog.EditCategoryDialog
+import kotlinx.android.synthetic.main.container_category_create_dialog.*
+import leakcanary.AppWatcher
 
 class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcategoryCreateCallback,
     ICategoryCreateCallback, ViewCreateCategory {
@@ -21,16 +22,18 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcat
     }
 
     companion object {
-
         fun newInstance(args: Bundle): DialogFragmentTabContainer {
             val fragment = DialogFragmentTabContainer()
             fragment.arguments = args
             return fragment
         }
-
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.base_category_create_dialog, container, false)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.container_category_create_dialog, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,17 +51,23 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcat
             )
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
+    }
+
     override fun subcategoryCreated(categoryName: String, parentId: Int) {
-        presenter.createSubCategory(categoryName,parentId)
+        callback.addSubcategory(SubCategory(description = categoryName, parentId = parentId))
         dismiss()
     }
 
-    override fun categoryCreated(
-        categoryName: String,
-        categoryTypes: Collection<SpDirection>,
-        color: ColorDrawable?,
-        imageId:Int) {
-        presenter.createCategory(categoryName, categoryTypes.toList(), color, imageId)
+    override fun categoryUpdated(category:Category) {
+        callback.updateCategory(category)
+        dismiss()
+    }
+
+    fun setListener(callback: EditCategoryDialog.ICategoryEditor){
+        this.callback = callback
     }
 
     @ProvidePresenter
@@ -66,4 +75,6 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcat
 
     @InjectPresenter
     lateinit var presenter: PresenterCreateCategory
+
+    lateinit var callback:EditCategoryDialog.ICategoryEditor
 }

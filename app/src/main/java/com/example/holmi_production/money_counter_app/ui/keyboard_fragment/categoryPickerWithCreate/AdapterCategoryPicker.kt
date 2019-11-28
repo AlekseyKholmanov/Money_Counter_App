@@ -17,7 +17,7 @@ class CategoryPickerAdapter(val callback:ICategoryPickerCallback):RecyclerView.A
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryPickerHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val item = inflater.inflate(R.layout.category_picker_item, parent, false)
+        val item = inflater.inflate(R.layout.item_category, parent, false)
         return CategoryPickerHolder(item, callback)
     }
 
@@ -46,7 +46,7 @@ class CategoryPickerAdapter(val callback:ICategoryPickerCallback):RecyclerView.A
             tv.text = category.description
             v.setBackgroundColor(category.color?:Color.MAGENTA)
             v.setOnClickListener {
-                callback.categoryPicked(category.id)
+                callback.categoryPicked(category.id!!)
             }
             v.setOnLongClickListener {
                 callback.categoryEdited(pair)

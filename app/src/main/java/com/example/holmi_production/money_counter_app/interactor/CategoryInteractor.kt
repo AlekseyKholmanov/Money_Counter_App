@@ -40,6 +40,10 @@ class CategoryInteractor @Inject constructor(
         return subCategoryRepository.insert(subcategory)
     }
 
+    fun delete(subcategory: SubCategory):Completable{
+        return  subCategoryRepository.delete(subcategory)
+    }
+
     fun observeCategories(): Flowable<MutableList<Category>> {
         return categoryRepository.observeCategories()
             .async()
@@ -57,7 +61,7 @@ class CategoryInteractor @Inject constructor(
                 val zipList = arrayListOf<Pair<Category, List<SubCategory>>>()
                 val sortedlist = categories.sortedByDescending { it.usageCount }
                 sortedlist.forEach { category ->
-                    zipList.add(Pair(category, subCategories.filter { it.parentId == category.id }))
+                    zipList.add(Pair(category, subCategories.filter { it.parentId == category.id && !it.isDeleted}))
                 }
                 return@map zipList
             }

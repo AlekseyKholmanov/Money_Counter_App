@@ -106,7 +106,7 @@ class BalanceChartFragment : AndroidXMvpAppCompatFragment(), BalanceView {
             chart.data = data
         }
 
-        val mv = ChartMarkerView(context, R.layout.custom_marker_view)
+        val mv = ChartMarkerView(context, R.layout.item_marker_view)
 
         // Set the marker to the chart
         mv.chartView = chart

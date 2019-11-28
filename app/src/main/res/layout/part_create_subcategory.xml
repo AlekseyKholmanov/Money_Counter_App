@@ -6,16 +6,29 @@
               android:clickable="true"
               android:focusable="true"
               android:focusableInTouchMode="true">
-    <include layout="@layout/container_category_detail"/>
+
+    <EditText
+            android:id="@+id/et_subcategory_name"
+            android:minWidth="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/et_text_enter_subcategory_name"
+            android:layout_margin="8dp"
+            android:inputType="text"
+            android:imeOptions="actionDone"/>
+
+    <Spinner
+            android:id="@+id/spinner_parentCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog"/>
 
     <Button
-            android:id="@+id/btn_create_category"
+            android:id="@+id/btn_create_subcategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:enabled="false"
             android:layout_margin="8dp"
             android:text="@string/text_save"/>
-
 
 </LinearLayout>

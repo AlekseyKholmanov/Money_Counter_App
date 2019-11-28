@@ -11,5 +11,6 @@ data class SubCategory(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val parentId: Int,
-    val description: String
+    val description: String,
+    val isDeleted:Boolean = false
 ) : Parcelable

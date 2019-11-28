@@ -1,10 +1,9 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog
 
-import android.graphics.drawable.ColorDrawable
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
-import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import javax.inject.Inject
@@ -14,8 +13,8 @@ class PresenterCreateCategory @Inject constructor(private val interactor: Catego
 
 
 
-    fun createCategory(categoryName: String, categoryTypes: List<SpDirection>, color:ColorDrawable?, imageId:Int) {
-        interactor.insert(name = categoryName, types = categoryTypes, color = color, imageId = imageId)
+    fun createCategory(category:Category) {
+        interactor.insert(category)
             .async()
             .doAfterTerminate {
                 viewState.dismissDialog()

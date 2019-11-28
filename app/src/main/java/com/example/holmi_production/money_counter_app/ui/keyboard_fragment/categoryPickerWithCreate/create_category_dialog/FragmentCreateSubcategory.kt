@@ -13,7 +13,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import kotlinx.android.synthetic.main.dialog_create_subcategory.*
+import kotlinx.android.synthetic.main.part_create_subcategory.*
 import leakcanary.AppWatcher
 
 class FragmentCreateSubcategory : AndroidXMvpAppCompatFragment() {
@@ -50,7 +50,7 @@ class FragmentCreateSubcategory : AndroidXMvpAppCompatFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_create_subcategory, container, false)
+        return inflater.inflate(R.layout.part_create_subcategory, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,7 +73,7 @@ class FragmentCreateSubcategory : AndroidXMvpAppCompatFragment() {
         }
         btn_create_subcategory.setOnClickListener {
             val pickedCategory = spinner_parentCategory.selectedItem as Category
-            callback!!.subcategoryCreated(et_subcategory_name.text.toString(),pickedCategory.id)
+            callback!!.subcategoryCreated(et_subcategory_name.text.toString(),pickedCategory.id!!)
         }
         et_subcategory_name.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             var handled = false

@@ -147,6 +147,9 @@ class KeyboardPresenter @Inject constructor(
 
     private fun updateKeyboardUI(categoryId:Int){
         categoryInteractor.getCategoryWithSub(categoryId)
+            .map {
+                Pair(it.first,it.second.filter { !it.isDeleted })
+            }
             .async()
             .subscribe ({ pair ->
                 viewState.updateCategoryPickerButton(category = pair.first)

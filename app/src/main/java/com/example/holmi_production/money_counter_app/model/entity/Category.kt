@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 data class Category(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Int? = 0,
     val spendingDirection: List<SpDirection>,
     val description: String,
     val color: Int?,

@@ -32,6 +32,10 @@ class SubCategoryRepository @Inject constructor(
         }
     }
 
+    fun delete(subCategory: SubCategory): Completable {
+        return Completable.fromCallable { dao.delete(subCategory) }
+    }
+
     fun clear(): Completable {
         return Completable.fromCallable { dao.deleteAll() }
     }

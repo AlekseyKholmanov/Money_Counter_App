@@ -18,7 +18,7 @@ class PieChartAdapter(private val spendings: Array<SpendingListItem>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PieChartHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val item = inflater.inflate(R.layout.cost_item, parent, false)
+        val item = inflater.inflate(R.layout.item_cost, parent, false)
         return PieChartHolder(item)
     }
 

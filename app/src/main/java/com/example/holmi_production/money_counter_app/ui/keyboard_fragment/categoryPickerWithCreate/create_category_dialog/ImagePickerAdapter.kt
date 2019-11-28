@@ -14,7 +14,7 @@ class ImagePickerAdapter(private val imageIds: TypedArray, val callback: IImageP
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
 
         val inflater = LayoutInflater.from(parent.context)
-        val item = inflater.inflate(R.layout.category_picker_item, parent, false)
+        val item = inflater.inflate(R.layout.item_category, parent, false)
         return ImageHolder(item)
     }
 

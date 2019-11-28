@@ -17,7 +17,7 @@ import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
 class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.cost_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cost, parent, false)
         return ViewHolder(view)
     }
 

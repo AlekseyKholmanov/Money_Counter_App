@@ -8,14 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppComaptDialogFragment
-import kotlinx.android.synthetic.main.pie_spendings_dialog.*
 
 class PieDialogFragment private constructor(): AndroidXMvpAppComaptDialogFragment() {
     lateinit var rv:RecyclerView
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(context!!)
-        val view = activity!!.layoutInflater.inflate(R.layout.pie_spendings_dialog, null)
+        val view = activity!!.layoutInflater.inflate(R.layout.dialog_pie_spendings, null)
         val items = arguments?.getParcelableArray("SPENDINGS") as Array<SpendingListItem>
         rv = view.findViewById(R.id.rv_spendings)
         rv.adapter = PieChartAdapter(items)

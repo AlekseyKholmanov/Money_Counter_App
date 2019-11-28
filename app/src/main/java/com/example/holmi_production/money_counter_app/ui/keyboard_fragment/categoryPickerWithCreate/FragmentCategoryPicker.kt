@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,22 +26,28 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
     ViewCategoryPicker,
     ICategoryPickerCallback, ICategoryEditor
 {
+    override fun showToast(text: String) {
+        Toast.makeText(context,text,Toast.LENGTH_SHORT).show()
+    }
+
     override fun addSubcategory(subcategory: SubCategory) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        presenter.createSubCategory(subcategory)
     }
 
     override fun deleteSubcategory(subcategory: SubCategory) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        presenter.deleteSubcategory(subcategory)
     }
 
     override fun updateCategory(category: Category) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d("M_FrCategoryPicker","category: id:${category.id} desc: ${category.description}")
+        presenter.insertCategory(category)
     }
 
     override fun categoryEdited(pair: Pair<Category, List<SubCategory>>) {
         val bundle = Bundle()
         bundle.putParcelable("category",pair.first)
         bundle.putParcelableArray("subcategories", pair.second.toTypedArray())
+        Log.d("M_FrCategoryPicker","edit category ${pair.first.id} ${pair.first.description}")
         val dialog = EditCategoryDialog.newInstance(args = bundle)
         dialog.setListener(this)
         dialog.show(childFragmentManager, "editCategoryDialog")
@@ -50,6 +57,7 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
         val bundle = Bundle()
         bundle.putParcelableArray("categories",it)
         val dialog = DialogFragmentTabContainer.newInstance(args = bundle)
+        dialog.setListener(this)
         dialog.show(childFragmentManager, "createCategoryDialog")
     }
 

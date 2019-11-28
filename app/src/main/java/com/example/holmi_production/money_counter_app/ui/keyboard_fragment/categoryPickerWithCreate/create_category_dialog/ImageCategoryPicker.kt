@@ -18,7 +18,7 @@ class ImageCategoryPicker : AndroidXMvpAppComaptDialogFragment(){
         val inflater = activity!!.layoutInflater
         val view = inflater.inflate(R.layout.fragment_image_picker,null)
         val imageIds = context!!.resources.obtainTypedArray(R.array.images)
-        val layoutManager = GridLayoutManager(context,3)
+        val layoutManager = GridLayoutManager(context,4)
         val adapter = ImagePickerAdapter(imageIds, callback)
         rv = view.findViewById(R.id.rv_images)
         rv.layoutManager = layoutManager
