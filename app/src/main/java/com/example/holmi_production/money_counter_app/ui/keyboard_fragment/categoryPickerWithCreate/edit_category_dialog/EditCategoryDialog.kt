@@ -58,7 +58,6 @@ class EditCategoryDialog private constructor() : DialogFragment(), ICategoryStat
         subcategories.forEach { subcategory ->
             chips_group.addView(buildChip(subcategory, category.color!!))
         }
-        btn_update.isEnabled = false
         btn_update.setOnClickListener {
             callback.updateCategory( categoryDetail.getCurrentState())
             dismiss()
