@@ -9,9 +9,6 @@ import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
-import io.reactivex.Observable
-import io.reactivex.Single
-import java.util.stream.Collectors
 import javax.inject.Inject
 
 @InjectViewState
@@ -19,9 +16,11 @@ class PieChartPresenter @Inject constructor(
     private val spendingInteractor: SpendingInteractor
 ) : BasePresenter<PieChartView>() {
 
+    var spendingList = mutableListOf<SpendingListItem>()
     fun observeData() {
         spendingInteractor.observeSpendingWithType()
             .map {
+                spendingList = it
                 filterList((it))
             }
             .async()
@@ -35,30 +34,20 @@ class PieChartPresenter @Inject constructor(
             .keep()
     }
 
-    fun getSpending(categoryId:Int){
-        spendingInteractor.observeSpendingWithType()
-            .map {
-                val l = mutableListOf<SpendingListItem>()
-                for (item in it){
-                    if (item.category?.id == categoryId)
-                        l.add(item)
-                }
-                l
-            }
-            .async()
-            .subscribe ({
-                Log.d("M_PieChartPresenter","size: ${it.size}")
-                viewState.showDetails(it.toTypedArray())
-            },{
-                Log.d("M_PieChartPresenter",it.localizedMessage)
-            })
-            .keep()
+    fun getSpending(categoryId: Int) {
+        val filtered = mutableListOf<SpendingListItem>()
+        spendingList.forEach {item ->
+            if (item.category?.id == categoryId)
+                filtered.add(item)
+        }
+        Log.d("M_PieChartPresenter", "size: ${filtered.size}")
+        viewState.showDetails(filtered.toTypedArray())
     }
 
     private fun filterList(list: List<SpendingListItem>): List<Pair<Category?, List<Spending>>> {
         return list
-            .filter { it.spending.isSpending  == SpDirection.SPENDING}
-            .groupBy { it.category}
+            .filter { it.spending.isSpending == SpDirection.SPENDING }
+            .groupBy { it.category }
             .map { Pair(it.key, it.value.map { it.spending }) }
             .sortedByDescending { it.second.sumByDouble { it.sum } }
     }

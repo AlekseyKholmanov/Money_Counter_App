@@ -28,39 +28,42 @@ import kotlinx.android.synthetic.main.chart_pie.*
 import leakcanary.AppWatcher
 
 class PieChartFragment : AndroidXMvpAppCompatFragment(),
-    PieChartView, OnChartValueSelectedListener {
+    PieChartView {
     override fun showDetails(items: Array<SpendingListItem>) {
         val bundle = Bundle()
         bundle.putParcelableArray("SPENDINGS", items)
         val fr = PieDialogFragment.newInstance(bundle)
-        fr.show(childFragmentManager,"Spending dialog")
+        fr.show(childFragmentManager, "Spending dialog")
     }
 
-    override fun onNothingSelected() {
-
-    }
-
-    override fun onValueSelected(e: Entry?, h: Highlight?) {
-        val categoryId = e!!.data as Int
-        presenter.getSpending(categoryId)
-        Log.d("M_PieChartFragment","index $categoryId")
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.chart_pie, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("M_PieChartFragment", "pie view created")
         super.onViewCreated(view, savedInstanceState)
-        chart_pie.setOnChartValueSelectedListener(this)
+        chart_pie.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
+            override fun onNothingSelected() {
+                Log.d("M_PieChartFragment", "NOTHING CALLBACK")
+            }
+
+            override fun onValueSelected(e: Entry?, h: Highlight?) {
+                val categoryId = e!!.data as Int
+                presenter.getSpending(categoryId)
+                Log.d("M_PieChartFragment", "VALUE SELECTED index $categoryId")
+            }
+        })
         presenter.observeData()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         AppWatcher.objectWatcher.watch(this)
-        Log.d("M_PieChartFragment","destroy")
+        Log.d("M_PieChartFragment", "destroy")
     }
 
     override fun showError() {
@@ -89,11 +92,12 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
             var allMoney = 0.0
             data.forEach { (category, spendings) ->
                 val sum = spendings.sumByDouble { it.sum }
-                first.add(PieEntry(sum.toFloat(), category!!.description, category.id))
+                val pieEntry = PieEntry(sum.toFloat(), category!!.description, category.id)
+                first.add(pieEntry)
                 second.add(category.description)
                 colors.add(category.color!!)
-                allMoney+= sum
-                Log.d("M_PieChartFragment","index ${category.id} name ${category.description}")
+                allMoney += sum
+                Log.d("M_PieChartFragment", "index ${category.id} name ${category.description}")
             }
             val pieSet = PieDataSet(first.toList(), null)
             val pieData = PieData(pieSet)
@@ -115,8 +119,12 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
         val chip = Chip(context)
         val text = "${type.description} ${sum.toCurencyFormat().withRubleSign()}"
         chip.text = text
-        chip.chipBackgroundColor= ColorStateList.valueOf(type.color!!)
+        chip.chipBackgroundColor = ColorStateList.valueOf(type.color!!)
         chip.textSize = 20f
+        chip.isCheckable = true
+        chip.setOnClickListener {
+            presenter.getSpending(type.id!!)
+        }
         return chip
     }
 
