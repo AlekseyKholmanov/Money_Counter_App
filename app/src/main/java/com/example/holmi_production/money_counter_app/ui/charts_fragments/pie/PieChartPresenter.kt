@@ -40,6 +40,7 @@ class PieChartPresenter @Inject constructor(
             if (item.category?.id == categoryId)
                 filtered.add(item)
         }
+        filtered.sortByDescending { it.spending.createdDate }
         Log.d("M_PieChartPresenter", "size: ${filtered.size}")
         viewState.showDetails(filtered.toTypedArray())
     }

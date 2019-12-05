@@ -5,6 +5,7 @@ import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 import java.lang.Exception
 import java.util.*
+import java.util.regex.Pattern
 
 fun Number.toCurencyFormat(): String {
     return if (this.toString().takeLast(2) == ".0")
@@ -22,7 +23,7 @@ fun DateTime.getNameDayOfWeek(): String {
         5 -> "Пятница"
         6 -> "Суббота"
         7 -> "Воскресение"
-        else ->{
+        else -> {
             throw Exception("некорректная дата ")
         }
     }
@@ -31,6 +32,24 @@ fun DateTime.getNameDayOfWeek(): String {
 
 fun DateTime.toRUformat(): String {
     val formatter = DateTimeFormat.forPattern("dd MMMM yyyy")
+        .withLocale(Locale("ru"))
+    return formatter.print(this)
+}
+
+fun DateTime.toRUformatWithTime(): String {
+    val formatter = DateTimeFormat.forPattern("dd.MM.yyyy hh:mm")
+        .withLocale(Locale("ru"))
+    return formatter.print(this)
+}
+
+fun DateTime.getPatternTime(pattern: String): String {
+    val formatter = DateTimeFormat.forPattern(pattern)
+        .withLocale(Locale("ru"))
+    return formatter.print(this)
+}
+
+fun DateTime.getTime(): String {
+    val formatter = DateTimeFormat.forPattern("hh:mm")
         .withLocale(Locale("ru"))
     return formatter.print(this)
 }

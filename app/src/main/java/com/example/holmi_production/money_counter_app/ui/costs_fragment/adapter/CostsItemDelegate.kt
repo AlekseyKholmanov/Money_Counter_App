@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.getTime
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
@@ -41,8 +42,8 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         private val mCategoryText: AppCompatTextView = v.findViewById(R.id.tv_cost_item_category)
         private val mImage: ImageView = v.findViewById(R.id.cost_item_image)
         private val mSum: AppCompatTextView = v.findViewById(R.id.cost_item_sum)
-        private val mSign: AppCompatTextView = v.findViewById(R.id.cost_item_sign)
         private val mComment: AppCompatTextView = v.findViewById(R.id.tv_cost_item_comment)
+        private val mDate:AppCompatTextView = v.findViewById(R.id.cost_item_date)
 
         fun bind(item: SpendingListItem) {
             val spending = item.spending
@@ -56,12 +57,12 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
             v.setBackgroundColor(category?.color ?: Color.TRANSPARENT)
             v.background.alpha = 160
             mImage.setImageResource(category?.imageId ?: R.drawable.ic_launcher_foreground)
-            mSum.text = spending.sum.toCurencyFormat().withRubleSign()
+            val sum = "$signText ${spending.sum.toCurencyFormat().withRubleSign()}"
+            mSum.text = sum
             mSum.setTextColor(directionColor)
-            mSign.text = signText
-            mSign.setTextColor(directionColor)
             mCategoryText.text = categoryText + subcategoryText
             mComment.text = spending.comment ?: ""
+            mDate.text = spending.createdDate.getTime()
         }
     }
 }
