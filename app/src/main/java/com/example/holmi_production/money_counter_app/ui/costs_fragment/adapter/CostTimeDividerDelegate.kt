@@ -40,12 +40,13 @@ class CostTimeDividerDelegate : AdapterDelegate<List<ListItem>>() {
         private val date = v.findViewById(R.id.costs_divider_date) as TextView
         private val sum = v.findViewById(R.id.costs_divider_sum) as TextView
         private val sign = v.findViewById(R.id.costs_divider_sign) as TextView
+        private val dayOfWeek = v.findViewById(R.id.costs_divider_day_of_week) as TextView
         fun bind(divider: CostTimeDivider) {
             val isPositive = divider.sum.isPositive
             val sign: String = if (isPositive) "+" else "-"
             val color: Int = if (isPositive) Color.parseColor("#2e7d32") else Color.parseColor("#c62828")
-            val header = "${divider.date.toRUformat()}, ${divider.date.getNameDayOfWeek()}"
-            date.text = header
+            date.text = divider.date.toRUformat()
+            dayOfWeek.text = divider.date.getNameDayOfWeek()
             sum.text = divider.sum.sum.toCurencyFormat().withRubleSign()
             sum.setTextColor(color)
             this.sign.text = sign

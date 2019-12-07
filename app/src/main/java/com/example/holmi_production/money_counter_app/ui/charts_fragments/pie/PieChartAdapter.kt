@@ -48,7 +48,12 @@ class PieChartAdapter(private val spendings: Array<SpendingListItem>) :
             mDate.text = spending.createdDate.getPatternTime("dd.MM.yyyy")
             mSum.setTextColor(directionColor)
             mCategoryText.text = categoryText + subcategoryText
-            mComment.text = spending.comment ?: ""
+            mComment.visibility = if (spending.comment.isNullOrEmpty()) {
+                View.GONE
+            } else {
+                mComment.text = spending.comment
+                View.VISIBLE
+            }
         }
     }
 }
