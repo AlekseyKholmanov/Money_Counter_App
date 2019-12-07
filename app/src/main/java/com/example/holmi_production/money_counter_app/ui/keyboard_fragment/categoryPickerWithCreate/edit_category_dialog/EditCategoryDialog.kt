@@ -76,7 +76,7 @@ class EditCategoryDialog private constructor() : DialogFragment(), ICategoryStat
             val displayMetrics = DisplayMetrics()
             activity!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
             val width = (displayMetrics.widthPixels * 0.8f).toInt()
-            val height = ViewGroup.LayoutParams.MATCH_PARENT
+            val height = ViewGroup.LayoutParams.WRAP_CONTENT
 
             dialog.window!!.setLayout(width, height)
         }
