@@ -49,7 +49,7 @@ fun DateTime.getPatternTime(pattern: String): String {
 }
 
 fun DateTime.getTime(): String {
-    val formatter = DateTimeFormat.forPattern("hh:mm")
+    val formatter = DateTimeFormat.forPattern("HH:mm")
         .withLocale(Locale("ru"))
     return formatter.print(this)
 }
