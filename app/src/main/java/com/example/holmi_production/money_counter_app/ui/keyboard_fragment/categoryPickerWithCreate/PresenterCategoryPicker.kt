@@ -16,43 +16,52 @@ class PresenterCategoryPicker @Inject constructor(private val interactor: Catego
     fun observeCategories() {
         interactor.observeCategoriesAndSubCategories()
             .async()
-            .subscribe ({
-                if(it.size==0)
+            .subscribe({
+                if (it.size == 0)
                     viewState.showMessage(true, R.string.information_empty_list)
-                else{
+                else {
                     viewState.showMessage(show = false)
                     viewState.showCategories(it)
                 }
-            },{
-                Log.d("M_PresenterCategPicker","${it.message}")
+            }, {
+                Log.d("M_PresenterCategPicker", "${it.message}")
                 viewState.showMessage(true, R.string.error_list)
             }).keep()
     }
 
-    fun getDialogData(){
+    fun getDialogData() {
         interactor.getCategories()
             .async()
-            .subscribe ({
+            .subscribe({
                 viewState.showCreateDialog(it!!)
-            },{
-                Log.d("M_PresenterCatPick",it.message)
+            }, {
+                Log.d("M_PresenterCatPick", it.message)
             })
             .keep()
 
     }
+
     fun insertCategory(category: Category) {
         interactor.insert(category)
             .async()
-            .subscribe{
+            .subscribe {
                 viewState.showToast("категория обновлена")
             }
             .keep()
     }
 
-    fun createSubCategory(subCategory: SubCategory){
+    fun createSubCategory(subCategory: SubCategory) {
         interactor.insert(subCategory)
             .async()
-            .subscribe{
+            .doAfterTerminate {
+                interactor.getCategoryWithSub(subCategory.parentId)
+                    .async()
+                    .subscribe({ (_, subcategoryList) ->
+                        val nonDeletedSubCategories = subcategoryList.filter { !it.isDeleted }
+                        viewState.updateSubcategories(nonDeletedSubCategories)
+                    }, {})
+            }
+            .subscribe {
                 viewState.showToast("подкатегория добавлена")
             }
             .keep()

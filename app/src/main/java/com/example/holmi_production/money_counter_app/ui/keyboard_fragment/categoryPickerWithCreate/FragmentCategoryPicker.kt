@@ -24,10 +24,17 @@ import leakcanary.AppWatcher
 
 class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
     ViewCategoryPicker,
-    ICategoryPickerCallback, ICategoryEditor
-{
+    ICategoryPickerCallback, ICategoryEditor {
+
+    //Only for update subcategories in edit Dialog
+    override fun updateSubcategories(subcategories: List<SubCategory>) {
+        val dialog = childFragmentManager.findFragmentByTag(EDIT_DIALOG_TAG)
+        if (dialog != null)
+            (dialog as EditCategoryDialog).updateSubcategories(subcategories)
+    }
+
     override fun showToast(text: String) {
-        Toast.makeText(context,text,Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
     override fun addSubcategory(subcategory: SubCategory) {
@@ -39,40 +46,46 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
     }
 
     override fun updateCategory(category: Category) {
-        Log.d("M_FrCategoryPicker","category: id:${category.id} desc: ${category.description}")
+        Log.d("M_FrCategoryPicker", "category: id:${category.id} desc: ${category.description}")
         presenter.insertCategory(category)
     }
 
     override fun categoryEdited(pair: Pair<Category, List<SubCategory>>) {
         val bundle = Bundle()
-        bundle.putParcelable("category",pair.first)
+        bundle.putParcelable("category", pair.first)
         bundle.putParcelableArray("subcategories", pair.second.toTypedArray())
-        Log.d("M_FrCategoryPicker","edit category ${pair.first.id} ${pair.first.description}")
+        Log.d("M_FrCategoryPicker", "edit category ${pair.first.id} ${pair.first.description}")
         val dialog = EditCategoryDialog.newInstance(args = bundle)
         dialog.setListener(this)
-        dialog.show(childFragmentManager, "editCategoryDialog")
+        dialog.show(childFragmentManager, EDIT_DIALOG_TAG)
     }
 
     override fun showCreateDialog(it: Array<Category>) {
         val bundle = Bundle()
-        bundle.putParcelableArray("categories",it)
+        bundle.putParcelableArray("categories", it)
         val dialog = DialogFragmentTabContainer.newInstance(args = bundle)
         dialog.setListener(this)
-        dialog.show(childFragmentManager, "createCategoryDialog")
+        dialog.show(childFragmentManager, CREATE_DIALOG_TAG)
     }
 
     override fun categoryPicked(categoryId: Int) {
         val bundle = bundleOf("categoryId" to categoryId)
-        findNavController().navigate(R.id.action_categoryPickerWithCreateFragment_to_mainFragment, bundle)
+        findNavController().navigate(
+            R.id.action_categoryPickerWithCreateFragment_to_mainFragment,
+            bundle
+        )
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_category_picker_with_create, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CategoryPickerAdapter( callback = this)
+        adapter = CategoryPickerAdapter(callback = this)
         val layoutManager = GridLayoutManager(context, 3)
         rv_categoryList.layoutManager = layoutManager
         rv_categoryList.adapter = adapter
@@ -85,7 +98,7 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("M_FragmentCatPicker","CAtegoryPicker Destroyed")
+        Log.d("M_FragmentCatPicker", "CategoryPicker Destroyed")
         AppWatcher.objectWatcher.watch(this)
     }
 
@@ -114,6 +127,10 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
         fun newInstance(): FragmentCategoryPicker {
             return FragmentCategoryPicker()
         }
+
+        private const val CREATE_DIALOG_TAG = "create dialog"
+        private const val EDIT_DIALOG_TAG = "edit dialog"
+
     }
 
 }
