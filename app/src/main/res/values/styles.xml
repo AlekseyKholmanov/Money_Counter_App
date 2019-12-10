@@ -30,4 +30,8 @@
         <item name="android:windowMinWidthMinor">90%</item>
     </style>
 
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
 </resources>
