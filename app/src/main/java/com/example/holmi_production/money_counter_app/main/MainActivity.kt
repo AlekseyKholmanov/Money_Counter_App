@@ -9,7 +9,7 @@ import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import leakcanary.AppWatcher
 import javax.inject.Inject
 
-class MainActivity : AndroidXMvpAppCompatActivity(){
+class MainActivity : AndroidXMvpAppCompatActivity() {
 
     @Inject
     lateinit var settingRepository: SettingRepository
@@ -25,12 +25,12 @@ class MainActivity : AndroidXMvpAppCompatActivity(){
         else if (settingRepository.getIsEnd())
             graph.startDestination = R.id.navEndPeriod
         navController.graph = graph
-        if(!settingRepository.getBalancePopulatedStatus())
-            WorkerManager.balancePopulateWork()
+        WorkerManager.balancePopulateWork()
         WorkerManager.cancelAll()
         WorkerManager.startBalanceWorker()
         WorkerManager.startNotificationWorker()
     }
+
     override fun onSupportNavigateUp() = findNavController(R.id.mainNavFragment).navigateUp()
 
     override fun onDestroy() {

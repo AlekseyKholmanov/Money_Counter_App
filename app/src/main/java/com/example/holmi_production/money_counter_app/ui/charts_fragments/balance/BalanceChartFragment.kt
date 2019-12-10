@@ -45,8 +45,6 @@ class BalanceChartFragment : AndroidXMvpAppCompatFragment(), BalanceView {
         presenter.observeBalances()
         chart = view.findViewById(R.id.line_chart)
         chart.xAxis.disableGridDashedLine()
-        val yAxis = chart.axisLeft
-        yAxis.axisMinimum = 0f
         chart.xAxis.disableAxisLineDashedLine()
         chart.xAxis.isEnabled = true
         chart.legend.isEnabled = false
@@ -120,9 +118,9 @@ class BalanceChartFragment : AndroidXMvpAppCompatFragment(), BalanceView {
         xAxis.valueFormatter = XAxisFormatter()
 
         //min and max y Axis
-        val yBottom = (balances.minBy { it.amount }?.amount ?: 0.0) - 3000
+        val yBottom = (balances.minBy { it.amount }?.amount!!)
         yAxis.axisMaximum = balances.maxBy { it.amount }!!.amount.toFloat() + 3000f
-        yAxis.axisMinimum = if (yBottom <= 0.0) 0f else yBottom.toFloat()
+        yAxis.axisMinimum = yBottom.toFloat() - 3000f
 
         // labels xAxis count
         val labelIndexs = getLabelIndexes(balances)
