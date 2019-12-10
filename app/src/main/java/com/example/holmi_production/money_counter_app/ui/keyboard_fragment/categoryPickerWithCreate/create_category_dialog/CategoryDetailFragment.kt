@@ -12,12 +12,14 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.custom.ColorSeekBar
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import kotlinx.android.synthetic.main.container_category_detail.*
+import kotlin.random.Random
 
 class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragment(), IImagePicker {
     override fun imagePicked(resId: Int) {
@@ -61,6 +63,12 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
                     ch_accumulation.isChecked = true
             }
         }
+        color_seek_bar.setOnColorChangeListener(object : ColorSeekBar.OnColorChangeListener {
+            override fun onColorChangeListener(color: Int) {
+                //gives the selected color
+                iv_category_image.setBackgroundColor(color)
+            }
+        })
 
         iv_category_image.setOnClickListener {
             val dialog = ImageCategoryPicker.newInstance()
@@ -94,9 +102,13 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
             callback.updateStateButton(isCheckboxesChecked())
         }
         btn_generate_color.setOnClickListener {
-            val color = ColorUtils.getColor()
-            v_color_container.setBackgroundColor(color)
-            iv_category_image.setBackgroundColor(color)
+            val rand = Random.nextInt(0, color_seek_bar.width)
+            color_seek_bar.setColor(rand.toFloat())
+            iv_category_image.setBackgroundColor(color_seek_bar.getColor())
+
+//            val color = ColorUtils.getColor()
+//            v_color_container.setBackgroundColor(color)
+//            iv_category_image.setBackgroundColor(color)
         }
         et_category_name.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             var handled = false
@@ -118,7 +130,7 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
         val imageId = iv_category_image.tag as Int?
         val category = (arguments?.getParcelable("category") as Category?)
         val categoryId = category?.id
-        Log.d("M_CatDetailFragment","dsada")
+        Log.d("M_CatDetailFragment", "dsada")
         return Category(
             id = categoryId,
             imageId = imageId ?: R.drawable.ic_launcher_foreground,

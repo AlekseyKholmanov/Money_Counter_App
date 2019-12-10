@@ -1,86 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
     <com.example.holmi_production.money_counter_app.model.SquareImageView
             android:id="@+id/iv_category_image"
-            android:padding="12dp"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_add_24dp"
-            android:scaleType="centerCrop"
             android:layout_margin="4dp"
-            />
+            android:padding="12dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_add_24dp" />
+
     <EditText
             android:id="@+id/et_category_name"
-            android:minWidth="200dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/et_text_enter_category_name"
             android:layout_margin="8dp"
-            android:inputType="text"
+            android:hint="@string/et_text_enter_category_name"
             android:imeOptions="actionDone"
-            />
+            android:inputType="text"
+            android:minWidth="200dp" />
+
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:layout_margin="8dp"
-            android:text="@string/text_choose_type"/>
+            android:text="@string/text_choose_type"
+            android:textSize="20sp" />
+
     <CheckedTextView
             android:id="@+id/ch_income"
-            android:checked="false"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/text_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+            android:checked="false"
             android:gravity="center_vertical"
-            android:layout_margin="8dp"/>
+            android:text="@string/text_income" />
+
     <CheckedTextView
             android:id="@+id/ch_spending"
-            android:checked="false"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/text_spending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+            android:checked="false"
             android:gravity="center_vertical"
-            android:layout_margin="8dp"/>
+            android:text="@string/text_spending" />
 
     <CheckedTextView
             android:id="@+id/ch_accumulation"
-            android:checked="false"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@string/text_accumulation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-            android:layout_margin="8dp"/>
+            android:checked="false"
+            android:gravity="center_vertical"
+            android:text="@string/text_accumulation" />
+
     <TextView
             android:id="@+id/tv_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:layout_margin="8dp"
             android:text="@string/text_color"
-            android:layout_margin="8dp"/>
+            android:textSize="20sp" />
 
-    <LinearLayout android:layout_width="match_parent"
+    <com.example.holmi_production.money_counter_app.custom.ColorSeekBar
+        android:id="@+id/color_seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
         <Button
                 android:id="@+id/btn_generate_color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_getColor"
-                android:layout_margin="8dp"/>
-        <View android:id="@+id/v_color_container"
-                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:text="@string/btn_getColor" />
+
+        <View
+                android:id="@+id/v_color_container"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:layout_gravity="center"/>
+                android:layout_weight="1" />
 
     </LinearLayout>
 
