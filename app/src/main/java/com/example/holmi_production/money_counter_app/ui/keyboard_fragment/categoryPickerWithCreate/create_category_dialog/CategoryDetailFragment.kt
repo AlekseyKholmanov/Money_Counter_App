@@ -104,7 +104,6 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
         btn_generate_color.setOnClickListener {
             val rand = Random.nextInt(0, color_seek_bar.width)
             color_seek_bar.setColor(rand.toFloat())
-            iv_category_image.setBackgroundColor(color_seek_bar.getColor())
 
 //            val color = ColorUtils.getColor()
 //            v_color_container.setBackgroundColor(color)

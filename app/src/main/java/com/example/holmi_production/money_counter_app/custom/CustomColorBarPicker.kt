@@ -133,6 +133,7 @@ class ColorSeekBar(context: Context, attributeSet: AttributeSet): View(context, 
     fun setColor(position: Float){
         thumbX = position
         invalidate()
+        colorChangeListener?.onColorChangeListener(pickColor(position,width))
     }
 
     private fun mix(start: Int, end: Int, position: Float): Int {

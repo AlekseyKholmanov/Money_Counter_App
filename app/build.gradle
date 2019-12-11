@@ -90,6 +90,9 @@ dependencies {
     //ui
     implementation 'com.appeaser.sublimepickerlibrary:sublimepickerlibrary:2.1.2'
 
+    //color picker bar
+    implementation 'com.divyanshu.colorseekbar:colorseekbar:1.0.2'
+
     //jetpack
     implementation "android.arch.work:work-runtime:1.0.1"
 
