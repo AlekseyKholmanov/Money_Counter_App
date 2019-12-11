@@ -12,7 +12,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:layout_margin="4dp"
+            android:layout_margin="8dp"
             android:padding="12dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_add_24dp" />
@@ -21,7 +21,9 @@
             android:id="@+id/et_category_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:hint="@string/et_text_enter_category_name"
             android:imeOptions="actionDone"
             android:inputType="text"
@@ -30,7 +32,9 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/text_choose_type"
             android:textSize="20sp" />
 
@@ -38,7 +42,9 @@
             android:id="@+id/ch_income"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:checked="false"
             android:gravity="center_vertical"
@@ -48,7 +54,9 @@
             android:id="@+id/ch_spending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:checked="false"
             android:gravity="center_vertical"
@@ -58,7 +66,9 @@
             android:id="@+id/ch_accumulation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:checked="false"
             android:gravity="center_vertical"
@@ -68,37 +78,27 @@
             android:id="@+id/tv_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/text_color"
             android:textSize="20sp" />
 
     <com.example.holmi_production.money_counter_app.custom.ColorSeekBar
-        android:id="@+id/color_seek_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"/>
-
-    <LinearLayout
+            android:id="@+id/color_seek_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp" />
 
-        <Button
-                android:id="@+id/btn_generate_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/btn_getColor" />
-
-        <View
-                android:id="@+id/v_color_container"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_weight="1" />
-
-    </LinearLayout>
+    <Button
+            android:id="@+id/btn_generate_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:text="@string/btn_getColor" />
 
 </LinearLayout>

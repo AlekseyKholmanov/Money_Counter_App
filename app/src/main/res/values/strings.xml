@@ -18,7 +18,7 @@
     <string name="information_empty_list">Данные отсутствуют</string>
 
     <string name="error_list">Произошла ошибка</string>
-    <string name="btn_getColor">получить цвет</string>
+    <string name="btn_getColor">случайный цвет</string>
     <string name="text_color">Цвет:</string>
     <string name="et_text_enter_category_name">введите название категории</string>
     <string name="text_choose_type">Выберите тип:</string>
