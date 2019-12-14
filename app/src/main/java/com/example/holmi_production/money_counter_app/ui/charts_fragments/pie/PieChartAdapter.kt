@@ -1,11 +1,13 @@
 package com.example.holmi_production.money_counter_app.ui.charts_fragments.pie
 
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.*
@@ -33,6 +35,9 @@ class PieChartAdapter(private val spendings: Array<SpendingListItem>) :
         private val mSum: AppCompatTextView = v.findViewById(R.id.cost_item_sum)
         private val mComment: AppCompatTextView = v.findViewById(R.id.tv_cost_item_comment)
         private val mDate :AppCompatTextView = v.findViewById(R.id.cost_item_date)
+        private val shapeContainer: ConstraintLayout =
+            v.findViewById(R.id.spending_item_shape_container)
+
 
         fun bind(item: SpendingListItem) {
             val spending = item.spending
@@ -43,6 +48,8 @@ class PieChartAdapter(private val spendings: Array<SpendingListItem>) :
             val subcategoryText = if (subcategory == null) "" else " \u2799 ${subcategory.description}"
             val categoryText = category?.description ?: ""
             val sum = "$signText ${spending.sum.toCurencyFormat().withRubleSign()}"
+            val drawable = shapeContainer.background as GradientDrawable
+            drawable.setColor(category?.color ?: Color.TRANSPARENT)
             mImage.visibility = View.GONE
             mSum.text = sum
             mDate.text = spending.createdDate.getPatternTime("dd.MM.yyyy")

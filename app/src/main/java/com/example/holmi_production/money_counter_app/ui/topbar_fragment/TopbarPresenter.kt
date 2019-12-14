@@ -8,8 +8,6 @@ import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
 import org.joda.time.DateTime
 import org.joda.time.Duration
-import org.xml.sax.DTDHandler
-import java.lang.NullPointerException
 import javax.inject.Inject
 
 @InjectViewState
@@ -26,8 +24,12 @@ class TopbarPresenter @Inject constructor(private val periodsRepository: Periods
                 viewState.showDate(newPeriod.leftBorder, newPeriod.rightBorder)
                 periodsRepository.insert(newPeriod).async().subscribe().keep()
             }, {
-                Log.d("M_TopbarPresenter", "set period error \r\n ${it.message} ")
+                val left = DateTime().withTimeAtStartOfDay().minusDays(7)
+                val right = DateTime().withMinuteOfHour(59).withHourOfDay(23)
+                val filterPeriods = FilterPeriods("",left,right)
 
+                viewState.showDate(left,right)
+                periodsRepository.insert(filterPeriods).async().subscribe().keep()
             })
             .keep()
     }
