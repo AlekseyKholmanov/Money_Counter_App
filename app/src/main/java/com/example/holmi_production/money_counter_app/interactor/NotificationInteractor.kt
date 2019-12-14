@@ -17,7 +17,7 @@ class NotificationInteractor @Inject constructor(
         Log.d("qwert", "alarm triggered")
         return sumPerDayRepository.getTodayAndAverage()
             .async()
-            .subscribe({ it ->
+            .subscribe({
                 val saved = it.first
                 val newToday = it.second
                 sumPerDayRepository.insertToday(newToday.inc(saved.sum).sum).complete()

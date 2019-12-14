@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.main
 
-import android.nfc.NfcAdapter
 import android.util.Log
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -27,7 +26,7 @@ class WorkerManager {
             val diff =Time.getDiffToNextDay(addMinutes = 2)
             Log.d("M_WorkerManager","balance work execute")
             Log.d("M_WorkerManager", "balance work wiil be ${diff/(1000*60*60*24)} day ${diff/(1000*60*60)} hours ${diff/1000%60} minutes")
-            val work = OneTimeWorkRequest.Builder(SaveBalanceTask::class.java)
+            val work = OneTimeWorkRequest.Builder(BalanceTask::class.java)
                 .setInitialDelay(diff, TimeUnit.MILLISECONDS)
                 .addTag(BALANCE_WORK_TAG)
                 .build()

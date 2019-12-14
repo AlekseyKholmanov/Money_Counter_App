@@ -16,7 +16,6 @@ import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.Flowables
 import org.joda.time.DateTime
-import org.joda.time.LocalDate
 import javax.inject.Inject
 
 class SpendingInteractor @Inject constructor(

@@ -41,7 +41,9 @@ class NotificationManager @Inject constructor(
         }
     }
 
-    private fun buildNotification(saveSum: Double, newSum: Double): Notification {
+
+
+    private fun buildSpendingNotification(saveSum: Double, newSum: Double): Notification {
         val intent = Intent(application, MainActivity::class.java).apply {
             FLAG_UPDATE_CURRENT
         }
@@ -61,14 +63,33 @@ class NotificationManager @Inject constructor(
             .build()
     }
 
-    fun notify(savedSum: Double, newSumPerDay: Double) {
-        val notification = buildNotification(savedSum, newSumPerDay)
-        sendNotification(notification)
+    private fun buillWorkerNotification(balance:Double): Notification {
+        return NotificationCompat.Builder(application, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("balance worker Task")
+            .setContentText("выполнено жи")
+            .setStyle(
+                NotificationCompat.InboxStyle()
+                    .addLine("баланс: $balance")
+            )
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
+            .build()
     }
 
-    private fun sendNotification(notification: Notification) {
+    fun notify(savedSum: Double, newSumPerDay: Double) {
+        val notification = buildSpendingNotification(savedSum, newSumPerDay)
+        sendNotification(notification, 1)
+    }
+
+    fun notifyWorkerTask(balance:Double){
+        val notification = buillWorkerNotification(balance)
+        sendNotification(notification, 2)
+    }
+
+    private fun sendNotification(notification: Notification, id:Int) {
         with(NotificationManagerCompat.from(application)) {
-            notify(1, notification)
+            notify(id, notification)
         }
     }
 
