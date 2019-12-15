@@ -70,6 +70,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
                 View.GONE
             } else {
                 mComment.text = spending.comment
+                mComment.setTextColor(ColorUtils.getFontColor(backgroundColor))
                 View.VISIBLE
             }
 
