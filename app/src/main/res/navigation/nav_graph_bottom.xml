@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tool="http://schemas.android.com/tools"
         android:id="@+id/nav_graph_bottom"
@@ -9,50 +8,61 @@
             android:id="@+id/mainFragment"
             android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardFragment"
             android:label="MainFragment"
-            tool:layout="@layout/fragment_bottom_keyboard"
-    >
-        <action android:id="@+id/action_mainFragment_to_categoryPickerFragment"
-                app:destination="@id/categoryPickerFragment" app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim" app:popUpToInclusive="false"
-                app:popUpTo="@+id/mainFragment" app:launchSingleTop="true"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
-        <action android:id="@+id/action_mainFragment_to_categoryPickerWithCreateFragment"
-                app:destination="@id/categoryPickerWithCreateFragment" app:launchSingleTop="true"
-                app:popUpTo="@+id/mainFragment"/>
+            tool:layout="@layout/fragment_bottom_keyboard">
+        <action
+                android:id="@+id/action_mainFragment_to_categoryPickerFragment"
+                app:destination="@id/categoryPickerFragment"
+                app:launchSingleTop="true"
+                app:popUpTo="@+id/mainFragment"
+                app:popUpToInclusive="false" />
+        <action
+                android:id="@+id/action_mainFragment_to_categoryPickerWithCreateFragment"
+                app:destination="@id/categoryPickerWithCreateFragment"
+                app:launchSingleTop="true"
+                app:popUpTo="@+id/mainFragment" />
     </fragment>
     <fragment
             android:id="@+id/chartFragment"
             android:name="com.example.holmi_production.money_counter_app.ui.charts_fragments.ChartFragment"
             android:label="ChartFragment"
-            tool:layout="@layout/fragment_bottom_chart"/>
+            tool:layout="@layout/fragment_bottom_chart" />
+
     <fragment
             android:id="@+id/costsFragment"
             android:name="com.example.holmi_production.money_counter_app.ui.costs_fragment.CostsFragment"
             android:label="CostsFragment"
-            tool:layout="@layout/fragment_bottom_costs"/>
-    <fragment android:id="@+id/categoryPickerFragment"
-              android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPicker.CategoryPickerFragment"
-              android:label="CategoryPickerFragment">
-        <action android:id="@+id/action_categoryPickerFragment_to_mainFragment" app:destination="@id/mainFragment"
-                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
-                app:popUpToInclusive="false" app:popUpTo="@+id/nav_graph_bottom"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim">
-        </action>
+            tool:layout="@layout/fragment_bottom_costs" />
+
+    <fragment
+            android:id="@+id/categoryPickerFragment"
+            android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker."
+            android:label="CategoryPickerFragment">
+        <action
+                android:id="@+id/action_categoryPickerFragment_to_mainFragment"
+                app:destination="@id/mainFragment"
+                app:popUpTo="@+id/nav_graph_bottom"
+                app:popUpToInclusive="false"/>
     </fragment>
     <fragment
             android:id="@+id/settingsFragment"
             android:name="com.example.holmi_production.money_counter_app.ui.settings.SettingsFragment"
             android:label="SettingsFragment"
-            tool:layout="@layout/frament_settings"/>
-    <fragment android:id="@+id/categoryPickerWithCreateFragment"
-              android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker"
-              android:label="CategoryPickerWithCreateFragment">
-        <action android:id="@+id/action_categoryPickerWithCreateFragment_to_mainFragment"
-                app:destination="@id/mainFragment" app:launchSingleTop="true" app:popUpTo="@+id/nav_graph_bottom"/>
-        <action android:id="@+id/action_categoryPickerWithCreateFragment_to_dialogCategoryCreate2"
-                app:destination="@id/dialogCategoryCreate2"/>
+            tool:layout="@layout/frament_settings" />
+    <fragment
+            android:id="@+id/categoryPickerWithCreateFragment"
+            android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker"
+            android:label="CategoryPickerWithCreateFragment">
+        <action
+                android:id="@+id/action_categoryPickerWithCreateFragment_to_mainFragment"
+                app:destination="@id/mainFragment"
+                app:launchSingleTop="true"
+                app:popUpTo="@+id/nav_graph_bottom" />
+        <action
+                android:id="@+id/action_categoryPickerWithCreateFragment_to_dialogCategoryCreate2"
+                app:destination="@id/dialogCategoryCreate2" />
     </fragment>
-    <dialog android:id="@+id/dialogCategoryCreate2"
+    <dialog
+            android:id="@+id/dialogCategoryCreate2"
             android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.DialogFragmentTabContainer"
-            android:label="DialogCategoryCreate"/>
+            android:label="DialogCategoryCreate" />
 </navigation>
