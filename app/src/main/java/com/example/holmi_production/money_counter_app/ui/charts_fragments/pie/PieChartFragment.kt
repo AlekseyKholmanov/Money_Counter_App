@@ -17,6 +17,7 @@ import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -119,7 +120,8 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
         val chip = Chip(context)
         val text = "${type.description} ${sum.toCurencyFormat().withRubleSign()}"
         chip.text = text
-        chip.chipBackgroundColor = ColorStateList.valueOf(type.color!!)
+        chip.setTextColor(ColorUtils.getFontColor(type.color!!))
+        chip.chipBackgroundColor = ColorStateList.valueOf(type.color)
         chip.textSize = 20f
         chip.isCheckable = true
         chip.setOnClickListener {

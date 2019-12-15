@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.ui.costs_fragment.adapter
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
@@ -17,6 +16,7 @@ import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
+import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
 class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
@@ -64,7 +64,8 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
                     ?: ""} \u2799 ${subcategory.description}"
             val drawable = shapeContainer.background as GradientDrawable
             val sum = "$signText ${spending.sum.toCurencyFormat().withRubleSign()}"
-            drawable.setColor(category?.color ?: Color.TRANSPARENT)
+            val backgroundColor = category?.color ?: Color.TRANSPARENT
+            drawable.setColor(backgroundColor)
             mComment.visibility = if (spending.comment.isNullOrEmpty()) {
                 View.GONE
             } else {
@@ -76,8 +77,9 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
             mSum.text = sum
             mSum.setTextColor(directionColor)
             mCategoryText.text = text
-
+            mCategoryText.setTextColor(ColorUtils.getFontColor(backgroundColor))
             mDate.text = spending.createdDate.getTime()
+            mDate.setTextColor(ColorUtils.getFontColor(backgroundColor))
         }
     }
 }

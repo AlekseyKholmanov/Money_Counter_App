@@ -3,7 +3,6 @@ package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,32 +11,36 @@ import android.widget.TextView
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.Vibrator
-import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
-import com.example.holmi_production.money_counter_app.extensions.isKeyboardClosed
 import com.example.holmi_production.money_counter_app.model.ButtonTypes
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.SquareImageView
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_keyboard_part.*
 import javax.inject.Inject
 
-class KeyboardPartFragment private constructor(): AndroidXMvpAppCompatFragment() {
+class KeyboardPartFragment private constructor() : AndroidXMvpAppCompatFragment() {
     companion object {
         fun newInstance(): KeyboardPartFragment {
             return KeyboardPartFragment()
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_keyboard_part, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        key_progress_bar.max = 100f
+        key_progress_bar.progress = 0f
         key_0.setOnClickListener { pressed(ButtonTypes.ZERO, "0") }
         key_1.setOnClickListener { pressed(ButtonTypes.NUMERIC, "1") }
         key_2.setOnClickListener { pressed(ButtonTypes.NUMERIC, "2") }
@@ -55,14 +58,14 @@ class KeyboardPartFragment private constructor(): AndroidXMvpAppCompatFragment()
         key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
         comment.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             var handled = false
-            if(actionId == EditorInfo.IME_ACTION_DONE){
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
                 comment?.hideKeyboardFrom(context!!)
                 handled = true
             }
             return@OnEditorActionListener handled
         })
         comment.setOnFocusChangeListener { _, hasFocus ->
-            if(!hasFocus){
+            if (!hasFocus) {
                 comment?.hideKeyboardFrom(context!!)
             }
         }
@@ -79,43 +82,51 @@ class KeyboardPartFragment private constructor(): AndroidXMvpAppCompatFragment()
         val text = key_category.findViewById<TextView>(R.id.tv_category_btn_placeholder)
         val image = key_category.findViewById<SquareImageView>(R.id.iv_category)
 
-        if(category == null){
+        if (category == null) {
             image.visibility = View.GONE
             text.visibility = View.VISIBLE
             text.text = "Категории не созданы"
-        }
-        else{
+        } else {
             image.visibility = View.VISIBLE
             text.visibility = View.GONE
             key_category.setBackgroundColor(category.color!!)
             image.setImageResource(category.imageId ?: R.drawable.ic_launcher_foreground)
         }
+
+
+        key_progress_bar.setBackgroundColor(category?.color!!)
+        key_progress_bar.progressColor = category.color
+        key_progress_bar.progress = 55f
+        key_progress_bar.invalidate()
     }
 
-    fun showChipsContainer(subcategories: List<SubCategory>, color:Int) {
-        if(subcategories.isNullOrEmpty()){
+    fun showChipsContainer(subcategories: List<SubCategory>, color: Int) {
+        if (subcategories.isNullOrEmpty()) {
             container_chips.visibility = View.GONE
-        }
-        else{
+        } else {
             container_chips.visibility = View.VISIBLE
-            for(i in 0 until subcategories.size){
-                val alpha = 255 - (i+1)*35
+            for (i in subcategories.indices) {
+                val alpha = 255 - (i + 1) * 35
                 cg_subcategory_group.addView(buildChip(subcategories[i], color, alpha) as View)
             }
         }
     }
 
-    fun showActionButtons(directions:List<SpDirection>){
-        key_income.visibility = if(directions.contains(SpDirection.INCOME)) View.VISIBLE else View.GONE
-        key_spending.visibility = if(directions.contains(SpDirection.SPENDING)) View.VISIBLE else View.GONE
-        key_accumulation.visibility = if(directions.contains(SpDirection.ACCUMULATION)) View.VISIBLE else View.GONE
+    fun showActionButtons(directions: List<SpDirection>) {
+        key_income.visibility =
+            if (directions.contains(SpDirection.INCOME)) View.VISIBLE else View.GONE
+        key_spending.visibility =
+            if (directions.contains(SpDirection.SPENDING)) View.VISIBLE else View.GONE
+        key_accumulation.visibility =
+            if (directions.contains(SpDirection.ACCUMULATION)) View.VISIBLE else View.GONE
 
     }
 
-    private fun buildChip(subcategory:SubCategory, color: Int, alpha:Int): Chip {
+    private fun buildChip(subcategory: SubCategory, color: Int, alpha: Int): Chip {
         val chip = Chip(context)
         chip.isCheckable = true
         chip.isClickable = true
+        chip.setTextColor(ColorUtils.getFontColor(color))
         chip.text = subcategory.description
         chip.background.alpha = alpha
         chip.chipBackgroundColor = ColorStateList.valueOf(color)
@@ -186,13 +197,13 @@ class KeyboardPartFragment private constructor(): AndroidXMvpAppCompatFragment()
             else -> {
                 val text = comment.text.toString()
                 val checkedId = cg_subcategory_group.checkedChipId
-                var tag:Int? = null
-                if(checkedId != View.NO_ID){
+                var tag: Int? = null
+                if (checkedId != View.NO_ID) {
                     val chips = cg_subcategory_group.findViewById<Chip>(checkedId)
                     tag = chips.tag as Int
                 }
 
-                mKeyboardListener!!.enterPressed(purshaseSum.toDouble(), text, isSpending , tag)
+                mKeyboardListener!!.enterPressed(purshaseSum.toDouble(), text, isSpending, tag)
                 purshaseSum = "0"
                 clearCommentField()
                 uncheckChips()
@@ -215,7 +226,7 @@ class KeyboardPartFragment private constructor(): AndroidXMvpAppCompatFragment()
 }
 
 interface IKeyboardListener {
-    fun enterPressed(money: Double, comment: String, isSpending: SpDirection , subcategoryId:Int?)
+    fun enterPressed(money: Double, comment: String, isSpending: SpDirection, subcategoryId: Int?)
     fun moneyUpdated(money: Double)
     fun showCategoryDialog()
 }

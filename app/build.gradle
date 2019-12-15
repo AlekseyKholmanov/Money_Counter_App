@@ -93,6 +93,9 @@ dependencies {
     //color picker bar
     implementation 'com.divyanshu.colorseekbar:colorseekbar:1.0.2'
 
+    //progress bar
+    implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
+
     //jetpack
     implementation "android.arch.work:work-runtime:1.0.1"
 
