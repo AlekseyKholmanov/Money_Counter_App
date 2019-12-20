@@ -55,10 +55,10 @@ class BottomHostFragment : AndroidXMvpAppCompatFragment() {
     }
 
     private fun hideTopbar() {
-        activity!!.topbarContainer.visibility = View.GONE
+        topbarContainer.visibility = View.GONE
     }
 
     private fun showTopbar() {
-        activity!!.topbarContainer.visibility = View.VISIBLE
+        topbarContainer.visibility = View.VISIBLE
     }
 }

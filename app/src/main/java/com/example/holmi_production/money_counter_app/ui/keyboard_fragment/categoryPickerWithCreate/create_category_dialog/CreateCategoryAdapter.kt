@@ -8,11 +8,10 @@ import com.example.holmi_production.money_counter_app.ui.charts_fragments.ChartT
 
 class CreateCategoryAdapter(
     fm: FragmentManager,
-    behavior: Int = BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
     val categories: Array<Category>,
     val subcategoryCallback: ISubcategoryCreateCallback,
     val categoryCallback: ICategoryCreateCallback) :
-    FragmentPagerAdapter(fm, behavior) {
+    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
          return when (CategoryCreateDialogType.values()[position]) {
