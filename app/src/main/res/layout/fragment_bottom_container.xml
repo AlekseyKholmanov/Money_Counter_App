@@ -11,10 +11,7 @@
             android:id="@+id/topbarContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:animateLayoutChanges="true">
 
         <fragment
                 android:id="@+id/topbarFragment"
@@ -30,11 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:animateLayoutChanges="true"
-            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/topbarContainer">
+            android:animateLayoutChanges="true">
 
         <fragment
                 android:id="@+id/bottomNavFragment"
@@ -53,10 +46,6 @@
             android:padding="0dp"
             app:itemIconTint="@color/colorAccent"
             app:itemTextColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:menu="@menu/bottom_navigation_main" />
-
 
 </LinearLayout>

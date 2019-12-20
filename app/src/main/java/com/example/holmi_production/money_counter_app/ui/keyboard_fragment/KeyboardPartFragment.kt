@@ -89,13 +89,13 @@ class KeyboardPartFragment private constructor() : AndroidXMvpAppCompatFragment(
         } else {
             image.visibility = View.VISIBLE
             text.visibility = View.GONE
-            key_category.setBackgroundColor(category.color!!)
+            key_category.setBackgroundColor(category.color ?: ColorUtils.getColor())
             image.setImageResource(category.imageId ?: R.drawable.ic_launcher_foreground)
         }
 
 
-        key_progress_bar.setBackgroundColor(category?.color!!)
-        key_progress_bar.progressColor = category.color
+        key_progress_bar.setBackgroundColor(category?.color ?: ColorUtils.getColor())
+        key_progress_bar.progressColor = ColorUtils.getColor()
         key_progress_bar.progress = 55f
         key_progress_bar.invalidate()
     }
