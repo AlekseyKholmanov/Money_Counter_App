@@ -27,6 +27,7 @@ class TimePickerDialog : DialogFragment(), DatePickerDialog.OnDateSetListener {
     override fun onDateSet(picker: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
         val time = DateTime(picker.year, picker.month + 1, picker.dayOfMonth, 0, 0)
         callback?.datePicked(time)
+        dismiss()
         Log.d("qwerty", time.toString())
 
     }

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -134,7 +135,13 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
 
     override fun showCategoryDialog() {
         withCreate = FragmentCategoryPicker.newInstance()
-        findNavController().navigate(R.id.action_mainFragment_to_categoryPickerWithCreateFragment)
+        val option = NavOptions.Builder()
+            .setEnterAnim(R.anim.start)
+            .setExitAnim(R.anim.end)
+            .setPopEnterAnim(R.anim.start)
+            .setPopExitAnim(R.anim.end)
+            .build()
+        findNavController().navigate(R.id.action_mainFragment_to_categoryPickerWithCreateFragment, null, option)
     }
 
     override fun showAverageSum(sum: String, isDisplayed: Boolean) {
