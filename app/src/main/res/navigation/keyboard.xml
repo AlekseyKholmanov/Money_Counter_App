@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/keyboard"
+        app:startDestination="@id/keyboardFragment">
+
+    <fragment
+            android:id="@+id/keyboardFragment"
+            android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardFragment"
+            android:label="KeyboardFragment" >
+        <action
+                android:id="@+id/action_keyboardFragment_to_fragmentCategoryPicker"
+                app:destination="@id/fragmentCategoryPicker" />
+    </fragment>
+    <fragment
+            android:id="@+id/fragmentCategoryPicker"
+            android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker"
+            android:label="FragmentCategoryPicker" />
+</navigation>

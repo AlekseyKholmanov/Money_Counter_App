@@ -10,15 +10,8 @@
             android:label="MainFragment"
             tool:layout="@layout/fragment_bottom_keyboard">
         <action
-                android:id="@+id/action_mainFragment_to_categoryPickerFragment"
-                app:destination="@id/categoryPickerFragment"
-                app:launchSingleTop="true"
-                app:popUpTo="@+id/mainFragment"
-                app:popUpToInclusive="false" />
-        <action
                 android:id="@+id/action_mainFragment_to_categoryPickerWithCreateFragment"
                 app:destination="@id/categoryPickerWithCreateFragment"
-                app:launchSingleTop="true"
                 app:popUpTo="@+id/mainFragment" />
     </fragment>
     <fragment
@@ -34,16 +27,6 @@
             tool:layout="@layout/fragment_bottom_costs" />
 
     <fragment
-            android:id="@+id/categoryPickerFragment"
-            android:name="com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.FragmentCategoryPicker."
-            android:label="CategoryPickerFragment">
-        <action
-                android:id="@+id/action_categoryPickerFragment_to_mainFragment"
-                app:destination="@id/mainFragment"
-                app:popUpTo="@+id/nav_graph_bottom"
-                app:popUpToInclusive="false"/>
-    </fragment>
-    <fragment
             android:id="@+id/settingsFragment"
             android:name="com.example.holmi_production.money_counter_app.ui.settings.SettingsFragment"
             android:label="SettingsFragment"
@@ -55,7 +38,6 @@
         <action
                 android:id="@+id/action_categoryPickerWithCreateFragment_to_mainFragment"
                 app:destination="@id/mainFragment"
-                app:launchSingleTop="true"
                 app:popUpTo="@+id/nav_graph_bottom" />
         <action
                 android:id="@+id/action_categoryPickerWithCreateFragment_to_dialogCategoryCreate2"
