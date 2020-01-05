@@ -5,6 +5,7 @@
         android:id="@+id/numbers_keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
     <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
@@ -14,7 +15,7 @@
             app:rcIconHeight="0dp"
             app:rcIconWidth="0dp"
             app:rcBackgroundPadding="0dp"
-            app:rcRadius="0dp" />
+            app:rcRadius="0dp"/>
 
     <View
             android:layout_width="match_parent"
@@ -23,7 +24,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
 
         <include
                 android:id="@+id/key_category"
@@ -58,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:scrollbars="none"
-            android:visibility="gone">
+            android:visibility="gone"
+            android:animateLayoutChanges="true">
 
         <com.google.android.material.chip.ChipGroup
                 android:id="@+id/cg_subcategory_group"
@@ -91,7 +94,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/design_default_color_primary_variant">
+            android:background="@color/design_default_color_primary_dark"
+            android:animateLayoutChanges="true">
 
         <Button
                 android:id="@+id/key_7"
@@ -107,7 +111,6 @@
                 android:id="@+id/key_8"
                 style="@style/MyKeyboardButtons"
                 android:layout_marginEnd="1dp"
-                android:background="#838383"
                 android:text="8"
                 app:layout_constraintBottom_toTopOf="@id/h_25"
                 app:layout_constraintLeft_toRightOf="@id/v_22"
@@ -127,6 +130,7 @@
         <Button
                 android:id="@+id/key_delete"
                 style="@style/MyKeyboardButtons"
+                android:layout_marginEnd="1dp"
                 android:text="Delete"
                 app:layout_constraintBottom_toTopOf="@id/h_25"
                 app:layout_constraintLeft_toRightOf="@id/v_66"
@@ -202,6 +206,7 @@
         <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginEnd="1dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"

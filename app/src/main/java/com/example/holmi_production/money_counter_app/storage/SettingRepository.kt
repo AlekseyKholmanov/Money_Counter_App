@@ -12,6 +12,23 @@ import javax.inject.Singleton
 
 @Singleton
 class SettingRepository @Inject constructor(private val pref: SharedPreferences) {
+
+    fun setEndMonth(day:Int){
+        pref.edit().putInt(END_MONTH,day).apply()
+    }
+
+    fun getEndMonth():Int{
+        return pref.getInt(END_MONTH,15)
+    }
+
+    fun getPeriodType(): Int {
+        return pref.getInt(PERIOD_TYPE, 0)
+    }
+
+    fun setPeriodType(type:Int){
+        pref.edit().putInt(PERIOD_TYPE, type).apply()
+    }
+
     private val settingSubject by lazy {
         PublishSubject.create<Long>()
     }
@@ -83,4 +100,6 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
     private val IS_END = "IS_END"
     private val CATEGORY_VALUE = "Category_value"
     private val BALANCE_MIGRATION_TAG = "BALANCE_POPULATED"
+    private val PERIOD_TYPE = "PERIOD_TYPE"
+    private val END_MONTH = "END_MONTH"
 }

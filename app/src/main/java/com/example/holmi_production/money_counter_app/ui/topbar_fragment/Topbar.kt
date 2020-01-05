@@ -9,6 +9,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
+import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_topbar.*
 import leakcanary.AppWatcher
@@ -16,8 +17,8 @@ import org.joda.time.DateTime
 
 class Topbar : AndroidXMvpAppCompatFragment(), TopbarView, ITopbarDatePickerCallback {
 
-    override fun showDate(leftBorder: DateTime, rightBorder: DateTime) {
-        tv_topbar_text.text = " ${leftBorder.toRUformat()} - ${rightBorder.toRUformat()}"
+    override fun showDate(date:String) {
+        tv_topbar_text.text = date
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -39,6 +40,10 @@ class Topbar : AndroidXMvpAppCompatFragment(), TopbarView, ITopbarDatePickerCall
             dialog.show(childFragmentManager, "TopbarDatePicker")
         }
         presenter.getPeriod()
+    }
+
+    override fun datePicked(type: PeriodTypeEnums) {
+        presenter.setPeriod(type)
     }
 
     override fun datePicked(left: DateTime, right: DateTime) {

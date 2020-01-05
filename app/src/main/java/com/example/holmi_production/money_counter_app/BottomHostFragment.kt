@@ -23,6 +23,7 @@ class BottomHostFragment : AndroidXMvpAppCompatFragment() {
                 R.id.mainFragment -> {
                     hideTopbar()
                     showBottomNav()
+                    activity?.title = "blah"
                 }
                 R.id.settingsFragment ->{
                     showBottomNav()
@@ -31,6 +32,10 @@ class BottomHostFragment : AndroidXMvpAppCompatFragment() {
                 R.id.categoryPickerWithCreateFragment -> {
                     hideTopbar()
                     hideBottomNav()
+                }
+                R.id.limitsFragment -> {
+                    showBottomNav()
+                    hideTopbar()
                 }
                 else -> {
                     showBottomNav()

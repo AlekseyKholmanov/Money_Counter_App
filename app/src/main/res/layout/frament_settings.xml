@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container_settings">
     <Button
             android:id="@+id/btn_clear_spending"
             android:layout_width="match_parent"
@@ -16,5 +18,28 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="@string/settings_btn_clear_category"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+        <TextView
+                android:id="@+id/tv_end_month_placeholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@string/plh_end_month"/>
+        <EditText
+                android:id="@+id/et_end_month_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:focusable="false"
+
+                tools:text="5"/>
+    </LinearLayout>
 
 </LinearLayout>

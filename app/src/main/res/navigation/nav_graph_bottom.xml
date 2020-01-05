@@ -11,9 +11,13 @@
             tool:layout="@layout/fragment_bottom_keyboard">
         <action
                 android:id="@+id/action_mainFragment_to_categoryPickerWithCreateFragment"
-                app:destination="@id/categoryPickerWithCreateFragment"
-                app:popUpTo="@+id/mainFragment" />
+                app:destination="@id/categoryPickerWithCreateFragment"/>
     </fragment>
+
+    <fragment
+            android:id="@+id/limitsFragment"
+            android:name="com.example.holmi_production.money_counter_app.ui.limits_fragment.LimitsFragment"
+            android:label="LimitsFragment" />
     <fragment
             android:id="@+id/chartFragment"
             android:name="com.example.holmi_production.money_counter_app.ui.charts_fragments.ChartFragment"
@@ -37,8 +41,7 @@
             android:label="CategoryPickerWithCreateFragment">
         <action
                 android:id="@+id/action_categoryPickerWithCreateFragment_to_mainFragment"
-                app:destination="@id/mainFragment"
-                app:popUpTo="@+id/nav_graph_bottom" />
+                app:destination="@id/mainFragment"/>
         <action
                 android:id="@+id/action_categoryPickerWithCreateFragment_to_dialogCategoryCreate2"
                 app:destination="@id/dialogCategoryCreate2" />

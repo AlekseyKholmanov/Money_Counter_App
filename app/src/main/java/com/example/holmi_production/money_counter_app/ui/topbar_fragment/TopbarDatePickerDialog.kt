@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
 import com.appeaser.sublimepickerlibrary.datepicker.SublimeDatePicker
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums
 import kotlinx.android.synthetic.main.dialog_date_picker.*
 import org.joda.time.DateTime
 
@@ -30,30 +31,24 @@ class TopbarDatePickerDialog : AppCompatDialogFragment(),SublimeDatePicker.OnDat
         btnMonth = view.findViewById(R.id.btn_category_month)
         btnCustom = view.findViewById(R.id.btn_custom_date)
         btnDay.setOnClickListener {
-            callback?.datePicked(DateTime().withTimeAtStartOfDay(), DateTime().withTime(23,59,59,999))
+            callback?.datePicked(PeriodTypeEnums.DAY)
             dismiss()
         }
 
         btnWeek.setOnClickListener {
-            val start = DateTime().withDayOfWeek(1).withTimeAtStartOfDay()
-            val end = DateTime().withDayOfWeek(7).withTime(23,59,59,999)
-            callback?.datePicked(start,end)
+            callback?.datePicked(PeriodTypeEnums.WEEK)
             dismiss()
         }
 
         btnMonth.setOnClickListener {
-            val startMonth = DateTime().withDayOfMonth(1).withTimeAtStartOfDay()
-            val endMonth = startMonth.plusMonths(1).minusDays(1).withTime(23,59,59,999)
-            callback?.datePicked(startMonth,endMonth)
+            callback?.datePicked(PeriodTypeEnums.MONTH)
             dismiss()
         }
         btnCustom.setOnClickListener{
             //            val time = DateTime.now()
 //            val now = Calendar.getInstance()
 //            val dialog = SublimeDatePicker(context)
-//
 //            dialog.init(SelectedDate(Calendar.getInstance()),true, this)
-
         }
         return builder.create()
     }
@@ -73,5 +68,6 @@ class TopbarDatePickerDialog : AppCompatDialogFragment(),SublimeDatePicker.OnDat
     }
 }
 interface ITopbarDatePickerCallback{
-    fun datePicked(left:DateTime, right:DateTime)
+    fun datePicked(type:PeriodTypeEnums)
+    fun datePicked(start:DateTime, end:DateTime)
 }

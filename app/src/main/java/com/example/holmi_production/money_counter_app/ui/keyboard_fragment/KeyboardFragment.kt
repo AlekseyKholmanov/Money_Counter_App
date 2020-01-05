@@ -71,7 +71,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun onDestroyView() {
-        Log.d("qwerty", "fragment_keyboard_part destroy view")
+        Log.d("M_KeyboardFragment", "fragment keyboard destroy view")
         left_days.setOnClickListener(null)
         super.onDestroyView()
     }

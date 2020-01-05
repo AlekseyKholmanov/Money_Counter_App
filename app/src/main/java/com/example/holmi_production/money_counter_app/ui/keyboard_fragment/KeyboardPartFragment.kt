@@ -12,7 +12,7 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.Vibrator
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
-import com.example.holmi_production.money_counter_app.model.ButtonTypes
+import com.example.holmi_production.money_counter_app.model.ButtonTypeEnums
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.SquareImageView
 import com.example.holmi_production.money_counter_app.model.entity.Category
@@ -21,9 +21,10 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_keyboard_part.*
+import leakcanary.AppWatcher
 import javax.inject.Inject
 
-class KeyboardPartFragment private constructor() : AndroidXMvpAppCompatFragment() {
+class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
     companion object {
         fun newInstance(): KeyboardPartFragment {
             return KeyboardPartFragment()
@@ -39,23 +40,23 @@ class KeyboardPartFragment private constructor() : AndroidXMvpAppCompatFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        numbers_keyboard.visibility = View.GONE
         key_progress_bar.max = 100f
-        key_progress_bar.progress = 0f
-        key_0.setOnClickListener { pressed(ButtonTypes.ZERO, "0") }
-        key_1.setOnClickListener { pressed(ButtonTypes.NUMERIC, "1") }
-        key_2.setOnClickListener { pressed(ButtonTypes.NUMERIC, "2") }
-        key_3.setOnClickListener { pressed(ButtonTypes.NUMERIC, "3") }
-        key_4.setOnClickListener { pressed(ButtonTypes.NUMERIC, "4") }
-        key_5.setOnClickListener { pressed(ButtonTypes.NUMERIC, "5") }
-        key_6.setOnClickListener { pressed(ButtonTypes.NUMERIC, "6") }
-        key_7.setOnClickListener { pressed(ButtonTypes.NUMERIC, "7") }
-        key_8.setOnClickListener { pressed(ButtonTypes.NUMERIC, "8") }
-        key_9.setOnClickListener { pressed(ButtonTypes.NUMERIC, "9") }
-        key_divider.setOnClickListener { pressed(ButtonTypes.DIVIDER, ".") }
-        key_delete.setOnClickListener { pressed(ButtonTypes.DELETE) }
-        key_spending.setOnClickListener { pressed(ButtonTypes.ENTER_UP) }
-        key_income.setOnClickListener { pressed(ButtonTypes.ENTER_DOWN) }
-        key_category.setOnClickListener { pressed(ButtonTypes.CATEGORY) }
+        key_0.setOnClickListener { pressed(ButtonTypeEnums.ZERO, "0") }
+        key_1.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "1") }
+        key_2.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "2") }
+        key_3.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "3") }
+        key_4.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "4") }
+        key_5.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "5") }
+        key_6.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "6") }
+        key_7.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "7") }
+        key_8.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "8") }
+        key_9.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "9") }
+        key_divider.setOnClickListener { pressed(ButtonTypeEnums.DIVIDER, ".") }
+        key_delete.setOnClickListener { pressed(ButtonTypeEnums.DELETE) }
+        key_spending.setOnClickListener { pressed(ButtonTypeEnums.ENTER_UP) }
+        key_income.setOnClickListener { pressed(ButtonTypeEnums.ENTER_DOWN) }
+        key_category.setOnClickListener { pressed(ButtonTypeEnums.CATEGORY) }
         comment.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -93,11 +94,13 @@ class KeyboardPartFragment private constructor() : AndroidXMvpAppCompatFragment(
             image.setImageResource(category.imageId ?: R.drawable.ic_launcher_foreground)
         }
 
-
-        key_progress_bar.setBackgroundColor(category?.color ?: ColorUtils.getColor())
-        key_progress_bar.progressColor = ColorUtils.getColor()
-        key_progress_bar.progress = 55f
-        key_progress_bar.invalidate()
+        key_progress_bar.apply{
+            setBackgroundColor(category?.color ?: ColorUtils.getColor())
+            progress = 55f
+            progressColor = ColorUtils.getColor()
+            invalidate()
+        }
+        numbers_keyboard.visibility = View.VISIBLE
     }
 
     fun showChipsContainer(subcategories: List<SubCategory>, color: Int) {
@@ -135,11 +138,11 @@ class KeyboardPartFragment private constructor() : AndroidXMvpAppCompatFragment(
         return chip
     }
 
-    private fun pressed(type: ButtonTypes, value: String? = null) {
+    private fun pressed(type: ButtonTypeEnums, value: String? = null) {
         vibrator.vibrate(50)
 
         when (type) {
-            ButtonTypes.DELETE -> {
+            ButtonTypeEnums.DELETE -> {
                 if (purshaseSum == "0") return
                 else {
                     purshaseSum = purshaseSum.dropLast(1)
@@ -150,33 +153,33 @@ class KeyboardPartFragment private constructor() : AndroidXMvpAppCompatFragment(
                         purshaseSum = "0"
                 }
             }
-            ButtonTypes.DIVIDER -> {
+            ButtonTypeEnums.DIVIDER -> {
                 when {
                     value == "." && purshaseSum.contains(".") -> return
                     purshaseSum == "" -> purshaseSum = "0."
                     else -> purshaseSum += value
                 }
             }
-            ButtonTypes.ZERO -> {
+            ButtonTypeEnums.ZERO -> {
                 if (purshaseSum == "0") return
                 if (purshaseSum.contains(Regex("[.].*"))) return
                 else purshaseSum += value
 
             }
-            ButtonTypes.ENTER_UP -> {
+            ButtonTypeEnums.ENTER_UP -> {
                 enterPressed(SpDirection.SPENDING)
             }
-            ButtonTypes.ENTER_DOWN -> {
+            ButtonTypeEnums.ENTER_DOWN -> {
                 enterPressed(SpDirection.INCOME)
             }
-            ButtonTypes.NUMERIC -> {
+            ButtonTypeEnums.NUMERIC -> {
                 if (purshaseSum == "0")
                     purshaseSum = ""
                 if (purshaseSum.contains('.') && purshaseSum.takeLast(1) != ".")
                     purshaseSum = purshaseSum.dropLast(1)
                 purshaseSum += value
             }
-            ButtonTypes.CATEGORY -> {
+            ButtonTypeEnums.CATEGORY -> {
                 mKeyboardListener!!.showCategoryDialog()
             }
         }
@@ -185,10 +188,16 @@ class KeyboardPartFragment private constructor() : AndroidXMvpAppCompatFragment(
         mKeyboardListener!!.moneyUpdated(purshaseSum.toDouble())
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mKeyboardListener = null
+        Log.d("M_KeyboardPart", "onDestroy view")
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        AppWatcher.objectWatcher.watch(this)
         Log.d("M_KeyboardPart", "onDestroy")
-        super.onDestroy()
     }
 
     private fun enterPressed(isSpending: SpDirection) {

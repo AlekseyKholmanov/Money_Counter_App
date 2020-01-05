@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfDay
 import com.example.holmi_production.money_counter_app.model.entity.*
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
 import org.joda.time.DateTime
@@ -45,7 +46,7 @@ abstract class ExpenseDatabase : RoomDatabase() {
                                         FilterPeriods(
                                             PeriodsRepository.key,
                                             DateTime().minusDays(6).withTimeAtStartOfDay(),
-                                            DateTime().withTime(23, 59, 59, 59)
+                                            DateTime().withTimeAtEndOfDay()
                                         )
                                     )
                                 }

@@ -30,4 +30,6 @@
     <string name="text_update">Обновить</string>
     <string name="txt_add_subcategory">Добавить подкатегорию</string>
     <string name="txt_subcategory">подкатегория</string>
+    <string name="plh_end_month">Дата окончания периода:</string>
+    <string name="text_limits">Лимиты</string>
 </resources>
