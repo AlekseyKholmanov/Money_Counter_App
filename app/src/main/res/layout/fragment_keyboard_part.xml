@@ -5,7 +5,7 @@
         android:id="@+id/numbers_keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
     <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
@@ -24,8 +24,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
+            android:layout_height="wrap_content"    >
 
         <include
                 android:id="@+id/key_category"

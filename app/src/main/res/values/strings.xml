@@ -32,4 +32,6 @@
     <string name="txt_subcategory">подкатегория</string>
     <string name="plh_end_month">Дата окончания периода:</string>
     <string name="text_limits">Лимиты</string>
+    <string name="navigation_drawer_open">bla</string>
+    <string name="navigation_drawer_close">nah</string>
 </resources>

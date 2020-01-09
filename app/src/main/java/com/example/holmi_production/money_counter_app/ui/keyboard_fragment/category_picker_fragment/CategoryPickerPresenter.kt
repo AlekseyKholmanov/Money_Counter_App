@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate
+package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment
 
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
@@ -11,8 +11,8 @@ import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import javax.inject.Inject
 
 @InjectViewState
-class PresenterCategoryPicker @Inject constructor(private val interactor: CategoryInteractor) :
-    BasePresenter<ViewCategoryPicker>() {
+class CategoryPickerPresenter @Inject constructor(private val interactor: CategoryInteractor) :
+    BasePresenter<CategoryPickerView>() {
     fun observeCategories() {
         interactor.observeCategoriesAndSubCategories()
             .async()

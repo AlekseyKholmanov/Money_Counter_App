@@ -31,7 +31,7 @@ class KeyboardPresenter @Inject constructor(
             .keep()
     }
 
-    fun saveSpend(sum: Double, comment: String, isSpending: SpDirection, subCategoryId:Int?) {
+    fun saveSpend(sum: Double, comment: String, isSpending: SpDirection, subCategoryId: Int?) {
         val categoryId = settingRepository.getCategoryValue()
         val spending = Spending(
             DateTime(),
@@ -42,13 +42,13 @@ class KeyboardPresenter @Inject constructor(
             comment
         )
         spendingInteractor.insert(spending)
-            .doOnComplete{
+            .doOnComplete {
                 categoryInteractor.getCategoryWithSub(spending.categoryId)
                     .async()
                     .subscribe({
                         viewState.showSnack(it, spending)
                     }, {
-                        Log.d("M_KeyboardPresenter","error ${it.message}")
+                        Log.d("M_KeyboardPresenter", "error ${it.message}")
                     })
                     .keep()
             }
@@ -103,7 +103,10 @@ class KeyboardPresenter @Inject constructor(
         sumPerDayRepository.observeAverage()
             .async()
             .subscribe({ average ->
-                viewState.showAverageSum(average.sum.toCurencyFormat().withRubleSign(), average.sum >= 0.0)
+                viewState.showAverageSum(
+                    average.sum.toCurencyFormat().withRubleSign(),
+                    average.sum >= 0.0
+                )
             }, { Log.d("qwerty", it.message) })
             .keep()
         settingRepository.observeEndDate()
@@ -133,8 +136,10 @@ class KeyboardPresenter @Inject constructor(
         spendingRepository.getAll()
             .async()
             .subscribe({ list ->
-                val spent = list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }.sum()
-                val income = list.filter { it.isSpending == SpDirection.INCOME}.map { it.sum }.sum()
+                val spent =
+                    list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }.sum()
+                val income =
+                    list.filter { it.isSpending == SpDirection.INCOME }.map { it.sum }.sum()
                 val period = (Days.daysBetween(DateTime.now(), endDate)).days + 1
                 val averageSum = (income - spent) / period
                 settingRepository.saveEndDate(endDate)
@@ -145,18 +150,21 @@ class KeyboardPresenter @Inject constructor(
             .keep()
     }
 
-    private fun updateKeyboardUI(categoryId:Int){
+    private fun updateKeyboardUI(categoryId: Int) {
         categoryInteractor.getCategoryWithSub(categoryId)
-            .map {
-                Pair(it.first,it.second.filter { !it.isDeleted })
+            .map {(category, subCategories) ->
+                Pair(category, subCategories.filter { !it.isDeleted })
             }
             .async()
-            .subscribe ({ pair ->
+            .subscribe({ pair ->
                 viewState.updateCategoryPickerButton(category = pair.first)
-                viewState.showSubcategoryMenu(subcategories = pair.second, color = pair.first.color ?: Color.BLACK)
+                viewState.showSubcategoryMenu(
+                    subcategories = pair.second,
+                    color = pair.first.color ?: Color.BLACK
+                )
                 viewState.showActionButtons(directions = pair.first.spendingDirection)
-            },{
-                Log.d("M_KeyboardPresenter",it.message)
+            }, {
+                Log.d("M_KeyboardPresenter", it.message)
                 viewState.updateCategoryPickerButton(null)
             })
             .keep()

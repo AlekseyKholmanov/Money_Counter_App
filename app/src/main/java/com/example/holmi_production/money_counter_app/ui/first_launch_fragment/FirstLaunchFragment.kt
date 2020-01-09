@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
@@ -22,7 +21,7 @@ import org.joda.time.DateTime
 
 class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
     override fun showMainScreen() {
-        findNavController().navigate(R.id.action_navFirstLaunch_to_navMain)
+//        findNavController().navigate(R.id.action_navFirstLaunch_to_navMain)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

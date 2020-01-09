@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog
+package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.icon_picker
 
 import android.app.Dialog
 import android.os.Bundle
@@ -16,10 +16,14 @@ class ImageCategoryPicker : AndroidXMvpAppComaptDialogFragment(){
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(context!!)
         val inflater = activity!!.layoutInflater
-        val view = inflater.inflate(R.layout.fragment_image_picker,null)
+        val view = inflater.inflate(R.layout.fragment_category_icon_picker,null)
         val imageIds = context!!.resources.obtainTypedArray(R.array.images)
         val layoutManager = GridLayoutManager(context,4)
-        val adapter = ImagePickerAdapter(imageIds, callback)
+        val adapter =
+            IconPickerAdapter(
+                imageIds,
+                callback
+            )
         rv = view.findViewById(R.id.rv_images)
         rv.layoutManager = layoutManager
         rv.adapter = adapter
@@ -28,7 +32,7 @@ class ImageCategoryPicker : AndroidXMvpAppComaptDialogFragment(){
         return builder.create()
     }
 
-    fun setListener(callback:IImagePicker){
+    fun setListener(callback: IImagePicker){
         this.callback = callback
     }
 

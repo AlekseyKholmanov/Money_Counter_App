@@ -12,8 +12,8 @@ import com.example.holmi_production.money_counter_app.ui.first_launch_fragment.F
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardPresenter
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardPartFragment
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.PresenterCategoryPicker
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.PresenterCreateCategory
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.CategoryPickerPresenter
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.PresenterCreateCategory
 import com.example.holmi_production.money_counter_app.ui.settings.SettingsPresenter
 import com.example.holmi_production.money_counter_app.ui.charts_fragments.balance.BalancePresenter
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarPresenter
@@ -32,7 +32,7 @@ interface ApplicationComponent {
     fun getStackedPresenter(): StackedPresenter
     fun getBalancePresenter():BalancePresenter
     fun getTopbarPresenter(): TopbarPresenter
-    fun getCategoryPickerPresenter(): PresenterCategoryPicker
+    fun getCategoryPickerPresenter(): CategoryPickerPresenter
     fun inject(activity: MainActivity)
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
     fun inject(keyboardFr: KeyboardPartFragment)

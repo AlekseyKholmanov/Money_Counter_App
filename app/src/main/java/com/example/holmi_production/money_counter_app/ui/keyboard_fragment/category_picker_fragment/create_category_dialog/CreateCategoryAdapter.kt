@@ -1,10 +1,9 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog
+package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.ui.charts_fragments.ChartType
 
 class CreateCategoryAdapter(
     fm: FragmentManager,
@@ -21,7 +20,7 @@ class CreateCategoryAdapter(
                 instance
             }
             CategoryCreateDialogType.SUBCATEGORY -> {
-                val instance = FragmentCreateSubcategory.newInstance(categories)
+                val instance = CreateSubcategoryFragment.newInstance(categories)
                 instance.setCallback(subcategoryCallback)
                 instance
             }

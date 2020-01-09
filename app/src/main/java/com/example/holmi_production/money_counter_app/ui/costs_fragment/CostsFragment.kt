@@ -25,6 +25,12 @@ import leakcanary.AppWatcher
 
 class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
 
+    companion object{
+        fun newInstance():CostsFragment{
+            return CostsFragment()
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_bottom_costs, container, false)
     }

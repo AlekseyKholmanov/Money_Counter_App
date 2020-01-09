@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
@@ -49,7 +48,7 @@ class EndPeriodFragment : AndroidXMvpAppCompatFragment(), EndPeriodView {
     }
 
     override fun goToMain() {
-        findNavController().navigate(R.id.action_navEndPeriod_to_navMain)
+//        findNavController().navigate(R.id.action_navEndPeriod_to_navMain)
     }
 
     @ProvidePresenter

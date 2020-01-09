@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.edit_category_dialog
+package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.edit_category_dialog
 
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -11,8 +11,8 @@ import androidx.fragment.app.DialogFragment
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.CategoryDetailFragment
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.ICategoryStateListener
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.CategoryDetailFragment
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.ICategoryStateListener
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.dialog_edit_category.*
 import leakcanary.AppWatcher
@@ -44,7 +44,7 @@ class EditCategoryDialog private constructor() : DialogFragment(), ICategoryStat
         val categoryDetail = CategoryDetailFragment.newInstance(arguments!!)
         categoryDetail.setListener(this)
         childFragmentManager.beginTransaction().apply {
-            add(R.id.container, categoryDetail)
+            replace(R.id.container, categoryDetail)
             commit()
         }
 

@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog
+package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -17,19 +17,14 @@ import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFro
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.icon_picker.IImagePicker
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.icon_picker.ImageCategoryPicker
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import kotlinx.android.synthetic.main.container_category_detail.*
 import kotlin.random.Random
 
-class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragment(), IImagePicker {
-    override fun imagePicked(resId: Int) {
-        iv_category_image.setImageResource(resId)
-        iv_category_image.tag = resId
-        iv_category_image.invalidate()
-        childFragmentManager.findFragmentByTag(CategoryCreateFragment.IMAGE_DIALOG_TAG)?.let {
-            (it as DialogFragment).dismiss()
-        }
-    }
+class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragment(),
+    IImagePicker {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,12 +32,6 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
         savedInstanceState: Bundle?): View? {
 
         return inflater.inflate(R.layout.container_category_detail, container, false)
-    }
-
-    private lateinit var callback: ICategoryStateListener
-
-    fun setListener(callback: ICategoryStateListener) {
-        this.callback = callback
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -120,6 +109,21 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
         et_category_name.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus)
                 et_category_name?.hideKeyboardFrom(context!!)
+        }
+    }
+
+    private lateinit var callback: ICategoryStateListener
+
+    fun setListener(callback: ICategoryStateListener) {
+        this.callback = callback
+    }
+
+    override fun imagePicked(resId: Int) {
+        iv_category_image.setImageResource(resId)
+        iv_category_image.tag = resId
+        iv_category_image.invalidate()
+        childFragmentManager.findFragmentByTag(CategoryCreateFragment.IMAGE_DIALOG_TAG)?.let {
+            (it as DialogFragment).dismiss()
         }
     }
 

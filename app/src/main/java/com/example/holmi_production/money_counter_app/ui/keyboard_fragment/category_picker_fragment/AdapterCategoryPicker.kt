@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate
+package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment
 
 import android.graphics.Color
 import android.view.LayoutInflater

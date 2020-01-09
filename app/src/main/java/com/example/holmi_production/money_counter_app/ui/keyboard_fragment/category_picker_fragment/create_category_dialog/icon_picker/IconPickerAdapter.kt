@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog
+package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.icon_picker
 
 import android.content.res.TypedArray
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.SquareImageView
 
-class ImagePickerAdapter(private val imageIds: TypedArray, val callback: IImagePicker?) : RecyclerView.Adapter<ImagePickerAdapter.ImageHolder>() {
+class IconPickerAdapter(private val imageIds: TypedArray, val callback: IImagePicker?) : RecyclerView.Adapter<IconPickerAdapter.ImageHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
 

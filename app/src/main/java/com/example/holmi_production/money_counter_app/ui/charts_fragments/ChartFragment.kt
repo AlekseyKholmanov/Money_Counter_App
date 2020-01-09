@@ -12,6 +12,12 @@ import kotlinx.android.synthetic.main.fragment_bottom_chart.*
 
 class ChartFragment : AndroidXMvpAppCompatFragment() {
 
+    companion object{
+        fun newInstance(): ChartFragment {
+            return ChartFragment()
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_bottom_chart, container, false)
     }

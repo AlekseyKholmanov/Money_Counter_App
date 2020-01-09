@@ -1,10 +1,41 @@
 package com.example.holmi_production.money_counter_app.extensions
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.view.View
+import android.view.ViewPropertyAnimator
 import android.view.inputmethod.InputMethodManager
+import kotlinx.android.synthetic.main.app_bar_main.*
 
 fun View.hideKeyboard() {
-    val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val inputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+}
+
+fun View.hideDelayed() {
+    this.animate().apply {
+        alpha(0.0f)
+        duration = 300L
+        setListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                super.onAnimationEnd(animation)
+                visibility = View.GONE
+            }
+        })
+    }
+}
+
+fun View.showDelayed() {
+    this.animate().apply {
+        alpha(1.0f)
+        duration = 300L
+        setListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator?) {
+                super.onAnimationEnd(animation)
+                visibility = View.VISIBLE
+            }
+        })
+    }
 }

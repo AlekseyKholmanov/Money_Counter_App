@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate
+package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -7,23 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.create_category_dialog.DialogFragmentTabContainer
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.edit_category_dialog.EditCategoryDialog
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categoryPickerWithCreate.edit_category_dialog.EditCategoryDialog.ICategoryEditor
-import kotlinx.android.synthetic.main.fragment_category_picker_with_create.*
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.DialogFragmentTabContainer
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.edit_category_dialog.EditCategoryDialog
+import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.edit_category_dialog.EditCategoryDialog.ICategoryEditor
+import kotlinx.android.synthetic.main.fragment_category_picker.*
 import leakcanary.AppWatcher
 
-class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
-    ViewCategoryPicker,
+class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
+    CategoryPickerView,
     ICategoryPickerCallback, ICategoryEditor {
 
     //Only for update subcategories in edit Dialog
@@ -70,17 +70,14 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
 
     override fun categoryPicked(categoryId: Int) {
         val bundle = bundleOf("categoryId" to categoryId)
-        findNavController().navigate(
-            R.id.action_categoryPickerWithCreateFragment_to_mainFragment,
-            bundle
-        )
+        (activity as MainActivity).showMain(bundle = bundle)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_category_picker_with_create, container, false)
+        return inflater.inflate(R.layout.fragment_category_picker, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -115,17 +112,17 @@ class FragmentCategoryPicker : AndroidXMvpAppCompatFragment(),
     }
 
     @ProvidePresenter
-    fun initPresenter(): PresenterCategoryPicker {
+    fun initPresenter(): CategoryPickerPresenter {
         return App.component.getCategoryPickerPresenter()
     }
 
     @InjectPresenter
-    lateinit var presenter: PresenterCategoryPicker
+    lateinit var presenter: CategoryPickerPresenter
     lateinit var adapter: CategoryPickerAdapter
 
     companion object {
-        fun newInstance(): FragmentCategoryPicker {
-            return FragmentCategoryPicker()
+        fun newInstance(): CategoryPickerFragment {
+            return CategoryPickerFragment()
         }
 
         private const val CREATE_DIALOG_TAG = "create dialog"

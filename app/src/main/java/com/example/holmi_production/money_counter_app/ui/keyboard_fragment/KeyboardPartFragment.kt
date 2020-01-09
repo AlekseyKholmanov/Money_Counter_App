@@ -86,19 +86,20 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         if (category == null) {
             image.visibility = View.GONE
             text.visibility = View.VISIBLE
+            key_progress_bar.visibility = View.GONE
             text.text = "Категории не созданы"
         } else {
             image.visibility = View.VISIBLE
             text.visibility = View.GONE
+            key_progress_bar.visibility = View.VISIBLE
             key_category.setBackgroundColor(category.color ?: ColorUtils.getColor())
             image.setImageResource(category.imageId ?: R.drawable.ic_launcher_foreground)
-        }
-
-        key_progress_bar.apply{
-            setBackgroundColor(category?.color ?: ColorUtils.getColor())
-            progress = 55f
-            progressColor = ColorUtils.getColor()
-            invalidate()
+            key_progress_bar.apply {
+                setBackgroundColor(category.color ?: ColorUtils.getColor())
+                progress = 55f
+                progressColor = category.color ?: ColorUtils.getColor()
+                invalidate()
+            }
         }
         numbers_keyboard.visibility = View.VISIBLE
     }

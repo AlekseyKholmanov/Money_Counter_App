@@ -15,7 +15,13 @@ import kotlinx.android.synthetic.main.fragment_topbar.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
 
-class Topbar : AndroidXMvpAppCompatFragment(), TopbarView, ITopbarDatePickerCallback {
+class TopbarFragment : AndroidXMvpAppCompatFragment(), TopbarView, ITopbarDatePickerCallback {
+
+    companion object{
+        fun newInstance(): TopbarFragment {
+            return TopbarFragment()
+        }
+    }
 
     override fun showDate(date:String) {
         tv_topbar_text.text = date
