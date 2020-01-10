@@ -13,19 +13,30 @@ import javax.inject.Singleton
 @Singleton
 class SettingRepository @Inject constructor(private val pref: SharedPreferences) {
 
-    fun setEndMonth(day:Int){
-        pref.edit().putInt(END_MONTH,day).apply()
+    companion object {
+        val FIRST_OPEN = "FirstOpen"
+        val START_PERIOD = "START_PERIOD"
+        val END_PERIOD = "END_PERIOD"
+        val IS_END = "IS_END"
+        val CATEGORY_VALUE = "Category_value"
+        val BALANCE_MIGRATION_TAG = "BALANCE_POPULATED"
+        val PERIOD_TYPE = "PERIOD_TYPE"
+        val END_MONTH = "END_MONTH"
     }
 
-    fun getEndMonth():Int{
-        return pref.getInt(END_MONTH,15)
+    fun setEndMonth(day: Int) {
+        pref.edit().putInt(END_MONTH, day).apply()
+    }
+
+    fun getEndMonth(): Int {
+        return pref.getInt(END_MONTH, 15)
     }
 
     fun getPeriodType(): Int {
         return pref.getInt(PERIOD_TYPE, 0)
     }
 
-    fun setPeriodType(type:Int){
+    fun setPeriodType(type: Int) {
         pref.edit().putInt(PERIOD_TYPE, type).apply()
     }
 
@@ -59,8 +70,8 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return pref.contains(FIRST_OPEN)
     }
 
-    fun getStartDate():Long{
-        return pref.getLong(START_PERIOD,0)
+    fun getStartDate(): Long {
+        return pref.getLong(START_PERIOD, 0)
     }
 
     fun getEndPeriod(): Long {
@@ -77,7 +88,7 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return settingSubject.toFlowable(BackpressureStrategy.LATEST)
     }
 
-    fun setIsEnd(isEnd:Boolean) {
+    fun setIsEnd(isEnd: Boolean) {
         pref.edit().putBoolean(IS_END, isEnd).apply()
     }
 
@@ -85,21 +96,11 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return pref.getBoolean(IS_END, false)
     }
 
-
     fun getBalancePopulatedStatus(): Boolean {
-        return pref.getBoolean(BALANCE_MIGRATION_TAG,false)
+        return pref.getBoolean(BALANCE_MIGRATION_TAG, false)
     }
 
-    fun setBalancePopulated(){
+    fun setBalancePopulated() {
         pref.edit().putBoolean(BALANCE_MIGRATION_TAG, true).apply()
     }
-
-    private val FIRST_OPEN = "FirstOpen"
-    private val START_PERIOD = "START_PERIOD"
-    private val END_PERIOD = "END_PERIOD"
-    private val IS_END = "IS_END"
-    private val CATEGORY_VALUE = "Category_value"
-    private val BALANCE_MIGRATION_TAG = "BALANCE_POPULATED"
-    private val PERIOD_TYPE = "PERIOD_TYPE"
-    private val END_MONTH = "END_MONTH"
 }

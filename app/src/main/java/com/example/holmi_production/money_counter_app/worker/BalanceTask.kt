@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.main
+package com.example.holmi_production.money_counter_app.worker
 
 import android.content.Context
 import android.util.Log
@@ -16,7 +16,7 @@ class BalanceTask(context: Context, params: WorkerParameters) : Worker(context, 
     }
 
     override fun doWork(): Result {
-        Log.d("BalanceTask","start work")
+        Log.d("BalanceTask", "start work")
         val instance = ExpenseDatabase.getInstance(applicationContext)
         val spendings = instance!!.spendingDao.getSpendings()
         var todayBalance = 0.0
@@ -29,7 +29,7 @@ class BalanceTask(context: Context, params: WorkerParameters) : Worker(context, 
         }
         instance.balanceDao.insert(Balance(DateTime().withTimeAtStartOfDay(), todayBalance))
         WorkerManager.startBalanceWorker()
-        Log.d("M_SaveBalanceTask","wnd work $todayBalance")
+        Log.d("M_SaveBalanceTask", "wnd work $todayBalance")
         return Result.success()
     }
 }

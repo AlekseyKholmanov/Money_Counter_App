@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="176dp"
+            android:background="@color/design_default_color_primary_dark">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:text="Welcome!"
+                android:textColor="@android:color/white"
+                android:layout_gravity="bottom"
+                android:layout_margin="8dp"/>
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textStyle="bold"
+            android:text="Настройки"/>
+
+    <include layout="@layout/menu_end_period_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+    <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/design_default_color_primary"/>
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textStyle="bold"
+            android:text="Данные"/>
+    <include layout="@layout/menu_delete_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+    <include layout="@layout/menu_delete_spendings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+    <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/design_default_color_primary"/>
+
+
+</LinearLayout>

@@ -30,8 +30,12 @@
     <string name="text_update">Обновить</string>
     <string name="txt_add_subcategory">Добавить подкатегорию</string>
     <string name="txt_subcategory">подкатегория</string>
-    <string name="plh_end_month">Дата окончания периода:</string>
+    <string name="plh_end_month">День окончания месяца</string>
     <string name="text_limits">Лимиты</string>
     <string name="navigation_drawer_open">bla</string>
     <string name="navigation_drawer_close">nah</string>
+    <string name="menu_clear_category">Удалить категории</string>
+    <string name="menu_clear_spendings">Очистить траты</string>
+    <string name="menu_group_data">Данные</string>
+    <string name="menu_group_settings">Настройки</string>
 </resources>

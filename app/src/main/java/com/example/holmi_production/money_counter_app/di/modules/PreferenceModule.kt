@@ -8,8 +8,10 @@ import javax.inject.Singleton
 
 @Module
 class PreferenceModule(private val context: Context) {
+    companion object{
+        val STORAGE_NAME = "PREFERENCE_STORAGE"
+    }
 
-    private val STORAGE_NAME = "PREFERENCE_STORAGE"
 
     @Provides
     @Singleton

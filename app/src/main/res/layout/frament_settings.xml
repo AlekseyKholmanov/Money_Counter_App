@@ -30,16 +30,16 @@
                 android:textSize="20sp"
                 android:text="@string/plh_end_month"/>
         <EditText
-                android:id="@+id/et_end_month_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:focusable="false"
+            android:id="@+id/et_end_month_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:focusable="false"
 
-                tools:text="5"/>
+            tools:text="5"/>
     </LinearLayout>
 
 </LinearLayout>
