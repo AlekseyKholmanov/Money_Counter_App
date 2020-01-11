@@ -58,7 +58,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         }
         presenter.getDaysLeft()
         presenter.setObservers()
-        Log.d("M_FragmentCategoryPickr","View Created")
+        Log.d("M_KeyboardFragment","View Created")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
