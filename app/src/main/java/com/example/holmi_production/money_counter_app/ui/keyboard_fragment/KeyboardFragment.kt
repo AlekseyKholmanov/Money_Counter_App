@@ -45,19 +45,19 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
             replace(R.id.keyboard,keyboardPart)
             commit()
         }
-        left_days.setOnClickListener {
-            val timePickerDialog = TimePickerDialog.newInstance(withMinDate = true)
-            timePickerDialog.setListener(this)
-            timePickerDialog.show(childFragmentManager, "datePicker")
-        }
+//        left_days.setOnClickListener {
+//            val timePickerDialog = TimePickerDialog.newInstance(withMinDate = true)
+//            timePickerDialog.setListener(this)
+//            timePickerDialog.show(childFragmentManager, "datePicker")
+//        }
         if (arguments == null)
             presenter.getCategoryButtonValue()
         else {
             val categoryId = arguments!!.getInt("categoryId")
             presenter.setCategoryButonType(categoryId)
         }
-        presenter.getDaysLeft()
-        presenter.setObservers()
+        //presenter.getDaysLeft()
+        presenter.observeData()
         Log.d("M_KeyboardFragment","View Created")
     }
 
@@ -132,7 +132,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     }
 
     override fun datePicked(date: DateTime) {
-        presenter.recalculateAverageSum(date)
+//        presenter.recalculateAverageSum(date)
     }
 
     override fun updateCategoryPickerButton(category: Category?) {

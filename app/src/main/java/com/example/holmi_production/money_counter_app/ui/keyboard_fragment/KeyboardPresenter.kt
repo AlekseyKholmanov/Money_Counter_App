@@ -85,7 +85,7 @@ class KeyboardPresenter @Inject constructor(
 
     }
 
-    fun setObservers() {
+    fun observeData() {
         spendingRepository.observeSpending()
             .async()
             .subscribe({ list ->
@@ -109,9 +109,10 @@ class KeyboardPresenter @Inject constructor(
                 )
             }, { Log.d("qwerty", it.message) })
             .keep()
-        settingRepository.observeEndDate()
+        settingRepository.observeEndPeriod()
             .async()
             .subscribe({
+                recalculateAverageSum(it)
                 viewState.showDaysLeft(" на ${settingRepository.getTillEnd().getDayAddition()}")
             }, { Log.d("qwerty", it.message) })
             .keep()
@@ -132,7 +133,7 @@ class KeyboardPresenter @Inject constructor(
         updateKeyboardUI(id)
     }
 
-    fun recalculateAverageSum(endDate: DateTime) {
+    private fun recalculateAverageSum(endDate: Int) {
         spendingRepository.getAll()
             .async()
             .subscribe({ list ->
@@ -140,9 +141,8 @@ class KeyboardPresenter @Inject constructor(
                     list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }.sum()
                 val income =
                     list.filter { it.isSpending == SpDirection.INCOME }.map { it.sum }.sum()
-                val period = (Days.daysBetween(DateTime.now(), endDate)).days + 1
+                val period = getDaystoEndPeriod(endDate)
                 val averageSum = (income - spent) / period
-                settingRepository.saveEndDate(endDate)
                 sumPerDayRepository.insertToday(averageSum).complete().keep()
                 sumPerDayRepository.insertAverage(averageSum).complete().keep()
                 viewState.showNewSumSnack(averageSum, period)
@@ -171,7 +171,24 @@ class KeyboardPresenter @Inject constructor(
     }
 
     private fun updateDayLeft() {
-        val diff = settingRepository.getTillEnd()
-        viewState.showDaysLeft(" на ${diff.getDayAddition()}")
+        val now = DateTime()
+        val endPeriodDate = settingRepository.getEndMonth() - 1
+        val toEndMonth = if(DateTime().dayOfMonth > endPeriodDate){
+             now.withTimeAtEndOfMonth(now.monthOfYear).dayOfMonth - now.dayOfMonth + endPeriodDate
+        }
+        else{
+            endPeriodDate - now.dayOfMonth
+        }
+        viewState.showDaysLeft(" на ${toEndMonth.getDayAddition()}")
+    }
+
+    private fun getDaystoEndPeriod(endPeriodDate:Int): Int {
+        val now = DateTime()
+        return if(DateTime().dayOfMonth > endPeriodDate){
+            now.withTimeAtEndOfMonth(now.monthOfYear).dayOfMonth - now.dayOfMonth + endPeriodDate
+        }
+        else{
+            endPeriodDate - now.dayOfMonth
+        }
     }
 }

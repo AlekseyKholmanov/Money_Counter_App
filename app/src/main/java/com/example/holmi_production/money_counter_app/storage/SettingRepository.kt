@@ -10,23 +10,24 @@ import org.joda.time.Days
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class SettingRepository @Inject constructor(private val pref: SharedPreferences) {
 
-    companion object {
-        val FIRST_OPEN = "FirstOpen"
-        val START_PERIOD = "START_PERIOD"
-        val END_PERIOD = "END_PERIOD"
-        val IS_END = "IS_END"
-        val CATEGORY_VALUE = "Category_value"
-        val BALANCE_MIGRATION_TAG = "BALANCE_POPULATED"
-        val PERIOD_TYPE = "PERIOD_TYPE"
-        val END_MONTH = "END_MONTH"
+    private val settingSubject by lazy { PublishSubject.create<Int>() }
+
+    fun setEndPeriod(day: Int) {
+        pref.edit().putInt(END_MONTH, day).apply()
+        settingSubject.onNext(day)
     }
 
-    fun setEndMonth(day: Int) {
-        pref.edit().putInt(END_MONTH, day).apply()
+    fun observeEndPeriod(): Flowable<Int> {
+        Log.d("qwerty", "observe end date")
+        return settingSubject.toFlowable(BackpressureStrategy.LATEST)
     }
+
+//       fun saveEndDate(endDate: DateTime) {
+//        Log.d("qwerty", "saved end date")
+//        settingSubject.onNext(endDate.millis)
+//        pref.edit().putLong(END_PERIOD, endDate.millis).apply()
 
     fun getEndMonth(): Int {
         return pref.getInt(END_MONTH, 15)
@@ -38,10 +39,6 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
 
     fun setPeriodType(type: Int) {
         pref.edit().putInt(PERIOD_TYPE, type).apply()
-    }
-
-    private val settingSubject by lazy {
-        PublishSubject.create<Long>()
     }
 
     fun setCategoryButtonType(type: Int) {
@@ -60,11 +57,7 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         pref.edit().putLong(START_PERIOD, startDay.millis).apply()
     }
 
-    fun saveEndDate(endDate: DateTime) {
-        Log.d("qwerty", "saved end date")
-        settingSubject.onNext(endDate.millis)
-        pref.edit().putLong(END_PERIOD, endDate.millis).apply()
-    }
+//    }
 
     fun isOpened(): Boolean {
         return pref.contains(FIRST_OPEN)
@@ -83,11 +76,6 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(endDate)).days
     }
 
-    fun observeEndDate(): Flowable<Long> {
-        Log.d("qwerty", "observe end date")
-        return settingSubject.toFlowable(BackpressureStrategy.LATEST)
-    }
-
     fun setIsEnd(isEnd: Boolean) {
         pref.edit().putBoolean(IS_END, isEnd).apply()
     }
@@ -102,5 +90,16 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
 
     fun setBalancePopulated() {
         pref.edit().putBoolean(BALANCE_MIGRATION_TAG, true).apply()
+    }
+
+    companion object {
+        val FIRST_OPEN = "FirstOpen"
+        val START_PERIOD = "START_PERIOD"
+        val END_PERIOD = "END_PERIOD"
+        val IS_END = "IS_END"
+        val CATEGORY_VALUE = "Category_value"
+        val BALANCE_MIGRATION_TAG = "BALANCE_POPULATED"
+        val PERIOD_TYPE = "PERIOD_TYPE"
+        val END_MONTH = "END_MONTH"
     }
 }

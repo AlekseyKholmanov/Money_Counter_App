@@ -27,7 +27,7 @@ android {
 
 ext {
     moxy_version = "1.5.5"
-    dagger_version = "2.16"
+    dagger_version = "2.25.4"
     room_version = "1.1.1"
     work_version = "2.0.1"
     nav_version = "2.1.0"
@@ -68,6 +68,10 @@ dependencies {
     //dagger
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    // Assisted Inject
+    compileOnly "com.squareup.inject:assisted-inject-annotations-dagger2:0.3.2"
+    kapt "com.squareup.inject:assisted-inject-processor-dagger2:0.3.2"
 
     // joda time
     implementation 'joda-time:joda-time:2.10.1'

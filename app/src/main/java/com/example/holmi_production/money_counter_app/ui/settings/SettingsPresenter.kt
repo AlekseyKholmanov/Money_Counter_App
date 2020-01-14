@@ -32,7 +32,7 @@ class SettingsPresenter @Inject constructor(
     }
 
     fun saveEndMonth(day:Int){
-        settingRepository.setEndMonth(day)
+        settingRepository.setEndPeriod(day)
         viewState.updateEndMonth(day)
     }
 
