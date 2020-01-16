@@ -57,7 +57,7 @@ class FirstLaunchPresenter @Inject constructor(
         sumPerDayRepository.insertAverage(sumPerDay).complete().keep()
         sumPerDayRepository.insertToday(sumPerDay).complete().keep()
         settingRepository.setAppOpened()
-        settingRepository.saveStartDate(today)
+//        settingRepository.saveStartDate(today)
 //        settingRepository.saveEndDate(endPeriod)
         viewState.showMainScreen()
     }

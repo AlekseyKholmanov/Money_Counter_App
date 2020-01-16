@@ -87,7 +87,7 @@ class TopbarPresenter @Inject constructor(
         currentPeriod: PeriodTypeEnums): FilterPeriods {
         if (currentPeriod == MONTH) {
             val date =
-                if (isRightDirection) oldPeriod.leftBorder.getDateWithNextMonth() else oldPeriod.leftBorder.getDateWithPreviousMonth()
+                if (isRightDirection) oldPeriod.leftBorder.withNextMonthDate() else oldPeriod.leftBorder.withPreviousMonthDate()
             return FilterPeriods(
                 "",
                 date.withTimeAtStartOfMonth().withTimeAtStartOfDay(),

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.work.WorkManager
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideDelayed
@@ -32,6 +33,9 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
 
     @Inject
     lateinit var settingRepository: SettingRepository
+    @Inject
+    lateinit var workManager: WorkManager
+
     private lateinit var toggle:ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,9 +54,9 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
         initializeFragments()
         setBottomNavigationController()
 
-        WorkerManager.cancelAll()
-        WorkerManager.startBalanceWorker()
-        WorkerManager.startNotificationWorker()
+        WorkerManager.cancelAll(workManager)
+        WorkerManager.startBalanceWorker(workManager)
+        WorkerManager.startNotificationWorker(workManager)
 
         et_end_month_value.text = settingRepository.getEndMonth().toString()
 
@@ -63,7 +67,7 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
             val datas = arrayOf("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28")
             b.setItems(datas) { dialog, which ->
                 Log.d("M_SettingsFragment","id: $which ${datas[which]}")
-                WorkerManager.startEndMonthWorker(datas[which].toInt())
+                WorkerManager.startEndMonthWorker(datas[which].toInt(), workManager)
                 et_end_month_value.text = datas[which]
                 dialog!!.dismiss()
             }

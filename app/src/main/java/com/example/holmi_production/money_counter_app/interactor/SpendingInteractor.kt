@@ -80,6 +80,7 @@ class SpendingInteractor @Inject constructor(
     }
 
     fun delete(spending: Spending): Single<Disposable> {
+        val endPeriodDays = settingRepository.getDaysToEndPeriod()
         when (spending.isSpending) {
             SpDirection.INCOME -> {
                 return sumPerDayRepository.getTodayAndAverage()
@@ -87,7 +88,7 @@ class SpendingInteractor @Inject constructor(
                     .map { sums ->
                         val today = sums.first.sum
                         val average = sums.second.sum
-                        val deltaAverage = spending.sum / settingRepository.getTillEnd()
+                        val deltaAverage = spending.sum / endPeriodDays
                         sumPerDayRepository.insertToday(today - deltaAverage).complete()
                         sumPerDayRepository.insertAverage(average - deltaAverage).complete()
                     }
@@ -112,7 +113,7 @@ class SpendingInteractor @Inject constructor(
                             .map { sums ->
                                 val today = sums.first.sum
                                 val average = sums.second.sum
-                                val deltaAverage = spending.sum / settingRepository.getTillEnd()
+                                val deltaAverage = spending.sum / endPeriodDays
                                 sumPerDayRepository.insertToday(today + deltaAverage).complete()
                                 sumPerDayRepository.insertAverage(average + deltaAverage).complete()
                             }

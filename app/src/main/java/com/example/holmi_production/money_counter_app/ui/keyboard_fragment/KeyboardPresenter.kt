@@ -33,6 +33,8 @@ class KeyboardPresenter @Inject constructor(
 
     fun saveSpend(sum: Double, comment: String, isSpending: SpDirection, subCategoryId: Int?) {
         val categoryId = settingRepository.getCategoryValue()
+        val (startDate, endDate) = settingRepository.getCurrentPeriodDate()
+        val diff = Days.daysBetween(DateTime(),endDate)
         val spending = Spending(
             DateTime(),
             sum,
@@ -65,14 +67,14 @@ class KeyboardPresenter @Inject constructor(
                     sumPerDayRepository.insertToday(today - sum).complete().keep()
                 //увеличиваем сумму у всех дней т.к. зарплата
                 else if (spending.isSpending == SpDirection.INCOME) {
-                    val daysCount = settingRepository.getTillEnd()
+                    val daysCount = diff.days
                     val deltaAverage = sum / daysCount
                     sumPerDayRepository.insertAverage(average + deltaAverage).complete().keep()
                     sumPerDayRepository.insertToday(today + deltaAverage).complete().keep()
                 }
                 //сумма сегодня < траты, вычитаем из общей суммы
                 else {
-                    val daysCount = settingRepository.getTillEnd() - 1
+                    val daysCount = diff.days - 1
                     val deltaAverage = (sum - today) / daysCount
                     sumPerDayRepository.insertAverage(average - deltaAverage).complete().keep()
                     sumPerDayRepository.insertToday(0.0).complete().keep()
@@ -112,8 +114,9 @@ class KeyboardPresenter @Inject constructor(
         settingRepository.observeEndPeriod()
             .async()
             .subscribe({
-                recalculateAverageSum(it)
-                viewState.showDaysLeft(" на ${settingRepository.getTillEnd().getDayAddition()}")
+                val daysTillEnd = settingRepository.getDaysToEndPeriod()
+                recalculateAverageSum(daysTillEnd)
+                viewState.showDaysLeft(" на $daysTillEnd")
             }, { Log.d("qwerty", it.message) })
             .keep()
     }
@@ -133,7 +136,7 @@ class KeyboardPresenter @Inject constructor(
         updateKeyboardUI(id)
     }
 
-    private fun recalculateAverageSum(endDate: Int) {
+    private fun recalculateAverageSum(days:Int) {
         spendingRepository.getAll()
             .async()
             .subscribe({ list ->
@@ -141,11 +144,10 @@ class KeyboardPresenter @Inject constructor(
                     list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }.sum()
                 val income =
                     list.filter { it.isSpending == SpDirection.INCOME }.map { it.sum }.sum()
-                val period = getDaystoEndPeriod(endDate)
-                val averageSum = (income - spent) / period
+                val averageSum = (income - spent) / days
                 sumPerDayRepository.insertToday(averageSum).complete().keep()
                 sumPerDayRepository.insertAverage(averageSum).complete().keep()
-                viewState.showNewSumSnack(averageSum, period)
+                viewState.showNewSumSnack(averageSum, days)
             }, { Log.d("qwerty", it.message) })
             .keep()
     }
@@ -180,15 +182,5 @@ class KeyboardPresenter @Inject constructor(
             endPeriodDate - now.dayOfMonth
         }
         viewState.showDaysLeft(" на ${toEndMonth.getDayAddition()}")
-    }
-
-    private fun getDaystoEndPeriod(endPeriodDate:Int): Int {
-        val now = DateTime()
-        return if(DateTime().dayOfMonth > endPeriodDate){
-            now.withTimeAtEndOfMonth(now.monthOfYear).dayOfMonth - now.dayOfMonth + endPeriodDate
-        }
-        else{
-            endPeriodDate - now.dayOfMonth
-        }
     }
 }

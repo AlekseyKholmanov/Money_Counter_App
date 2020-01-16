@@ -35,11 +35,6 @@ class NotificationAlarmReciever : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("M_NotAlarmRecivr", "recieve notification intent")
         if (intent.action == NotificationTask.ACTION) {
-            val endDate = settingRepository.getTillEnd()
-            if (endDate <= 0) {
-                settingRepository.setIsEnd(true)
-                return
-            }
             notificationInteractor.alarmTriggered()
         }
         if(intent.action == BalancePopulateTask.ACTION){

@@ -28,7 +28,7 @@ class BalanceTask(context: Context, params: WorkerParameters) : Worker(context, 
             }
         }
         instance.balanceDao.insert(Balance(DateTime().withTimeAtStartOfDay(), todayBalance))
-        WorkerManager.startBalanceWorker()
+//        WorkerManager.startBalanceWorker()
         Log.d("M_SaveBalanceTask", "wnd work $todayBalance")
         return Result.success()
     }

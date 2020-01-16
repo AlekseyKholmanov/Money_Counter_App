@@ -1,8 +1,8 @@
 package com.example.holmi_production.money_counter_app.di.components
 
-import com.example.holmi_production.money_counter_app.di.modules.ApplicationModule
-import com.example.holmi_production.money_counter_app.di.modules.ContextModule
-import com.example.holmi_production.money_counter_app.di.modules.PreferenceModule
+import android.app.Application
+import com.example.holmi_production.money_counter_app.App
+import com.example.holmi_production.money_counter_app.di.modules.*
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
 import com.example.holmi_production.money_counter_app.ui.charts_fragments.balance.BalancePresenter
@@ -17,12 +17,32 @@ import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categ
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.PresenterCreateCategory
 import com.example.holmi_production.money_counter_app.ui.settings.SettingsPresenter
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarPresenter
+import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ContextModule::class, ApplicationModule::class, PreferenceModule::class])
-interface ApplicationComponent {
+@Component(
+    modules = [
+        ApplicationModule::class,
+        ApplicationModule2::class,
+        DatabaseModule::class,
+        PreferenceModule::class,
+        WorkerModule::class ]
+)
+interface ApplicationComponent : AndroidInjector<App> {
+
+    @Component.Builder
+    interface Builder {
+
+        @BindsInstance
+        fun application(application: Application): Builder
+
+        fun build(): ApplicationComponent
+    }
+
     fun getKeyboardPresenter(): KeyboardPresenter
     fun getCostsPresenter(): CostsPresenter
     fun getSettingsPresenter(): SettingsPresenter
@@ -30,7 +50,7 @@ interface ApplicationComponent {
     fun getChartPresenter(): PieChartPresenter
     fun getEndPeriodPresenter(): EndPeriodPresenter
     fun getStackedPresenter(): StackedPresenter
-    fun getBalancePresenter():BalancePresenter
+    fun getBalancePresenter(): BalancePresenter
     fun getTopbarPresenter(): TopbarPresenter
     fun getCategoryPickerPresenter(): CategoryPickerPresenter
     fun inject(activity: MainActivity)

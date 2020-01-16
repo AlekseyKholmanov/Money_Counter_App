@@ -19,13 +19,13 @@ fun DateTime.withTimeAtStartOfMonth():DateTime{
     return this.withDayOfMonth(1)
 }
 
-fun DateTime.getDateWithPreviousMonth(): DateTime {
+fun DateTime.withPreviousMonthDate(): DateTime {
     val month = this.monthOfYear
     val year = this.year
     return if (month == 1) this.withMonthOfYear(12).withYear(year-1) else this.withMonthOfYear(month-1)
 }
 
-fun DateTime.getDateWithNextMonth(): DateTime {
+fun DateTime.withNextMonthDate(): DateTime {
     val month = this.monthOfYear
     val year = this.year
     return if (month == 12) this.withMonthOfYear(1).withYear(year+1) else this.withMonthOfYear(month+1)

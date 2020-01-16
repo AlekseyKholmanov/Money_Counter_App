@@ -2,35 +2,52 @@ package com.example.holmi_production.money_counter_app.storage
 
 import android.content.SharedPreferences
 import android.util.Log
+import com.example.holmi_production.money_counter_app.extensions.withNextMonthDate
+import com.example.holmi_production.money_counter_app.extensions.withPreviousMonthDate
+import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfDay
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import org.joda.time.DateTime
 import org.joda.time.Days
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class SettingRepository @Inject constructor(private val pref: SharedPreferences) {
 
     private val settingSubject by lazy { PublishSubject.create<Int>() }
 
-    fun setEndPeriod(day: Int) {
+    fun setEndMonth(day: Int) {
         pref.edit().putInt(END_MONTH, day).apply()
         settingSubject.onNext(day)
+    }
+
+    fun getCurrentPeriodDate(): Pair<DateTime, DateTime> {
+        val today = DateTime()
+        val endPeriodDay = getEndMonth()
+        return if (today.dayOfMonth < endPeriodDay)
+            Pair<DateTime, DateTime>(
+                DateTime().withPreviousMonthDate().withDayOfMonth(endPeriodDay).withTimeAtStartOfDay(),
+                DateTime().withDayOfMonth(endPeriodDay - 1).withTimeAtEndOfDay()
+            ) else {
+            Pair<DateTime,DateTime>(
+                DateTime().withTimeAtStartOfDay().withDayOfMonth(endPeriodDay),
+                DateTime().withNextMonthDate().withDayOfMonth(endPeriodDay).withTimeAtEndOfDay()
+            )
+        }
+    }
+
+    fun getDaysToEndPeriod() : Int {
+        val days = getCurrentPeriodDate()
+        return Days.daysBetween(DateTime.now(), days.second).days
+    }
+
+    fun getEndMonth(): Int {
+        return pref.getInt(END_MONTH, 15)
     }
 
     fun observeEndPeriod(): Flowable<Int> {
         Log.d("qwerty", "observe end date")
         return settingSubject.toFlowable(BackpressureStrategy.LATEST)
-    }
-
-//       fun saveEndDate(endDate: DateTime) {
-//        Log.d("qwerty", "saved end date")
-//        settingSubject.onNext(endDate.millis)
-//        pref.edit().putLong(END_PERIOD, endDate.millis).apply()
-
-    fun getEndMonth(): Int {
-        return pref.getInt(END_MONTH, 15)
     }
 
     fun getPeriodType(): Int {
@@ -53,35 +70,8 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         pref.edit().putBoolean(FIRST_OPEN, true).apply()
     }
 
-    fun saveStartDate(startDay: DateTime) {
-        pref.edit().putLong(START_PERIOD, startDay.millis).apply()
-    }
-
-//    }
-
     fun isOpened(): Boolean {
         return pref.contains(FIRST_OPEN)
-    }
-
-    fun getStartDate(): Long {
-        return pref.getLong(START_PERIOD, 0)
-    }
-
-    fun getEndPeriod(): Long {
-        return pref.getLong(END_PERIOD, 0)
-    }
-
-    fun getTillEnd(): Int {
-        val endDate = getEndPeriod()
-        return Days.daysBetween(DateTime().withTimeAtStartOfDay(), DateTime(endDate)).days
-    }
-
-    fun setIsEnd(isEnd: Boolean) {
-        pref.edit().putBoolean(IS_END, isEnd).apply()
-    }
-
-    fun getIsEnd(): Boolean {
-        return pref.getBoolean(IS_END, false)
     }
 
     fun getBalancePopulatedStatus(): Boolean {
@@ -94,9 +84,6 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
 
     companion object {
         val FIRST_OPEN = "FirstOpen"
-        val START_PERIOD = "START_PERIOD"
-        val END_PERIOD = "END_PERIOD"
-        val IS_END = "IS_END"
         val CATEGORY_VALUE = "Category_value"
         val BALANCE_MIGRATION_TAG = "BALANCE_POPULATED"
         val PERIOD_TYPE = "PERIOD_TYPE"

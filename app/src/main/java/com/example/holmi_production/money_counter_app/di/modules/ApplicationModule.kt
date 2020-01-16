@@ -15,34 +15,23 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val application: Application) {
+class ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideApplicationContext(): Application = application
-
-
-    @Provides
-    @Singleton
-    fun provideDatabase(context: Context): ExpenseDatabase {
-        return ExpenseDatabase.getInstance(context)!!
+    fun provideAlarmManager(context: Context): AlarmManager {
+        return context.applicationContext.getSystemService()!!
     }
 
     @Provides
     @Singleton
-    fun provideAlarmManager(): AlarmManager {
-        return application.getSystemService<AlarmManager>()!!
+    fun provideNotificationManager(context: Context):NotificationManager{
+        return  context.applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
 
     @Provides
     @Singleton
-    fun provideNotificationManager():NotificationManager{
-        return  application.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-    }
-
-    @Provides
-    @Singleton
-    fun provideVibrator(): Vibrator {
-        return application.getSystemService(VIBRATOR_SERVICE) as Vibrator
+    fun provideVibrator(context: Context): Vibrator {
+        return context.applicationContext.getSystemService(VIBRATOR_SERVICE) as Vibrator
     }
 }

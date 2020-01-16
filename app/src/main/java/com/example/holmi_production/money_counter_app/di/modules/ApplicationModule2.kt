@@ -1,14 +1,16 @@
 package com.example.holmi_production.money_counter_app.di.modules
 
+import android.app.Application
 import android.content.Context
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class ContextModule(private val context: Context){
+abstract class ApplicationModule2 {
 
-    @Provides
     @Singleton
-    fun provideApplication(): Context = context
+    @Binds
+    abstract fun bindContext(application: Application): Context
+
 }

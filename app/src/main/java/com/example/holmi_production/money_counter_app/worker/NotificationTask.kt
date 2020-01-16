@@ -18,7 +18,7 @@ class NotificationTask(context: Context, params: WorkerParameters) : Worker(cont
         intent.action =
             ACTION
         applicationContext.sendBroadcast(intent)
-        WorkerManager.startNotificationWorker()
+//        WorkerManager.startNotificationWorker()
         Log.d("M_WorkerTask","notification tasks end work")
         return Result.success()
     }
