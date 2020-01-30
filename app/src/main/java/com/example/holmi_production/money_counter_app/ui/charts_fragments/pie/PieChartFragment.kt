@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.charts_fragments.pie
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,8 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.chip.Chip
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.chart_pie.*
 import leakcanary.AppWatcher
 
@@ -42,6 +45,11 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.chart_pie, container, false)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -139,9 +147,6 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
         emptyPlaceholder_pie.isVisible = true
         chart_pie.isVisible = false
     }
-
-    @ProvidePresenter
-    fun providePresenter() = App.component.getChartPresenter()
 
     @InjectPresenter
     lateinit var presenter: PieChartPresenter

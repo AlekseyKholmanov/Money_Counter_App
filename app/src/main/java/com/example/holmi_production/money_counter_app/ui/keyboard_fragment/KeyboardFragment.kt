@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,22 +19,31 @@ import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.example.holmi_production.money_counter_app.ui.settings.SettingsPresenter
 import com.google.android.material.snackbar.Snackbar
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
+import javax.inject.Inject
 
 class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     IKeyboardListener, IDatePickerCallback {
 
-    companion object{
-        fun newInstance(bundle: Bundle?):KeyboardFragment {
+    companion object {
+        fun newInstance(bundle: Bundle?): KeyboardFragment {
             val fragment = KeyboardFragment()
             fragment.arguments = bundle
             return fragment
         }
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_bottom_keyboard, container, false)
     }
 
@@ -42,14 +52,12 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         keyboardPart = KeyboardPartFragment.newInstance()
         keyboardPart.setListener(this)
         childFragmentManager.beginTransaction().apply {
-            replace(R.id.keyboard,keyboardPart)
+            replace(R.id.keyboard, keyboardPart)
             commit()
         }
-//        left_days.setOnClickListener {
-//            val timePickerDialog = TimePickerDialog.newInstance(withMinDate = true)
-//            timePickerDialog.setListener(this)
-//            timePickerDialog.show(childFragmentManager, "datePicker")
-//        }
+        left_days.setOnClickListener {
+            presenter.observeEndPeriodDate()
+        }
         if (arguments == null)
             presenter.getCategoryButtonValue()
         else {
@@ -58,7 +66,8 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         }
         //presenter.getDaysLeft()
         presenter.observeData()
-        Log.d("M_KeyboardFragment","View Created")
+        presenter.observeEndPeriodDate()
+        Log.d("M_KeyboardFragment", "View Created")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,11 +107,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         AppWatcher.objectWatcher.watch(this)
     }
 
-    @ProvidePresenter
-    fun initPresenter(): KeyboardPresenter {
-        return App.component.getKeyboardPresenter()
-    }
-
     override fun showNewSumSnack(sum: Double, days: Int) {
         val message = "новая сумма: ${sum.toCurencyFormat()} на ${days.getDayAddition()}"
         Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
@@ -113,13 +117,14 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         keyboardPart.showActionButtons(directions)
     }
 
-    override fun showSubcategoryMenu(subcategories: List<SubCategory>, color:Int) {
+    override fun showSubcategoryMenu(subcategories: List<SubCategory>, color: Int) {
         keyboardPart.showChipsContainer(subcategories, color)
     }
 
     override fun showSnack(
         category: Pair<Category, List<SubCategory>>,
-        spending: Spending) {
+        spending: Spending
+    ) {
         val message = if (spending.isSpending == SpDirection.SPENDING)
             "Расход. ${category.first.description}. ${spending.sum.toCurencyFormat().withRubleSign()}"
         else
@@ -150,7 +155,12 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
         new_sum_per_day.text = sum
     }
 
-    override fun enterPressed(money: Double, comment: String, isSpending: SpDirection , subcategoryId:Int?) {
+    override fun enterPressed(
+        money: Double,
+        comment: String,
+        isSpending: SpDirection,
+        subcategoryId: Int?
+    ) {
         Log.d("qwerty", money.toString())
         presenter.saveSpend(money, comment, isSpending, subcategoryId)
     }
@@ -175,8 +185,15 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
 //        expense.date = money
     }
 
-    private lateinit var keyboardPart:KeyboardPartFragment
+    private lateinit var keyboardPart: KeyboardPartFragment
+
+    @Inject
     @InjectPresenter
     lateinit var presenter: KeyboardPresenter
+
+    @ProvidePresenter
+    fun providePresenter(): KeyboardPresenter? {
+        return presenter
+    }
 }
 

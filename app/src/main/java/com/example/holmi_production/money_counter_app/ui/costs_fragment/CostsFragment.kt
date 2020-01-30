@@ -20,18 +20,24 @@ import com.example.holmi_production.money_counter_app.ui.costs_fragment.adapter.
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_bottom_costs.*
 import leakcanary.AppWatcher
 
 class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
 
-    companion object{
-        fun newInstance():CostsFragment{
+    companion object {
+        fun newInstance(): CostsFragment {
             return CostsFragment()
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_bottom_costs, container, false)
     }
 
@@ -57,7 +63,7 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("qwerty", "cost attached")
+        AndroidSupportInjection.inject(this)
     }
 
     override fun onStop() {
@@ -119,9 +125,6 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
         AppWatcher.objectWatcher.watch(this)
         Log.d("M_CostsFragment", "destroy")
     }
-
-    @ProvidePresenter
-    fun providePresenter() = App.component.getCostsPresenter()
 
     private lateinit var adapter: CostsAdapter
     @InjectPresenter

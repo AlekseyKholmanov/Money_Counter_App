@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.charts_fragments.bar
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,6 +23,8 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.chart_bar.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
@@ -37,6 +40,11 @@ class StackedChartFragment : AndroidXMvpAppCompatFragment(),
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.chart_bar, container, false)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -132,8 +140,5 @@ class StackedChartFragment : AndroidXMvpAppCompatFragment(),
     lateinit var presenter: StackedPresenter
 
     lateinit var chart: BarChart
-
-    @ProvidePresenter
-    fun providePresenter() = App.component.getStackedPresenter()
 
 }

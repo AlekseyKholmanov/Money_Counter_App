@@ -1,27 +1,24 @@
 package com.example.holmi_production.money_counter_app.ui.settings
 
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Spinner.MODE_DIALOG
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.frament_settings.*
 import leakcanary.AppWatcher
+import javax.inject.Inject
+
 
 class SettingsFragment : AndroidXMvpAppCompatFragment(), SettingsView {
 
@@ -70,11 +67,14 @@ class SettingsFragment : AndroidXMvpAppCompatFragment(), SettingsView {
         AppWatcher.objectWatcher.watch(this)
     }
 
-    @ProvidePresenter
-    fun providePresenter() = App.component.getSettingsPresenter()
-
+    @Inject
     @InjectPresenter
     lateinit var presenter: SettingsPresenter
+
+    @ProvidePresenter
+    fun providePresenter(): SettingsPresenter? {
+        return presenter
+    }
 
     private class SpinnerAdapter(context:Context, resource:Int, val datas:Array<Int>): ArrayAdapter<Int>(context,resource,datas){
         override fun getCount(): Int = datas.size

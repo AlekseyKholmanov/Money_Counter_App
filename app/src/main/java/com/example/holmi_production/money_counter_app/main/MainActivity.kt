@@ -23,8 +23,10 @@ import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categ
 import com.example.holmi_production.money_counter_app.ui.limits_fragment.LimitsFragment
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarFragment
 import com.example.holmi_production.money_counter_app.worker.WorkerManager
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.menu_delete_categories.*
 import kotlinx.android.synthetic.main.menu_end_period_date.*
 import leakcanary.AppWatcher
 import javax.inject.Inject
@@ -41,7 +43,7 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        App.component.inject(this)
+        AndroidInjection.inject(this)
         //        val navController = findNavController(R.id.mainNavFragment)
 //        val graph = navController.graph
 //        if (!settingRepository.isOpened())
@@ -49,7 +51,7 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
 //        else if (settingRepository.getIsEnd())
 //            graph.startDestination = R.id.navEndPeriod
 //        navController.graph = graph
-
+        Log.d("M_MainActivity","setting: $settingRepository")
         initializeDrawers()
         initializeFragments()
         setBottomNavigationController()
@@ -67,8 +69,9 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
             val datas = arrayOf("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28")
             b.setItems(datas) { dialog, which ->
                 Log.d("M_SettingsFragment","id: $which ${datas[which]}")
-                WorkerManager.startEndMonthWorker(datas[which].toInt(), workManager)
+                //WorkerManager.startEndMonthWorker(datas[which].toInt(), workManager)
                 et_end_month_value.text = datas[which]
+                settingRepository.setEndMonth(datas[which].toInt())
                 dialog!!.dismiss()
             }
             b.show()

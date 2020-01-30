@@ -3,6 +3,7 @@ package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 import android.graphics.Color
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
+import com.example.holmi_production.money_counter_app.Test_Singleton
 import com.example.holmi_production.money_counter_app.extensions.*
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
@@ -12,8 +13,10 @@ import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
+import io.reactivex.disposables.Disposable
 import org.joda.time.DateTime
 import org.joda.time.Days
+import java.util.*
 import javax.inject.Inject
 
 @InjectViewState
@@ -22,7 +25,8 @@ class KeyboardPresenter @Inject constructor(
     private val settingRepository: SettingRepository,
     private val spendingInteractor: SpendingInteractor,
     private val categoryInteractor: CategoryInteractor,
-    private val spendingRepository: SpendingRepository) :
+    private val spendingRepository: SpendingRepository
+) :
     BasePresenter<KeyboardFragmnetView>() {
 
     fun undoAdding(spending: Spending) {
@@ -34,7 +38,7 @@ class KeyboardPresenter @Inject constructor(
     fun saveSpend(sum: Double, comment: String, isSpending: SpDirection, subCategoryId: Int?) {
         val categoryId = settingRepository.getCategoryValue()
         val (startDate, endDate) = settingRepository.getCurrentPeriodDate()
-        val diff = Days.daysBetween(DateTime(),endDate)
+        val diff = Days.daysBetween(DateTime(), endDate)
         val spending = Spending(
             DateTime(),
             sum,
@@ -88,6 +92,9 @@ class KeyboardPresenter @Inject constructor(
     }
 
     fun observeData() {
+        val a = settingRepository.getDaysToEndPeriod()
+        Log.d("M_KeyboardPresenter","ostalos $a")
+
         spendingRepository.observeSpending()
             .async()
             .subscribe({ list ->
@@ -111,13 +118,19 @@ class KeyboardPresenter @Inject constructor(
                 )
             }, { Log.d("qwerty", it.message) })
             .keep()
+    }
+
+    fun observeEndPeriodDate(){
+        Log.d("M_KeyboardPresenter","subj ${settingRepository.settingSubject}")
+        Log.d("M_KeyboardPresenter","setting ${settingRepository}")
+        Log.d("M_KeyboardPresenter","test $Test_Singleton")
         settingRepository.observeEndPeriod()
             .async()
-            .subscribe({
-                val daysTillEnd = settingRepository.getDaysToEndPeriod()
-                recalculateAverageSum(daysTillEnd)
-                viewState.showDaysLeft(" на $daysTillEnd")
-            }, { Log.d("qwerty", it.message) })
+            .subscribe { day ->
+                Log.d("M_KeyboardPresenter","presenter get new end day $day")
+                recalculateAverageSum(day)
+                viewState.showDaysLeft(" на $day")
+            }
             .keep()
     }
 
@@ -136,7 +149,8 @@ class KeyboardPresenter @Inject constructor(
         updateKeyboardUI(id)
     }
 
-    private fun recalculateAverageSum(days:Int) {
+    private fun recalculateAverageSum(days: Int) {
+        Log.d("M_KeyboardPresenter","start recalculating")
         spendingRepository.getAll()
             .async()
             .subscribe({ list ->
@@ -154,7 +168,7 @@ class KeyboardPresenter @Inject constructor(
 
     private fun updateKeyboardUI(categoryId: Int) {
         categoryInteractor.getCategoryWithSub(categoryId)
-            .map {(category, subCategories) ->
+            .map { (category, subCategories) ->
                 Pair(category, subCategories.filter { !it.isDeleted })
             }
             .async()
@@ -175,10 +189,9 @@ class KeyboardPresenter @Inject constructor(
     private fun updateDayLeft() {
         val now = DateTime()
         val endPeriodDate = settingRepository.getEndMonth() - 1
-        val toEndMonth = if(DateTime().dayOfMonth > endPeriodDate){
-             now.withTimeAtEndOfMonth(now.monthOfYear).dayOfMonth - now.dayOfMonth + endPeriodDate
-        }
-        else{
+        val toEndMonth = if (DateTime().dayOfMonth > endPeriodDate) {
+            now.withTimeAtEndOfMonth(now.monthOfYear).dayOfMonth - now.dayOfMonth + endPeriodDate
+        } else {
             endPeriodDate - now.dayOfMonth
         }
         viewState.showDaysLeft(" на ${toEndMonth.getDayAddition()}")

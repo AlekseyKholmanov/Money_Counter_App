@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.charts_fragments.balance
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
@@ -26,6 +28,8 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.chart_balance.*
 import kotlinx.android.synthetic.main.chart_bar.emptyPlaceholder_bar
 import leakcanary.AppWatcher
@@ -55,6 +59,11 @@ class BalanceChartFragment : AndroidXMvpAppCompatFragment(), BalanceView {
         chart.setScaleEnabled(false)
         chart.isDragEnabled = true
         Log.d("M_BalanceChartFragment", "on view created")
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
     }
 
     override fun showChart(balances: List<Balance>) {
@@ -158,8 +167,6 @@ class BalanceChartFragment : AndroidXMvpAppCompatFragment(), BalanceView {
 
     lateinit var chart: LineChart
 
-    @ProvidePresenter
-    fun providePresenter() = App.component.getBalancePresenter()
 
     inner class XAxisFormatter : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {

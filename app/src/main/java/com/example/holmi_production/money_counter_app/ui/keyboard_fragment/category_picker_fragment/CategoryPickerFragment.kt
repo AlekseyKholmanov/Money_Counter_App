@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,12 +20,45 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.DialogFragmentTabContainer
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.edit_category_dialog.EditCategoryDialog
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.edit_category_dialog.EditCategoryDialog.ICategoryEditor
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_category_picker.*
 import leakcanary.AppWatcher
 
 class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
     CategoryPickerView,
     ICategoryPickerCallback, ICategoryEditor {
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_category_picker, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        adapter = CategoryPickerAdapter(callback = this)
+        val layoutManager = GridLayoutManager(context, 3)
+        rv_categoryList.layoutManager = layoutManager
+        rv_categoryList.adapter = adapter
+
+        btn_add_category.setOnClickListener {
+            presenter.getDialogData()
+        }
+        presenter.observeCategories()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("M_FragmentCatPicker", "CategoryPicker Destroyed")
+        AppWatcher.objectWatcher.watch(this)
+    }
 
     //Only for update subcategories in edit Dialog
     override fun updateSubcategories(subcategories: List<SubCategory>) {
@@ -73,32 +107,6 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
         (activity as MainActivity).showMain(bundle = bundle)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_category_picker, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        adapter = CategoryPickerAdapter(callback = this)
-        val layoutManager = GridLayoutManager(context, 3)
-        rv_categoryList.layoutManager = layoutManager
-        rv_categoryList.adapter = adapter
-
-        btn_add_category.setOnClickListener {
-            presenter.getDialogData()
-        }
-        presenter.observeCategories()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("M_FragmentCatPicker", "CategoryPicker Destroyed")
-        AppWatcher.objectWatcher.watch(this)
-    }
-
     override fun showCategories(categories: ArrayList<Pair<Category, List<SubCategory>>>) {
         adapter.setCategory(categories)
         adapter.notifyDataSetChanged()
@@ -109,11 +117,6 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
         tv_empty_categories.visibility = if (show) View.VISIBLE else View.GONE
         if (show && messageResId != null)
             tv_empty_categories.text = getString(messageResId)
-    }
-
-    @ProvidePresenter
-    fun initPresenter(): CategoryPickerPresenter {
-        return App.component.getCategoryPickerPresenter()
     }
 
     @InjectPresenter

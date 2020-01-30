@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.storage
 
 import android.content.SharedPreferences
 import android.util.Log
+import com.example.holmi_production.money_counter_app.Test_Singleton
 import com.example.holmi_production.money_counter_app.extensions.withNextMonthDate
 import com.example.holmi_production.money_counter_app.extensions.withPreviousMonthDate
 import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfDay
@@ -14,11 +15,14 @@ import javax.inject.Inject
 
 class SettingRepository @Inject constructor(private val pref: SharedPreferences) {
 
-    private val settingSubject by lazy { PublishSubject.create<Int>() }
+    val settingSubject by lazy { PublishSubject.create<Int>() }
 
     fun setEndMonth(day: Int) {
-        pref.edit().putInt(END_MONTH, day).apply()
+        Log.d("M_SettingRepository","subject $settingSubject")
+        Log.d("M_SettingRepository","repository $this")
+        Log.d("M_KeyboardPresenter","test $Test_Singleton")
         settingSubject.onNext(day)
+        pref.edit().putInt(END_MONTH, day).apply()
     }
 
     fun getCurrentPeriodDate(): Pair<DateTime, DateTime> {
@@ -46,7 +50,7 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
     }
 
     fun observeEndPeriod(): Flowable<Int> {
-        Log.d("qwerty", "observe end date")
+        Log.d("M_SettingRepository", "observe end date")
         return settingSubject.toFlowable(BackpressureStrategy.LATEST)
     }
 

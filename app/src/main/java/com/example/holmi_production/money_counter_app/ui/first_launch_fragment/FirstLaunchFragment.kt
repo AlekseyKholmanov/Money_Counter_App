@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui.first_launch_fragment
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,8 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_first_launch.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
@@ -22,6 +25,11 @@ import org.joda.time.DateTime
 class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
     override fun showMainScreen() {
 //        findNavController().navigate(R.id.action_navFirstLaunch_to_navMain)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -120,9 +128,4 @@ class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
 
     @InjectPresenter
     lateinit var presenter: FirstLaunchPresenter
-
-    @ProvidePresenter
-    fun initPresenter(): FirstLaunchPresenter {
-        return App.component.getFirstLaunchPresenter()
-    }
 }

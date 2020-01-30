@@ -15,13 +15,11 @@ import com.example.holmi_production.money_counter_app.worker.NotificationTask
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Balance
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
+import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 class NotificationAlarmReciever : BroadcastReceiver() {
 
-    init {
-        App.component.inject(this)
-    }
 
     @Inject
     lateinit var settingRepository: SettingRepository
