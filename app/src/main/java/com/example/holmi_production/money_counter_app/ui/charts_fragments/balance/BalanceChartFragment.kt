@@ -61,10 +61,8 @@ class BalanceChartFragment : AndroidXMvpAppCompatFragment(), BalanceView {
         Log.d("M_BalanceChartFragment", "on view created")
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        AndroidSupportInjection.inject(this)
-    }
+    @ProvidePresenter
+    fun providePresenter() = App.component.getBalancePresenter()
 
     override fun showChart(balances: List<Balance>) {
         hidePlaceholder()

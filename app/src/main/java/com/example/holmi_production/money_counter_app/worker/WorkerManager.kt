@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.worker
 
+import android.content.Context
 import android.util.Log
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
@@ -16,7 +17,7 @@ class WorkerManager {
         val END_PERIOD_TAG = "END_PERIOD_TAG"
 
 
-        fun startNotificationWorker(workManager:WorkManager) {
+        fun startNotificationWorker(context: Context) {
             val diff = Time.getDiffToNextDay(addMinutes = 1)
             Log.d(
                 "M_WorkerManager",
@@ -26,11 +27,11 @@ class WorkerManager {
                 .setInitialDelay(diff, TimeUnit.MILLISECONDS)
                 .addTag(NOTIFICATION_WORK_TAG)
                 .build()
-            workManager.enqueue(work)
+            WorkManager.getInstance(context).enqueue(work)
             Log.d("M_WorkerManager", "notification work executed")
         }
 
-        fun startBalanceWorker(workManager:WorkManager) {
+        fun startBalanceWorker(context: Context) {
             val diff = Time.getDiffToNextDay(addMinutes = 2)
             Log.d("M_WorkerManager", "balance work execute")
             Log.d(
@@ -41,11 +42,11 @@ class WorkerManager {
                 .setInitialDelay(diff, TimeUnit.MILLISECONDS)
                 .addTag(BALANCE_WORK_TAG)
                 .build()
-            workManager.enqueue(work)
+            WorkManager.getInstance(context).enqueue(work)
             Log.d("M_WorkerManager", "balance work executed")
         }
 
-        fun startEndMonthWorker(value:Int, workManager:WorkManager) {
+        fun startEndMonthWorker(value:Int, context: Context) {
             val data = Data.Builder().apply {
                 putInt("endMonth",value)
             }.build()
@@ -53,15 +54,15 @@ class WorkerManager {
                 .addTag(END_PERIOD_TAG)
                 .setInputData(data)
                 .build()
-            workManager.enqueue(work)
+            WorkManager.getInstance(context).enqueue(work)
             Log.d("M_WorkerManager", "notification work executed")
         }
 
-        fun balancePopulateWork() {
+        fun balancePopulateWork(context:Context) {
             val work = OneTimeWorkRequest.Builder(BalancePopulateTask::class.java)
                 .addTag(BALANCE_POPULATE_TAG)
                 .build()
-            WorkManager.getInstance().enqueue(work)
+            WorkManager.getInstance(context).enqueue(work)
         }
 
         private fun cancelWorks(tag: String, workManager:WorkManager) {
@@ -69,12 +70,14 @@ class WorkerManager {
             Log.d("M_WorkerManager", "wrk canceled $tag")
         }
 
-        fun cancelAll(workManager:WorkManager) {
+        fun cancelAll(context: Context) {
+            val manager =
+                WorkManager.getInstance(context)
             cancelWorks(
-                BALANCE_WORK_TAG, workManager
+                BALANCE_WORK_TAG, manager
             )
             cancelWorks(
-                NOTIFICATION_WORK_TAG, workManager
+                NOTIFICATION_WORK_TAG, manager
             )
 
         }

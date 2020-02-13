@@ -30,14 +30,6 @@
                 <action android:name="android.intent.action.MY_NOTIFICATION_MESSAGE"/>
             </intent-filter>
         </activity>
-
-        <!-- Disable WorkManager's default initialization so we can use Dagger with it -->
-        <provider
-            android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="${applicationId}.workmanager-init"
-            android:enabled="false"
-            android:exported="false"
-            tools:replace="android:authorities" />
     </application>
     <uses-permission android:name="android.permission.VIBRATE"/>
 

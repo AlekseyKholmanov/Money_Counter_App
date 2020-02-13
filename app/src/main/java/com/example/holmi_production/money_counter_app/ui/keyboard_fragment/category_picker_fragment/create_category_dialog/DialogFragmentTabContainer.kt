@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
@@ -76,9 +77,7 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcat
     lateinit var presenter: PresenterCreateCategory
 
     @ProvidePresenter
-    fun providePresenter(): PresenterCreateCategory? {
-        return presenter
-    }
+    fun initPresenter(): PresenterCreateCategory = App.component.getCategoryCreatePresenter()
 
     lateinit var callback:EditCategoryDialog.ICategoryEditor
 }

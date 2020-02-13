@@ -42,10 +42,8 @@ class StackedChartFragment : AndroidXMvpAppCompatFragment(),
         return inflater.inflate(R.layout.chart_bar, container, false)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        AndroidSupportInjection.inject(this)
-    }
+    @ProvidePresenter
+    fun providePresenter() = App.component.getStackedPresenter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

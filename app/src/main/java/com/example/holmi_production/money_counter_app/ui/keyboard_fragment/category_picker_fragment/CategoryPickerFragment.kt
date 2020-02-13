@@ -29,16 +29,16 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
     CategoryPickerView,
     ICategoryPickerCallback, ICategoryEditor {
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        AndroidSupportInjection.inject(this)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_category_picker, container, false)
+    }
+
+    @ProvidePresenter
+    fun initPresenter(): CategoryPickerPresenter {
+        return App.component.getCategoryPickerPresenter()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

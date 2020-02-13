@@ -61,10 +61,8 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
         itemTouchHelper.attachToRecyclerView(spendingList)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        AndroidSupportInjection.inject(this)
-    }
+    @ProvidePresenter
+    fun providePresenter() = App.component.getCostsPresenter()
 
     override fun onStop() {
         super.onStop()

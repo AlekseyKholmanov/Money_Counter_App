@@ -28,10 +28,6 @@ import leakcanary.AppWatcher
 import javax.inject.Inject
 
 class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        AndroidSupportInjection.inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +39,7 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        App.component.inject(this)
         numbers_keyboard.visibility = View.GONE
         key_progress_bar.max = 100f
         key_0.setOnClickListener { pressed(ButtonTypeEnums.ZERO, "0") }

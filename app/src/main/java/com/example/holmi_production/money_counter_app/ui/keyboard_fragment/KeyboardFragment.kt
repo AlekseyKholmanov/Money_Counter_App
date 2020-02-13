@@ -192,8 +192,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
     lateinit var presenter: KeyboardPresenter
 
     @ProvidePresenter
-    fun providePresenter(): KeyboardPresenter? {
-        return presenter
-    }
+    fun initPresenter(): KeyboardPresenter = App.component.getKeyboardPresenter()
 }
 

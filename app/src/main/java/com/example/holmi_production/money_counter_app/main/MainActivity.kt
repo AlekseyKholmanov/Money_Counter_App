@@ -35,15 +35,13 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
 
     @Inject
     lateinit var settingRepository: SettingRepository
-    @Inject
-    lateinit var workManager: WorkManager
 
     private lateinit var toggle:ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        AndroidInjection.inject(this)
+        App.component.inject(this)
         //        val navController = findNavController(R.id.mainNavFragment)
 //        val graph = navController.graph
 //        if (!settingRepository.isOpened())
@@ -55,10 +53,9 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
         initializeDrawers()
         initializeFragments()
         setBottomNavigationController()
-
-        WorkerManager.cancelAll(workManager)
-        WorkerManager.startBalanceWorker(workManager)
-        WorkerManager.startNotificationWorker(workManager)
+        WorkerManager.cancelAll(this)
+        WorkerManager.startBalanceWorker(this)
+        WorkerManager.startNotificationWorker(this)
 
         et_end_month_value.text = settingRepository.getEndMonth().toString()
 

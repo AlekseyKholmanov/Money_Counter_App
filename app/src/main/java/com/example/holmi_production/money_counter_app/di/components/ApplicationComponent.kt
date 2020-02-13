@@ -27,24 +27,26 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-        AndroidInjectionModule::class,
         ApplicationModule::class,
-        ApplicationModule2::class,
+        ContextModule::class,
         DatabaseModule::class,
-        PreferenceModule::class,
-        BindingModule::class,
-        WorkerModule::class,
-        MainActivityModule::class]
+        PreferenceModule::class]
 )
-interface ApplicationComponent:AndroidInjector<App> {
+interface ApplicationComponent{
 
-    @Component.Builder
-    interface Builder {
-
-        @BindsInstance
-        fun application(application: Application): Builder
-
-        fun build(): ApplicationComponent
-    }
+    fun getKeyboardPresenter(): KeyboardPresenter
+    fun getCostsPresenter(): CostsPresenter
+    fun getSettingsPresenter(): SettingsPresenter
+    fun getFirstLaunchPresenter(): FirstLaunchPresenter
+    fun getChartPresenter(): PieChartPresenter
+    fun getEndPeriodPresenter(): EndPeriodPresenter
+    fun getStackedPresenter(): StackedPresenter
+    fun getBalancePresenter(): BalancePresenter
+    fun getTopbarPresenter(): TopbarPresenter
+    fun getCategoryPickerPresenter(): CategoryPickerPresenter
+    fun inject(activity: MainActivity)
+    fun inject(notificationAlarmReciever: NotificationAlarmReciever)
+    fun inject(keyboardFr: KeyboardPartFragment)
+    fun getCategoryCreatePresenter(): PresenterCreateCategory
 }
 

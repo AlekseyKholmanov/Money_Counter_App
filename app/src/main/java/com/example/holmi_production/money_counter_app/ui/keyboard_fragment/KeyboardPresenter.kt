@@ -3,7 +3,6 @@ package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 import android.graphics.Color
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
-import com.example.holmi_production.money_counter_app.Test_Singleton
 import com.example.holmi_production.money_counter_app.extensions.*
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
@@ -123,7 +122,6 @@ class KeyboardPresenter @Inject constructor(
     fun observeEndPeriodDate(){
         Log.d("M_KeyboardPresenter","subj ${settingRepository.settingSubject}")
         Log.d("M_KeyboardPresenter","setting ${settingRepository}")
-        Log.d("M_KeyboardPresenter","test $Test_Singleton")
         settingRepository.observeEndPeriod()
             .async()
             .subscribe { day ->

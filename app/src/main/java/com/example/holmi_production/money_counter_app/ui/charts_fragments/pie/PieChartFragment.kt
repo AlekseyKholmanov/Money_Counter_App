@@ -47,10 +47,8 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
         return inflater.inflate(R.layout.chart_pie, container, false)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        AndroidSupportInjection.inject(this)
-    }
+    @ProvidePresenter
+    fun providePresenter() = App.component.getChartPresenter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("M_PieChartFragment", "pie view created")

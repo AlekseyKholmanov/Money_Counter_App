@@ -2,7 +2,6 @@ package com.example.holmi_production.money_counter_app.storage
 
 import android.content.SharedPreferences
 import android.util.Log
-import com.example.holmi_production.money_counter_app.Test_Singleton
 import com.example.holmi_production.money_counter_app.extensions.withNextMonthDate
 import com.example.holmi_production.money_counter_app.extensions.withPreviousMonthDate
 import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfDay
@@ -20,7 +19,6 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
     fun setEndMonth(day: Int) {
         Log.d("M_SettingRepository","subject $settingSubject")
         Log.d("M_SettingRepository","repository $this")
-        Log.d("M_KeyboardPresenter","test $Test_Singleton")
         settingSubject.onNext(day)
         pref.edit().putInt(END_MONTH, day).apply()
     }

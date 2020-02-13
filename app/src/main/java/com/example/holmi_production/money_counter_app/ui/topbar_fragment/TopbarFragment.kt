@@ -1,24 +1,22 @@
 package com.example.holmi_production.money_counter_app.ui.topbar_fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.modules.Injectable
 import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_topbar.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
 import javax.inject.Inject
 
 
-class TopbarFragment : AndroidXMvpAppCompatFragment(), TopbarView, ITopbarDatePickerCallback, Injectable {
+class TopbarFragment : AndroidXMvpAppCompatFragment(), TopbarView, ITopbarDatePickerCallback{
 
     companion object{
         fun newInstance(): TopbarFragment {
@@ -65,7 +63,8 @@ class TopbarFragment : AndroidXMvpAppCompatFragment(), TopbarView, ITopbarDatePi
     }
 
     @ProvidePresenter
-    fun providePresenter(): TopbarPresenter? = presenter
+    fun initPresenter(): TopbarPresenter = App.component.getTopbarPresenter()
+
 
 
     @Inject

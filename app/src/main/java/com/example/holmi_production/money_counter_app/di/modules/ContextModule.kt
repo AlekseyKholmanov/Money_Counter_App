@@ -4,13 +4,13 @@ import android.app.Application
 import android.content.Context
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-abstract class ApplicationModule2 {
+class ContextModule(private val context: Context){
 
+    @Provides
     @Singleton
-    @Binds
-    abstract fun bindContext(application: Application): Context
-
+    fun provideApplication(): Context = context
 }
