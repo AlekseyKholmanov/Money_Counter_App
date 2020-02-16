@@ -17,36 +17,26 @@ import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categ
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.PresenterCreateCategory
 import com.example.holmi_production.money_counter_app.ui.settings.SettingsPresenter
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarPresenter
-import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
-import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
+        AppModule::class,
         ApplicationModule::class,
-        ContextModule::class,
         DatabaseModule::class,
-        PreferenceModule::class]
+        PreferenceModule::class,
+        WorkerModule::class]
 )
-interface ApplicationComponent{
+interface ApplicationComponent : AndroidInjector<App> {
 
-    fun getKeyboardPresenter(): KeyboardPresenter
-    fun getCostsPresenter(): CostsPresenter
-    fun getSettingsPresenter(): SettingsPresenter
-    fun getFirstLaunchPresenter(): FirstLaunchPresenter
-    fun getChartPresenter(): PieChartPresenter
-    fun getEndPeriodPresenter(): EndPeriodPresenter
-    fun getStackedPresenter(): StackedPresenter
-    fun getBalancePresenter(): BalancePresenter
-    fun getTopbarPresenter(): TopbarPresenter
-    fun getCategoryPickerPresenter(): CategoryPickerPresenter
-    fun inject(activity: MainActivity)
-    fun inject(notificationAlarmReciever: NotificationAlarmReciever)
-    fun inject(keyboardFr: KeyboardPartFragment)
-    fun getCategoryCreatePresenter(): PresenterCreateCategory
+    @Component.Builder
+    interface Builder {
+        fun application(application: Application): Builder
+
+        fun build(): ApplicationComponent
+    }
 }
 
