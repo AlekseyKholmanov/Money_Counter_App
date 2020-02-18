@@ -60,7 +60,6 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
             val categoryId = arguments!!.getInt("categoryId")
             presenter.setCategoryButonType(categoryId)
         }
-        presenter.observeDaysLeft()
         presenter.observeData()
         presenter.observeEndPeriodDate()
         Log.d("M_KeyboardFragment", "View Created")

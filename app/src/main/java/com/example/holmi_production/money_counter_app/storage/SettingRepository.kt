@@ -11,8 +11,15 @@ import io.reactivex.subjects.PublishSubject
 import org.joda.time.DateTime
 import org.joda.time.Days
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class SettingRepository @Inject constructor(private val pref: SharedPreferences) {
+
+    init {
+        Log.d("M_SettingRepository",this.toString())
+    }
+
 
     val settingSubject by lazy { PublishSubject.create<Int>() }
 

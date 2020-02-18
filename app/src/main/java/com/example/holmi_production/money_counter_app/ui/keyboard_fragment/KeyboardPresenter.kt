@@ -92,7 +92,7 @@ class KeyboardPresenter @Inject constructor(
 
     fun observeData() {
         val a = settingRepository.getDaysToEndPeriod()
-        Log.d("M_KeyboardPresenter","ostalos $a")
+        Log.d("M_KeyboardPresenter", "ostalos $a")
 
         spendingRepository.observeSpending()
             .async()
@@ -119,25 +119,19 @@ class KeyboardPresenter @Inject constructor(
             .keep()
     }
 
-    fun observeEndPeriodDate(){
-        Log.d("M_KeyboardPresenter","subj ${settingRepository.settingSubject}")
-        Log.d("M_KeyboardPresenter","setting ${settingRepository}")
+    fun observeEndPeriodDate() {
+        Log.d("M_KeyboardPresenter", "subj ${settingRepository.settingSubject}")
+        Log.d("M_KeyboardPresenter", "setting ${settingRepository}")
+        val current = settingRepository.getDaysToEndPeriod()
+        //TODO костыль
+        viewState.showDaysLeft(" на $current дней")
         settingRepository.observeEndPeriod()
             .async()
             .subscribe { day ->
-                Log.d("M_KeyboardPresenter","presenter get new end day $day")
-                recalculateAverageSum(day)
-                viewState.showDaysLeft(" на $day")
-            }
-            .keep()
-    }
-
-    fun observeDaysLeft() {
-        settingRepository.observeEndPeriod()
-            .async()
-            .subscribe { day->
+                Log.d("M_KeyboardPresenter", "presenter get new end day $day")
                 val days = settingRepository.getDaysToEndPeriod()
-                viewState.showDaysLeft(" на ${days.getDayAddition()}")
+                recalculateAverageSum(days)
+                viewState.showDaysLeft(" на $days дней")
             }
             .keep()
     }
@@ -154,7 +148,7 @@ class KeyboardPresenter @Inject constructor(
     }
 
     private fun recalculateAverageSum(days: Int) {
-        Log.d("M_KeyboardPresenter","start recalculating")
+        Log.d("M_KeyboardPresenter", "start recalculating")
         spendingRepository.getAll()
             .async()
             .subscribe({ list ->
