@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,10 +18,7 @@ import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.Spending
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.example.holmi_production.money_counter_app.ui.settings.SettingsPresenter
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.AndroidInjection
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
@@ -64,7 +60,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
             val categoryId = arguments!!.getInt("categoryId")
             presenter.setCategoryButonType(categoryId)
         }
-        //presenter.getDaysLeft()
+        presenter.observeDaysLeft()
         presenter.observeData()
         presenter.observeEndPeriodDate()
         Log.d("M_KeyboardFragment", "View Created")

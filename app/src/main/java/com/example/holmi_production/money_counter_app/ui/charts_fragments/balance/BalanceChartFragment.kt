@@ -28,8 +28,6 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
-import dagger.android.AndroidInjection
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.chart_balance.*
 import kotlinx.android.synthetic.main.chart_bar.emptyPlaceholder_bar
 import leakcanary.AppWatcher

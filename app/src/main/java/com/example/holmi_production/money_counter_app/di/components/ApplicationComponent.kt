@@ -1,7 +1,6 @@
 package com.example.holmi_production.money_counter_app.di.components
 
 import android.app.Application
-import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.di.modules.*
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
@@ -17,11 +16,11 @@ import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categ
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.PresenterCreateCategory
 import com.example.holmi_production.money_counter_app.ui.settings.SettingsPresenter
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarPresenter
+import com.example.holmi_production.money_counter_app.worker.CustomWorkerFactory
+import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
-import dagger.android.AndroidInjector
-import dagger.android.support.AndroidSupportInjectionModule
+import dagger.Module
 import javax.inject.Singleton
 
 @Singleton
@@ -30,9 +29,10 @@ import javax.inject.Singleton
         ApplicationModule::class,
         ContextModule::class,
         DatabaseModule::class,
-        PreferenceModule::class]
+        PreferenceModule::class,
+        WorkerBindingModule::class]
 )
-interface ApplicationComponent{
+interface ApplicationComponent {
 
     fun getKeyboardPresenter(): KeyboardPresenter
     fun getCostsPresenter(): CostsPresenter
@@ -48,5 +48,19 @@ interface ApplicationComponent{
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
     fun inject(keyboardFr: KeyboardPartFragment)
     fun getCategoryCreatePresenter(): PresenterCreateCategory
+    fun factory(): CustomWorkerFactory
+
+    @Component.Builder
+    interface Builder {
+
+        @BindsInstance
+        fun application(application: Application): Builder
+
+        fun build(): ApplicationComponent
+    }
 }
+
+//@Module(includes = [AssistedInject_SampleAssistedInjectModule::class])
+//@AssistedModule
+//interface SampleAssistedInjectModule
 

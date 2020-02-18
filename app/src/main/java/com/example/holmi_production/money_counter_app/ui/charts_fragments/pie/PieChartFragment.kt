@@ -26,8 +26,6 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.chip.Chip
-import dagger.android.AndroidInjection
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.chart_pie.*
 import leakcanary.AppWatcher
 

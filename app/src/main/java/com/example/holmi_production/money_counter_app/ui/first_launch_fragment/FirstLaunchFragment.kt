@@ -16,8 +16,6 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import dagger.android.AndroidInjection
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_first_launch.*
 import leakcanary.AppWatcher
 import org.joda.time.DateTime
@@ -29,7 +27,6 @@ class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        AndroidSupportInjection.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

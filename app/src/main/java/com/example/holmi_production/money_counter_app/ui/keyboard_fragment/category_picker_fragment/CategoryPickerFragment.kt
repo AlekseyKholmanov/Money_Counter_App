@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,8 +19,6 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.DialogFragmentTabContainer
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.edit_category_dialog.EditCategoryDialog
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.edit_category_dialog.EditCategoryDialog.ICategoryEditor
-import dagger.android.AndroidInjection
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_category_picker.*
 import leakcanary.AppWatcher
 

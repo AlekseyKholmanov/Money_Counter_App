@@ -132,8 +132,14 @@ class KeyboardPresenter @Inject constructor(
             .keep()
     }
 
-    fun getDaysLeft() {
-        updateDayLeft()
+    fun observeDaysLeft() {
+        settingRepository.observeEndPeriod()
+            .async()
+            .subscribe { day->
+                val days = settingRepository.getDaysToEndPeriod()
+                viewState.showDaysLeft(" на ${days.getDayAddition()}")
+            }
+            .keep()
     }
 
     fun getCategoryButtonValue() {

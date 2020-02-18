@@ -20,8 +20,6 @@ import com.example.holmi_production.money_counter_app.ui.costs_fragment.adapter.
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import dagger.android.AndroidInjection
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_bottom_costs.*
 import leakcanary.AppWatcher
 
