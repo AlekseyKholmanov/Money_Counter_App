@@ -19,10 +19,6 @@ import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 class NotificationAlarmReciever : BroadcastReceiver() {
-
-
-    @Inject
-    lateinit var settingRepository: SettingRepository
     @Inject
     lateinit var notificationInteractor: NotificationInteractor
     @Inject
@@ -35,24 +31,6 @@ class NotificationAlarmReciever : BroadcastReceiver() {
         if (intent.action == NotificationTask.ACTION) {
             notificationInteractor.alarmTriggered()
         }
-        if(intent.action == BalancePopulateTask.ACTION){
-            settingRepository.setBalancePopulated()
-            spendingInteractor.getAll()
-                .map { it.groupBy { it.createdDate.withTimeAtStartOfDay() }.toSortedMap(Comparator { o1, o2 -> o1.compareTo(o2) }) }
-                .async()
-                .subscribe { list->
-                    var daylyBalance = 0.0
-                    list.forEach { (t, u) ->
-                        u.forEach {
-                            if(it.isSpending == SpDirection.INCOME) daylyBalance+= it.sum else daylyBalance-=it.sum
-                        }
-                        val balance = Balance(t,daylyBalance)
-                        balanceInteractor.insert(balance)
-                        Log.d("M_NotAlarmReciever","${t.toRUformat()} $daylyBalance")
-                    }
-                }
-            
-            
-        }
+
     }
 }

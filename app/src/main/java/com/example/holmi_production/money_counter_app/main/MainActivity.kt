@@ -2,8 +2,11 @@ package com.example.holmi_production.money_counter_app.main
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
@@ -26,6 +29,7 @@ import com.example.holmi_production.money_counter_app.worker.WorkerManager
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.menu_currency_converting.*
 import kotlinx.android.synthetic.main.menu_delete_categories.*
 import kotlinx.android.synthetic.main.menu_end_period_date.*
 import leakcanary.AppWatcher
@@ -36,26 +40,20 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
     @Inject
     lateinit var settingRepository: SettingRepository
 
-    private lateinit var toggle:ActionBarDrawerToggle
+    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         App.component.inject(this)
-        //        val navController = findNavController(R.id.mainNavFragment)
-//        val graph = navController.graph
-//        if (!settingRepository.isOpened())
-//            graph.startDestination = R.id.navFirstLaunch
-//        else if (settingRepository.getIsEnd())
-//            graph.startDestination = R.id.navEndPeriod
-//        navController.graph = graph
-        Log.d("M_MainActivity","setting: $settingRepository")
+        Log.d("M_MainActivity", "setting: $settingRepository")
         initializeDrawers()
         initializeFragments()
+        initializeSettings()
         setBottomNavigationController()
-        WorkerManager.cancelAll(this)
-        WorkerManager.startBalanceWorker(this)
-        WorkerManager.startNotificationWorker(this)
+        WorkerManager.cancelAll(this.applicationContext)
+        WorkerManager.startBalanceWorker(this.applicationContext)
+        WorkerManager.startNotificationWorker(this.applicationContext)
 
         et_end_month_value.text = settingRepository.getEndMonth().toString()
 
@@ -63,9 +61,36 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
         end_month_container.setOnClickListener {
             val b = AlertDialog.Builder(this)
             b.setTitle("День окончания месяца")
-            val datas = arrayOf("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28")
+            val datas = arrayOf(
+                "1", "2", "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
+                "25",
+                "26",
+                "27",
+                "28"
+            )
             b.setItems(datas) { dialog, which ->
-                Log.d("M_SettingsFragment","id: $which ${datas[which]}")
+                Log.d("M_SettingsFragment", "id: $which ${datas[which]}")
                 WorkerManager.startEndMonthWorker(datas[which].toInt(), this)
                 et_end_month_value.text = datas[which]
                 dialog!!.dismiss()
@@ -82,6 +107,15 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setConverterState(state: Boolean) {
+
+        if (state) {
+            converter_value.visibility = View.VISIBLE
+        } else {
+            converter_value.visibility = View.GONE
+        }
     }
 
     private fun initializeDrawers() {
@@ -103,6 +137,30 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
     override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onPostCreate(savedInstanceState, persistentState)
         toggle.syncState()
+    }
+
+    private fun initializeSettings() {
+
+        val converterState = settingRepository.getConverter()
+        val defValue = settingRepository.getConverterValue()
+        converter_value.text = Editable.Factory.getInstance().newEditable(defValue)
+        converter_checkbox.isChecked = converterState
+        setConverterState(converterState)
+        converter_checkbox.setOnCheckedChangeListener { _, isChecked ->
+            setConverterState(isChecked)
+            settingRepository.setConverter(isChecked)
+        }
+        converter_value.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                settingRepository.setConverterValue(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
     }
 
     private fun initializeFragments() {
@@ -141,7 +199,8 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
         isAddedToBackstack: Boolean = false,
         withTopbar: Boolean = true,
         withBottomBar: Boolean = true,
-        withAppBar: Boolean = false) {
+        withAppBar: Boolean = false
+    ) {
         if (withBottomBar) showBottomNav() else hideBottomNav()
         if (withTopbar) showDatePickerBar() else hideDatePickerBar()
         if (withAppBar) {

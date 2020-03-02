@@ -10,7 +10,6 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 
-
 class CustomWorkerFactory @Inject constructor(
     private val workerFactories: Map<Class<out ListenableWorker>, @JvmSuppressWildcards Provider<ChildWorkerFactory>>
 ) : WorkerFactory() {
@@ -18,7 +17,7 @@ class CustomWorkerFactory @Inject constructor(
         appContext: Context,
         workerClassName: String,
         workerParameters: WorkerParameters
-    ): ListenableWorker? {
+    ): ListenableWorker {
         val foundEntry =
             workerFactories.entries.find { Class.forName(workerClassName).isAssignableFrom(it.key) }
         val factoryProvider = foundEntry?.value

@@ -12,10 +12,8 @@ import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
-import io.reactivex.disposables.Disposable
 import org.joda.time.DateTime
 import org.joda.time.Days
-import java.util.*
 import javax.inject.Inject
 
 @InjectViewState
@@ -36,11 +34,19 @@ class KeyboardPresenter @Inject constructor(
 
     fun saveSpend(sum: Double, comment: String, isSpending: SpDirection, subCategoryId: Int?) {
         val categoryId = settingRepository.getCategoryValue()
-        val (startDate, endDate) = settingRepository.getCurrentPeriodDate()
+        val (startDate, endDate) = settingRepository.getCurrentPeriods()
         val diff = Days.daysBetween(DateTime(), endDate)
+        // if currency converter enable
+        val sumWithConverter = if (settingRepository.getConverter()) {
+            val coef = settingRepository.getConverterValue()
+            sum * coef.toDouble()
+
+        } else {
+            sum
+        }
         val spending = Spending(
             DateTime(),
-            sum,
+            sumWithConverter,
             categoryId,
             subCategoryId,
             isSpending,
@@ -97,17 +103,19 @@ class KeyboardPresenter @Inject constructor(
         spendingRepository.observeSpending()
             .async()
             .subscribe({ list ->
-                val a = list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }
-                val b = list.filter { it.isSpending == SpDirection.INCOME }.map { it.sum }
-                viewState.showIncomeSum((b.sum() - a.sum()).toCurencyFormat().withRubleSign())
+                val spending = list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }
+                val income = list.filter { it.isSpending == SpDirection.INCOME }.map { it.sum }
+                viewState.showIncomeSum((income.sum() - spending.sum()).toCurencyFormat().withRubleSign())
             }, { Log.d("qwerty", it.message) })
             .keep()
+
         sumPerDayRepository.observeToday()
             .async()
             .subscribe({ today ->
                 viewState.showSumPerDay(today.sum.toCurencyFormat().withRubleSign())
             }, { Log.d("qwerty", it.message) })
             .keep()
+
         sumPerDayRepository.observeAverage()
             .async()
             .subscribe({ average ->

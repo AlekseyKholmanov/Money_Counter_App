@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.di.components
 
-import android.app.Application
 import com.example.holmi_production.money_counter_app.di.modules.*
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
@@ -18,7 +17,6 @@ import com.example.holmi_production.money_counter_app.ui.settings.SettingsPresen
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarPresenter
 import com.example.holmi_production.money_counter_app.worker.CustomWorkerFactory
 import com.squareup.inject.assisted.dagger2.AssistedModule
-import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import javax.inject.Singleton
@@ -30,7 +28,8 @@ import javax.inject.Singleton
         ContextModule::class,
         DatabaseModule::class,
         PreferenceModule::class,
-        WorkerBindingModule::class]
+        WorkerBindingModule::class,
+        SampleAssistedInjectModule::class]
 )
 interface ApplicationComponent {
 
@@ -49,18 +48,9 @@ interface ApplicationComponent {
     fun inject(keyboardFr: KeyboardPartFragment)
     fun getCategoryCreatePresenter(): PresenterCreateCategory
     fun factory(): CustomWorkerFactory
-
-    @Component.Builder
-    interface Builder {
-
-        @BindsInstance
-        fun application(application: Application): Builder
-
-        fun build(): ApplicationComponent
-    }
 }
 
-//@Module(includes = [AssistedInject_SampleAssistedInjectModule::class])
-//@AssistedModule
-//interface SampleAssistedInjectModule
+@Module(includes = [AssistedInject_SampleAssistedInjectModule::class])
+@AssistedModule
+interface SampleAssistedInjectModule
 

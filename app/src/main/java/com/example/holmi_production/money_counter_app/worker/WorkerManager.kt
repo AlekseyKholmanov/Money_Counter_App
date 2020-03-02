@@ -18,7 +18,7 @@ class WorkerManager {
 
 
         fun startNotificationWorker(context: Context) {
-            val diff = Time.getDiffToNextDay(addMinutes = 1)
+            val diff = Time.getDiffToNextDay(addMinutes = 50)
             Log.d(
                 "M_WorkerManager",
                 "notification work wiil be ${diff / (1000 * 60 * 60 * 24)} day ${diff / (1000 * 60 * 60)} hours ${diff / 1000 % 60} minutes"
@@ -27,8 +27,8 @@ class WorkerManager {
                 .setInitialDelay(diff, TimeUnit.MILLISECONDS)
                 .addTag(NOTIFICATION_WORK_TAG)
                 .build()
-            WorkManager.getInstance(context).enqueue(work)
-            Log.d("M_WorkerManager", "notification work executed")
+            WorkManager.getInstance(context.applicationContext).enqueue(work)
+            Log.d("M_WorkerManager", "notification work executed with id: ${work.stringId}")
         }
 
         fun startBalanceWorker(context: Context) {
@@ -42,8 +42,8 @@ class WorkerManager {
                 .setInitialDelay(diff, TimeUnit.MILLISECONDS)
                 .addTag(BALANCE_WORK_TAG)
                 .build()
-            WorkManager.getInstance(context).enqueue(work)
-            Log.d("M_WorkerManager", "balance work executed")
+            WorkManager.getInstance(context.applicationContext).enqueue(work)
+            Log.d("M_WorkerManager", "balance work executed with id: ${work.stringId}")
         }
 
         fun startEndMonthWorker(value:Int, context: Context) {
@@ -54,7 +54,7 @@ class WorkerManager {
                 .addTag(END_PERIOD_TAG)
                 .setInputData(data)
                 .build()
-            WorkManager.getInstance(context).enqueue(work)
+            WorkManager.getInstance(context.applicationContext).enqueue(work)
             Log.d("M_WorkerManager", "notification work executed")
         }
 

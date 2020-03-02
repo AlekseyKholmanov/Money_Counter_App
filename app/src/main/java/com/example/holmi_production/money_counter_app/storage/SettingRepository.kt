@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.storage
 
+import android.content.ContentValues
 import android.content.SharedPreferences
 import android.util.Log
 import com.example.holmi_production.money_counter_app.extensions.withNextMonthDate
@@ -16,21 +17,17 @@ import javax.inject.Singleton
 @Singleton
 class SettingRepository @Inject constructor(private val pref: SharedPreferences) {
 
-    init {
-        Log.d("M_SettingRepository",this.toString())
-    }
-
 
     val settingSubject by lazy { PublishSubject.create<Int>() }
 
     fun setEndMonth(day: Int) {
-        Log.d("M_SettingRepository","subject $settingSubject")
-        Log.d("M_SettingRepository","repository $this")
+        Log.d("M_SettingRepository", "subject $settingSubject")
+        Log.d("M_SettingRepository", "repository $this")
         settingSubject.onNext(day)
         pref.edit().putInt(END_MONTH, day).apply()
     }
 
-    fun getCurrentPeriodDate(): Pair<DateTime, DateTime> {
+    fun getCurrentPeriods(): Pair<DateTime, DateTime> {
         val today = DateTime()
         val endPeriodDay = getEndMonth()
         return if (today.dayOfMonth < endPeriodDay)
@@ -38,15 +35,15 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
                 DateTime().withPreviousMonthDate().withDayOfMonth(endPeriodDay).withTimeAtStartOfDay(),
                 DateTime().withDayOfMonth(endPeriodDay - 1).withTimeAtEndOfDay()
             ) else {
-            Pair<DateTime,DateTime>(
+            Pair<DateTime, DateTime>(
                 DateTime().withTimeAtStartOfDay().withDayOfMonth(endPeriodDay),
                 DateTime().withNextMonthDate().withDayOfMonth(endPeriodDay).withTimeAtEndOfDay()
             )
         }
     }
 
-    fun getDaysToEndPeriod() : Int {
-        val days = getCurrentPeriodDate()
+    fun getDaysToEndPeriod(): Int {
+        val days = getCurrentPeriods()
         return Days.daysBetween(DateTime.now(), days.second).days
     }
 
@@ -91,7 +88,26 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         pref.edit().putBoolean(BALANCE_MIGRATION_TAG, true).apply()
     }
 
+    fun setConverter(state: Boolean) {
+        pref.edit().putBoolean(Converter, state).apply()
+    }
+
+    fun getConverter(): Boolean {
+        return pref.getBoolean(Converter, false)
+    }
+
+    fun setConverterValue(value: String) {
+        pref.edit().putString(Converter_VALUE, value).apply()
+    }
+
+    fun getConverterValue(): String {
+        return pref.getString(Converter_VALUE, "0.0")
+    }
+
+
     companion object {
+        val Converter_VALUE = "Converter_VALUE"
+        val Converter = "Converter"
         val FIRST_OPEN = "FirstOpen"
         val CATEGORY_VALUE = "Category_value"
         val BALANCE_MIGRATION_TAG = "BALANCE_POPULATED"
