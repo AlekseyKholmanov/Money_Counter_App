@@ -12,7 +12,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.work.WorkManager
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideDelayed
@@ -25,12 +24,10 @@ import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.Keybo
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.CategoryPickerFragment
 import com.example.holmi_production.money_counter_app.ui.limits_fragment.LimitsFragment
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarFragment
-import com.example.holmi_production.money_counter_app.worker.WorkerManager
-import dagger.android.AndroidInjection
+import com.example.holmi_production.money_counter_app.worker.WorkerInteractor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.menu_currency_converting.*
-import kotlinx.android.synthetic.main.menu_delete_categories.*
 import kotlinx.android.synthetic.main.menu_end_period_date.*
 import leakcanary.AppWatcher
 import javax.inject.Inject
@@ -39,6 +36,9 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
 
     @Inject
     lateinit var settingRepository: SettingRepository
+
+    @Inject
+    lateinit var workerInteractor: WorkerInteractor
 
     private lateinit var toggle: ActionBarDrawerToggle
 
@@ -51,9 +51,9 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
         initializeFragments()
         initializeSettings()
         setBottomNavigationController()
-        WorkerManager.cancelAll(this.applicationContext)
-        WorkerManager.startBalanceWorker(this.applicationContext)
-        WorkerManager.startNotificationWorker(this.applicationContext)
+        workerInteractor.cancelAll()
+        workerInteractor.startBalanceWorker()
+        workerInteractor.startNotificationWorker()
 
         et_end_month_value.text = settingRepository.getEndMonth().toString()
 
@@ -91,7 +91,7 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
             )
             b.setItems(datas) { dialog, which ->
                 Log.d("M_SettingsFragment", "id: $which ${datas[which]}")
-                WorkerManager.startEndMonthWorker(datas[which].toInt(), this)
+                workerInteractor.startEndMonthWorker(datas[which].toInt())
                 et_end_month_value.text = datas[which]
                 dialog!!.dismiss()
             }

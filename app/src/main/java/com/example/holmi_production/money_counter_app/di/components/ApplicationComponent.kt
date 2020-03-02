@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.di.components
 
+import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.di.modules.*
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
@@ -15,10 +16,7 @@ import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.categ
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.PresenterCreateCategory
 import com.example.holmi_production.money_counter_app.ui.settings.SettingsPresenter
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarPresenter
-import com.example.holmi_production.money_counter_app.worker.CustomWorkerFactory
-import com.squareup.inject.assisted.dagger2.AssistedModule
 import dagger.Component
-import dagger.Module
 import javax.inject.Singleton
 
 @Singleton
@@ -28,8 +26,7 @@ import javax.inject.Singleton
         ContextModule::class,
         DatabaseModule::class,
         PreferenceModule::class,
-        WorkerBindingModule::class,
-        SampleAssistedInjectModule::class]
+        WorkerModule::class]
 )
 interface ApplicationComponent {
 
@@ -47,10 +44,4 @@ interface ApplicationComponent {
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
     fun inject(keyboardFr: KeyboardPartFragment)
     fun getCategoryCreatePresenter(): PresenterCreateCategory
-    fun factory(): CustomWorkerFactory
 }
-
-@Module(includes = [AssistedInject_SampleAssistedInjectModule::class])
-@AssistedModule
-interface SampleAssistedInjectModule
-
