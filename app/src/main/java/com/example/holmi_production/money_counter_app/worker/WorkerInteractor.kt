@@ -3,50 +3,39 @@ package com.example.holmi_production.money_counter_app.worker
 import android.util.Log
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.holmi_production.money_counter_app.utils.Time
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class WorkerInteractor @Inject constructor(val workManager: WorkManager) {
-    companion object{
+class WorkerInteractor @Inject constructor(private val workManager: WorkManager) {
+    companion object {
 
         val NOTIFICATION_WORK_TAG = "NOTIFICATION_TASK"
         val BALANCE_WORK_TAG = "BALANCE_WORK_TAG"
         val BALANCE_POPULATE_TAG = "BALANCE_POPULATE_TAG"
         val END_PERIOD_TAG = "END_PERIOD_TAG"
-
     }
 
 
     fun startNotificationWorker() {
-        val diff = Time.getDiffToNextDay(addMinutes = 50)
-        Log.d(
-            "M_WorkerManager",
-            "notification work wiil be ${diff / (1000 * 60 * 60 * 24)} day ${diff / (1000 * 60 * 60)} hours ${diff / 1000 % 60} minutes"
-        )
-        val work = OneTimeWorkRequest.Builder(NotificationTask::class.java)
+        val diff = Time.getDiffToNextDay(addMinutes = 1)
+        val work = PeriodicWorkRequestBuilder<NotificationTask>(24, TimeUnit.HOURS)
             .setInitialDelay(diff, TimeUnit.MILLISECONDS)
             .addTag(NOTIFICATION_WORK_TAG)
             .build()
         workManager.enqueue(work)
-
-        Log.d("M_WorkerManager", "notification work executed with id: ${work.stringId}")
     }
 
     fun startBalanceWorker() {
-        val diff = Time.getDiffToNextDay(addMinutes = 2)
+        val diff = Time.getDiffToNextDay(addMinutes = 5)
         Log.d("M_WorkerManager", "balance work execute")
-        Log.d(
-            "M_WorkerManager",
-            "balance work wiil be ${diff / (1000 * 60 * 60 * 24)} day ${diff / (1000 * 60 * 60)} hours ${diff / 1000 % 60} minutes"
-        )
-        val work = OneTimeWorkRequest.Builder(BalanceTask::class.java)
+        val work = PeriodicWorkRequestBuilder<BalanceTask>(24, TimeUnit.HOURS)
             .setInitialDelay(diff, TimeUnit.MILLISECONDS)
             .addTag(BALANCE_WORK_TAG)
             .build()
         workManager.enqueue(work)
-        Log.d("M_WorkerManager", "balance work executed with id: ${work.stringId}")
     }
 
     fun startEndMonthWorker(value: Int) {
@@ -74,8 +63,7 @@ class WorkerInteractor @Inject constructor(val workManager: WorkManager) {
     }
 
     fun cancelAll() {
-        val manager =
-            workManager.cancelAllWork()
+        workManager.cancelAllWork()
     }
 
 }

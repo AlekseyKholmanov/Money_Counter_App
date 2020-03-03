@@ -15,8 +15,6 @@ class BalanceTask constructor(
     private val context: Context,
     private val params: WorkerParameters
 ) : Worker(context, params) {
-
-
     lateinit var spendingRepository: SpendingRepository
     lateinit var balanceRepository: BalanceRepository
 
