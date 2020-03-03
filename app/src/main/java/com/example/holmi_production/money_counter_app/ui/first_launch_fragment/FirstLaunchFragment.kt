@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui.first_launch_fragment
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
@@ -22,7 +22,11 @@ import org.joda.time.DateTime
 
 class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
     override fun showMainScreen() {
-        findNavController().navigate(R.id.action_navFirstLaunch_to_navMain)
+//        findNavController().navigate(R.id.action_navFirstLaunch_to_navMain)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -121,9 +125,4 @@ class FirstLaunchFragment : AndroidXMvpAppCompatFragment(), FirstLaunchView {
 
     @InjectPresenter
     lateinit var presenter: FirstLaunchPresenter
-
-    @ProvidePresenter
-    fun initPresenter(): FirstLaunchPresenter {
-        return App.component.getFirstLaunchPresenter()
-    }
 }

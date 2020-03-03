@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
@@ -15,6 +14,11 @@ import leakcanary.AppWatcher
 
 class EndPeriodFragment : AndroidXMvpAppCompatFragment(), EndPeriodView {
 
+    @ProvidePresenter
+    fun initPresenter(): EndPeriodPresenter {
+        return App.component.getEndPeriodPresenter()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getSum()
@@ -23,7 +27,11 @@ class EndPeriodFragment : AndroidXMvpAppCompatFragment(), EndPeriodView {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_end_period, container, false)
     }
 
@@ -49,12 +57,7 @@ class EndPeriodFragment : AndroidXMvpAppCompatFragment(), EndPeriodView {
     }
 
     override fun goToMain() {
-        findNavController().navigate(R.id.action_navEndPeriod_to_navMain)
-    }
-
-    @ProvidePresenter
-    fun initPresenter(): EndPeriodPresenter {
-        return App.component.getEndPeriodPresenter()
+//        findNavController().navigate(R.id.action_navEndPeriod_to_navMain)
     }
 
     @InjectPresenter

@@ -5,5 +5,6 @@ import com.arellomobile.mvp.MvpView
 interface SettingsView:MvpView {
     fun showMessage(message:String)
     fun showMessage(resId:Int)
+    fun updateEndMonth(day: Int)
 
 }

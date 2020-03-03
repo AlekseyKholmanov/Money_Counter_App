@@ -36,7 +36,7 @@ class SumPerDayRepository @Inject constructor(
     }
 
     fun getTodayAndAverage(): Single<Pair<SumPerDay, SumPerDay>> {
-        return Singles.zip(getToday(),getAverage())
+        return Singles.zip(getToday(), getAverage())
     }
 
     fun getAverage(): Single<SumPerDay> {

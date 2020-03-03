@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.charts_fragments.bar
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -38,6 +39,9 @@ class StackedChartFragment : AndroidXMvpAppCompatFragment(),
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.chart_bar, container, false)
     }
+
+    @ProvidePresenter
+    fun providePresenter() = App.component.getStackedPresenter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -132,8 +136,5 @@ class StackedChartFragment : AndroidXMvpAppCompatFragment(),
     lateinit var presenter: StackedPresenter
 
     lateinit var chart: BarChart
-
-    @ProvidePresenter
-    fun providePresenter() = App.component.getStackedPresenter()
 
 }

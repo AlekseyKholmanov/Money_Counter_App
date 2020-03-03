@@ -7,13 +7,14 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class PreferenceModule(private val context: Context) {
+class PreferenceModule {
+    companion object{
+        val STORAGE_NAME = "PREFERENCE_STORAGE"
+    }
 
-    private val STORAGE_NAME = "PREFERENCE_STORAGE"
 
     @Provides
-    @Singleton
-    fun provideSharedPreference(): SharedPreferences {
+    fun provideSharedPreference(context:Context): SharedPreferences {
         return context.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE)
     }
 }

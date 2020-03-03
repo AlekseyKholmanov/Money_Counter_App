@@ -22,7 +22,8 @@ class KeyboardPresenter @Inject constructor(
     private val settingRepository: SettingRepository,
     private val spendingInteractor: SpendingInteractor,
     private val categoryInteractor: CategoryInteractor,
-    private val spendingRepository: SpendingRepository) :
+    private val spendingRepository: SpendingRepository
+) :
     BasePresenter<KeyboardFragmnetView>() {
 
     fun undoAdding(spending: Spending) {
@@ -31,24 +32,34 @@ class KeyboardPresenter @Inject constructor(
             .keep()
     }
 
-    fun saveSpend(sum: Double, comment: String, isSpending: SpDirection, subCategoryId:Int?) {
+    fun saveSpend(sum: Double, comment: String, isSpending: SpDirection, subCategoryId: Int?) {
         val categoryId = settingRepository.getCategoryValue()
+        val (startDate, endDate) = settingRepository.getCurrentPeriods()
+        val diff = Days.daysBetween(DateTime(), endDate)
+        // if currency converter enable
+        val sumWithConverter = if (settingRepository.getConverter()) {
+            val coef = settingRepository.getConverterValue()
+            sum * coef.toDouble()
+
+        } else {
+            sum
+        }
         val spending = Spending(
             DateTime(),
-            sum,
+            sumWithConverter,
             categoryId,
             subCategoryId,
             isSpending,
             comment
         )
         spendingInteractor.insert(spending)
-            .doOnComplete{
+            .doOnComplete {
                 categoryInteractor.getCategoryWithSub(spending.categoryId)
                     .async()
                     .subscribe({
                         viewState.showSnack(it, spending)
                     }, {
-                        Log.d("M_KeyboardPresenter","error ${it.message}")
+                        Log.d("M_KeyboardPresenter", "error ${it.message}")
                     })
                     .keep()
             }
@@ -65,14 +76,14 @@ class KeyboardPresenter @Inject constructor(
                     sumPerDayRepository.insertToday(today - sum).complete().keep()
                 //увеличиваем сумму у всех дней т.к. зарплата
                 else if (spending.isSpending == SpDirection.INCOME) {
-                    val daysCount = settingRepository.getTillEnd()
+                    val daysCount = diff.days
                     val deltaAverage = sum / daysCount
                     sumPerDayRepository.insertAverage(average + deltaAverage).complete().keep()
                     sumPerDayRepository.insertToday(today + deltaAverage).complete().keep()
                 }
                 //сумма сегодня < траты, вычитаем из общей суммы
                 else {
-                    val daysCount = settingRepository.getTillEnd() - 1
+                    val daysCount = diff.days - 1
                     val deltaAverage = (sum - today) / daysCount
                     sumPerDayRepository.insertAverage(average - deltaAverage).complete().keep()
                     sumPerDayRepository.insertToday(0.0).complete().keep()
@@ -85,37 +96,52 @@ class KeyboardPresenter @Inject constructor(
 
     }
 
-    fun setObservers() {
+    fun observeData() {
+        val a = settingRepository.getDaysToEndPeriod()
+        Log.d("M_KeyboardPresenter", "ostalos $a")
+
         spendingRepository.observeSpending()
             .async()
             .subscribe({ list ->
-                val a = list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }
-                val b = list.filter { it.isSpending == SpDirection.INCOME }.map { it.sum }
-                viewState.showIncomeSum((b.sum() - a.sum()).toCurencyFormat().withRubleSign())
+                val spending = list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }
+                val income = list.filter { it.isSpending == SpDirection.INCOME }.map { it.sum }
+                viewState.showIncomeSum((income.sum() - spending.sum()).toCurencyFormat().withRubleSign())
             }, { Log.d("qwerty", it.message) })
             .keep()
+
         sumPerDayRepository.observeToday()
             .async()
             .subscribe({ today ->
                 viewState.showSumPerDay(today.sum.toCurencyFormat().withRubleSign())
             }, { Log.d("qwerty", it.message) })
             .keep()
+
         sumPerDayRepository.observeAverage()
             .async()
             .subscribe({ average ->
-                viewState.showAverageSum(average.sum.toCurencyFormat().withRubleSign(), average.sum >= 0.0)
-            }, { Log.d("qwerty", it.message) })
-            .keep()
-        settingRepository.observeEndDate()
-            .async()
-            .subscribe({
-                viewState.showDaysLeft(" на ${settingRepository.getTillEnd().getDayAddition()}")
+                viewState.showAverageSum(
+                    average.sum.toCurencyFormat().withRubleSign(),
+                    average.sum >= 0.0
+                )
             }, { Log.d("qwerty", it.message) })
             .keep()
     }
 
-    fun getDaysLeft() {
-        updateDayLeft()
+    fun observeEndPeriodDate() {
+        Log.d("M_KeyboardPresenter", "subj ${settingRepository.settingSubject}")
+        Log.d("M_KeyboardPresenter", "setting ${settingRepository}")
+        val current = settingRepository.getDaysToEndPeriod()
+        //TODO костыль
+        viewState.showDaysLeft(" на $current дней")
+        settingRepository.observeEndPeriod()
+            .async()
+            .subscribe { day ->
+                Log.d("M_KeyboardPresenter", "presenter get new end day $day")
+                val days = settingRepository.getDaysToEndPeriod()
+                recalculateAverageSum(days)
+                viewState.showDaysLeft(" на $days дней")
+            }
+            .keep()
     }
 
     fun getCategoryButtonValue() {
@@ -129,41 +155,51 @@ class KeyboardPresenter @Inject constructor(
         updateKeyboardUI(id)
     }
 
-    fun recalculateAverageSum(endDate: DateTime) {
+    private fun recalculateAverageSum(days: Int) {
+        Log.d("M_KeyboardPresenter", "start recalculating")
         spendingRepository.getAll()
             .async()
             .subscribe({ list ->
-                val spent = list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }.sum()
-                val income = list.filter { it.isSpending == SpDirection.INCOME}.map { it.sum }.sum()
-                val period = (Days.daysBetween(DateTime.now(), endDate)).days + 1
-                val averageSum = (income - spent) / period
-                settingRepository.saveEndDate(endDate)
+                val spent =
+                    list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }.sum()
+                val income =
+                    list.filter { it.isSpending == SpDirection.INCOME }.map { it.sum }.sum()
+                val averageSum = (income - spent) / days
                 sumPerDayRepository.insertToday(averageSum).complete().keep()
                 sumPerDayRepository.insertAverage(averageSum).complete().keep()
-                viewState.showNewSumSnack(averageSum, period)
+                viewState.showNewSumSnack(averageSum, days)
             }, { Log.d("qwerty", it.message) })
             .keep()
     }
 
-    private fun updateKeyboardUI(categoryId:Int){
+    private fun updateKeyboardUI(categoryId: Int) {
         categoryInteractor.getCategoryWithSub(categoryId)
-            .map {
-                Pair(it.first,it.second.filter { !it.isDeleted })
+            .map { (category, subCategories) ->
+                Pair(category, subCategories.filter { !it.isDeleted })
             }
             .async()
-            .subscribe ({ pair ->
+            .subscribe({ pair ->
                 viewState.updateCategoryPickerButton(category = pair.first)
-                viewState.showSubcategoryMenu(subcategories = pair.second, color = pair.first.color ?: Color.BLACK)
+                viewState.showSubcategoryMenu(
+                    subcategories = pair.second,
+                    color = pair.first.color ?: Color.BLACK
+                )
                 viewState.showActionButtons(directions = pair.first.spendingDirection)
-            },{
-                Log.d("M_KeyboardPresenter",it.message)
+            }, {
+                Log.d("M_KeyboardPresenter", it.message)
                 viewState.updateCategoryPickerButton(null)
             })
             .keep()
     }
 
     private fun updateDayLeft() {
-        val diff = settingRepository.getTillEnd()
-        viewState.showDaysLeft(" на ${diff.getDayAddition()}")
+        val now = DateTime()
+        val endPeriodDate = settingRepository.getEndMonth() - 1
+        val toEndMonth = if (DateTime().dayOfMonth > endPeriodDate) {
+            now.withTimeAtEndOfMonth(now.monthOfYear).dayOfMonth - now.dayOfMonth + endPeriodDate
+        } else {
+            endPeriodDate - now.dayOfMonth
+        }
+        viewState.showDaysLeft(" на ${toEndMonth.getDayAddition()}")
     }
 }

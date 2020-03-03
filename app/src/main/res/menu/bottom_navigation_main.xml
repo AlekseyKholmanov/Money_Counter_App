@@ -16,11 +16,9 @@
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/text_chart"/>
-
-
     <item
-            android:id="@+id/settingsFragment"
+            android:id="@+id/limitsFragment"
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/text_settings"/>
+            android:title="@string/text_limits"/>
 </menu>

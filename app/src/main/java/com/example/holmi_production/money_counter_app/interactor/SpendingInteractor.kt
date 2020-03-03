@@ -23,13 +23,15 @@ class SpendingInteractor @Inject constructor(
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,
     private val periodsRepository: PeriodsRepository,
-    private val categoryInteractor: CategoryInteractor) {
+    private val categoryInteractor: CategoryInteractor
+) {
 
     fun insert(spending: Spending): Completable {
         return spendingRepository.insert(spending)
             .doOnComplete {
                 categoryInteractor.getCategory(spending.categoryId).doOnSuccess {
-                    categoryInteractor.insert(it.copy(usageCount = it.usageCount.plus(1))).subscribe()
+                    categoryInteractor.insert(it.copy(usageCount = it.usageCount.plus(1)))
+                        .subscribe()
                 }.subscribe()
             }
     }
@@ -44,7 +46,7 @@ class SpendingInteractor @Inject constructor(
             }
     }
 
-    fun getAll():Single<List<Spending>>{
+    fun getAll(): Single<List<Spending>> {
         return spendingRepository.getAll()
     }
 
@@ -55,7 +57,7 @@ class SpendingInteractor @Inject constructor(
             categoryInteractor.observeSubcategories()
         )
             .map { (spendings, categories, subcategories) ->
-                Log.d("M_SpendingInteractor","${spendings.size}")
+                Log.d("M_SpendingInteractor", "${spendings.size}")
                 val muList = mutableListOf<SpendingListItem>()
                 for (s in spendings) {
                     val categoryId = categories.firstOrNull { it.id == s.categoryId }
@@ -67,10 +69,16 @@ class SpendingInteractor @Inject constructor(
     }
 
     fun observePeriods(): Flowable<List<Spending>> {
-        return Flowables.combineLatest(periodsRepository.observePeriod(), spendingRepository.observeSpending())
+        return Flowables.combineLatest(
+            periodsRepository.observePeriod(),
+            spendingRepository.observeSpending()
+        )
             .map { (period, list) ->
                 Log.d("M_SpendingInteractor", "listcount ${list.count()}")
-                Log.d("M_SpendingInteractor", "left border ${period.leftBorder}  right border ${period.rightBorder}")
+                Log.d(
+                    "M_SpendingInteractor",
+                    "left border ${period.leftBorder}  right border ${period.rightBorder}"
+                )
                 if (period.leftBorder == period.rightBorder) {
                     list.filter { it.createdDate == period.leftBorder }
                 } else {
@@ -80,6 +88,7 @@ class SpendingInteractor @Inject constructor(
     }
 
     fun delete(spending: Spending): Single<Disposable> {
+        val endPeriodDays = settingRepository.getDaysToEndPeriod()
         when (spending.isSpending) {
             SpDirection.INCOME -> {
                 return sumPerDayRepository.getTodayAndAverage()
@@ -87,7 +96,7 @@ class SpendingInteractor @Inject constructor(
                     .map { sums ->
                         val today = sums.first.sum
                         val average = sums.second.sum
-                        val deltaAverage = spending.sum / settingRepository.getTillEnd()
+                        val deltaAverage = spending.sum / endPeriodDays
                         sumPerDayRepository.insertToday(today - deltaAverage).complete()
                         sumPerDayRepository.insertAverage(average - deltaAverage).complete()
                     }
@@ -95,13 +104,15 @@ class SpendingInteractor @Inject constructor(
                         spendingRepository.delete(spending).complete()
                     }
             }
-            else-> {
+            else -> {
                 when (spending.createdDate.dayOfYear()) {
                     DateTime.now().dayOfYear() -> {
                         return sumPerDayRepository.getToday()
                             .async()
                             .doOnError { t -> Log.d("qwerty", t.toString()) }
-                            .map { sumPerDayRepository.insertToday(it.inc(spending.sum).sum).complete() }
+                            .map {
+                                sumPerDayRepository.insertToday(it.inc(spending.sum).sum).complete()
+                            }
                             .also {
                                 spendingRepository.delete(spending).complete()
                             }
@@ -112,7 +123,7 @@ class SpendingInteractor @Inject constructor(
                             .map { sums ->
                                 val today = sums.first.sum
                                 val average = sums.second.sum
-                                val deltaAverage = spending.sum / settingRepository.getTillEnd()
+                                val deltaAverage = spending.sum / endPeriodDays
                                 sumPerDayRepository.insertToday(today + deltaAverage).complete()
                                 sumPerDayRepository.insertAverage(average + deltaAverage).complete()
                             }

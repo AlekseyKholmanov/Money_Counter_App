@@ -25,7 +25,17 @@ import leakcanary.AppWatcher
 
 class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    companion object {
+        fun newInstance(): CostsFragment {
+            return CostsFragment()
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_bottom_costs, container, false)
     }
 
@@ -49,10 +59,8 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
         itemTouchHelper.attachToRecyclerView(spendingList)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Log.d("qwerty", "cost attached")
-    }
+    @ProvidePresenter
+    fun providePresenter() = App.component.getCostsPresenter()
 
     override fun onStop() {
         super.onStop()
@@ -113,9 +121,6 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
         AppWatcher.objectWatcher.watch(this)
         Log.d("M_CostsFragment", "destroy")
     }
-
-    @ProvidePresenter
-    fun providePresenter() = App.component.getCostsPresenter()
 
     private lateinit var adapter: CostsAdapter
     @InjectPresenter

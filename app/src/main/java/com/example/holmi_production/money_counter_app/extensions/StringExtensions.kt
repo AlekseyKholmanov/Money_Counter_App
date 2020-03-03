@@ -57,8 +57,7 @@ fun DateTime.getTime(): String {
 fun Int.getDayAddition(): String {
     val last = this % 10
     val mod = this % 100
-    val end: String
-    end = if (last == 1 && mod != 11)
+    val end = if (last == 1 && mod != 11)
         "день"
     else
         if ((last < 5 && last != 0)
@@ -71,5 +70,5 @@ fun Int.getDayAddition(): String {
 }
 
 fun String.withRubleSign(): String {
-    return "${this} \u20BD"
+    return "$this \u20BD"
 }

@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.charts_fragments.balance
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
@@ -56,6 +58,9 @@ class BalanceChartFragment : AndroidXMvpAppCompatFragment(), BalanceView {
         chart.isDragEnabled = true
         Log.d("M_BalanceChartFragment", "on view created")
     }
+
+    @ProvidePresenter
+    fun providePresenter() = App.component.getBalancePresenter()
 
     override fun showChart(balances: List<Balance>) {
         hidePlaceholder()
@@ -158,8 +163,6 @@ class BalanceChartFragment : AndroidXMvpAppCompatFragment(), BalanceView {
 
     lateinit var chart: LineChart
 
-    @ProvidePresenter
-    fun providePresenter() = App.component.getBalancePresenter()
 
     inner class XAxisFormatter : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {

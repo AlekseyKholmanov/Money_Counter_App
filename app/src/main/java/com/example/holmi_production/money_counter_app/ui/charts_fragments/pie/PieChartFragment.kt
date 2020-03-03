@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.charts_fragments.pie
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
@@ -43,6 +44,9 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
         savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.chart_pie, container, false)
     }
+
+    @ProvidePresenter
+    fun providePresenter() = App.component.getChartPresenter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("M_PieChartFragment", "pie view created")
@@ -139,9 +143,6 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
         emptyPlaceholder_pie.isVisible = true
         chart_pie.isVisible = false
     }
-
-    @ProvidePresenter
-    fun providePresenter() = App.component.getChartPresenter()
 
     @InjectPresenter
     lateinit var presenter: PieChartPresenter
