@@ -17,11 +17,17 @@ import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.dialog_edit_category.*
 import leakcanary.AppWatcher
 
-class EditCategoryDialog private constructor() : DialogFragment(), ICategoryStateListener,
+class EditCategoryDialog : DialogFragment(), ICategoryStateListener,
     ICreateSubcategoryCallback {
     override fun createSubcategory(name: String) {
         val category = arguments?.getParcelable("category") as Category
-        callback.addSubcategory(SubCategory(parentId = category.id!!, description = name))
+        callback.addSubcategory(
+            SubCategory(
+                parentId = category.id,
+                description = name,
+                color = ColorStateList.valueOf(category.color).defaultColor
+            )
+        )
     }
 
     override fun updateStateButton(isEnable: Boolean) {
@@ -34,7 +40,8 @@ class EditCategoryDialog private constructor() : DialogFragment(), ICategoryStat
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         dialog!!.setTitle("dialog title")
         return inflater.inflate(R.layout.dialog_edit_category, container, false)
     }
@@ -48,10 +55,9 @@ class EditCategoryDialog private constructor() : DialogFragment(), ICategoryStat
             commit()
         }
 
-        val category = arguments?.getParcelable("category") as Category
-        val subcategories = arguments?.getParcelableArray("subcategories") as Array<SubCategory>
+        val subcategories = arguments?.getParcelableArray("subcategories") as Array<*>
         subcategories.forEach { subcategory ->
-            chips_group.addView(buildChip(subcategory, category.color!!))
+            chips_group.addView(buildChip(subcategory as SubCategory))
         }
         btn_update.setOnClickListener {
             callback.updateCategory(categoryDetail.getCurrentState())
@@ -81,11 +87,11 @@ class EditCategoryDialog private constructor() : DialogFragment(), ICategoryStat
         this.callback = callback
     }
 
-    private fun buildChip(subcategory: SubCategory, color: Int): Chip {
+    private fun buildChip(subcategory: SubCategory): Chip {
         val chip = Chip(context)
         val text = subcategory.description
         chip.text = text
-        chip.chipBackgroundColor = ColorStateList.valueOf(color)
+        chip.chipBackgroundColor = ColorStateList.valueOf(subcategory.color)
         chip.textSize = 20f
         chip.isCloseIconVisible = true
         chip.setOnCloseIconClickListener {
@@ -102,9 +108,8 @@ class EditCategoryDialog private constructor() : DialogFragment(), ICategoryStat
 
     fun updateSubcategories(subcategories: List<SubCategory>) {
         chips_group.removeAllViews()
-        val category = arguments?.getParcelable("category") as Category
         subcategories.forEach {
-            val chip = buildChip(it, category.color!!)
+            val chip = buildChip(it)
             chips_group.addView(chip)
         }
     }

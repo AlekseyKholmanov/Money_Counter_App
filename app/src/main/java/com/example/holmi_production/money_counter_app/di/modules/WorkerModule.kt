@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import androidx.work.WorkerFactory
+import com.example.holmi_production.money_counter_app.interactor.BalanceInteractor
 import com.example.holmi_production.money_counter_app.interactor.NotificationInteractor
+import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.storage.BalanceRepository
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
@@ -31,13 +33,17 @@ class WorkerModule {
         settingRepository: SettingRepository,
         spendingRepository: SpendingRepository,
         balanceRepository: BalanceRepository,
-        notificationInteractor: NotificationInteractor
+        notificationInteractor: NotificationInteractor,
+        balanceInteractor: BalanceInteractor,
+        spendingInteractor: SpendingInteractor
     ): WorkerFactory {
         return DaggerWorkerFactory(
             settingRepository,
             spendingRepository,
             balanceRepository,
-            notificationInteractor
+            notificationInteractor,
+            balanceInteractor,
+            spendingInteractor
         )
     }
 

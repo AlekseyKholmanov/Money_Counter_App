@@ -10,11 +10,11 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 data class Category(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = 0,
+    override val id: Int = 0,
     val spendingDirection: List<SpDirection>,
-    val description: String,
-    val color: Int?,
+    override val description: String,
+    override val color: Int,
     val imageId: Int? = null,
     var usageCount: Int = 0,
-    var isDelete:Boolean = false
-) : Parcelable
+    override var isDeleted:Boolean = false
+) : Nameble, Parcelable

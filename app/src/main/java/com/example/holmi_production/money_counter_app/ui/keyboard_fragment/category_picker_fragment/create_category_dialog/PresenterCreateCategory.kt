@@ -9,11 +9,11 @@ import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import javax.inject.Inject
 
 @InjectViewState
-class PresenterCreateCategory @Inject constructor(private val interactor: CategoryInteractor): BasePresenter<ViewCreateCategory>() {
+class PresenterCreateCategory @Inject constructor(private val interactor: CategoryInteractor) :
+    BasePresenter<ViewCreateCategory>() {
 
 
-
-    fun createCategory(category:Category) {
+    fun createCategory(category: Category) {
         interactor.insert(category)
             .async()
             .doAfterTerminate {
@@ -23,11 +23,11 @@ class PresenterCreateCategory @Inject constructor(private val interactor: Catego
             .keep()
     }
 
-    fun createSubCategory(name:String, parentId:Int){
-        val subCategory = SubCategory(parentId = parentId, description = name)
+    fun createSubCategory(name: String, parentId: Int, color: Int) {
+        val subCategory = SubCategory(parentId = parentId, description = name, color = color)
         interactor.insert(subCategory)
             .async()
-            .subscribe{
+            .subscribe {
                 viewState.dismissDialog()
             }
             .keep()

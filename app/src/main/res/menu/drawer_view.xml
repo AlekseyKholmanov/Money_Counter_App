@@ -4,7 +4,7 @@
         <menu>
             <item
                     android:id="@+id/nav_share"
-                    android:icon="@drawable/ic_add_24dp"
+                    android:icon="@drawable/ic_24_add"
                     android:title="Share" />
         </menu>
     </item>
@@ -12,11 +12,11 @@
         <menu>
             <item
                     android:id="@+id/clear_category"
-                    android:icon="@drawable/ic_delete_forever"
+                    android:icon="@drawable/ic_24_delete_forever"
                     android:title="@string/menu_clear_category" />
             <item
                     android:id="@+id/clear_spending"
-                    android:icon="@drawable/ic_delete_forever"
+                    android:icon="@drawable/ic_24_delete_forever"
                     android:title="@string/menu_clear_spendings" />
         </menu>
     </item>

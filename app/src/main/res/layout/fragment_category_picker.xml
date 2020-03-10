@@ -28,7 +28,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             style="@style/Widget.MaterialComponents.FloatingActionButton"
-            android:src="@drawable/ic_add_24dp"
+            android:src="@drawable/ic_24_add"
             android:layout_margin="32dp"/>
 
     <androidx.recyclerview.widget.RecyclerView

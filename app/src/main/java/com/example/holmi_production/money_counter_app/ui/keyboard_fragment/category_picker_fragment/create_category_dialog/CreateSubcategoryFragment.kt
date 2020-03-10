@@ -31,7 +31,8 @@ class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.part_create_subcategory, container, false)
     }
 
@@ -53,7 +54,8 @@ class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long) {
+                    id: Long
+                ) {
                     val category = parent!!.selectedItem as Category
                     Toast.makeText(
                         context,
@@ -64,7 +66,7 @@ class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
             }
         btn_create_subcategory.setOnClickListener {
             val pickedCategory = spinner_parentCategory.selectedItem as Category
-            callback!!.subcategoryCreated(et_subcategory_name.text.toString(), pickedCategory.id!!)
+            callback!!.subcategoryCreated(et_subcategory_name.text.toString(), pickedCategory.id, colot = pickedCategory.color)
         }
         et_subcategory_name.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             var handled = false
@@ -103,5 +105,5 @@ class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
 }
 
 interface ISubcategoryCreateCallback {
-    fun subcategoryCreated(categoryName: String, parentId: Int)
+    fun subcategoryCreated(categoryName: String, parentId: Int, colot: Int)
 }

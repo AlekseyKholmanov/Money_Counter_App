@@ -15,7 +15,7 @@
             android:layout_margin="8dp"
             android:padding="12dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_add_24dp" />
+            android:src="@drawable/ic_24_add" />
 
     <EditText
             android:id="@+id/et_category_name"

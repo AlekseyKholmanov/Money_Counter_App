@@ -28,6 +28,7 @@ import com.example.holmi_production.money_counter_app.worker.WorkerInteractor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.menu_currency_converting.*
+import kotlinx.android.synthetic.main.menu_drawer_custom.*
 import kotlinx.android.synthetic.main.menu_end_period_date.*
 import leakcanary.AppWatcher
 import javax.inject.Inject
@@ -61,34 +62,7 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
         end_month_container.setOnClickListener {
             val b = AlertDialog.Builder(this)
             b.setTitle("День окончания месяца")
-            val datas = arrayOf(
-                "1", "2", "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9",
-                "10",
-                "11",
-                "12",
-                "13",
-                "14",
-                "15",
-                "16",
-                "17",
-                "18",
-                "19",
-                "20",
-                "21",
-                "22",
-                "23",
-                "24",
-                "25",
-                "26",
-                "27",
-                "28"
-            )
+            val datas = resources.getStringArray(R.array.numbers)
             b.setItems(datas) { dialog, which ->
                 Log.d("M_SettingsFragment", "id: $which ${datas[which]}")
                 workerInteractor.startEndMonthWorker(datas[which].toInt())
@@ -96,6 +70,9 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
                 dialog!!.dismiss()
             }
             b.show()
+        }
+        balancer.setOnClickListener {
+            workerInteractor.balancePopulateWork()
         }
     }
 
@@ -219,7 +196,7 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
+        AppWatcher.objectWatcher.watch(this, "main activity")
     }
 
     override fun onBackPressed() {

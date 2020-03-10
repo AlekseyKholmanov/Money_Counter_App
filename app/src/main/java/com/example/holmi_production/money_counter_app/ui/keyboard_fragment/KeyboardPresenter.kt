@@ -128,8 +128,6 @@ class KeyboardPresenter @Inject constructor(
     }
 
     fun observeEndPeriodDate() {
-        Log.d("M_KeyboardPresenter", "subj ${settingRepository.settingSubject}")
-        Log.d("M_KeyboardPresenter", "setting ${settingRepository}")
         val current = settingRepository.getDaysToEndPeriod()
         //TODO костыль
         viewState.showDaysLeft(" на $current дней")

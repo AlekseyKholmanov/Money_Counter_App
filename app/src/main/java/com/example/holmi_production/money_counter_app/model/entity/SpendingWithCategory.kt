@@ -16,5 +16,5 @@ class SpendingWithCategory:ListItem {
 
 
 @Parcelize
-class SpendingListItem(val spending: Spending, val category: Category?, val subCategory: SubCategory?):ListItem,
+class SpendingListItem(val spending: Spending, val category: Category, val subCategory: SubCategory?):ListItem,
     Parcelable

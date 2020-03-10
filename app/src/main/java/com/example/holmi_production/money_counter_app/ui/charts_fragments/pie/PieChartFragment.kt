@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.ui.charts_fragments.pie
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
@@ -14,9 +13,7 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
-import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.Spending
-import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
+import com.example.holmi_production.money_counter_app.model.entity.GraphEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.github.mikephil.charting.data.Entry
@@ -29,19 +26,14 @@ import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.chart_pie.*
 import leakcanary.AppWatcher
 
-class PieChartFragment : AndroidXMvpAppCompatFragment(),
+class PieChartFragment() : AndroidXMvpAppCompatFragment(),
     PieChartView {
-    override fun showDetails(items: Array<SpendingListItem>) {
-        val bundle = Bundle()
-        bundle.putParcelableArray("SPENDINGS", items)
-        val fr = PieDialogFragment.newInstance(bundle)
-        fr.show(childFragmentManager, "Spending dialog")
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.chart_pie, container, false)
     }
 
@@ -51,18 +43,21 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("M_PieChartFragment", "pie view created")
         super.onViewCreated(view, savedInstanceState)
+        presenter.observeData()
+        preparePieSettings()
         chart_pie.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
-            override fun onNothingSelected() {
-                Log.d("M_PieChartFragment", "NOTHING CALLBACK")
-            }
+            override fun onNothingSelected() {}
 
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 val categoryId = e!!.data as Int
-                presenter.getSpending(categoryId)
+                val canDetailed = pieBack.visibility == View.VISIBLE
+                presenter.updateGraph(categoryId, canDetailed)
                 Log.d("M_PieChartFragment", "VALUE SELECTED index $categoryId")
             }
         })
-        presenter.observeData()
+        pieBack.setOnClickListener {
+            presenter.updateGraph(null, true)
+        }
     }
 
     override fun onDestroy() {
@@ -71,65 +66,114 @@ class PieChartFragment : AndroidXMvpAppCompatFragment(),
         Log.d("M_PieChartFragment", "destroy")
     }
 
-    override fun showError() {
-        showEmptyPlaceholder()
-    }
 
-    override fun showChips(data: List<Pair<Category?, List<Spending>>>) {
-        chip_group.removeAllViews()
-        data.forEach { (category, spendings) ->
-            chip_group.addView(buildChip(category!!, spendings.sumByDouble { it.sum }))
+    override fun render(state: PieCharState) {
+        when (state) {
+            is PieCharState.DetailsState -> renderDetailsState(state)
+            is PieCharState.ErrorState -> renderError()
+            is PieCharState.NormalState -> renderNormalState(state)
         }
     }
 
-    override fun showPie(data: List<Pair<Category?, List<Spending>>>) {
+    private fun renderNormalState(state: PieCharState.NormalState) {
+        hidePlaceholder()
+        showPie(state.values)
+        showChips(state.values)
+        if (state.canDetailed) {
+            chart_pie.setTouchEnabled(true)
+            chip_group.isClickable = true
+            pieBack.visibility = View.GONE
+        } else {
+            chart_pie.setTouchEnabled(false)
+            chip_group.isClickable = false
+            pieBack.visibility = View.VISIBLE
+        }
+    }
+
+    private fun renderError() {
+        showEmptyPlaceholder()
+    }
+
+    private fun renderDetailsState(state: PieCharState.DetailsState) {
+        hidePlaceholder()
+        val bundle = Bundle()
+        bundle.putParcelableArray("SPENDINGS", state.spendings)
+        val fr = PieDialogFragment.newInstance(bundle)
+        fr.show(childFragmentManager, "Spending dialog")
+    }
+
+
+    private fun showChips(data: List<GraphEntity>) {
+        chip_group.removeAllViews()
+        data.forEach {
+            chip_group.addView(
+                buildChip(
+                    id = it.id,
+                    description = it.description,
+                    color = it.color,
+                    sum = it.sum
+                )
+            )
+        }
+    }
+
+    private fun showPie(data: List<GraphEntity>) {
         if (data.isEmpty()) {
             showEmptyPlaceholder()
         } else {
-            hidePlaceholder()
-            chart_pie.description.text = ""
-            chart_pie.description.textSize = 20f
-            chart_pie.holeRadius = 45f
-            chart_pie.isRotationEnabled = false
             val first = arrayListOf<PieEntry>()
             val second = arrayListOf<String>()
             val colors = arrayListOf<Int>()
             var allMoney = 0.0
-            data.forEach { (category, spendings) ->
-                val sum = spendings.sumByDouble { it.sum }
-                val pieEntry = PieEntry(sum.toFloat(), category!!.description, category.id)
+            data.forEach {
+                val pieEntry = PieEntry(it.sum.toFloat(), it.description, it.id)
                 first.add(pieEntry)
-                second.add(category.description)
-                colors.add(category.color!!)
-                allMoney += sum
-                Log.d("M_PieChartFragment", "index ${category.id} name ${category.description}")
+                second.add(it.description)
+                colors.add(it.color)
+                allMoney += it.sum
+                Log.d("M_PieChartFragment", "index ${it.id} name ${it.description}")
             }
             val pieSet = PieDataSet(first.toList(), null)
             val pieData = PieData(pieSet)
             pieSet.sliceSpace = 3f
-            pieSet.colors = colors
             pieSet.setDrawValues(false)
-            chart_pie.setDrawEntryLabels(false)
+            pieSet.colors = colors
+            pieSet.isHighlightEnabled = false
             chart_pie.data = pieData
-            chart_pie.setCenterTextSize(35f)
             chart_pie.centerText = allMoney.toCurencyFormat().withRubleSign()
-            chart_pie.legend.isEnabled = false
-            chart_pie.minAngleForSlices = 5f
-            chart_pie.animateXY(1000, 1000)
+            chart_pie.onTouchListener.setLastHighlighted(null)
+            chart_pie.highlightValues(null)
             chart_pie.notifyDataSetChanged()
+            chart_pie.animateXY(1000, 1000)
         }
     }
 
-    private fun buildChip(type: Category, sum: Double): Chip {
+    private fun preparePieSettings() {
+        hidePlaceholder()
+        chart_pie.isRotationEnabled = false
+        chart_pie.description.text = ""
+        chart_pie.description.textSize = 20f
+        chart_pie.holeRadius = 45f
+        chart_pie.setDrawEntryLabels(false)
+        chart_pie.legend.isEnabled = false
+        chart_pie.setCenterTextSize(35f)
+        chart_pie.minAngleForSlices = 5f
+    }
+
+    private fun buildChip(id: Int?, description: String, color: Int, sum: Double): Chip {
         val chip = Chip(context)
-        val text = "${type.description} ${sum.toCurencyFormat().withRubleSign()}"
+        val text = "$description ${sum.toCurencyFormat().withRubleSign()}"
         chip.text = text
-        chip.setTextColor(ColorUtils.getFontColor(type.color!!))
-        chip.chipBackgroundColor = ColorStateList.valueOf(type.color)
+        chip.setTextColor(ColorUtils.getFontColor(color))
+        chip.chipBackgroundColor = ColorStateList.valueOf(color)
         chip.textSize = 20f
         chip.isCheckable = true
+        chip.setOnLongClickListener {
+            presenter.getSpending(id!!)
+            return@setOnLongClickListener true
+        }
         chip.setOnClickListener {
-            presenter.getSpending(type.id!!)
+            presenter.getSpending(id!!)
         }
         return chip
     }

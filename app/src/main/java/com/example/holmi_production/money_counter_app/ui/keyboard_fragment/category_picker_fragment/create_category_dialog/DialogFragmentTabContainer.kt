@@ -34,7 +34,8 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcat
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.container_category_create_dialog, container, false)
     }
 
@@ -58,17 +59,23 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcat
         AppWatcher.objectWatcher.watch(this)
     }
 
-    override fun subcategoryCreated(categoryName: String, parentId: Int) {
-        callback.addSubcategory(SubCategory(description = categoryName, parentId = parentId))
+    override fun subcategoryCreated(categoryName: String, parentId: Int, color: Int) {
+        callback.addSubcategory(
+            SubCategory(
+                description = categoryName,
+                parentId = parentId,
+                color = color
+            )
+        )
         dismiss()
     }
 
-    override fun categoryUpdated(category:Category) {
+    override fun categoryUpdated(category: Category) {
         callback.updateCategory(category)
         dismiss()
     }
 
-    fun setListener(callback: EditCategoryDialog.ICategoryEditor){
+    fun setListener(callback: EditCategoryDialog.ICategoryEditor) {
         this.callback = callback
     }
 
@@ -79,5 +86,5 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(), ISubcat
     @ProvidePresenter
     fun initPresenter(): PresenterCreateCategory = App.component.getCategoryCreatePresenter()
 
-    lateinit var callback:EditCategoryDialog.ICategoryEditor
+    lateinit var callback: EditCategoryDialog.ICategoryEditor
 }

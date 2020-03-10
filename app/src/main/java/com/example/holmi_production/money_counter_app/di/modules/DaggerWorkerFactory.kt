@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
+import com.example.holmi_production.money_counter_app.interactor.BalanceInteractor
 import com.example.holmi_production.money_counter_app.interactor.NotificationInteractor
+import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.storage.BalanceRepository
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
+import com.example.holmi_production.money_counter_app.worker.BalancePopulateTask
 import com.example.holmi_production.money_counter_app.worker.BalanceTask
 import com.example.holmi_production.money_counter_app.worker.EndMonthTask
 import com.example.holmi_production.money_counter_app.worker.NotificationTask
@@ -16,7 +19,9 @@ class DaggerWorkerFactory(
     private val settingRepository: SettingRepository,
     private val spendingRepository: SpendingRepository,
     private val balanceRepository: BalanceRepository,
-    private val notificationInteractor: NotificationInteractor
+    private val notificationInteractor: NotificationInteractor,
+    private val balanceInteractor: BalanceInteractor,
+    private val spendingInteractor: SpendingInteractor
 ) : WorkerFactory() {
     override fun createWorker(
         appContext: Context,
@@ -31,8 +36,9 @@ class DaggerWorkerFactory(
 
         when (instance) {
             is EndMonthTask -> injectEndMonthWorker(instance)
-            is BalanceTask -> inhectBalanceWorker(instance)
+            is BalanceTask -> injectBalanceWorker(instance)
             is NotificationTask -> injectNotificationWorker(instance)
+            is BalancePopulateTask -> injectBalancePopulateWorker(instance)
         }
         return instance
 
@@ -42,9 +48,14 @@ class DaggerWorkerFactory(
         instance.notificationInteractor = notificationInteractor
     }
 
-    private fun inhectBalanceWorker(instance: BalanceTask) {
+    private fun injectBalanceWorker(instance: BalanceTask) {
         instance.spendingRepository = spendingRepository
         instance.balanceRepository = balanceRepository
+    }
+
+    private fun injectBalancePopulateWorker(instance: BalancePopulateTask){
+        instance.balanceInteractor = balanceInteractor
+        instance.spendingInteractor = spendingInteractor
     }
 
     private fun injectEndMonthWorker(instance: EndMonthTask) {

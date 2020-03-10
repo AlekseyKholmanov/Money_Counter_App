@@ -29,7 +29,8 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
 
         return inflater.inflate(R.layout.container_category_detail, container, false)
     }
@@ -39,7 +40,7 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
         val category = arguments?.getParcelable("category") as Category?
 
         if (category != null) {
-            category.color?.let { iv_category_image.setBackgroundColor(it) }
+            category.color.let { iv_category_image.setBackgroundColor(it) }
             category.imageId?.let { iv_category_image.setImageResource(it) }
             et_category_name.setText(category.description)
             iv_category_image.tag = category.imageId
@@ -132,14 +133,14 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
         val color: ColorDrawable? = background as? ColorDrawable
         val imageId = iv_category_image.tag as Int?
         val category = (arguments?.getParcelable("category") as Category?)
-        val categoryId = category?.id
+        val categoryId = category?.id ?: 0
         Log.d("M_CatDetailFragment", "dsada")
         return Category(
             id = categoryId,
             imageId = imageId ?: R.drawable.ic_launcher_foreground,
             color = color?.color ?: ColorUtils.getColor(),
             description = et_category_name.text.toString(),
-            isDelete = false,
+            isDeleted = false,
             spendingDirection = getDirections()
         )
     }

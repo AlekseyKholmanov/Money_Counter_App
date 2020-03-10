@@ -45,12 +45,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        keyboardPart = KeyboardPartFragment.newInstance()
-        keyboardPart.setListener(this)
-        childFragmentManager.beginTransaction().apply {
-            replace(R.id.keyboard, keyboardPart)
-            commit()
-        }
+        initializeKeyboard()
         left_days.setOnClickListener {
             presenter.observeEndPeriodDate()
         }
@@ -178,6 +173,15 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(), KeyboardFragmnetView,
 
     override fun showMoney(money: String) {
 //        expense.date = money
+    }
+
+    private fun initializeKeyboard() {
+        keyboardPart = KeyboardPartFragment.newInstance()
+        keyboardPart.setListener(this)
+        childFragmentManager.beginTransaction().apply {
+            replace(R.id.keyboard, keyboardPart)
+            commit()
+        }
     }
 
     private lateinit var keyboardPart: KeyboardPartFragment

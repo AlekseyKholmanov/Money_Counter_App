@@ -10,7 +10,7 @@ import com.example.holmi_production.money_counter_app.model.entity.*
 @TypeConverters(Converters::class)
 @Database(
     entities = [Spending::class, SumPerDay::class, FilterPeriods::class, Category::class, SubCategory::class, Balance::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class ExpenseDatabase : RoomDatabase() {

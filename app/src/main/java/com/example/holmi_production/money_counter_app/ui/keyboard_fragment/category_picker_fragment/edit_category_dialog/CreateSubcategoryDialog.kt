@@ -7,7 +7,7 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.example.holmi_production.money_counter_app.R
 
-class CreateSubcategoryDialog private constructor() : DialogFragment() {
+class CreateSubcategoryDialog : DialogFragment() {
 
     lateinit var et: EditText
     lateinit var callback: ICreateSubcategoryCallback

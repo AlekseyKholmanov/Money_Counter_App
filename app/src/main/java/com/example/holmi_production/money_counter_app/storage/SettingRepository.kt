@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.storage
 
-import android.content.ContentValues
 import android.content.SharedPreferences
 import android.util.Log
 import com.example.holmi_production.money_counter_app.extensions.withNextMonthDate
@@ -104,6 +103,14 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         return pref.getString(Converter_VALUE, "0.0")
     }
 
+    fun setSumPerDayOption(isSetted: Boolean) {
+        pref.edit().putBoolean(SUM_PER_DAY, isSetted).apply()
+    }
+
+    fun getSumPerDayOption(): Boolean {
+        return pref.getBoolean(SUM_PER_DAY, false)
+    }
+
 
     companion object {
         val Converter_VALUE = "Converter_VALUE"
@@ -113,5 +120,6 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         val BALANCE_MIGRATION_TAG = "BALANCE_POPULATED"
         val PERIOD_TYPE = "PERIOD_TYPE"
         val END_MONTH = "END_MONTH"
+        val SUM_PER_DAY = "SUM_PER_DAY"
     }
 }

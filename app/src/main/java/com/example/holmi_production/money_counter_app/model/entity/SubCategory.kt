@@ -9,8 +9,9 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class SubCategory(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    override val id: Int = 0,
     val parentId: Int,
-    val description: String,
-    val isDeleted:Boolean = false
-) : Parcelable
+    override val description: String,
+    override val isDeleted: Boolean = false,
+    override val color: Int
+) : Nameble, Parcelable

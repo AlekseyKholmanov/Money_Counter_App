@@ -2,21 +2,14 @@ package com.example.holmi_production.money_counter_app.ui.topbar_fragment
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
-import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate
-import com.appeaser.sublimepickerlibrary.datepicker.SublimeDatePicker
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums
-import kotlinx.android.synthetic.main.dialog_date_picker.*
 import org.joda.time.DateTime
 
-class TopbarDatePickerDialog : AppCompatDialogFragment(),SublimeDatePicker.OnDateChangedListener{
-    override fun onDateChanged(view: SublimeDatePicker?, selectedDate: SelectedDate?) {
-
-    }
+class TopbarDatePickerDialog : AppCompatDialogFragment(){
     lateinit var btnDay:Button
     lateinit var btnWeek:Button
     lateinit var btnMonth:Button
