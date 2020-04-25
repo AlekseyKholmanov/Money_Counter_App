@@ -49,6 +49,8 @@
     <string name="key_8">8</string>
     <string name="key_7">7</string>
     <string name="hint_comment">комментарий</string>
+    <string name="label_category">Категория</string>
+    <string name="label_subcategory">Подкатегория</string>
     <array name="numbers">
         <item>1</item>
         <item>2</item>

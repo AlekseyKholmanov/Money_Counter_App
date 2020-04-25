@@ -9,18 +9,24 @@ import android.view.View
  */
 object ViewAnimation {
 
-    fun rotateFab(v: View, rotate: Boolean): Boolean {
-        v.animate()
-            .setDuration(200)
-            .setUpdateListener {
-                object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator?) {
-                        super.onAnimationEnd(animation)
-                    }
-                }
-            }
-            .rotation(if (rotate) 135f else 0f)
-        return rotate
+    fun fadeIn(v:View){
+        with(v){
+            alpha = 0f
+            animate()
+                .setDuration(200)
+                .alpha(0.8f)
+                .start()
+        }
+    }
+
+    fun fadeOut(v:View){
+        with(v){
+            alpha = 0.8f
+            animate()
+                .setDuration(200)
+                .alpha(0f)
+                .start()
+        }
     }
 
     fun showIn(v: View) {

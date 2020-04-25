@@ -25,6 +25,7 @@ import com.example.holmi_production.money_counter_app.ui.dialogs.EditCategoryDia
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.DialogFragmentTabContainer
 import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPickerPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPickerView
+import com.example.holmi_production.money_counter_app.ui.utils.ViewAnimation
 import kotlinx.android.synthetic.main.fragment_category_picker.*
 import kotlinx.android.synthetic.main.include_category_picker_fragment.*
 
@@ -98,12 +99,15 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
             addFab.startAnimation(rotateBackward)
             categoryFab.startAnimation(fabClose)
             subcategoryFab.startAnimation(fabClose)
+            ViewAnimation.fadeOut(frameBackground)
+            frameBackground.isClickable = false
             false
-
         } else {
             addFab.startAnimation(rotateForward)
             categoryFab.startAnimation(fabOpen)
             subcategoryFab.startAnimation(fabOpen)
+            ViewAnimation.fadeIn(frameBackground)
+            frameBackground.isClickable = true
             true
         }
         categoryFab.isClickable = isFabOpen
