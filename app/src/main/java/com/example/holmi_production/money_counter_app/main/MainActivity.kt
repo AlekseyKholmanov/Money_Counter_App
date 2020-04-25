@@ -18,12 +18,12 @@ import com.example.holmi_production.money_counter_app.extensions.hideDelayed
 import com.example.holmi_production.money_counter_app.extensions.showDelayed
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatActivity
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import com.example.holmi_production.money_counter_app.ui.charts_fragments.ChartFragment
-import com.example.holmi_production.money_counter_app.ui.costs_fragment.CostsFragment
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.ChartFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.CostsFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.KeyboardFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.CategoryPickerFragment
-import com.example.holmi_production.money_counter_app.ui.limits_fragment.LimitsFragment
-import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.LimitsFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.TopbarFragment
 import com.example.holmi_production.money_counter_app.worker.WorkerInteractor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*

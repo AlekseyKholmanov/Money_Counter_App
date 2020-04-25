@@ -22,7 +22,6 @@ import com.example.holmi_production.money_counter_app.ui.adapter.CategoryPickerA
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.CategoryPickerHolder
 import com.example.holmi_production.money_counter_app.ui.dialogs.EditCategoryDialog
 import com.example.holmi_production.money_counter_app.ui.dialogs.EditCategoryDialog.ICategoryEditor
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.DialogFragmentTabContainer
 import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPickerPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPickerView
 import com.example.holmi_production.money_counter_app.ui.utils.ViewAnimation
