@@ -20,7 +20,8 @@ import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
-import kotlinx.android.synthetic.main.fragment_keyboard_part.*
+import kotlinx.android.synthetic.main.part_fragment_keyboard.*
+import kotlinx.android.synthetic.main.view_splitted_button.*
 import leakcanary.AppWatcher
 import javax.inject.Inject
 
@@ -31,7 +32,7 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_keyboard_part, container, false)
+        return inflater.inflate(R.layout.part_fragment_keyboard, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -113,13 +114,7 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
     }
 
     fun showActionButtons(directions: List<SpDirection>) {
-        key_income.visibility =
-            if (directions.contains(SpDirection.INCOME)) View.VISIBLE else View.GONE
-        key_spending.visibility =
-            if (directions.contains(SpDirection.SPENDING)) View.VISIBLE else View.GONE
-        key_accumulation.visibility =
-            if (directions.contains(SpDirection.ACCUMULATION)) View.VISIBLE else View.GONE
-
+        splittedButtons.changeButtonState(directions)
     }
 
     private fun buildChip(subcategory: SubCategory, color: Int, alpha: Int): Chip {

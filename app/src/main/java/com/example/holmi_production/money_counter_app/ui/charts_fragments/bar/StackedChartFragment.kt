@@ -79,11 +79,6 @@ class StackedChartFragment : AndroidXMvpAppCompatFragment(),
         l.textSize = 25f
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
-    }
-
     override fun showError() {
         showEmptyPlaceholder()
     }

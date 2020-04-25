@@ -139,11 +139,6 @@ class BalanceChartFragment : AndroidXMvpAppCompatFragment(), BalanceView {
         chart.invalidate()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
-    }
-
     override fun showError() {
         showEmptyPlaceholder()
     }

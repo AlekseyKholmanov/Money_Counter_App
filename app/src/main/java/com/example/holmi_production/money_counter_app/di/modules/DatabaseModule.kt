@@ -12,6 +12,6 @@ class DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(context: Context): ExpenseDatabase {
-        return ExpenseDatabase.getInstance(context)!!
+        return ExpenseDatabase.getInstance(context)
     }
 }

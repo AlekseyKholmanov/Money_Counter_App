@@ -116,12 +116,6 @@ class CostsFragment : AndroidXMvpAppCompatFragment(), CostsView {
         spendingList.isVisible = !show
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
-        Log.d("M_CostsFragment", "destroy")
-    }
-
     private lateinit var adapter: CostsAdapter
     @InjectPresenter
     lateinit var presenter: CostsPresenter

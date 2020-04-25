@@ -60,8 +60,8 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
                     "#2e7d32"
                 )
             val text =
-                if (subcategory == null) category?.description ?: "" else "${category?.description
-                    ?: ""} \u2799 ${subcategory.description}"
+                if (subcategory == null) category.description else "${category.description
+                    } \u2799 ${subcategory.description}"
             val drawable = shapeContainer.background as GradientDrawable
             val sum = "$signText ${spending.sum.toCurencyFormat().withRubleSign()}"
             val backgroundColor = category?.color ?: Color.TRANSPARENT
