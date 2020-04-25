@@ -5,4 +5,8 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorYellow">#ffea00</color>
     <color name="Gray">#616161</color>
+
+    <color name="text_button_text_color_normal">@color/colorPrimary</color>
+    <color name="text_button_text_color_disabled">@color/colorPrimaryDark</color>
+
 </resources>

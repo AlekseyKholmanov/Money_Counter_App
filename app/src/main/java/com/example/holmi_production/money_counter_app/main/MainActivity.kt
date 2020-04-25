@@ -27,9 +27,9 @@ import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarF
 import com.example.holmi_production.money_counter_app.worker.WorkerInteractor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.menu_currency_converting.*
+import kotlinx.android.synthetic.main.include_menu_currency_converting.*
 import kotlinx.android.synthetic.main.menu_drawer_custom.*
-import kotlinx.android.synthetic.main.menu_end_period_date.*
+import kotlinx.android.synthetic.main.include_menu_end_period_date.*
 import leakcanary.AppWatcher
 import javax.inject.Inject
 

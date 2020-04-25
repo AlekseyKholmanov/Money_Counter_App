@@ -27,14 +27,14 @@
         android:textStyle="bold" />
 
     <include
-        layout="@layout/menu_end_period_date"
+        layout="@layout/include_menu_end_period_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp" />
 
     <include
-        layout="@layout/menu_currency_converting"
+        layout="@layout/include_menu_currency_converting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -54,20 +54,20 @@
         android:textStyle="bold" />
 
     <include
-        layout="@layout/menu_delete_categories"
+        layout="@layout/include_menu_delete_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp" />
 
     <include
-        layout="@layout/menu_delete_spendings"
+        layout="@layout/include_menu_delete_spendings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp" />
     <include
-        layout="@layout/menu_start_balancer"
+        layout="@layout/include_menu_start_balancer"
         android:id="@+id/balancer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
