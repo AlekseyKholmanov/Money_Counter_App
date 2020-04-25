@@ -16,7 +16,6 @@
     <string name="txt_add_category">добавить категорию</string>
     <string name="validation_empty_categories">Отсутствуют добавленные категории</string>
     <string name="information_empty_list">Данные отсутствуют</string>
-
     <string name="error_list">Произошла ошибка</string>
     <string name="btn_getColor">случайный цвет</string>
     <string name="text_color">Цвет:</string>
@@ -39,6 +38,17 @@
     <string name="menu_group_data">Данные</string>
     <string name="menu_group_settings">Настройки</string>
     <string name="arrow_back">arrow back</string>
+    <string name="key2">2</string>
+    <string name="key1">1</string>
+    <string name="key3">3</string>
+    <string name="key6">6</string>
+    <string name="key5">5</string>
+    <string name="key4">4</string>
+    <string name="key_delete">Delete</string>
+    <string name="key_9">9</string>
+    <string name="key_8">8</string>
+    <string name="key_7">7</string>
+    <string name="hint_comment">комментарий</string>
     <array name="numbers">
         <item>1</item>
         <item>2</item>
@@ -68,5 +78,9 @@
         <item>26</item>
         <item>27</item>
         <item>28</item>
+    </array>
+
+    <array name="drawables">
+        <item>@drawable/ic_cat_bar</item>
     </array>
 </resources>

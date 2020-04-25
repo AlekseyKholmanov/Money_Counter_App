@@ -27,24 +27,24 @@ enum class CategoryType(val id: Int, val spendingDirection: SpDirection, val des
     companion object {
         fun getImage(categoryType: CategoryType): Int {
             return when (categoryType) {
-                //SALARY -> R.drawable.ic_salary
-                HOME -> R.drawable.ic_home
-                ENTERTAINMENT -> R.drawable.ic_glass
-                FOOD -> R.drawable.ic_food
-                TRANSPORT -> R.drawable.ic_bus
-                WEAR -> R.drawable.ic_clothes_2
-                NET -> R.drawable.ic_network
-                BAR -> R.drawable.ic_bar
-                //OTHER -> R.drawable.ic_other
-                BEATY -> R.drawable.ic_beauty
-                BOOKS -> R.drawable.ic_books
-                EDUCATION -> R.drawable.ic_education
-                FASTFOOD -> R.drawable.ic_fastfood
-                FUEL -> R.drawable.ic_fuel
-                PETS -> R.drawable.ic_pets
-                SPORT -> R.drawable.ic_sport
-                TRAVEL -> R.drawable.ic_travel
-                MEDICINE -> R.drawable.ic_health
+                //SALARY -> R.drawable.ic_cat_salary
+                HOME -> R.drawable.ic_cat_home
+                ENTERTAINMENT -> R.drawable.ic_cat_glass
+                FOOD -> R.drawable.ic_cat_food
+                TRANSPORT -> R.drawable.ic_cat_bus
+                WEAR -> R.drawable.ic_cat_clothes_2
+                NET -> R.drawable.ic_cat_network
+                BAR -> R.drawable.ic_cat_bar
+                //OTHER -> R.drawable.ic_cat_other
+                BEATY -> R.drawable.ic_cat_beauty
+                BOOKS -> R.drawable.ic_cat_books
+                EDUCATION -> R.drawable.ic_cat_education
+                FASTFOOD -> R.drawable.ic_cat_fastfood
+                FUEL -> R.drawable.ic_cat_fuel
+                PETS -> R.drawable.ic_cat_pets
+                SPORT -> R.drawable.ic_cat_sport
+                TRAVEL -> R.drawable.ic_cat_travel
+                MEDICINE -> R.drawable.ic_cat_health
                 else -> R.drawable.ic_launcher_foreground
             }
         }

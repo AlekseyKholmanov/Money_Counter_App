@@ -40,18 +40,18 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         App.component.inject(this)
         numbers_keyboard.visibility = View.GONE
         key_progress_bar.max = 100f
-        key_0.setOnClickListener { pressed(ButtonTypeEnums.ZERO, "0") }
-        key_1.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "1") }
-        key_2.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "2") }
-        key_3.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "3") }
-        key_4.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "4") }
-        key_5.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "5") }
-        key_6.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "6") }
-        key_7.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "7") }
+        key0.setOnClickListener { pressed(ButtonTypeEnums.ZERO, "0") }
+        key1.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "1") }
+        key2.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "2") }
+        key3.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "3") }
+        key4.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "4") }
+        key5.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "5") }
+        key6.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "6") }
+        key7.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "7") }
         key_8.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "8") }
-        key_9.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "9") }
-        key_divider.setOnClickListener { pressed(ButtonTypeEnums.DIVIDER, ".") }
-        key_delete.setOnClickListener { pressed(ButtonTypeEnums.DELETE) }
+        key9.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "9") }
+        keyDivider.setOnClickListener { pressed(ButtonTypeEnums.DIVIDER, ".") }
+        keyDelete.setOnClickListener { pressed(ButtonTypeEnums.DELETE) }
         key_spending.setOnClickListener { pressed(ButtonTypeEnums.ENTER_UP) }
         key_income.setOnClickListener { pressed(ButtonTypeEnums.ENTER_DOWN) }
         key_category.setOnClickListener { pressed(ButtonTypeEnums.CATEGORY) }
@@ -114,7 +114,7 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
     }
 
     fun showActionButtons(directions: List<SpDirection>) {
-        splittedButtons.changeButtonState(directions)
+        splittedButton.changeButtonState(directions)
     }
 
     private fun buildChip(subcategory: SubCategory, color: Int, alpha: Int): Chip {

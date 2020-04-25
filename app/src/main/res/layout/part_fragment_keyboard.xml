@@ -80,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="end|center_vertical"
-        android:hint="комментарий"
+        android:hint="@string/hint_comment"
         android:imeOptions="actionDone"
         android:inputType="text"
         android:paddingStart="8dp"
@@ -95,180 +95,175 @@
         android:animateLayoutChanges="true">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/key_7"
+            android:id="@+id/key7"
             style="@style/TextButton"
-            android:text="7"
-            app:layout_constraintBottom_toTopOf="@id/h_25"
+            android:text="@string/key_7"
+            app:layout_constraintBottom_toTopOf="@id/h25"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="@id/v_22"
+            app:layout_constraintRight_toRightOf="@id/v22"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/key_8"
             style="@style/TextButton"
-            android:text="8"
-            app:layout_constraintBottom_toTopOf="@id/h_25"
-            app:layout_constraintLeft_toRightOf="@id/v_22"
-            app:layout_constraintRight_toLeftOf="@id/v_44"
+            android:text="@string/key_8"
+            app:layout_constraintBottom_toTopOf="@id/h25"
+            app:layout_constraintLeft_toRightOf="@id/v22"
+            app:layout_constraintRight_toLeftOf="@id/v44"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/key_9"
+            android:id="@+id/key9"
             style="@style/TextButton"
-            android:text="9"
-            app:layout_constraintBottom_toTopOf="@id/h_25"
-            app:layout_constraintLeft_toRightOf="@id/v_44"
-            app:layout_constraintRight_toLeftOf="@id/v_66"
+            android:text="@string/key_9"
+            app:layout_constraintBottom_toTopOf="@id/h25"
+            app:layout_constraintLeft_toRightOf="@id/v44"
+            app:layout_constraintRight_toLeftOf="@id/v66"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/key_delete"
+            android:id="@+id/keyDelete"
             style="@style/TextButton"
-            android:text="Delete"
-            app:layout_constraintBottom_toTopOf="@id/h_25"
-            app:layout_constraintLeft_toRightOf="@id/v_66"
+            android:text="@string/key_delete"
+            app:layout_constraintBottom_toTopOf="@id/h25"
+            app:layout_constraintLeft_toRightOf="@id/v66"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/key_4"
+            android:id="@+id/key4"
             style="@style/TextButton"
-            android:text="4"
-            app:layout_constraintBottom_toTopOf="@id/h_50"
+            android:text="@string/key4"
+            app:layout_constraintBottom_toTopOf="@id/h50"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="@id/v_22"
-            app:layout_constraintTop_toBottomOf="@id/h_25" />
+            app:layout_constraintRight_toRightOf="@id/v22"
+            app:layout_constraintTop_toBottomOf="@id/h25" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/key_5"
+            android:id="@+id/key5"
             style="@style/TextButton"
-            android:text="5"
-            app:layout_constraintBottom_toTopOf="@id/h_50"
-            app:layout_constraintLeft_toRightOf="@id/v_22"
-            app:layout_constraintRight_toLeftOf="@id/v_44"
-            app:layout_constraintTop_toBottomOf="@id/h_25" />
+            android:text="@string/key5"
+            app:layout_constraintBottom_toTopOf="@id/h50"
+            app:layout_constraintLeft_toRightOf="@id/v22"
+            app:layout_constraintRight_toLeftOf="@id/v44"
+            app:layout_constraintTop_toBottomOf="@id/h25" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/key_6"
+            android:id="@+id/key6"
             style="@style/TextButton"
-            android:text="6"
-            app:layout_constraintBottom_toTopOf="@id/h_50"
-            app:layout_constraintLeft_toRightOf="@id/v_44"
-            app:layout_constraintRight_toLeftOf="@id/v_66"
-            app:layout_constraintTop_toBottomOf="@id/h_25" />
+            android:text="@string/key6"
+            app:layout_constraintBottom_toTopOf="@id/h50"
+            app:layout_constraintLeft_toRightOf="@id/v44"
+            app:layout_constraintRight_toLeftOf="@id/v66"
+            app:layout_constraintTop_toBottomOf="@id/h25" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/key_1"
+            android:id="@+id/key1"
             style="@style/TextButton"
-            android:text="1"
-            app:layout_constraintBottom_toTopOf="@id/h_75"
+            android:text="@string/key1"
+            app:layout_constraintBottom_toTopOf="@id/h75"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="@id/v_22"
-            app:layout_constraintTop_toBottomOf="@id/h_50" />
+            app:layout_constraintRight_toRightOf="@id/v22"
+            app:layout_constraintTop_toBottomOf="@id/h50" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/key_2"
+            android:id="@+id/key2"
             style="@style/TextButton"
-            android:text="2"
-            app:layout_constraintBottom_toTopOf="@id/h_75"
-            app:layout_constraintLeft_toRightOf="@id/v_22"
-            app:layout_constraintRight_toLeftOf="@id/v_44"
-            app:layout_constraintTop_toBottomOf="@id/h_50" />
+            android:text="@string/key2"
+            app:layout_constraintBottom_toTopOf="@id/h75"
+            app:layout_constraintLeft_toRightOf="@id/v22"
+            app:layout_constraintRight_toLeftOf="@id/v44"
+            app:layout_constraintTop_toBottomOf="@id/h50" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/key_3"
+            android:id="@+id/key3"
             style="@style/TextButton"
-            android:text="3"
-            app:layout_constraintBottom_toTopOf="@id/h_75"
-            app:layout_constraintLeft_toRightOf="@id/v_44"
-            app:layout_constraintRight_toLeftOf="@id/v_66"
-            app:layout_constraintTop_toBottomOf="@id/h_50" />
+            android:text="@string/key3"
+            app:layout_constraintBottom_toTopOf="@id/h75"
+            app:layout_constraintLeft_toRightOf="@id/v44"
+            app:layout_constraintRight_toLeftOf="@id/v66"
+            app:layout_constraintTop_toBottomOf="@id/h50" />
 
         <com.example.holmi_production.money_counter_app.ui.custom.SplitButtonView
-            android:id="@+id/splittedButtons"
+            android:id="@+id/splittedButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/v_66"
+            app:layout_constraintLeft_toRightOf="@id/v66"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/h_25">
+            app:layout_constraintTop_toBottomOf="@id/h25">
 
 
         </com.example.holmi_production.money_counter_app.ui.custom.SplitButtonView>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/key_0"
+            android:id="@+id/key0"
             style="@style/TextButton"
             android:text="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/v_44"
-            app:layout_constraintTop_toBottomOf="@id/h_75" />
+            app:layout_constraintRight_toLeftOf="@id/v44"
+            app:layout_constraintTop_toBottomOf="@id/h75" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/key_divider"
+            android:id="@+id/keyDivider"
             style="@style/TextButton"
             android:text="."
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/v_44"
-            app:layout_constraintRight_toLeftOf="@id/v_66"
-            app:layout_constraintTop_toBottomOf="@id/h_75" />
+            app:layout_constraintLeft_toRightOf="@id/v44"
+            app:layout_constraintRight_toLeftOf="@id/v66"
+            app:layout_constraintTop_toBottomOf="@id/h75" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/h_66"
+            android:id="@+id/h66"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.63" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/h_25"
+            android:id="@+id/h25"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.25" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/h_50"
+            android:id="@+id/h50"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.5" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/h_75"
+            android:id="@+id/h75"
             android:layout_width="1dp"
             android:layout_height="1dp"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.75" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/v_22"
+            android:id="@+id/v22"
             android:layout_width="1dp"
             android:layout_height="1dp"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.22" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/v_44"
+            android:id="@+id/v44"
             android:layout_width="1dp"
             android:layout_height="1dp"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.44" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/v_66"
+            android:id="@+id/v66"
             android:layout_width="1dp"
             android:layout_height="1dp"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.66" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/design_default_color_primary_dark" />
 </LinearLayout>
 
