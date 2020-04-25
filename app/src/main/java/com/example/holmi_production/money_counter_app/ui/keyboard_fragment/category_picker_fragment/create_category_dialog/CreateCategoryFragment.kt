@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.CategoryDetailFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.ICategoryStateListener
 import kotlinx.android.synthetic.main.part_create_category.*
 import leakcanary.AppWatcher
 
-class CategoryCreateFragment : AndroidXMvpAppCompatFragment(),ICategoryStateListener{
+class CategoryCreateFragment : AndroidXMvpAppCompatFragment(),
+    ICategoryStateListener {
     override fun updateStateButton(isEnable: Boolean) {
         btn_create_category.isEnabled = isEnable
     }

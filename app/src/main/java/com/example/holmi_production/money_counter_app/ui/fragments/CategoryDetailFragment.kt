@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog
+package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -16,7 +16,7 @@ import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFro
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.icon_picker.ImageCategoryPicker
+import com.example.holmi_production.money_counter_app.ui.dialogs.ImageCategoryPicker
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import kotlinx.android.synthetic.main.container_category_detail.*
 import kotlin.random.Random
@@ -58,15 +58,18 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
         })
 
         iv_category_image.setOnClickListener {
-            val dialog = ImageCategoryPicker(requireContext()) { imageArrayPosition ->
-                val imageId = requireContext().resources.obtainTypedArray(R.array.images)
-                val id = imageId.getResourceId(imageArrayPosition, -1)
-                iv_category_image.setImageResource(id)
+            val dialog =
+                ImageCategoryPicker(
+                    requireContext()
+                ) { imageArrayPosition ->
+                    val imageId = requireContext().resources.obtainTypedArray(R.array.images)
+                    val id = imageId.getResourceId(imageArrayPosition, -1)
+                    iv_category_image.setImageResource(id)
 
-                iv_category_image.tag = imageArrayPosition
-                iv_category_image.invalidate()
-                imageId.recycle()
-            }
+                    iv_category_image.tag = imageArrayPosition
+                    iv_category_image.invalidate()
+                    imageId.recycle()
+                }
 
             dialog.show()
         }
@@ -158,13 +161,15 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
 
     companion object {
         fun newInstance(): CategoryDetailFragment {
-            val fr = CategoryDetailFragment()
+            val fr =
+                CategoryDetailFragment()
             fr.arguments = null
             return fr
         }
 
         fun newInstance(bundle: Bundle): CategoryDetailFragment {
-            val fr = CategoryDetailFragment()
+            val fr =
+                CategoryDetailFragment()
             fr.arguments = bundle
             return fr
         }

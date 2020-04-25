@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.storage
 
+import android.content.Context
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import io.reactivex.Completable
@@ -22,7 +23,9 @@ class CategoryRepository @Inject constructor(
     }
 
     fun getCategories():Single<List<Category>>{
-        return Single.fromCallable { dao.getCategories() }
+        return Single.fromCallable {
+            dao.getCategories()
+        }
     }
 
     fun observeCategories(): Flowable<List<Category>> {

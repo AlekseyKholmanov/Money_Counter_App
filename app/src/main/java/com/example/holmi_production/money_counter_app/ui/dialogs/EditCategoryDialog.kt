@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.edit_category_dialog
+package com.example.holmi_production.money_counter_app.ui.dialogs
 
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -11,13 +11,14 @@ import androidx.fragment.app.DialogFragment
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.CategoryDetailFragment
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.create_category_dialog.ICategoryStateListener
+import com.example.holmi_production.money_counter_app.ui.fragments.CategoryDetailFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.ICategoryStateListener
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.dialog_edit_category.*
 import leakcanary.AppWatcher
 
-class EditCategoryDialog : DialogFragment(), ICategoryStateListener,
+class EditCategoryDialog : DialogFragment(),
+    ICategoryStateListener,
     ICreateSubcategoryCallback {
     override fun createSubcategory(name: String) {
         val category = arguments?.getParcelable("category") as Category
@@ -64,7 +65,8 @@ class EditCategoryDialog : DialogFragment(), ICategoryStateListener,
             dismiss()
         }
         btn_create_subcategory.setOnClickListener {
-            val dialog = CreateSubcategoryDialog.newInstance()
+            val dialog =
+                CreateSubcategoryDialog.newInstance()
             dialog.setListener(this)
             dialog.show(childFragmentManager, "CreateSubcategoryDialog")
         }
@@ -75,11 +77,10 @@ class EditCategoryDialog : DialogFragment(), ICategoryStateListener,
         val dialog = dialog
         if (dialog != null) {
             val displayMetrics = DisplayMetrics()
-            activity!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+            requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
             val width = (displayMetrics.widthPixels * 0.8f).toInt()
             val height = ViewGroup.LayoutParams.WRAP_CONTENT
-
-            dialog.window!!.setLayout(width, height)
+            dialog.window?.setLayout(width, height)
         }
     }
 
@@ -116,7 +117,8 @@ class EditCategoryDialog : DialogFragment(), ICategoryStateListener,
 
     companion object {
         fun newInstance(args: Bundle): EditCategoryDialog {
-            val fr = EditCategoryDialog()
+            val fr =
+                EditCategoryDialog()
             fr.arguments = args
             return fr
         }

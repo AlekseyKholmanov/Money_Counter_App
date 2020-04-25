@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment
+package com.example.holmi_production.money_counter_app.ui.presenters
 
 import com.arellomobile.mvp.MvpView
 import com.example.holmi_production.money_counter_app.model.entity.Category

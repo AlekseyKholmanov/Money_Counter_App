@@ -21,7 +21,7 @@ import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.ui.charts_fragments.ChartFragment
 import com.example.holmi_production.money_counter_app.ui.costs_fragment.CostsFragment
 import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.KeyboardFragment
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.CategoryPickerFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.CategoryPickerFragment
 import com.example.holmi_production.money_counter_app.ui.limits_fragment.LimitsFragment
 import com.example.holmi_production.money_counter_app.ui.topbar_fragment.TopbarFragment
 import com.example.holmi_production.money_counter_app.worker.WorkerInteractor

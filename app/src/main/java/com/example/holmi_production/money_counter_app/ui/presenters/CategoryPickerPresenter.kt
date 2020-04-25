@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment
+package com.example.holmi_production.money_counter_app.ui.presenters
 
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState

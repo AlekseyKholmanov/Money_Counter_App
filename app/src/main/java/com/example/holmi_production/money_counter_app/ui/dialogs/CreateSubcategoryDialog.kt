@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.edit_category_dialog
+package com.example.holmi_production.money_counter_app.ui.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog

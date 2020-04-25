@@ -35,7 +35,7 @@ class SplitButtonView @JvmOverloads constructor(
             key_income.visibility = View.VISIBLE
             key_income.iconSize = iconSize
         } else {
-            View.GONE
+            key_income.visibility = View.GONE
         }
         if (state.contains(SpDirection.SPENDING)) {
             key_spending.visibility = View.VISIBLE

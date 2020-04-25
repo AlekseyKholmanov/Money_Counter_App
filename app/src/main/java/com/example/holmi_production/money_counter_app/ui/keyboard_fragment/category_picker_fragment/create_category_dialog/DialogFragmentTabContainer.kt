@@ -11,7 +11,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.entity.Category
 import com.example.holmi_production.money_counter_app.model.entity.SubCategory
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppComaptDialogFragment
-import com.example.holmi_production.money_counter_app.ui.keyboard_fragment.category_picker_fragment.edit_category_dialog.EditCategoryDialog
+import com.example.holmi_production.money_counter_app.ui.dialogs.EditCategoryDialog
 import kotlinx.android.synthetic.main.container_category_create_dialog.*
 import leakcanary.AppWatcher
 import javax.inject.Inject
