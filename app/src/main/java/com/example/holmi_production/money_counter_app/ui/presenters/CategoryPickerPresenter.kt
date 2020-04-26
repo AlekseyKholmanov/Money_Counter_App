@@ -5,8 +5,8 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
-import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.SubCategory
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
+import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import javax.inject.Inject
 
@@ -41,7 +41,7 @@ class CategoryPickerPresenter @Inject constructor(private val interactor: Catego
 
     }
 
-    fun insertCategory(category: Category) {
+    fun insertCategory(category: CategoryEntity) {
         interactor.insert(category)
             .async()
             .subscribe {
@@ -50,7 +50,7 @@ class CategoryPickerPresenter @Inject constructor(private val interactor: Catego
             .keep()
     }
 
-    fun createSubCategory(subCategory: SubCategory) {
+    fun createSubCategory(subCategory: SubCategoryEntity) {
         interactor.insert(subCategory)
             .async()
             .doAfterTerminate {
@@ -67,7 +67,7 @@ class CategoryPickerPresenter @Inject constructor(private val interactor: Catego
             .keep()
     }
 
-    fun deleteSubcategory(subCategory: SubCategory) {
+    fun deleteSubcategory(subCategory: SubCategoryEntity) {
         interactor.insert(subCategory.copy(isDeleted = true))
             .async()
             .subscribe()

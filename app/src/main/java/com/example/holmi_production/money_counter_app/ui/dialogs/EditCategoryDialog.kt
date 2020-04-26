@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.SubCategory
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
+import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.ui.fragments.CategoryDetailFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.ICategoryStateListener
 import com.google.android.material.chip.Chip
@@ -21,9 +21,9 @@ class EditCategoryDialog : DialogFragment(),
     ICategoryStateListener,
     ICreateSubcategoryCallback {
     override fun createSubcategory(name: String) {
-        val category = arguments?.getParcelable("category") as Category
+        val category = arguments?.getParcelable("category") as CategoryEntity
         callback.addSubcategory(
-            SubCategory(
+            SubCategoryEntity(
                 parentId = category.id,
                 description = name,
                 color = ColorStateList.valueOf(category.color).defaultColor
@@ -58,7 +58,7 @@ class EditCategoryDialog : DialogFragment(),
 
         val subcategories = arguments?.getParcelableArray("subcategories") as Array<*>
         subcategories.forEach { subcategory ->
-            chips_group.addView(buildChip(subcategory as SubCategory))
+            chips_group.addView(buildChip(subcategory as SubCategoryEntity))
         }
         btn_update.setOnClickListener {
             callback.updateCategory(categoryDetail.getCurrentState())
@@ -88,7 +88,7 @@ class EditCategoryDialog : DialogFragment(),
         this.callback = callback
     }
 
-    private fun buildChip(subcategory: SubCategory): Chip {
+    private fun buildChip(subcategory: SubCategoryEntity): Chip {
         val chip = Chip(context)
         val text = subcategory.description
         chip.text = text
@@ -107,7 +107,7 @@ class EditCategoryDialog : DialogFragment(),
         AppWatcher.objectWatcher.watch(this)
     }
 
-    fun updateSubcategories(subcategories: List<SubCategory>) {
+    fun updateSubcategories(subcategories: List<SubCategoryEntity>) {
         chips_group.removeAllViews()
         subcategories.forEach {
             val chip = buildChip(it)
@@ -125,8 +125,8 @@ class EditCategoryDialog : DialogFragment(),
     }
 
     interface ICategoryEditor {
-        fun addSubcategory(subcategory: SubCategory)
-        fun deleteSubcategory(subcategory: SubCategory)
-        fun updateCategory(category: Category)
+        fun addSubcategory(subcategory: SubCategoryEntity)
+        fun deleteSubcategory(subcategory: SubCategoryEntity)
+        fun updateCategory(category: CategoryEntity)
     }
 }

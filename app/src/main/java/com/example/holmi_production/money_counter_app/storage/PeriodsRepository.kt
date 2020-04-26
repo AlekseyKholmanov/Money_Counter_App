@@ -1,6 +1,6 @@
 package com.example.holmi_production.money_counter_app.storage
 
-import com.example.holmi_production.money_counter_app.model.entity.FilterPeriods
+import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -15,15 +15,15 @@ class PeriodsRepository @Inject constructor(
     }
     private val dao = database.periodsDao
 
-    fun insert(period: FilterPeriods): Completable {
+    fun insert(period: FilterPeriodEntity): Completable {
         return Completable.fromCallable { dao.insert(period.copy(id = key)) }
     }
 
-    fun getPeriod(): Single<FilterPeriods> {
+    fun getPeriod(): Single<FilterPeriodEntity> {
         return Single.fromCallable { dao.getPeriod(key)}
     }
 
-    fun observePeriod(): Flowable<FilterPeriods> {
+    fun observePeriod(): Flowable<FilterPeriodEntity> {
         return dao.observePeriod(key).distinctUntilChanged()
     }
 }

@@ -8,13 +8,13 @@ import kotlinx.android.parcel.Parcelize
 
 class SpendingWithCategory:ListItem {
     @Embedded
-    lateinit var spending: Spending
+    lateinit var spending: SpendingEntity
 
-    @Relation(parentColumn = "categoryId", entity = Category::class, entityColumn = "id")
-    lateinit var category: List<Category>
+    @Relation(parentColumn = "categoryId", entity = CategoryEntity::class, entityColumn = "id")
+    lateinit var category: List<CategoryEntity>
 }
 
 
 @Parcelize
-class SpendingListItem(val spending: Spending, val category: Category, val subCategory: SubCategory?):ListItem,
+class SpendingListItem(val spending: SpendingEntity, val category: CategoryEntity, val subCategory: SubCategoryEntity?):ListItem,
     Parcelable

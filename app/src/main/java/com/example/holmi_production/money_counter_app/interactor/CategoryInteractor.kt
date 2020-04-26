@@ -1,11 +1,10 @@
 package com.example.holmi_production.money_counter_app.interactor
 
 import android.graphics.drawable.ColorDrawable
-import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.SubCategory
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
+import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.storage.CategoryRepository
 import com.example.holmi_production.money_counter_app.storage.SubCategoryRepository
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
@@ -23,7 +22,7 @@ class CategoryInteractor @Inject constructor(
 
     fun insert(name: String, types: List<SpDirection>, color: ColorDrawable?, imageId:Int): Completable {
 
-        val category = Category(
+        val category = CategoryEntity(
             description = name,
             imageId = imageId,
             color = color?.color ?: ColorUtils.getColor(),
@@ -32,33 +31,33 @@ class CategoryInteractor @Inject constructor(
         return insert(category)
     }
 
-    fun insert(category: Category): Completable {
+    fun insert(category: CategoryEntity): Completable {
         return categoryRepository.insert(category).async()
     }
 
-    fun insert(subcategory: SubCategory): Completable {
+    fun insert(subcategory: SubCategoryEntity): Completable {
         return subCategoryRepository.insert(subcategory)
     }
 
-    fun delete(subcategory: SubCategory):Completable{
+    fun delete(subcategory: SubCategoryEntity):Completable{
         return  subCategoryRepository.delete(subcategory)
     }
 
-    fun observeCategories(): Flowable<MutableList<Category>> {
+    fun observeCategories(): Flowable<MutableList<CategoryEntity>> {
         return categoryRepository.observeCategories()
             .async()
             .map { it.sortedByDescending { it.usageCount } }
             .map { it.toMutableList() }
     }
 
-    fun observeSubcategories():Flowable<List<SubCategory>>{
+    fun observeSubcategories():Flowable<List<SubCategoryEntity>>{
         return subCategoryRepository.observeSubCategories()
     }
 
-    fun observeCategoriesAndSubCategories(): Flowable<ArrayList<Pair<Category, List<SubCategory>>>> {
+    fun observeCategoriesAndSubCategories(): Flowable<ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>>> {
         return Flowables.combineLatest(categoryRepository.observeCategories(), subCategoryRepository.observeSubCategories())
             .map { (categories, subCategories) ->
-                val zipList = arrayListOf<Pair<Category, List<SubCategory>>>()
+                val zipList = arrayListOf<Pair<CategoryEntity, List<SubCategoryEntity>>>()
                 val sortedlist = categories.sortedByDescending { it.usageCount }
                 sortedlist.forEach { category ->
                     zipList.add(Pair(category, subCategories.filter { it.parentId == category.id && !it.isDeleted}))
@@ -67,10 +66,10 @@ class CategoryInteractor @Inject constructor(
             }
     }
 
-    fun getCategoriesAndSubCategories(): Single<ArrayList<Pair<Category, List<SubCategory>>>> {
+    fun getCategoriesAndSubCategories(): Single<ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>>> {
         return Singles.zip(categoryRepository.getCategories(), subCategoryRepository.getSubCategories())
             .map { (categories, subCategories) ->
-                val zipList = arrayListOf<Pair<Category, List<SubCategory>>>()
+                val zipList = arrayListOf<Pair<CategoryEntity, List<SubCategoryEntity>>>()
                 categories.forEach { category ->
                     zipList.add(Pair(category, subCategories.filter { it.parentId == category.id }))
                 }
@@ -78,17 +77,17 @@ class CategoryInteractor @Inject constructor(
             }
     }
 
-    fun getCategories(): Single<Array<Category>> {
+    fun getCategories(): Single<Array<CategoryEntity>> {
         return categoryRepository.getCategories().map {
             it.toTypedArray()
         }
     }
 
-    fun getCategory(id: Int): Single<Category> {
+    fun getCategory(id: Int): Single<CategoryEntity> {
         return categoryRepository.getCategory(id)
     }
 
-    fun getCategoryWithSub(id: Int): Single<Pair<Category, List<SubCategory>>> {
+    fun getCategoryWithSub(id: Int): Single<Pair<CategoryEntity, List<SubCategoryEntity>>> {
         return Singles.zip(categoryRepository.getCategory(id), subCategoryRepository.getSubcategoriesWithParentId(id))
     }
 

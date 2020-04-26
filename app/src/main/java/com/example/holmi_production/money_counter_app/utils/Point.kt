@@ -1,12 +1,12 @@
 package com.example.holmi_production.money_counter_app.utils
 
-import com.example.holmi_production.money_counter_app.model.entity.Balance
+import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 
 object Point {
 
     private val MIN_INTERVAL_SIZE = 3
 
-    fun getLabelIndexes(balances: List<Balance>): List<Int> {
+    fun getLabelIndexes(balances: List<BalanceEntity>): List<Int> {
         var isUpDirection = true
         var tempElement = balances[0].amount
         val directionIndexes = arrayListOf<Int>()

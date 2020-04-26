@@ -6,7 +6,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.Balance
+import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 import com.example.holmi_production.money_counter_app.storage.BalanceRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import org.joda.time.DateTime
@@ -32,7 +32,7 @@ class BalanceTask constructor(
                 }
             }
             .doAfterTerminate {
-                val balance = Balance(DateTime().withTimeAtStartOfDay(), todayBalance)
+                val balance = BalanceEntity(DateTime().withTimeAtStartOfDay(), todayBalance)
                 balanceRepository.insert(balance)
                     .subscribe()
                 Log.d("M_SaveBalanceTask", "wnd work $todayBalance")

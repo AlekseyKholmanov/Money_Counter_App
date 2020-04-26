@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.entity.Category
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.part_create_category.*
 import leakcanary.AppWatcher
@@ -69,5 +69,5 @@ class CategoryCreateFragment : AndroidXMvpAppCompatFragment(),
 }
 
 interface ICategoryCreateCallback {
-    fun categoryUpdated(category:Category)
+    fun categoryUpdated(category:CategoryEntity)
 }

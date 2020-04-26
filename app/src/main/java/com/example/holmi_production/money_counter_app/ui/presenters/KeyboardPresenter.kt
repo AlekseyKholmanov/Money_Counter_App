@@ -7,7 +7,7 @@ import com.example.holmi_production.money_counter_app.extensions.*
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
@@ -26,7 +26,7 @@ class KeyboardPresenter @Inject constructor(
 ) :
     BasePresenter<KeyboardFragmnetView>() {
 
-    fun undoAdding(spending: Spending) {
+    fun undoAdding(spending: SpendingEntity) {
         spendingInteractor.delete(spending)
             .subscribe({ Log.d("qwerty", "delete") }, { Log.d("qwerty", "error" + it.message) })
             .keep()
@@ -44,7 +44,7 @@ class KeyboardPresenter @Inject constructor(
         } else {
             sum
         }
-        val spending = Spending(
+        val spending = SpendingEntity(
             DateTime(),
             sumWithConverter,
             categoryId,

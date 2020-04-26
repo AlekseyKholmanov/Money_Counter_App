@@ -5,12 +5,12 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity
-data class SumPerDay(
+data class SumPerDayEntity(
     @PrimaryKey(autoGenerate = false)
     val id: String,
     var sum: Double
 ) : Serializable {
-    operator fun inc(inc: Double): SumPerDay {
-        return SumPerDay(id, sum + inc)
+    operator fun inc(inc: Double): SumPerDayEntity {
+        return SumPerDayEntity(id, sum + inc)
     }
 }

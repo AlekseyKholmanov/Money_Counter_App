@@ -11,7 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
-import com.example.holmi_production.money_counter_app.model.entity.Category
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.adapter.SpinnerSubcategoryAdapter
 import kotlinx.android.synthetic.main.part_create_subcategory.*
@@ -20,7 +20,7 @@ import leakcanary.AppWatcher
 class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
 
     companion object {
-        fun newInstance(categories: Array<Category>): CreateSubcategoryFragment {
+        fun newInstance(categories: Array<CategoryEntity>): CreateSubcategoryFragment {
             val bundle = Bundle()
             bundle.putParcelableArray("categories", categories)
             val fragment =
@@ -40,7 +40,7 @@ class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val categories = arguments!!.getParcelableArray("categories") as Array<Category>
+        val categories = arguments!!.getParcelableArray("categories") as Array<CategoryEntity>
         val adapter =
             SpinnerSubcategoryAdapter(
                 context!!,
@@ -59,7 +59,7 @@ class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
                     position: Int,
                     id: Long
                 ) {
-                    val category = parent!!.selectedItem as Category
+                    val category = parent!!.selectedItem as CategoryEntity
                     Toast.makeText(
                         context,
                         "categoryId:${category.description}, usage count: ${category.usageCount}",
@@ -68,7 +68,7 @@ class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
                 }
             }
         btn_create_subcategory.setOnClickListener {
-            val pickedCategory = spinner_parentCategory.selectedItem as Category
+            val pickedCategory = spinner_parentCategory.selectedItem as CategoryEntity
             callback!!.subcategoryCreated(et_subcategory_name.text.toString(), pickedCategory.id, colot = pickedCategory.color)
         }
         et_subcategory_name.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->

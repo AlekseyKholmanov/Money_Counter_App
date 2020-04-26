@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
@@ -26,7 +26,7 @@ class SpendingInteractor @Inject constructor(
     private val categoryInteractor: CategoryInteractor
 ) {
 
-    fun insert(spending: Spending): Completable {
+    fun insert(spending: SpendingEntity): Completable {
         return spendingRepository.insert(spending)
             .doOnComplete {
                 categoryInteractor.getCategory(spending.categoryId).doOnSuccess {
@@ -36,7 +36,7 @@ class SpendingInteractor @Inject constructor(
             }
     }
 
-    fun getIncomesAndSpendings(): Single<Pair<List<Spending>, List<Spending>>> {
+    fun getIncomesAndSpendings(): Single<Pair<List<SpendingEntity>, List<SpendingEntity>>> {
         return getAll()
             .async()
             .map { list ->
@@ -46,7 +46,7 @@ class SpendingInteractor @Inject constructor(
             }
     }
 
-    fun getAll(): Single<List<Spending>> {
+    fun getAll(): Single<List<SpendingEntity>> {
         return spendingRepository.getAll()
     }
 
@@ -68,7 +68,7 @@ class SpendingInteractor @Inject constructor(
             }
     }
 
-    fun observePeriods(): Flowable<List<Spending>> {
+    fun observePeriods(): Flowable<List<SpendingEntity>> {
         return Flowables.combineLatest(
             periodsRepository.observePeriod(),
             spendingRepository.observeSpending()
@@ -87,7 +87,7 @@ class SpendingInteractor @Inject constructor(
             }
     }
 
-    fun delete(spending: Spending): Single<Disposable> {
+    fun delete(spending: SpendingEntity): Single<Disposable> {
         val endPeriodDays = settingRepository.getDaysToEndPeriod()
         when (spending.isSpending) {
             SpDirection.INCOME -> {

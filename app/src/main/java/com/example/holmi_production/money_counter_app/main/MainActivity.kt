@@ -11,7 +11,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.ui.AppBarConfiguration
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideDelayed
@@ -42,6 +44,19 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
     lateinit var workerInteractor: WorkerInteractor
 
     private lateinit var toggle: ActionBarDrawerToggle
+
+    val navDrawer: DrawerLayout
+        get() = drawer
+
+    val appBarConfig: AppBarConfiguration
+        get() = AppBarConfiguration(
+            setOf(
+                R.id.keyboardFragment,
+                R.id.costsFragment,
+                R.id.limitsFragment,
+                R.id.chartFragment
+            ), drawer
+        ) { false }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +94,7 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean { // The action bar home/up action should open or close the drawer.
         when (item.itemId) {
             R.id.home -> {
-                drawer_layout.openDrawer(GravityCompat.START)
+                drawer.openDrawer(GravityCompat.START)
                 return true
             }
         }
@@ -101,12 +116,12 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
 
         toggle = ActionBarDrawerToggle(
             this,
-            drawer_layout,
+            drawer,
             toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        drawer_layout.addDrawerListener(toggle)
+        drawer.addDrawerListener(toggle)
         toggle.isDrawerIndicatorEnabled = true
         toggle.syncState()
     }

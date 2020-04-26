@@ -4,8 +4,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.SubCategory
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
+import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import kotlinx.android.synthetic.main.item_category.view.*
 
 /**
@@ -16,7 +16,7 @@ class CategoryPickerHolder(
     private val callback: Callback
 ) : RecyclerView.ViewHolder(view) {
 
-    fun bind(pair: Pair<Category, List<SubCategory>>) {
+    fun bind(pair: Pair<CategoryEntity, List<SubCategoryEntity>>) {
         with(itemView) {
             val (category, subcategories) = pair
             text_category_dialog.text = category.description
@@ -45,6 +45,6 @@ class CategoryPickerHolder(
 
     interface Callback {
         fun categoryPicked(categoryId: Int)
-        fun categoryEdited(pair: Pair<Category, List<SubCategory>>)
+        fun categoryEdited(pair: Pair<CategoryEntity, List<SubCategoryEntity>>)
     }
 }

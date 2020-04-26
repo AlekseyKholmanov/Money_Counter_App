@@ -8,15 +8,14 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.SubCategory
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
+import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppComaptDialogFragment
 import com.example.holmi_production.money_counter_app.ui.adapter.CreateCategoryAdapter
 import com.example.holmi_production.money_counter_app.ui.dialogs.EditCategoryDialog
 import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryView
 import kotlinx.android.synthetic.main.container_category_create_dialog.*
-import leakcanary.AppWatcher
 import javax.inject.Inject
 
 
@@ -48,7 +47,7 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bundle = this.arguments
-        val categories = bundle!!.get("categories") as? Array<Category>
+        val categories = bundle!!.get("categories") as? Array<CategoryEntity>
 
         category_create_tabs.setupWithViewPager(category_create_viewPager)
         category_create_viewPager.adapter =
@@ -60,14 +59,9 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(),
             )
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
-    }
-
     override fun subcategoryCreated(categoryName: String, parentId: Int, color: Int) {
         callback.addSubcategory(
-            SubCategory(
+            SubCategoryEntity(
                 description = categoryName,
                 parentId = parentId,
                 color = color
@@ -76,7 +70,7 @@ class DialogFragmentTabContainer : AndroidXMvpAppComaptDialogFragment(),
         dismiss()
     }
 
-    override fun categoryUpdated(category: Category) {
+    override fun categoryUpdated(category: CategoryEntity) {
         callback.updateCategory(category)
         dismiss()
     }

@@ -2,7 +2,6 @@ package com.example.holmi_production.money_counter_app.worker
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -11,8 +10,7 @@ import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.interactor.BalanceInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.Balance
-import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
+import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 
 class BalancePopulateTask(context: Context, params: WorkerParameters) : Worker(context, params) {
     companion object {
@@ -37,7 +35,7 @@ class BalancePopulateTask(context: Context, params: WorkerParameters) : Worker(c
                     u.forEach {
                         if (it.isSpending == SpDirection.INCOME) daylyBalance += it.sum else daylyBalance -= it.sum
                     }
-                    val balance = Balance(t, daylyBalance)
+                    val balance = BalanceEntity(t, daylyBalance)
                     balanceInteractor.insert(balance)
                     Log.d("M_NotAlarmReciever", "${t.toRUformat()} $daylyBalance")
                 }

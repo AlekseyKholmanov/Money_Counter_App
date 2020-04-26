@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity
-data class Category(
+data class CategoryEntity(
     @PrimaryKey(autoGenerate = true)
     override val id: Int = 0,
     val spendingDirection: List<SpDirection>,

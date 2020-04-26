@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_graph"
+    app:startDestination="@id/keyboardFragment">
+
+    <fragment
+        android:id="@+id/keyboardFragment"
+        android:name="com.example.holmi_production.money_counter_app.ui.fragments.KeyboardFragment"
+        android:label="KeyboardFragment" />
+    <fragment
+        android:id="@+id/chartFragment"
+        android:name="com.example.holmi_production.money_counter_app.ui.fragments.ChartFragment"
+        android:label="ChartFragment" />
+    <fragment
+        android:id="@+id/costsFragment"
+        android:name="com.example.holmi_production.money_counter_app.ui.fragments.CostsFragment"
+        android:label="CostsFragment" />
+</navigation>

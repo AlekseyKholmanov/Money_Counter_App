@@ -1,7 +1,6 @@
 package com.example.holmi_production.money_counter_app.storage
 
-import com.example.holmi_production.money_counter_app.model.entity.Balance
-import com.example.holmi_production.money_counter_app.model.entity.FilterPeriods
+import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -14,15 +13,15 @@ class BalanceRepository @Inject constructor(
 ) {
     private val dao = database.balanceDao
 
-    fun insert(balance: Balance): Completable {
+    fun insert(balance: BalanceEntity): Completable {
         return Completable.fromCallable { dao.insert(balance) }
     }
 
-    fun getBalance(id:DateTime): Single<Balance> {
+    fun getBalance(id:DateTime): Single<BalanceEntity> {
         return Single.fromCallable { dao.getBalance(id)}
     }
 
-    fun observeBalances(): Flowable<List<Balance>> {
+    fun observeBalances(): Flowable<List<BalanceEntity>> {
         return dao.getBalances().distinctUntilChanged()
     }
 }

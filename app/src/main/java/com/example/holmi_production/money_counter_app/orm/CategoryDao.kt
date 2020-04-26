@@ -1,26 +1,26 @@
 package com.example.holmi_production.money_counter_app.orm
 
 import androidx.room.*
-import com.example.holmi_production.money_counter_app.model.entity.Category
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import io.reactivex.Flowable
 
 @Dao
 interface CategoryDao {
-    @Query("SELECT * FROM Category")
-    fun observeCategories(): Flowable<List<Category>>
+    @Query("SELECT * FROM CategoryEntity")
+    fun observeCategories(): Flowable<List<CategoryEntity>>
 
-    @Query("SELECT * FROM Category")
-    fun getCategories():List<Category>
+    @Query("SELECT * FROM CategoryEntity")
+    fun getCategories():List<CategoryEntity>
 
-    @Query("SELECT * FROM Category WHERE id=:id")
-    fun getCategory(id:Int):Category
+    @Query("SELECT * FROM CategoryEntity WHERE id=:id")
+    fun getCategory(id:Int):CategoryEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(category: Category)
+    fun insert(category: CategoryEntity)
 
     @Delete
-    fun delete(category: Category)
+    fun delete(category: CategoryEntity)
 
-    @Query("DELETE FROM Category")
+    @Query("DELETE FROM CategoryEntity")
     fun deleteAll()
 }

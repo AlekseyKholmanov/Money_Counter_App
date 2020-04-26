@@ -11,7 +11,7 @@ import org.joda.time.DateTime
 
 @Entity
 @Parcelize
-data class Spending(
+data class SpendingEntity(
     @PrimaryKey(autoGenerate = false)
     val createdDate: DateTime,
 

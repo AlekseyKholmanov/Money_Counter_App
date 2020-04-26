@@ -1,23 +1,23 @@
 package com.example.holmi_production.money_counter_app.orm
 
 import androidx.room.*
-import com.example.holmi_production.money_counter_app.model.entity.SubCategory
+import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import io.reactivex.Flowable
 
 @Dao
 interface SubcategoryDao  {
-    @Query("SELECT * FROM SubCategory")
-    fun observeCategories(): Flowable<List<SubCategory>>
+    @Query("SELECT * FROM SubCategoryEntity")
+    fun observeCategories(): Flowable<List<SubCategoryEntity>>
 
-    @Query("SELECT * FROM SubCategory")
-    fun getCategories():List<SubCategory>
+    @Query("SELECT * FROM SubCategoryEntity")
+    fun getCategories():List<SubCategoryEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(category: SubCategory)
+    fun insert(category: SubCategoryEntity)
 
     @Delete
-    fun delete(category: SubCategory)
+    fun delete(category: SubCategoryEntity)
 
-    @Query("DELETE FROM Category")
+    @Query("DELETE FROM CategoryEntity")
     fun deleteAll()
 }

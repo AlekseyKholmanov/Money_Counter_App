@@ -6,7 +6,7 @@ import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOf
 import org.joda.time.DateTime
 
 @Entity
-data class FilterPeriods(
+data class FilterPeriodEntity(
     @PrimaryKey(autoGenerate = false)
     val id: String,
     var leftBorder: DateTime = DateTime().withTimeAtStartOfDay(),

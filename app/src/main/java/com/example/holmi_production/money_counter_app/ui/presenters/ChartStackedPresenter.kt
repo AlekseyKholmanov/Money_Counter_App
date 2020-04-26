@@ -5,7 +5,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import org.joda.time.DateTime
 import javax.inject.Inject
@@ -28,7 +28,7 @@ class ChartStackedPresenter @Inject constructor(private val spendingInteractor: 
 
     }
 
-    private fun prepareDatas(spendings: List<Spending>): Map<DateTime, List<Spending>> {
+    private fun prepareDatas(spendings: List<SpendingEntity>): Map<DateTime, List<SpendingEntity>> {
         return spendings
             .filter { it.isSpending == SpDirection.SPENDING }
             .sortedByDescending { it.sum }

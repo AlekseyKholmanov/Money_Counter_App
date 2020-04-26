@@ -1,6 +1,6 @@
 package com.example.holmi_production.money_counter_app.storage
 
-import com.example.holmi_production.money_counter_app.model.entity.SumPerDay
+import com.example.holmi_production.money_counter_app.model.entity.SumPerDayEntity
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -19,27 +19,27 @@ class SumPerDayRepository @Inject constructor(
     private val dao = database.sumPerDayDao
 
     fun insertToday(todaySum: Double): Completable {
-        val sum = SumPerDay(TODAY, todaySum)
+        val sum = SumPerDayEntity(TODAY, todaySum)
         return Completable.fromCallable { dao.insert(sum) }
     }
 
     fun insertAverage(averageSum: Double): Completable {
-        val sum = SumPerDay(AVERAGE, averageSum)
+        val sum = SumPerDayEntity(AVERAGE, averageSum)
         return Completable.fromCallable { dao.insert(sum) }
     }
 
-    fun observeToday(): Flowable<SumPerDay> = dao.observeSum(TODAY).distinctUntilChanged()
-    fun observeAverage(): Flowable<SumPerDay> = dao.observeSum(AVERAGE).distinctUntilChanged()
+    fun observeToday(): Flowable<SumPerDayEntity> = dao.observeSum(TODAY).distinctUntilChanged()
+    fun observeAverage(): Flowable<SumPerDayEntity> = dao.observeSum(AVERAGE).distinctUntilChanged()
 
-    fun getToday(): Single<SumPerDay> {
+    fun getToday(): Single<SumPerDayEntity> {
         return Single.fromCallable { dao.getSum(TODAY) }
     }
 
-    fun getTodayAndAverage(): Single<Pair<SumPerDay, SumPerDay>> {
+    fun getTodayAndAverage(): Single<Pair<SumPerDayEntity, SumPerDayEntity>> {
         return Singles.zip(getToday(), getAverage())
     }
 
-    fun getAverage(): Single<SumPerDay> {
+    fun getAverage(): Single<SumPerDayEntity> {
         return Single.fromCallable { dao.getSum(AVERAGE) }
     }
 }

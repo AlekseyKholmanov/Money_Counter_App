@@ -15,14 +15,14 @@ interface KeyboardFragmnetView : MvpView {
     fun showNewSumSnack(sum: Double, days: Int)
 
     fun showSnack(
-        category: Pair<Category, List<SubCategory>>,
-        spending: Spending)
+        category: Pair<CategoryEntity, List<SubCategoryEntity>>,
+        spending: SpendingEntity)
 
     @StateStrategyType(SkipStrategy::class)
-    fun updateCategoryPickerButton(category: Category?)
+    fun updateCategoryPickerButton(category: CategoryEntity?)
 
     @StateStrategyType(SkipStrategy::class)
-    fun showSubcategoryMenu(subcategories: List<SubCategory>, color: Int)
+    fun showSubcategoryMenu(subcategories: List<SubCategoryEntity>, color: Int)
 
     @StateStrategyType(SkipStrategy::class)
     fun showActionButtons(directions: List<SpDirection>)

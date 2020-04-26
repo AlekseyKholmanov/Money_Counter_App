@@ -9,7 +9,7 @@ import com.example.holmi_production.money_counter_app.model.PieCharState
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.GraphEntity
 import com.example.holmi_production.money_counter_app.model.entity.Nameble
-import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import javax.inject.Inject
@@ -53,7 +53,7 @@ class ChartPiePresenter @Inject constructor(
     private fun filterList(
         list: List<SpendingListItem>,
         categoryId: Int?
-    ): List<Pair<Nameble?, List<Spending>>> {
+    ): List<Pair<Nameble?, List<SpendingEntity>>> {
         val value = list
             .asSequence()
             .filter { it.spending.isSpending == SpDirection.SPENDING }
@@ -80,7 +80,7 @@ class ChartPiePresenter @Inject constructor(
         viewState.render(PieCharState.NormalState(output, canDetailed))
     }
 
-    private fun getChartEntities(values: List<Pair<Nameble?, List<Spending>>>): List<GraphEntity> {
+    private fun getChartEntities(values: List<Pair<Nameble?, List<SpendingEntity>>>): List<GraphEntity> {
         val entities = mutableListOf<GraphEntity>()
         values.forEach { (entity, spendings) ->
             entities.add(

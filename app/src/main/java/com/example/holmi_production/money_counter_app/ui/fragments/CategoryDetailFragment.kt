@@ -14,7 +14,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.custom.ColorSeekBar
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.Category
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.dialogs.ImageCategoryPicker
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
@@ -34,7 +34,7 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val category = arguments?.getParcelable("category") as Category?
+        val category = arguments?.getParcelable("category") as CategoryEntity?
 
         if (category != null) {
             category.color.let { iv_category_image.setBackgroundColor(it) }
@@ -127,14 +127,14 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
         this.callback = callback
     }
 
-    fun getCurrentState(): Category {
+    fun getCurrentState(): CategoryEntity {
         val background = iv_category_image.background
         val color: ColorDrawable? = background as? ColorDrawable
         val imageId = iv_category_image.tag as Int?
-        val category = (arguments?.getParcelable("category") as Category?)
+        val category = (arguments?.getParcelable("category") as CategoryEntity?)
         val categoryId = category?.id ?: 0
         Log.d("M_CatDetailFragment", "dsada")
-        return Category(
+        return CategoryEntity(
             id = categoryId,
             imageId = imageId ?: R.drawable.ic_launcher_foreground,
             color = color?.color ?: ColorUtils.getColor(),

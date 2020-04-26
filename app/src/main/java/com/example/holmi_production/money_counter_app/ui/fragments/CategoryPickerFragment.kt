@@ -15,8 +15,8 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.MainActivity
-import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.SubCategory
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
+import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.adapter.CategoryPickerAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.CategoryPickerHolder
@@ -43,11 +43,10 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
             (activity as MainActivity).showMain(bundle = bundle)
         }
 
-        override fun categoryEdited(pair: Pair<Category, List<SubCategory>>) {
+        override fun categoryEdited(pair: Pair<CategoryEntity, List<SubCategoryEntity>>) {
             val bundle = Bundle()
             bundle.putParcelable("category", pair.first)
             bundle.putParcelableArray("subcategories", pair.second.toTypedArray())
-            Log.d("M_FrCategoryPicker", "edit category ${pair.first.id} ${pair.first.description}")
             val dialog = EditCategoryDialog.newInstance(args = bundle)
             dialog.setListener(this@CategoryPickerFragment)
             dialog.show(
@@ -114,7 +113,7 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
     }
 
     //Only for update subcategories in edit Dialog
-    override fun updateSubcategories(subcategories: List<SubCategory>) {
+    override fun updateSubcategories(subcategories: List<SubCategoryEntity>) {
         val dialog = childFragmentManager.findFragmentByTag(EDIT_DIALOG_TAG)
         if (dialog != null)
             (dialog as EditCategoryDialog).updateSubcategories(subcategories)
@@ -124,20 +123,20 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
-    override fun addSubcategory(subcategory: SubCategory) {
+    override fun addSubcategory(subcategory: SubCategoryEntity) {
         presenter.createSubCategory(subcategory)
     }
 
-    override fun deleteSubcategory(subcategory: SubCategory) {
+    override fun deleteSubcategory(subcategory: SubCategoryEntity) {
         presenter.deleteSubcategory(subcategory)
     }
 
-    override fun updateCategory(category: Category) {
+    override fun updateCategory(category: CategoryEntity) {
         Log.d("M_FrCategoryPicker", "category: id:${category.id} desc: ${category.description}")
         presenter.insertCategory(category)
     }
 
-    override fun showCreateDialog(it: Array<Category>) {
+    override fun showCreateDialog(it: Array<CategoryEntity>) {
         val bundle = Bundle()
         bundle.putParcelableArray("categories", it)
         val dialog = DialogFragmentTabContainer.newInstance(args = bundle)
@@ -148,7 +147,7 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
         )
     }
 
-    override fun showCategories(categories: ArrayList<Pair<Category, List<SubCategory>>>) {
+    override fun showCategories(categories: ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>>) {
         adapter.setCategory(categories)
         adapter.notifyDataSetChanged()
     }

@@ -15,8 +15,8 @@ import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFro
 import com.example.holmi_production.money_counter_app.model.ButtonTypeEnums
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.SquareImageView
-import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.SubCategory
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
+import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
@@ -76,7 +76,7 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         this.mKeyboardListener = mKeyboardListener
     }
 
-    fun updateCategoryButton(category: Category?) {
+    fun updateCategoryButton(category: CategoryEntity?) {
         val text = key_category.findViewById<TextView>(R.id.tv_category_btn_placeholder)
         val image = key_category.findViewById<SquareImageView>(R.id.iv_category)
 
@@ -101,7 +101,7 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         numbers_keyboard.visibility = View.VISIBLE
     }
 
-    fun showChipsContainer(subcategories: List<SubCategory>, color: Int) {
+    fun showChipsContainer(subcategories: List<SubCategoryEntity>, color: Int) {
         if (subcategories.isNullOrEmpty()) {
             container_chips.visibility = View.GONE
         } else {
@@ -117,7 +117,7 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         splittedButton.changeButtonState(directions)
     }
 
-    private fun buildChip(subcategory: SubCategory, color: Int, alpha: Int): Chip {
+    private fun buildChip(subcategory: SubCategoryEntity, color: Int, alpha: Int): Chip {
         val chip = Chip(context)
         chip.isCheckable = true
         chip.isClickable = true

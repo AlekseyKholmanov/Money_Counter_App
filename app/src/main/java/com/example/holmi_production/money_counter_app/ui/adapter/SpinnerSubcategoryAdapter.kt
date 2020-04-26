@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.example.holmi_production.money_counter_app.model.entity.Category
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 
-class SpinnerSubcategoryAdapter(context: Context, val resource: Int, val categories: Array<Category>) :
-    ArrayAdapter<Category>(context, resource, categories){
+class SpinnerSubcategoryAdapter(context: Context, val resource: Int, val categories: Array<CategoryEntity>) :
+    ArrayAdapter<CategoryEntity>(context, resource, categories){
 
     override fun getCount(): Int = categories.size
 
-    override fun getItem(position: Int): Category? = categories[position]
+    override fun getItem(position: Int): CategoryEntity? = categories[position]
 
     override fun getItemId(position: Int): Long  = position.toLong()
 

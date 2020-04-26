@@ -7,20 +7,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/ThemeOverlay.AppCompat" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <include layout="@layout/include_category_picker_fragment" />
 
     <LinearLayout
@@ -29,9 +15,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="140dp"
+        android:layout_marginEnd="24dp"
         android:background="@android:color/transparent"
         android:orientation="horizontal"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        tools:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,8 +35,9 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_24_sync"
+            android:src="@drawable/ic_delete"
             app:backgroundTint="@color/Gray"
+            app:fabSize="mini"
             app:elevation="6dp"
             tools:visibility="visible" />
     </LinearLayout>
@@ -59,8 +48,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="80dp"
+        android:layout_marginEnd="24dp"
         android:background="@android:color/transparent"
         android:orientation="horizontal"
+        tools:visibility="visible"
         android:visibility="invisible">
 
         <TextView
@@ -75,6 +66,7 @@
             android:textSize="14sp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            app:fabSize="mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -92,7 +84,9 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_24_add"
-        app:backgroundTint="@color/colorAccent"
+        android:tint="@android:color/white"
+        app:backgroundTint="@android:color/black"
+        app:rippleColor="@color/colorAccent"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp" />
 

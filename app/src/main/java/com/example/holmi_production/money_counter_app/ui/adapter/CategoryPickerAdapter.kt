@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.SubCategory
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
+import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.CategoryPickerHolder
 
 class CategoryPickerAdapter(val callback: CategoryPickerHolder.Callback) :
     RecyclerView.Adapter<CategoryPickerHolder>() {
 
-    private val types: ArrayList<Pair<Category, List<SubCategory>>> = arrayListOf()
+    private val types: ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryPickerHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -19,7 +19,7 @@ class CategoryPickerAdapter(val callback: CategoryPickerHolder.Callback) :
         return CategoryPickerHolder(item, callback)
     }
 
-    fun setCategory(categories: ArrayList<Pair<Category, List<SubCategory>>>) {
+    fun setCategory(categories: ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>>) {
         types.clear()
         types.addAll(categories)
         notifyDataSetChanged()

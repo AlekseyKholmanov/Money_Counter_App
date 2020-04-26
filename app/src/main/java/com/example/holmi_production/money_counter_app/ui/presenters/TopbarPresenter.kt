@@ -5,7 +5,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.*
 import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums
 import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums.*
-import com.example.holmi_production.money_counter_app.model.entity.FilterPeriods
+import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
@@ -31,7 +31,7 @@ class TopbarPresenter @Inject constructor(
                 periodsRepository.insert(newPeriod).async().subscribe().keep()
             }, {
                 val left = DateTime().withTimeAtStartOfDay().minusDays(7)
-                val filterPeriods = FilterPeriods("", left)
+                val filterPeriods = FilterPeriodEntity("", left)
 
                 viewState.showDate(getPeriodText(filterPeriods, CUSTOM))
                 periodsRepository.insert(filterPeriods).async().subscribe().keep()
@@ -40,14 +40,14 @@ class TopbarPresenter @Inject constructor(
     }
 
     fun setPeriod(left: DateTime, right: DateTime) {
-        val fPeriod = FilterPeriods("", left, right)
+        val fPeriod = FilterPeriodEntity("", left, right)
         periodsRepository.insert(fPeriod).async().subscribe {
             viewState.showDate(getPeriodText(fPeriod, CUSTOM))
         }.keep()
     }
 
     fun setPeriod(type: PeriodTypeEnums) {
-        val period = FilterPeriods("")
+        val period = FilterPeriodEntity("")
         when (type) {
             DAY -> {
             }
@@ -82,13 +82,13 @@ class TopbarPresenter @Inject constructor(
     }
 
     private fun getNewPeriod(
-        oldPeriod: FilterPeriods,
+        oldPeriod: FilterPeriodEntity,
         isRightDirection: Boolean,
-        currentPeriod: PeriodTypeEnums): FilterPeriods {
+        currentPeriod: PeriodTypeEnums): FilterPeriodEntity {
         if (currentPeriod == MONTH) {
             val date =
                 if (isRightDirection) oldPeriod.leftBorder.withNextMonthDate() else oldPeriod.leftBorder.withPreviousMonthDate()
-            return FilterPeriods(
+            return FilterPeriodEntity(
                 "",
                 date.withTimeAtStartOfMonth().withTimeAtStartOfDay(),
                 date.withTimeAtEndOfMonth(date.monthOfYear).withTimeAtEndOfDay()
@@ -101,7 +101,7 @@ class TopbarPresenter @Inject constructor(
                 ).standardDays + 1 //чтобы не пересекались даты
             else
                 Duration(oldPeriod.rightBorder, oldPeriod.leftBorder).standardDays - 1
-            return FilterPeriods(
+            return FilterPeriodEntity(
                 "",
                 oldPeriod.leftBorder.plusDays(difDays.toInt()).withTimeAtStartOfDay(),
                 oldPeriod.rightBorder.plusDays(difDays.toInt()).withTimeAtEndOfDay()
@@ -109,7 +109,7 @@ class TopbarPresenter @Inject constructor(
         }
     }
 
-    private fun getPeriodText(period: FilterPeriods, type: PeriodTypeEnums): String {
+    private fun getPeriodText(period: FilterPeriodEntity, type: PeriodTypeEnums): String {
         return if (type == DAY) period.leftBorder.toRUformat() else
             " ${period.leftBorder.toRUformat()} - ${period.rightBorder.toRUformat()}"
     }

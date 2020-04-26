@@ -14,9 +14,9 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.Category
-import com.example.holmi_production.money_counter_app.model.entity.Spending
-import com.example.holmi_production.money_counter_app.model.entity.SubCategory
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
+import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
+import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.dialogs.IDatePickerCallback
 import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardFragmnetView
@@ -113,13 +113,13 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(),
         keyboardPart.showActionButtons(directions)
     }
 
-    override fun showSubcategoryMenu(subcategories: List<SubCategory>, color: Int) {
+    override fun showSubcategoryMenu(subcategories: List<SubCategoryEntity>, color: Int) {
         keyboardPart.showChipsContainer(subcategories, color)
     }
 
     override fun showSnack(
-        category: Pair<Category, List<SubCategory>>,
-        spending: Spending
+        category: Pair<CategoryEntity, List<SubCategoryEntity>>,
+        spending: SpendingEntity
     ) {
         val message = if (spending.isSpending == SpDirection.SPENDING)
             "Расход. ${category.first.description}. ${spending.sum.toCurencyFormat().withRubleSign()}"
@@ -136,7 +136,7 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(),
 //        presenter.recalculateAverageSum(date)
     }
 
-    override fun updateCategoryPickerButton(category: Category?) {
+    override fun updateCategoryPickerButton(category: CategoryEntity?) {
         keyboardPart.updateCategoryButton(category = category)
     }
 

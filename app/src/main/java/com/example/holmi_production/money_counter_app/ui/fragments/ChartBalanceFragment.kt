@@ -16,7 +16,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.custom.ChartMarkerView
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
-import com.example.holmi_production.money_counter_app.model.entity.Balance
+import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.ChartBalancePresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.ChartBalanceView
@@ -62,7 +62,7 @@ class ChartBalanceFragment : AndroidXMvpAppCompatFragment(),
     @ProvidePresenter
     fun providePresenter() = App.component.getBalancePresenter()
 
-    override fun showChart(balances: List<Balance>) {
+    override fun showChart(balances: List<BalanceEntity>) {
         hidePlaceholder()
         val values = ArrayList<Entry>()
         for (i in balances.indices) {

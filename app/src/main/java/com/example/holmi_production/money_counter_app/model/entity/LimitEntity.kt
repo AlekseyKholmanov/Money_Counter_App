@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import org.joda.time.DateTime
 
 @Entity
-data class Limit(
+data class LimitEntity(
 
     @PrimaryKey(autoGenerate = true)
     val id: Int,

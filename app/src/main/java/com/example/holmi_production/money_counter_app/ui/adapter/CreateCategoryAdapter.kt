@@ -3,7 +3,7 @@ package com.example.holmi_production.money_counter_app.ui.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.holmi_production.money_counter_app.model.entity.Category
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.ui.fragments.CategoryCreateFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.CreateSubcategoryFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.ICategoryCreateCallback
@@ -11,7 +11,7 @@ import com.example.holmi_production.money_counter_app.ui.fragments.ISubcategoryC
 
 class CreateCategoryAdapter(
     fm: FragmentManager,
-    val categories: Array<Category>,
+    val categories: Array<CategoryEntity>,
     val subcategoryCallback: ISubcategoryCreateCallback,
     val categoryCallback: ICategoryCreateCallback
 ) :

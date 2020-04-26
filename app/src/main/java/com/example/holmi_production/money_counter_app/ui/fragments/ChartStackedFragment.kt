@@ -12,7 +12,7 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.model.CategoryType
-import com.example.holmi_production.money_counter_app.model.entity.Spending
+import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.ChartStackedPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.StackedView
@@ -83,7 +83,7 @@ class ChartStackedFragment : AndroidXMvpAppCompatFragment(),
         showEmptyPlaceholder()
     }
 
-    override fun showGraph(list: Map<DateTime, List<Spending>>) {
+    override fun showGraph(list: Map<DateTime, List<SpendingEntity>>) {
         if (list.isEmpty()) {
             showEmptyPlaceholder()
         } else {

@@ -4,18 +4,18 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import com.example.holmi_production.money_counter_app.model.entity.FilterPeriods
+import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import io.reactivex.Flowable
 
 @Dao
 interface PeriodsDao {
-    @Query("SELECT * FROM FilterPeriods WHERE id=:key")
-    fun observePeriod(key:String):Flowable<FilterPeriods>
+    @Query("SELECT * FROM FilterPeriodEntity WHERE id=:key")
+    fun observePeriod(key:String):Flowable<FilterPeriodEntity>
 
-    @Query("SELECT * FROM FilterPeriods WHERE id=:key")
-    fun getPeriod(key:String): FilterPeriods
+    @Query("SELECT * FROM FilterPeriodEntity WHERE id=:key")
+    fun getPeriod(key:String): FilterPeriodEntity
 
     @Insert(onConflict = REPLACE)
-    fun insert(date: FilterPeriods)
+    fun insert(date: FilterPeriodEntity)
 }
 
