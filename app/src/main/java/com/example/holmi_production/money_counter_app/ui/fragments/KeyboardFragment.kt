@@ -23,7 +23,6 @@ import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardFrag
 import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardPresenter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
-import leakcanary.AppWatcher
 import org.joda.time.DateTime
 import javax.inject.Inject
 
@@ -58,49 +57,12 @@ class KeyboardFragment : AndroidXMvpAppCompatFragment(),
         if (arguments == null)
             presenter.getCategoryButtonValue()
         else {
-            val categoryId = arguments!!.getInt("categoryId")
+            val categoryId = requireArguments().getInt("categoryId")
             presenter.setCategoryButonType(categoryId)
         }
         presenter.observeData()
         presenter.observeEndPeriodDate()
         Log.d("M_KeyboardFragment", "View Created")
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("M_KeyboardFragment", "onCreate")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("M_KeyboardFragment", "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("M_KeyboardFragment", "onResume")
-    }
-
-    override fun onDestroyView() {
-        Log.d("M_KeyboardFragment", "fragment keyboard destroy view")
-        left_days.setOnClickListener(null)
-        super.onDestroyView()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("M_KeyboardFragment", "OnPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("M_KeyboardFragment", "onStop")
-    }
-
-    override fun onDestroy() {
-        Log.d("M_KeyboardFragment", "onDestroy")
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
     }
 
     override fun showNewSumSnack(sum: Double, days: Int) {

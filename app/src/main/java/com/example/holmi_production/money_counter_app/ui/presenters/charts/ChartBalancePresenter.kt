@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.presenters
+package com.example.holmi_production.money_counter_app.ui.presenters.charts
 
 import com.arellomobile.mvp.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async

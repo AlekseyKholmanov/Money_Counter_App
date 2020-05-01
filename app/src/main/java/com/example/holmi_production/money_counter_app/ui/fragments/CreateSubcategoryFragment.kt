@@ -15,7 +15,6 @@ import com.example.holmi_production.money_counter_app.model.entity.CategoryEntit
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.adapter.SpinnerSubcategoryAdapter
 import kotlinx.android.synthetic.main.part_create_subcategory.*
-import leakcanary.AppWatcher
 
 class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
 
@@ -40,10 +39,10 @@ class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val categories = arguments!!.getParcelableArray("categories") as Array<CategoryEntity>
+        val categories = requireArguments().getParcelableArray("categories") as Array<CategoryEntity>
         val adapter =
             SpinnerSubcategoryAdapter(
-                context!!,
+                requireContext(),
                 R.layout.support_simple_spinner_dropdown_item,
                 categories
             )
@@ -74,14 +73,14 @@ class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
         et_subcategory_name.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                et_subcategory_name?.hideKeyboardFrom(context!!)
+                et_subcategory_name?.hideKeyboardFrom(requireContext())
                 handled = true
             }
             return@OnEditorActionListener handled
         })
         et_subcategory_name.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus)
-                et_subcategory_name?.hideKeyboardFrom(context!!)
+                et_subcategory_name?.hideKeyboardFrom(requireContext())
         }
     }
 
@@ -99,11 +98,6 @@ class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
     override fun onPause() {
         super.onPause()
         Log.d("M_FragmentSubcategory", "Paused")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
     }
 }
 

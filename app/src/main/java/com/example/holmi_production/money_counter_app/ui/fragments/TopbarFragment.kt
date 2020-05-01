@@ -15,7 +15,6 @@ import com.example.holmi_production.money_counter_app.ui.dialogs.TopbarDatePicke
 import com.example.holmi_production.money_counter_app.ui.presenters.TopbarPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.TopbarView
 import kotlinx.android.synthetic.main.fragment_topbar.*
-import leakcanary.AppWatcher
 import org.joda.time.DateTime
 import javax.inject.Inject
 
@@ -61,11 +60,6 @@ class TopbarFragment : AndroidXMvpAppCompatFragment(),
 
     override fun datePicked(left: DateTime, right: DateTime) {
         presenter.setPeriod(left, right)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
     }
 
     @ProvidePresenter

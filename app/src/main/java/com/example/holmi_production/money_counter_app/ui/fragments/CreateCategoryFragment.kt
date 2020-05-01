@@ -9,7 +9,6 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import kotlinx.android.synthetic.main.part_create_category.*
-import leakcanary.AppWatcher
 
 class CategoryCreateFragment : AndroidXMvpAppCompatFragment(),
     ICategoryStateListener {
@@ -41,11 +40,6 @@ class CategoryCreateFragment : AndroidXMvpAppCompatFragment(),
 
     fun setCallback(callback: ICategoryCreateCallback) {
         this.callback = callback
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
     }
 
     override fun onPause() {

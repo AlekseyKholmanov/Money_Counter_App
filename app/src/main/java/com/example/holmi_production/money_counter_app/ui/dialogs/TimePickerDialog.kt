@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
-import leakcanary.AppWatcher
 import org.joda.time.DateTime
 
 class TimePickerDialog : DialogFragment(), DatePickerDialog.OnDateSetListener {
@@ -40,7 +39,7 @@ class TimePickerDialog : DialogFragment(), DatePickerDialog.OnDateSetListener {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val time = DateTime()
         val startDate: Long = arguments?.getLong("startDate") ?: DateTime().minusMonths(1).millis
-        val dialog = DatePickerDialog(context!!, this, time.year, time.monthOfYear - 1, time.dayOfMonth)
+        val dialog = DatePickerDialog(requireContext(), this, time.year, time.monthOfYear - 1, time.dayOfMonth)
         dialog.datePicker.minDate = startDate
         return dialog
     }
@@ -48,7 +47,6 @@ class TimePickerDialog : DialogFragment(), DatePickerDialog.OnDateSetListener {
     override fun onDestroy() {
         super.onDestroy()
         callback = null
-        AppWatcher.objectWatcher.watch(this)
     }
 }
 

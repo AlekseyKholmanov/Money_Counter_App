@@ -3,9 +3,9 @@ package com.example.holmi_production.money_counter_app.di.components
 import com.example.holmi_production.money_counter_app.di.modules.*
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
-import com.example.holmi_production.money_counter_app.ui.presenters.ChartBalancePresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.ChartStackedPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.ChartPiePresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalancePresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartStackedPresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CostsPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.FirstLaunchPresenter

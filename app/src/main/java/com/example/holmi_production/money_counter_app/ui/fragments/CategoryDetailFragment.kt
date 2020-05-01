@@ -110,14 +110,14 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
         et_category_name.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                et_category_name?.hideKeyboardFrom(context!!)
+                et_category_name?.hideKeyboardFrom(requireContext())
                 handled = true
             }
             return@OnEditorActionListener handled
         })
         et_category_name.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus)
-                et_category_name?.hideKeyboardFrom(context!!)
+                et_category_name?.hideKeyboardFrom(requireContext())
         }
     }
 
@@ -136,7 +136,7 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
         Log.d("M_CatDetailFragment", "dsada")
         return CategoryEntity(
             id = categoryId,
-            imageId = imageId ?: R.drawable.ic_launcher_foreground,
+            imageId = imageId,
             color = color?.color ?: ColorUtils.getColor(),
             description = et_category_name.text.toString(),
             isDeleted = false,

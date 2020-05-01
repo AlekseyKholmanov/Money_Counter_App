@@ -18,7 +18,6 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import com.example.holmi_production.money_counter_app.ui.presenters.SettingsPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.SettingsView
 import kotlinx.android.synthetic.main.frament_settings.*
-import leakcanary.AppWatcher
 import javax.inject.Inject
 
 
@@ -63,11 +62,6 @@ class SettingsFragment : AndroidXMvpAppCompatFragment(),
 
     override fun updateEndMonth(day: Int) {
         et_end_month_value.setText(day.toString())
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
     }
 
     @Inject

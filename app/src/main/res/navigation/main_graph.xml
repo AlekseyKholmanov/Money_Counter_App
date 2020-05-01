@@ -9,7 +9,7 @@
         android:label="KeyboardFragment" />
     <fragment
         android:id="@+id/chartFragment"
-        android:name="com.example.holmi_production.money_counter_app.ui.fragments.ChartFragment"
+        android:name="com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartFragment"
         android:label="ChartFragment" />
     <fragment
         android:id="@+id/costsFragment"

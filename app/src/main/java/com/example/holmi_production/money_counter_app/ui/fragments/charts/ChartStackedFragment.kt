@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.fragments
+package com.example.holmi_production.money_counter_app.ui.fragments.charts
 
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +14,7 @@ import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.example.holmi_production.money_counter_app.ui.presenters.ChartStackedPresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartStackedPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.StackedView
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart

@@ -15,7 +15,6 @@ import com.example.holmi_production.money_counter_app.ui.fragments.CategoryDetai
 import com.example.holmi_production.money_counter_app.ui.fragments.ICategoryStateListener
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.dialog_edit_category.*
-import leakcanary.AppWatcher
 
 class EditCategoryDialog : DialogFragment(),
     ICategoryStateListener,
@@ -49,7 +48,7 @@ class EditCategoryDialog : DialogFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val categoryDetail = CategoryDetailFragment.newInstance(arguments!!)
+        val categoryDetail = CategoryDetailFragment.newInstance(requireArguments())
         categoryDetail.setListener(this)
         childFragmentManager.beginTransaction().apply {
             replace(R.id.container, categoryDetail)
@@ -100,11 +99,6 @@ class EditCategoryDialog : DialogFragment(),
             callback.deleteSubcategory(subcategory)
         }
         return chip
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
     }
 
     fun updateSubcategories(subcategories: List<SubCategoryEntity>) {

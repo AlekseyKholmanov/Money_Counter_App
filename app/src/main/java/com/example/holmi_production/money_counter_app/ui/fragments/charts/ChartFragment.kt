@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.fragments
+package com.example.holmi_production.money_counter_app.ui.fragments.charts
 
 import android.content.Context
 import android.os.Bundle

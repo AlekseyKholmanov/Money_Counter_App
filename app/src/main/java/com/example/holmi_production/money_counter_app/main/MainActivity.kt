@@ -20,7 +20,7 @@ import com.example.holmi_production.money_counter_app.extensions.hideDelayed
 import com.example.holmi_production.money_counter_app.extensions.showDelayed
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatActivity
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import com.example.holmi_production.money_counter_app.ui.fragments.ChartFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.CostsFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.KeyboardFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.CategoryPickerFragment
@@ -32,7 +32,6 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.include_menu_currency_converting.*
 import kotlinx.android.synthetic.main.menu_drawer_custom.*
 import kotlinx.android.synthetic.main.include_menu_end_period_date.*
-import leakcanary.AppWatcher
 import javax.inject.Inject
 
 class MainActivity : AndroidXMvpAppCompatActivity() {
@@ -207,11 +206,6 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
         }
         transaction.replace(R.id.container_main, fragment)
         transaction.commit()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this, "main activity")
     }
 
     override fun onBackPressed() {

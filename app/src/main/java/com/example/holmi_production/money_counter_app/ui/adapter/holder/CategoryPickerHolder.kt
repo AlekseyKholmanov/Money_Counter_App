@@ -34,7 +34,11 @@ class CategoryPickerHolder(
                 View.GONE
             }
             val array = resources.obtainTypedArray(R.array.images)
-            val image = array.getResourceId(category.imageId ?: -1, -1)
+            val image = if (category.imageId != null) {
+                array.getResourceId(category.imageId, R.drawable.ic_launcher_foreground)
+            } else {
+                R.drawable.ic_launcher_foreground
+            }
             image_category_dialog.load(image) {
                 placeholder(R.drawable.ic_launcher_foreground)
                 error(R.drawable.ic_launcher_foreground)

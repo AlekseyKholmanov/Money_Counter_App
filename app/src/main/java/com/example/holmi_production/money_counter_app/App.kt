@@ -16,7 +16,6 @@ class App : Application() {
         lateinit var component: ApplicationComponent
     }
 
-
     override fun onCreate() {
         super.onCreate()
         initDi()
@@ -26,9 +25,7 @@ class App : Application() {
     private fun initFlipper() {
         SoLoader.init(this, false)
 
-        if (BuildConfig.DEBUG && FlipperUtils.shouldEnableFlipper(
-                this
-            )
+        if (BuildConfig.DEBUG && FlipperUtils.shouldEnableFlipper(this)
         ) {
             val client = AndroidFlipperClient.getInstance(this)
             client.addPlugin(InspectorFlipperPlugin(this, DescriptorMapping.withDefaults()))

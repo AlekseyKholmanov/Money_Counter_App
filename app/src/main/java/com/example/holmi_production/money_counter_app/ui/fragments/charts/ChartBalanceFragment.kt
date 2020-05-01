@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.fragments
+package com.example.holmi_production.money_counter_app.ui.fragments.charts
 
 import android.graphics.Color
 import android.graphics.DashPathEffect
@@ -18,8 +18,8 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.example.holmi_production.money_counter_app.ui.presenters.ChartBalancePresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.ChartBalanceView
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalancePresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalanceView
 import com.example.holmi_production.money_counter_app.utils.Point.getLabelIndexes
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry

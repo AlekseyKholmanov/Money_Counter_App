@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.fragments
+package com.example.holmi_production.money_counter_app.ui.fragments.charts
 
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -16,8 +16,9 @@ import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.PieCharState
 import com.example.holmi_production.money_counter_app.model.entity.GraphEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
-import com.example.holmi_production.money_counter_app.ui.presenters.ChartPiePresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.ChartPieView
+import com.example.holmi_production.money_counter_app.ui.fragments.PieDialogFragment
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPieView
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
@@ -94,7 +95,10 @@ class ChartPieFragment() : AndroidXMvpAppCompatFragment(),
         hidePlaceholder()
         val bundle = Bundle()
         bundle.putParcelableArray("SPENDINGS", state.spendings)
-        val fr = PieDialogFragment.newInstance(bundle)
+        val fr =
+            PieDialogFragment.newInstance(
+                bundle
+            )
         fr.show(childFragmentManager, "Spending dialog")
     }
 

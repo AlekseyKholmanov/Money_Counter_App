@@ -22,7 +22,6 @@ import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.part_fragment_keyboard.*
 import kotlinx.android.synthetic.main.view_splitted_button.*
-import leakcanary.AppWatcher
 import javax.inject.Inject
 
 class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
@@ -184,12 +183,6 @@ class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
         super.onDestroyView()
         mKeyboardListener = null
         Log.d("M_KeyboardPart", "onDestroy view")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
-        Log.d("M_KeyboardPart", "onDestroy")
     }
 
     private fun enterPressed(isSpending: SpDirection) {

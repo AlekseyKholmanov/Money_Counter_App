@@ -12,7 +12,6 @@ import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFr
 import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodView
 import kotlinx.android.synthetic.main.fragment_end_period.*
-import leakcanary.AppWatcher
 
 class EndPeriodFragment : AndroidXMvpAppCompatFragment(),
     EndPeriodView {
@@ -36,11 +35,6 @@ class EndPeriodFragment : AndroidXMvpAppCompatFragment(),
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_end_period, container, false)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        AppWatcher.objectWatcher.watch(this)
     }
 
     override fun showDatePeriod(start: String, end: String) {
