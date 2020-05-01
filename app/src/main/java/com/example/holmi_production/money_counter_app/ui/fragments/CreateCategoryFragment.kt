@@ -5,63 +5,48 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.arellomobile.mvp.presenter.InjectPresenter
+import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import com.example.holmi_production.money_counter_app.ui.presenters.CostsPresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryPresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryView
 import kotlinx.android.synthetic.main.part_create_category.*
 
-class CategoryCreateFragment : AndroidXMvpAppCompatFragment(),
-    ICategoryStateListener {
-    override fun updateStateButton(isEnable: Boolean) {
-        btn_create_category.isEnabled = isEnable
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-
-        return inflater.inflate(R.layout.part_create_category, container, false)
-    }
+class CategoryCreateFragment : BaseFragment(R.layout.part_create_category), CreateCategoryView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val categoryDetail = CategoryDetailFragment.newInstance()
-        categoryDetail.setListener(this)
         childFragmentManager.beginTransaction().apply {
             add(R.id.container_detail_category, categoryDetail)
             commit()
         }
         btn_create_category.setOnClickListener {
            val category =  categoryDetail.getCurrentState()
-            callback!!.categoryUpdated(category)
+            presenter.createCategory(category)
         }
+        btn_create_category.isEnabled = categoryDetail.isValidState
     }
 
-    fun setCallback(callback: ICategoryCreateCallback) {
-        this.callback = callback
-    }
+    @ProvidePresenter
+    fun providePresenter() = App.component.getCreateCategoryPresenter()
 
-    override fun onPause() {
-        super.onPause()
-        Log.d("M_FragmentCategory", "Paused")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("M_FragmentCategory", "stopped")
-    }
-
-    private var callback: ICategoryCreateCallback? = null
+    @InjectPresenter
+    lateinit var presenter: CreateCategoryPresenter
 
     companion object {
-        val IMAGE_DIALOG_TAG = "IMAGE_DIALOG_TAG"
         fun newInstance(): CategoryCreateFragment {
             return CategoryCreateFragment()
         }
     }
-}
 
-interface ICategoryCreateCallback {
-    fun categoryUpdated(category:CategoryEntity)
+    override fun popUp() {
+        TODO("Not yet implemented")
+    }
+
 }

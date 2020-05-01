@@ -1,10 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -14,22 +11,21 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.main.MainActivity
+import com.example.holmi_production.money_counter_app.main.Navigation
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.adapter.CategoryPickerAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.CategoryPickerHolder
-import com.example.holmi_production.money_counter_app.ui.dialogs.EditCategoryDialog
-import com.example.holmi_production.money_counter_app.ui.dialogs.EditCategoryDialog.ICategoryEditor
 import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPickerPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPickerView
 import com.example.holmi_production.money_counter_app.ui.utils.ViewAnimation
 import kotlinx.android.synthetic.main.fragment_category_picker.*
 import kotlinx.android.synthetic.main.include_category_picker_fragment.*
 
-class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
-    CategoryPickerView, ICategoryEditor {
+class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
+    CategoryPickerView {
 
     private lateinit var fabOpen: Animation
     private lateinit var fabClose: Animation
@@ -47,12 +43,16 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
             val bundle = Bundle()
             bundle.putParcelable("category", pair.first)
             bundle.putParcelableArray("subcategories", pair.second.toTypedArray())
-            val dialog = EditCategoryDialog.newInstance(args = bundle)
-            dialog.setListener(this@CategoryPickerFragment)
-            dialog.show(
-                childFragmentManager,
-                EDIT_DIALOG_TAG
-            )
+            categoryFab.setOnClickListener {
+                (requireActivity() as Navigation).loadFragment(
+                    EditCategoryFragment.newInstance(bundle),
+                    isAddedToBackstack = true,
+                    withBottomBar = false,
+                    withTopbar = false,
+                    withAppBar = false
+                )
+                animateFab()
+            }
         }
     }
 
@@ -64,14 +64,6 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
         fabClose = AnimationUtils.loadAnimation(requireContext(), R.anim.fab_close)
         rotateForward = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_forward)
         rotateBackward = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_backward)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_category_picker, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,8 +78,17 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
             animateFab()
         }
         categoryFab.setOnClickListener {
-            presenter.getDialogData()
+            (requireActivity() as Navigation).loadFragment(
+                CategoryCreateFragment.newInstance(),
+                isAddedToBackstack = true,
+                withBottomBar = false,
+                withTopbar = false,
+                withAppBar = false
+            )
             animateFab()
+        }
+        subcategoryFab.setOnClickListener {
+            //TODO open subcategory fragment here
         }
         presenter.observeCategories()
     }
@@ -116,35 +117,11 @@ class CategoryPickerFragment : AndroidXMvpAppCompatFragment(),
     override fun updateSubcategories(subcategories: List<SubCategoryEntity>) {
         val dialog = childFragmentManager.findFragmentByTag(EDIT_DIALOG_TAG)
         if (dialog != null)
-            (dialog as EditCategoryDialog).updateSubcategories(subcategories)
+            (dialog as EditCategoryFragment).updateSubcategories(subcategories)
     }
 
     override fun showToast(text: String) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun addSubcategory(subcategory: SubCategoryEntity) {
-        presenter.createSubCategory(subcategory)
-    }
-
-    override fun deleteSubcategory(subcategory: SubCategoryEntity) {
-        presenter.deleteSubcategory(subcategory)
-    }
-
-    override fun updateCategory(category: CategoryEntity) {
-        Log.d("M_FrCategoryPicker", "category: id:${category.id} desc: ${category.description}")
-        presenter.insertCategory(category)
-    }
-
-    override fun showCreateDialog(it: Array<CategoryEntity>) {
-        val bundle = Bundle()
-        bundle.putParcelableArray("categories", it)
-        val dialog = DialogFragmentTabContainer.newInstance(args = bundle)
-        dialog.setListener(this)
-        dialog.show(
-            childFragmentManager,
-            CREATE_DIALOG_TAG
-        )
     }
 
     override fun showCategories(categories: ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>>) {

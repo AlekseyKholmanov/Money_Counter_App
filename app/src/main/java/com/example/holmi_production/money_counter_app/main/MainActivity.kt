@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.menu_drawer_custom.*
 import kotlinx.android.synthetic.main.include_menu_end_period_date.*
 import javax.inject.Inject
 
-class MainActivity : AndroidXMvpAppCompatActivity() {
+class MainActivity : AndroidXMvpAppCompatActivity(), Navigation {
 
     @Inject
     lateinit var settingRepository: SettingRepository
@@ -185,12 +185,12 @@ class MainActivity : AndroidXMvpAppCompatActivity() {
         }
     }
 
-    private fun loadFragment(
+    override fun loadFragment(
         fragment: Fragment,
-        isAddedToBackstack: Boolean = false,
-        withTopbar: Boolean = true,
-        withBottomBar: Boolean = true,
-        withAppBar: Boolean = false
+        isAddedToBackstack: Boolean,
+        withTopbar: Boolean,
+        withBottomBar: Boolean,
+        withAppBar: Boolean
     ) {
         if (withBottomBar) showBottomNav() else hideBottomNav()
         if (withTopbar) showDatePickerBar() else hideDatePickerBar()

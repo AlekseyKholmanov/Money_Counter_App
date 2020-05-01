@@ -28,7 +28,7 @@ class SubCategoryRepository @Inject constructor(
     fun getSubcategoriesWithParentId(parentId: Int): Single<List<SubCategoryEntity>> {
         return Single.fromCallable {
             dao.getCategories()
-                .filter { sub -> sub.parentId == parentId }
+                .filter { sub -> sub.categoryId == parentId }
         }
     }
 

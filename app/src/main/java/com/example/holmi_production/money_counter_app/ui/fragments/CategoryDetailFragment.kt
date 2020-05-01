@@ -2,35 +2,35 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.custom.ColorSeekBar
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.dialogs.ImageCategoryPicker
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
+import com.jakewharton.rxbinding3.view.clicks
+import com.jakewharton.rxbinding3.widget.textChanges
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Function4
+import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.container_category_detail.*
+import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
-class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragment() {
+class CategoryDetailFragment private constructor() :
+    BaseFragment(R.layout.container_category_detail) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    var isValidState = false
 
-        return inflater.inflate(R.layout.container_category_detail, container, false)
-    }
+    private val disposables = CompositeDisposable()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,31 +74,40 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
             dialog.show()
         }
 
-        et_category_name.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
+        val categoryNameObservable = et_category_name
+            .textChanges()
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .map { it.isNotBlank() }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (count == 0)
-                    callback.updateStateButton(false)
-                else
-                    callback.updateStateButton(isCheckboxesChecked())
+        val accumulationObservable = ch_accumulation
+            .clicks()
+            .map {
+                ch_accumulation.isChecked
             }
-        })
+        val incomeObservable = ch_income
+            .clicks()
+            .map {
+                ch_income.isChecked
+            }
+        val spendingObservable = ch_spending
+            .clicks()
+            .map { ch_spending.isChecked }
 
-        ch_accumulation.setOnClickListener {
-            ch_accumulation.isChecked = !ch_accumulation.isChecked
-            callback.updateStateButton(isCheckboxesChecked())
-        }
-        ch_income.setOnClickListener {
-            ch_income.isChecked = !ch_income.isChecked
-            callback.updateStateButton(isCheckboxesChecked())
-        }
-        ch_spending.setOnClickListener {
-            ch_spending.isChecked = !ch_spending.isChecked
-            callback.updateStateButton(isCheckboxesChecked())
-        }
+        Observable.combineLatest(
+            categoryNameObservable, accumulationObservable, incomeObservable,
+            spendingObservable,
+            Function4 { categoryNameOk: Boolean, incomeChecked: Boolean, accumulationChecked: Boolean, spendingChecked: Boolean ->
+                categoryNameOk && incomeChecked && accumulationChecked && spendingChecked
+            })
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe{
+                isValidState = it
+            }
+            .addTo(disposables)
+
+
+
+
         btn_generate_color.setOnClickListener {
             val rand = Random.nextInt(0, color_seek_bar.width)
             color_seek_bar.setColor(rand.toFloat())
@@ -121,10 +130,9 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
         }
     }
 
-    private lateinit var callback: ICategoryStateListener
-
-    fun setListener(callback: ICategoryStateListener) {
-        this.callback = callback
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disposables.dispose()
     }
 
     fun getCurrentState(): CategoryEntity {
@@ -174,8 +182,4 @@ class CategoryDetailFragment private constructor() : AndroidXMvpAppCompatFragmen
             return fr
         }
     }
-}
-
-interface ICategoryStateListener {
-    fun updateStateButton(isEnable: Boolean)
 }

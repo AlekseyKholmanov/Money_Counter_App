@@ -8,8 +8,8 @@ import com.example.holmi_production.money_counter_app.model.CostTimeDivider
 import com.example.holmi_production.money_counter_app.model.DailyExpenses
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
-import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import javax.inject.Inject
 
@@ -41,7 +41,7 @@ class CostsPresenter @Inject constructor(
         }, {}).keep()
     }
 
-    private fun transform(list: MutableList<SpendingListItem>): ArrayList<ListItem> {
+    private fun transform(list: List<SpendingDetails>): ArrayList<ListItem> {
         val array = arrayListOf<ListItem>()
         list
             .sortedByDescending { it.spending.createdDate }

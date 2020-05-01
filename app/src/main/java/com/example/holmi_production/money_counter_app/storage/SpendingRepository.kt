@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.storage
 
+import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import io.reactivex.Completable
@@ -30,6 +31,9 @@ class SpendingRepository @Inject constructor(
 
     fun deleteAll(): Completable {
         return Completable.fromCallable { dao.deleteAll() }
+    }
 
+    fun observeSpendingsDetails():Flowable<List<SpendingDetails>>{
+        return dao.observeSpendingDetails()
     }
 }

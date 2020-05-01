@@ -60,7 +60,7 @@ class CategoryInteractor @Inject constructor(
                 val zipList = arrayListOf<Pair<CategoryEntity, List<SubCategoryEntity>>>()
                 val sortedlist = categories.sortedByDescending { it.usageCount }
                 sortedlist.forEach { category ->
-                    zipList.add(Pair(category, subCategories.filter { it.parentId == category.id && !it.isDeleted}))
+                    zipList.add(Pair(category, subCategories.filter { it.categoryId == category.id && !it.isDeleted}))
                 }
                 return@map zipList
             }
@@ -71,7 +71,7 @@ class CategoryInteractor @Inject constructor(
             .map { (categories, subCategories) ->
                 val zipList = arrayListOf<Pair<CategoryEntity, List<SubCategoryEntity>>>()
                 categories.forEach { category ->
-                    zipList.add(Pair(category, subCategories.filter { it.parentId == category.id }))
+                    zipList.add(Pair(category, subCategories.filter { it.categoryId == category.id }))
                 }
                 return@map zipList
             }

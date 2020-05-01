@@ -6,15 +6,8 @@ import com.example.holmi_production.money_counter_app.notification.NotificationA
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalancePresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartStackedPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.CostsPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.FirstLaunchPresenter
 import com.example.holmi_production.money_counter_app.ui.fragments.KeyboardPartFragment
-import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPickerPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.SettingsPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.TopbarPresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.*
 import dagger.Component
 import javax.inject.Singleton
 
@@ -31,6 +24,7 @@ interface ApplicationComponent {
 
     fun getKeyboardPresenter(): KeyboardPresenter
     fun getCostsPresenter(): CostsPresenter
+    fun getCreateCategoryPresenter(): CreateCategoryPresenter
     fun getSettingsPresenter(): SettingsPresenter
     fun getFirstLaunchPresenter(): FirstLaunchPresenter
     fun getChartPresenter(): ChartPiePresenter
@@ -39,8 +33,8 @@ interface ApplicationComponent {
     fun getBalancePresenter(): ChartBalancePresenter
     fun getTopbarPresenter(): TopbarPresenter
     fun getCategoryPickerPresenter(): CategoryPickerPresenter
+    fun getEditCategoryPresenter(): EditCategoryPresenter
     fun inject(activity: MainActivity)
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
     fun inject(keyboardFr: KeyboardPartFragment)
-    fun getCategoryCreatePresenter(): CreateCategoryPresenter
 }

@@ -4,8 +4,8 @@ import android.util.Log
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
-import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
@@ -50,22 +50,8 @@ class SpendingInteractor @Inject constructor(
         return spendingRepository.getAll()
     }
 
-    fun observeSpendingWithType(): Flowable<MutableList<SpendingListItem>> {
-        return Flowables.combineLatest(
-            observePeriods(),
-            categoryInteractor.observeCategories(),
-            categoryInteractor.observeSubcategories()
-        )
-            .map { (spendings, categories, subcategories) ->
-                Log.d("M_SpendingInteractor", "${spendings.size}")
-                val muList = mutableListOf<SpendingListItem>()
-                for (s in spendings) {
-                    val categoryId = categories.first { it.id == s.categoryId }
-                    val subcat = subcategories.firstOrNull { it.id == s.subcategoryId }
-                    muList.add(SpendingListItem(s, categoryId, subcat))
-                }
-                muList
-            }
+    fun observeSpendingWithType(): Flowable<List<SpendingDetails>> {
+        return spendingRepository.observeSpendingsDetails()
     }
 
     fun observePeriods(): Flowable<List<SpendingEntity>> {

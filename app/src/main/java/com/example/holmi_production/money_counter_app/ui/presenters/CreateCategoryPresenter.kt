@@ -17,18 +17,18 @@ class CreateCategoryPresenter @Inject constructor(private val interactor: Catego
         interactor.insert(category)
             .async()
             .doAfterTerminate {
-                viewState.dismissDialog()
+                viewState.popUp()
             }
             .subscribe()
             .keep()
     }
 
     fun createSubCategory(name: String, parentId: Int, color: Int) {
-        val subCategory = SubCategoryEntity(parentId = parentId, description = name, color = color)
+        val subCategory = SubCategoryEntity(categoryId = parentId, description = name, color = color)
         interactor.insert(subCategory)
             .async()
             .subscribe {
-                viewState.dismissDialog()
+                viewState.popUp()
             }
             .keep()
     }

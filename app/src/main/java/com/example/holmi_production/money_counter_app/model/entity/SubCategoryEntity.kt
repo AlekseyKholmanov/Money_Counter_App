@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 data class SubCategoryEntity(
     @PrimaryKey(autoGenerate = true)
     override val id: Int = 0,
-    val parentId: Int,
+    val categoryId: Int,
     override val description: String,
     override val isDeleted: Boolean = false,
     override val color: Int

@@ -29,18 +29,6 @@ class CategoryPickerPresenter @Inject constructor(private val interactor: Catego
             }).keep()
     }
 
-    fun getDialogData() {
-        interactor.getCategories()
-            .async()
-            .subscribe({
-                viewState.showCreateDialog(it!!)
-            }, {
-                Log.d("M_PresenterCatPick", it.message)
-            })
-            .keep()
-
-    }
-
     fun insertCategory(category: CategoryEntity) {
         interactor.insert(category)
             .async()
@@ -54,7 +42,7 @@ class CategoryPickerPresenter @Inject constructor(private val interactor: Catego
         interactor.insert(subCategory)
             .async()
             .doAfterTerminate {
-                interactor.getCategoryWithSub(subCategory.parentId)
+                interactor.getCategoryWithSub(subCategory.categoryId)
                     .async()
                     .subscribe({ (_, subcategoryList) ->
                         val nonDeletedSubCategories = subcategoryList.filter { !it.isDeleted }

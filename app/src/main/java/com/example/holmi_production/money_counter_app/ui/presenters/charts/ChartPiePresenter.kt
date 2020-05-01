@@ -7,10 +7,7 @@ import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.PieCharState
 import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.GraphEntity
-import com.example.holmi_production.money_counter_app.model.entity.Nameble
-import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
-import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
+import com.example.holmi_production.money_counter_app.model.entity.*
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import javax.inject.Inject
 
@@ -19,11 +16,11 @@ class ChartPiePresenter @Inject constructor(
     private val spendingInteractor: SpendingInteractor
 ) : BasePresenter<ChartPieView>() {
 
-    var spendingList = mutableListOf<SpendingListItem>()
+    var spendingList = mutableListOf<SpendingDetails>()
     fun observeData() {
         spendingInteractor.observeSpendingWithType()
             .map {
-                spendingList = it
+                spendingList = it.toMutableList()
                 filterList(it, null)
             }
             .map {
@@ -40,7 +37,7 @@ class ChartPiePresenter @Inject constructor(
     }
 
     fun getSpending(categoryId: Int) {
-        val filtered = mutableListOf<SpendingListItem>()
+        val filtered = mutableListOf<SpendingDetails>()
         spendingList.forEach { item ->
             if (item.category.id == categoryId)
                 filtered.add(item)
@@ -51,7 +48,7 @@ class ChartPiePresenter @Inject constructor(
     }
 
     private fun filterList(
-        list: List<SpendingListItem>,
+        list: List<SpendingDetails>,
         categoryId: Int?
     ): List<Pair<Nameble?, List<SpendingEntity>>> {
         val value = list
@@ -66,7 +63,7 @@ class ChartPiePresenter @Inject constructor(
                 if (categoryId == null)
                     it.category
                 else
-                    it.subCategory
+                    it.subcategory
             }
             .map { Pair(it.key as Nameble?, it.value.map { it.spending }) }
             .sortedByDescending { it.second.sumByDouble { it.sum } }

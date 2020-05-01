@@ -15,7 +15,7 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
+import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
 
@@ -28,7 +28,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
     }
 
     override fun isForViewType(items: List<ListItem>, position: Int): Boolean {
-        return items[position] is SpendingListItem
+        return items[position] is SpendingDetails
     }
 
     override fun onBindViewHolder(
@@ -37,7 +37,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         holder: RecyclerView.ViewHolder,
         list: List<Any>) {
         if (holder is ViewHolder) {
-            val item = items[position] as SpendingListItem
+            val item = items[position] as SpendingDetails
             holder.bind(item)
         }
     }
@@ -52,9 +52,9 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
         private val shapeContainer: ConstraintLayout =
             v.findViewById(R.id.spending_item_shape_container)
 
-        fun bind(item: SpendingListItem) {
+        fun bind(item: SpendingDetails) {
             val spending = item.spending
-            val subcategory = item.subCategory
+            val subcategory = item.subcategory
             val category = item.category
             val signText = if (spending.isSpending == SpDirection.SPENDING) "-" else "+"
             val directionColor =
@@ -66,7 +66,7 @@ class CostsItemDelegate : AdapterDelegate<List<ListItem>>() {
                     } \u2799 ${subcategory.description}"
             val drawable = shapeContainer.background as GradientDrawable
             val sum = "$signText ${spending.sum.toCurencyFormat().withRubleSign()}"
-            val backgroundColor = category?.color ?: Color.TRANSPARENT
+            val backgroundColor = category.color
             drawable.setColor(backgroundColor)
             mComment.visibility = if (spending.comment.isNullOrEmpty()) {
                 View.GONE

@@ -17,7 +17,7 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.ui.adapter.CostsAdapter
 import com.example.holmi_production.money_counter_app.model.ListItem
-import com.example.holmi_production.money_counter_app.model.entity.SpendingListItem
+import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.CostsPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CostsView
@@ -49,10 +49,10 @@ class CostsFragment : AndroidXMvpAppCompatFragment(),
         spendingList.layoutManager = LinearLayoutManager(requireContext())
 
         spendingList.adapter = adapter
-        val swipeHandle = object : SwipeToDeleteCallback(context!!) {
+        val swipeHandle = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val item = adapter.items[viewHolder.adapterPosition]
-                if (item is SpendingListItem) {
+                if (item is SpendingDetails) {
                     adapter.notifyItemRemoved(viewHolder.adapterPosition)
                     presenter.delete(item.spending)
                 }
@@ -64,26 +64,6 @@ class CostsFragment : AndroidXMvpAppCompatFragment(),
 
     @ProvidePresenter
     fun providePresenter() = App.component.getCostsPresenter()
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("qwerty", "cost stopped")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("qwerty", "cost view destroyed")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("qwerty", "cost detached")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("qwerty", "cost resumed")
-    }
 
     override fun onError(error: Throwable) {
         showEmptyPlaceholder(show = true)

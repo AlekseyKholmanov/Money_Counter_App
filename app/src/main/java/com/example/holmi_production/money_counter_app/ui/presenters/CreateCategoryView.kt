@@ -5,6 +5,6 @@ import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
 interface CreateCategoryView:MvpView {
-    @StateStrategyType(SkipStrategy::class)
-    fun dismissDialog()
+
+    fun popUp(): Unit
 }
