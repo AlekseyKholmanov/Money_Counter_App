@@ -1,7 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui.presenters
 
 import android.util.Log
-import com.arellomobile.mvp.InjectViewState
+import moxy.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.*
 import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums
 import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums.*

@@ -18,7 +18,7 @@ import io.reactivex.rxkotlin.Flowables
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class SpendingInteractor @Inject constructor(
+class SpendingInteractor (
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,

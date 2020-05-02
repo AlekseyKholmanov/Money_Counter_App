@@ -1,6 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.presenters
 
-import com.arellomobile.mvp.InjectViewState
+import moxy.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity

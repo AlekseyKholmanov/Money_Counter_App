@@ -13,4 +13,5 @@ interface Navigation {
         withBottomBar: Boolean = true,
         withAppBar: Boolean = false
     )
+    fun popUp()
 }

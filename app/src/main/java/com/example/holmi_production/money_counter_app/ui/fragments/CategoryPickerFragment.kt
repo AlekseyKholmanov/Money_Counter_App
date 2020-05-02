@@ -7,8 +7,6 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
@@ -23,6 +21,8 @@ import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPick
 import com.example.holmi_production.money_counter_app.ui.utils.ViewAnimation
 import kotlinx.android.synthetic.main.fragment_category_picker.*
 import kotlinx.android.synthetic.main.include_category_picker_fragment.*
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 
 class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
     CategoryPickerView {

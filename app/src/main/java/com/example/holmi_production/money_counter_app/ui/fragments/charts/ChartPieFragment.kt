@@ -7,15 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.PieCharState
 import com.example.holmi_production.money_counter_app.model.entity.GraphEntity
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.PieDialogFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPieView
@@ -28,8 +25,11 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.chart_pie.*
+import moxy.MvpAppCompatFragment
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 
-class ChartPieFragment() : AndroidXMvpAppCompatFragment(),
+class ChartPieFragment() : MvpAppCompatFragment(),
     ChartPieView {
 
     override fun onCreateView(

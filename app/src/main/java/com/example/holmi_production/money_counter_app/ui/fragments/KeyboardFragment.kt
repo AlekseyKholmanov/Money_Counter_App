@@ -5,8 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
@@ -17,16 +15,18 @@ import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.dialogs.IDatePickerCallback
 import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardFragmnetView
 import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardPresenter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
+import moxy.MvpAppCompatFragment
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class KeyboardFragment : AndroidXMvpAppCompatFragment(),
+class KeyboardFragment : MvpAppCompatFragment(),
     KeyboardFragmnetView,
     IKeyboardListener,
     IDatePickerCallback {

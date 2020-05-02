@@ -5,17 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
+import com.example.holmi_production.money_counter_app.main.Navigation
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.CostsPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryView
 import kotlinx.android.synthetic.main.part_create_category.*
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 
 class CategoryCreateFragment : BaseFragment(R.layout.part_create_category), CreateCategoryView {
 
@@ -46,7 +46,7 @@ class CategoryCreateFragment : BaseFragment(R.layout.part_create_category), Crea
     }
 
     override fun popUp() {
-        TODO("Not yet implemented")
+        (requireActivity() as Navigation).popUp()
     }
 
 }

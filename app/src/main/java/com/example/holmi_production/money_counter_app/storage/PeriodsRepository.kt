@@ -7,7 +7,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class PeriodsRepository @Inject constructor(
+class PeriodsRepository (
     database: ExpenseDatabase
 ) {
     companion object{

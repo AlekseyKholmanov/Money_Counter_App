@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppComaptDialogFragment
 import com.example.holmi_production.money_counter_app.ui.adapter.PieAdapter
+import moxy.MvpAppCompatDialogFragment
 
-class PieDialogFragment private constructor(): AndroidXMvpAppComaptDialogFragment() {
+class PieDialogFragment private constructor(): MvpAppCompatDialogFragment() {
     lateinit var rv:RecyclerView
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

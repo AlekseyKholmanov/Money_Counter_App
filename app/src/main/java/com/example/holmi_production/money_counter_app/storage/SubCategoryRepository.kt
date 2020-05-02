@@ -7,7 +7,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class SubCategoryRepository @Inject constructor(
+class SubCategoryRepository (
     val database: ExpenseDatabase
 ) {
 

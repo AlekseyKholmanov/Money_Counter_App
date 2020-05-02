@@ -9,15 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.custom.ChartMarkerView
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalancePresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalanceView
 import com.example.holmi_production.money_counter_app.utils.Point.getLabelIndexes
@@ -30,10 +27,13 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import kotlinx.android.synthetic.main.chart_balance.*
 import kotlinx.android.synthetic.main.chart_bar.emptyPlaceholder_bar
+import moxy.MvpAppCompatFragment
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 import org.joda.time.DateTime
 import kotlin.collections.ArrayList
 
-class ChartBalanceFragment : AndroidXMvpAppCompatFragment(),
+class ChartBalanceFragment : MvpAppCompatFragment(),
     ChartBalanceView {
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,7 +92,7 @@ class ChartBalanceFragment : AndroidXMvpAppCompatFragment(),
 
             if (Utils.getSDKInt() >= 18) {
                 // drawables only supported on api level 18 and above
-                val drawable = ContextCompat.getDrawable(context!!, R.drawable.fade_red)
+                val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.fade_red)
                 dataSet.fillDrawable = drawable
             } else {
                 dataSet.fillColor = Color.BLACK

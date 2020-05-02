@@ -10,16 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.FirstLaunchPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.FirstLaunchView
 import kotlinx.android.synthetic.main.fragment_first_launch.*
+import moxy.MvpAppCompatFragment
+import moxy.presenter.InjectPresenter
 import org.joda.time.DateTime
 
-class FirstLaunchFragment : AndroidXMvpAppCompatFragment(),
+class FirstLaunchFragment : MvpAppCompatFragment(),
     FirstLaunchView {
     override fun showMainScreen() {
 //        findNavController().navigate(R.id.action_navFirstLaunch_to_navMain)

@@ -2,7 +2,7 @@ package com.example.holmi_production.money_counter_app.ui.presenters.charts
 
 import android.graphics.Color
 import android.util.Log
-import com.arellomobile.mvp.InjectViewState
+import moxy.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.PieCharState

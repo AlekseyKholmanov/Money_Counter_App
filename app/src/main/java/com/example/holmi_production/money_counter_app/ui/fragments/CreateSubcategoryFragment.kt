@@ -11,12 +11,13 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.adapter.SpinnerSubcategoryAdapter
 import kotlinx.android.synthetic.main.part_create_subcategory.*
+import moxy.MvpAppCompatFragment
 
-class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
+class CreateSubcategoryFragment : BaseFragment(R.layout.part_create_subcategory) {
 
     companion object {
         fun newInstance(categories: Array<CategoryEntity>): CreateSubcategoryFragment {
@@ -27,14 +28,6 @@ class CreateSubcategoryFragment : AndroidXMvpAppCompatFragment() {
             fragment.arguments = bundle
             return fragment
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.part_create_subcategory, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

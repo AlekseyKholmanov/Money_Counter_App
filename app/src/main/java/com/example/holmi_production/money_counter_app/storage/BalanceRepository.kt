@@ -8,7 +8,7 @@ import io.reactivex.Single
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class BalanceRepository @Inject constructor(
+class BalanceRepository(
     database: ExpenseDatabase
 ) {
     private val dao = database.balanceDao

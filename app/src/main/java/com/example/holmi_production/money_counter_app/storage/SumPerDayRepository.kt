@@ -8,7 +8,7 @@ import io.reactivex.Single
 import io.reactivex.rxkotlin.Singles
 import javax.inject.Inject
 
-class SumPerDayRepository @Inject constructor(
+class SumPerDayRepository (
     private val database: ExpenseDatabase
 ) {
     companion object {

@@ -4,22 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.dialogs.ITopbarDatePickerCallback
 import com.example.holmi_production.money_counter_app.ui.dialogs.TopbarDatePickerDialog
 import com.example.holmi_production.money_counter_app.ui.presenters.TopbarPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.TopbarView
 import kotlinx.android.synthetic.main.fragment_topbar.*
+import moxy.MvpAppCompatFragment
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 import org.joda.time.DateTime
 import javax.inject.Inject
 
 
-class TopbarFragment : AndroidXMvpAppCompatFragment(),
+class TopbarFragment : MvpAppCompatFragment(),
     TopbarView,
     ITopbarDatePickerCallback {
 
@@ -64,8 +64,6 @@ class TopbarFragment : AndroidXMvpAppCompatFragment(),
 
     @ProvidePresenter
     fun initPresenter(): TopbarPresenter = App.component.getTopbarPresenter()
-
-
 
     @Inject
     @InjectPresenter

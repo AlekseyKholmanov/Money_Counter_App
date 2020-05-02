@@ -14,6 +14,14 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions{
+            annotationProcessorOptions {
+                arguments = [
+                        disableEmptyStrategyCheck: 'true',
+                        defaultMoxyStrategy: 'moxy.viewstate.strategy.OneExecutionStateStrategy'
+                ]
+            }
+        }
     }
     buildTypes {
         release {
@@ -36,7 +44,7 @@ android {
 }
 
 ext {
-    moxy_version = "1.5.6"
+    moxyVersion = "2.1.2"
     dagger_version = "2.25.4"
     room_version = "2.2.5"
     workManager = "2.3.4"
@@ -72,10 +80,9 @@ dependencies {
 
 
     // mvp
-    implementation "com.arello-mobile:moxy-app-compat:$moxy_version"
-    implementation "com.arello-mobile:moxy-android:$moxy_version"
-    implementation "com.arello-mobile:moxy:$moxy_version"
-    kapt "com.arello-mobile:moxy-compiler:$moxy_version"
+    implementation "com.github.moxy-community:moxy:$moxyVersion"
+    kapt "com.github.moxy-community:moxy-compiler:$moxyVersion"
+    implementation "com.github.moxy-community:moxy-app-compat:$moxyVersion"
 
     // rxjava
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'

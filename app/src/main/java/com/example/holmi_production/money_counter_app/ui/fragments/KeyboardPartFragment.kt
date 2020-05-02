@@ -17,14 +17,14 @@ import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.SquareImageView
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.part_fragment_keyboard.*
 import kotlinx.android.synthetic.main.view_splitted_button.*
+import moxy.MvpAppCompatFragment
 import javax.inject.Inject
 
-class KeyboardPartFragment : AndroidXMvpAppCompatFragment() {
+class KeyboardPartFragment : MvpAppCompatFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -11,12 +11,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.bindView
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
+import moxy.MvpAppCompatFragment
 
 /**
  * @author Alexey Kholmanov (alexey.holmanov@cleverpumpkin.ru)
  */
-abstract class BaseFragment(private val layoutId: Int) : AndroidXMvpAppCompatFragment() {
+abstract class BaseFragment(private val layoutId: Int) : MvpAppCompatFragment() {
 
     private val appbarConfig
         get() = (requireActivity() as MainActivity).appBarConfig

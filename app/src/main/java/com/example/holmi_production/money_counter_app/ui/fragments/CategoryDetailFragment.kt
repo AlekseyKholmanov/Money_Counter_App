@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.container_category_detail.*
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
-class CategoryDetailFragment private constructor() :
+class CategoryDetailFragment :
     BaseFragment(R.layout.container_category_detail) {
 
     var isValidState = false

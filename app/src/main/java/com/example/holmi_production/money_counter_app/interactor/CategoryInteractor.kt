@@ -16,7 +16,7 @@ import io.reactivex.rxkotlin.Flowables
 import io.reactivex.rxkotlin.Singles
 import javax.inject.Inject
 
-class CategoryInteractor @Inject constructor(
+class CategoryInteractor(
     private val categoryRepository: CategoryRepository,
     private val subCategoryRepository: SubCategoryRepository) {
 

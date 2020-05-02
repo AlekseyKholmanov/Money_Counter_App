@@ -3,6 +3,7 @@ package com.example.holmi_production.money_counter_app.notification
 import android.app.*
 import android.app.NotificationManager
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -15,10 +16,10 @@ import com.example.holmi_production.money_counter_app.main.MainActivity
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
+
 class NotificationManager @Inject constructor(
     private val notificationManager: NotificationManager,
-    private val application: Application) {
+    private val context: Context) {
 
     init {
         createNotificationChannel()
@@ -44,11 +45,11 @@ class NotificationManager @Inject constructor(
 
 
     private fun buildSpendingNotification(saveSum: Double, newSum: Double): Notification {
-        val intent = Intent(application, MainActivity::class.java).apply {
+        val intent = Intent(context.applicationContext, MainActivity::class.java).apply {
             FLAG_UPDATE_CURRENT
         }
-        val pIntent = PendingIntent.getActivity(application, 0, intent, 0)
-        return NotificationCompat.Builder(application, CHANNEL_ID)
+        val pIntent = PendingIntent.getActivity(context.applicationContext, 0, intent, 0)
+        return NotificationCompat.Builder(context.applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Итоги дня")
             .setContentText("ble ble ble")
@@ -64,7 +65,7 @@ class NotificationManager @Inject constructor(
     }
 
     private fun buillWorkerNotification(balance:Double): Notification {
-        return NotificationCompat.Builder(application, CHANNEL_ID)
+        return NotificationCompat.Builder(context.applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("balance worker Task")
             .setContentText("выполнено жи")
@@ -88,7 +89,7 @@ class NotificationManager @Inject constructor(
     }
 
     private fun sendNotification(notification: Notification, id:Int) {
-        with(NotificationManagerCompat.from(application)) {
+        with(NotificationManagerCompat.from(context.applicationContext)) {
             notify(id, notification)
         }
     }

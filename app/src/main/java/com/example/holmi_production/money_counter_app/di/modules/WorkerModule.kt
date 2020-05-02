@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import androidx.work.WorkerFactory
+import com.example.holmi_production.money_counter_app.di.common.DaggerWorkerFactory
+import com.example.holmi_production.money_counter_app.di.common.PerFeature
 import com.example.holmi_production.money_counter_app.interactor.BalanceInteractor
 import com.example.holmi_production.money_counter_app.interactor.NotificationInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
@@ -12,13 +14,12 @@ import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
-class WorkerModule {
+object WorkerModule {
 
     @Provides
-    @Singleton
+    @PerFeature
     fun workManager(context: Context, workerFactory: WorkerFactory): WorkManager {
         val config = Configuration.Builder()
             .setWorkerFactory(workerFactory)
@@ -28,7 +29,7 @@ class WorkerModule {
     }
 
     @Provides
-    @Singleton
+    @PerFeature
     fun workerFactory(
         settingRepository: SettingRepository,
         spendingRepository: SpendingRepository,

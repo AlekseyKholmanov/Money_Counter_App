@@ -8,7 +8,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class SpendingRepository @Inject constructor(
+class SpendingRepository (
     database: ExpenseDatabase
 ) {
     private val dao = database.spendingDao

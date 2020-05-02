@@ -10,12 +10,11 @@ import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import org.joda.time.DateTime
 import org.joda.time.Days
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class SettingRepository @Inject constructor(private val pref: SharedPreferences) {
 
+class SettingRepository(
+    private val pref: SharedPreferences
+) {
 
     val settingSubject by lazy { PublishSubject.create<Int>() }
 
@@ -31,7 +30,8 @@ class SettingRepository @Inject constructor(private val pref: SharedPreferences)
         val endPeriodDay = getEndMonth()
         return if (today.dayOfMonth < endPeriodDay)
             Pair<DateTime, DateTime>(
-                DateTime().withPreviousMonthDate().withDayOfMonth(endPeriodDay).withTimeAtStartOfDay(),
+                DateTime().withPreviousMonthDate().withDayOfMonth(endPeriodDay)
+                    .withTimeAtStartOfDay(),
                 DateTime().withDayOfMonth(endPeriodDay - 1).withTimeAtEndOfDay()
             ) else {
             Pair<DateTime, DateTime>(

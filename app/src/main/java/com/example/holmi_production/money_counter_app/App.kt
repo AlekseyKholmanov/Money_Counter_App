@@ -1,9 +1,8 @@
 package com.example.holmi_production.money_counter_app
 
 import android.app.Application
-import com.example.holmi_production.money_counter_app.di.components.ApplicationComponent
-import com.example.holmi_production.money_counter_app.di.components.DaggerApplicationComponent
-import com.example.holmi_production.money_counter_app.di.modules.ContextModule
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
+import com.example.holmi_production.money_counter_app.di.components.CoreComponent
 import com.facebook.flipper.android.AndroidFlipperClient
 import com.facebook.flipper.android.utils.FlipperUtils
 import com.facebook.flipper.plugins.inspector.DescriptorMapping
@@ -13,7 +12,7 @@ import com.facebook.soloader.SoLoader
 
 class App : Application() {
     companion object {
-        lateinit var component: ApplicationComponent
+        lateinit var component: AppComponent
     }
 
     override fun onCreate() {
@@ -34,7 +33,7 @@ class App : Application() {
     }
 
     private fun initDi() {
-        component = DaggerApplicationComponent.builder()
-            .contextModule(ContextModule(this)).build()
+        CoreComponent.init(applicationContext)
+        AppComponent.instance.inject(this)
     }
 }

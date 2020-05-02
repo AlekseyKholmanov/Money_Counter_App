@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.di.modules
+package com.example.holmi_production.money_counter_app.di.common
 
 import android.content.Context
 import androidx.work.ListenableWorker

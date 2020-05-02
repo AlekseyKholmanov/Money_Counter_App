@@ -14,11 +14,11 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
+import moxy.MvpAppCompatActivity
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideDelayed
 import com.example.holmi_production.money_counter_app.extensions.showDelayed
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatActivity
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.CostsFragment
@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.menu_drawer_custom.*
 import kotlinx.android.synthetic.main.include_menu_end_period_date.*
 import javax.inject.Inject
 
-class MainActivity : AndroidXMvpAppCompatActivity(), Navigation {
+class MainActivity : MvpAppCompatActivity(), Navigation {
 
     @Inject
     lateinit var settingRepository: SettingRepository
@@ -206,6 +206,10 @@ class MainActivity : AndroidXMvpAppCompatActivity(), Navigation {
         }
         transaction.replace(R.id.container_main, fragment)
         transaction.commit()
+    }
+
+    override fun popUp() {
+        supportFragmentManager.popBackStack()
     }
 
     override fun onBackPressed() {

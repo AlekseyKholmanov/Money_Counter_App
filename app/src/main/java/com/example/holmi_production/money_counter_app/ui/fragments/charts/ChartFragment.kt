@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.mvp.AndroidXMvpAppCompatFragment
 import com.example.holmi_production.money_counter_app.ui.adapter.ChartFragmentAdapter
 import kotlinx.android.synthetic.main.fragment_bottom_chart.*
+import moxy.MvpAppCompatFragment
 
-class ChartFragment : AndroidXMvpAppCompatFragment() {
+class ChartFragment : MvpAppCompatFragment() {
 
     companion object{
         fun newInstance(): ChartFragment {

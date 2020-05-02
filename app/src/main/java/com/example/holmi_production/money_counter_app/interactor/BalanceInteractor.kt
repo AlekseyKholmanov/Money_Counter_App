@@ -9,7 +9,7 @@ import io.reactivex.rxkotlin.Flowables
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class BalanceInteractor @Inject constructor(
+class BalanceInteractor(
     private val spendingInteractor: SpendingInteractor,
     private val balanceRepository: BalanceRepository,
     private val periodsRepository: PeriodsRepository){

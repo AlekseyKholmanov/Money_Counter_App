@@ -4,8 +4,6 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
@@ -15,6 +13,8 @@ import com.example.holmi_production.money_counter_app.ui.presenters.EditCategory
 import com.example.holmi_production.money_counter_app.ui.presenters.EditCategoryView
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.dialog_edit_category.*
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 
 class EditCategoryFragment : BaseFragment(R.layout.dialog_edit_category), EditCategoryView {
 
