@@ -17,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import moxy.MvpAppCompatActivity
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.hideDelayed
 import com.example.holmi_production.money_counter_app.extensions.showDelayed
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
@@ -60,7 +61,7 @@ class MainActivity : MvpAppCompatActivity(), Navigation {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        App.component.inject(this)
+        AppComponent.instance.inject(this)
         Log.d("M_MainActivity", "setting: $settingRepository")
         initializeDrawers()
         initializeFragments()

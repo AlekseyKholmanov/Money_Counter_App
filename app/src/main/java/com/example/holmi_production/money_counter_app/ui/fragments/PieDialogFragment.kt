@@ -13,6 +13,7 @@ import moxy.MvpAppCompatDialogFragment
 class PieDialogFragment private constructor(): MvpAppCompatDialogFragment() {
     lateinit var rv:RecyclerView
 
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
         val view = requireActivity().layoutInflater.inflate(R.layout.dialog_pie_spendings, null)

@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodView
 import kotlinx.android.synthetic.main.fragment_end_period.*
@@ -13,13 +15,9 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 
-class EndPeriodFragment : MvpAppCompatFragment(),
+class EndPeriodFragment : BaseFragment(R.layout.fragment_end_period),
     EndPeriodView {
 
-    @ProvidePresenter
-    fun initPresenter(): EndPeriodPresenter {
-        return App.component.getEndPeriodPresenter()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,13 +27,10 @@ class EndPeriodFragment : MvpAppCompatFragment(),
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_end_period, container, false)
+    override fun inject() {
+        AppComponent.instance.inject(this)
     }
+
 
     override fun showDatePeriod(start: String, end: String) {
         end_period_date_row.text = "За период с $start по $end:"

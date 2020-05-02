@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.ui.adapter.CostsAdapter
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
@@ -23,7 +25,7 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 
-class CostsFragment : MvpAppCompatFragment(),
+class CostsFragment : BaseFragment(R.layout.fragment_bottom_costs),
     CostsView {
 
     companion object {
@@ -32,16 +34,14 @@ class CostsFragment : MvpAppCompatFragment(),
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_bottom_costs, container, false)
+    override fun inject() {
+        AppComponent.instance.inject(this)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AppComponent.instance.inject(this)
         adapter =
             CostsAdapter()
         presenter.observeSpengings()
@@ -61,8 +61,6 @@ class CostsFragment : MvpAppCompatFragment(),
         itemTouchHelper.attachToRecyclerView(spendingList)
     }
 
-    @ProvidePresenter
-    fun providePresenter() = App.component.getCostsPresenter()
 
     override fun onError(error: Throwable) {
         showEmptyPlaceholder(show = true)

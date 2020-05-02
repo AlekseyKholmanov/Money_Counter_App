@@ -25,9 +25,6 @@ class FirstLaunchFragment : MvpAppCompatFragment(),
 //        findNavController().navigate(R.id.action_navFirstLaunch_to_navMain)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_first_launch, container, false)

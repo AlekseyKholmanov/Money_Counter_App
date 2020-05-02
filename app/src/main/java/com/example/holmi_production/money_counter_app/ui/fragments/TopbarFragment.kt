@@ -62,8 +62,6 @@ class TopbarFragment : MvpAppCompatFragment(),
         presenter.setPeriod(left, right)
     }
 
-    @ProvidePresenter
-    fun initPresenter(): TopbarPresenter = App.component.getTopbarPresenter()
 
     @Inject
     @InjectPresenter

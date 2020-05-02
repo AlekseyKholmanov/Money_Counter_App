@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.custom.ColorSeekBar
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.SpDirection
@@ -31,6 +32,10 @@ class CategoryDetailFragment :
     var isValidState = false
 
     private val disposables = CompositeDisposable()
+
+    override fun inject() {
+        AppComponent.instance.inject(this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

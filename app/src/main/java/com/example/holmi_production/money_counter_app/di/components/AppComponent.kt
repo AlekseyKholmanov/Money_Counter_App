@@ -10,7 +10,11 @@ import com.example.holmi_production.money_counter_app.di.modules.ViewModelModule
 import com.example.holmi_production.money_counter_app.di.modules.WorkerModule
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
-import com.example.holmi_production.money_counter_app.ui.fragments.KeyboardPartFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.*
+import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartBalanceFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartPieFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartStackedFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.*
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalancePresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
@@ -47,22 +51,25 @@ interface AppComponent {
         }
     }
 
-    fun getKeyboardPresenter(): KeyboardPresenter
-    fun getCostsPresenter(): CostsPresenter
-    fun getCreateCategoryPresenter(): CreateCategoryPresenter
-    fun getSettingsPresenter(): SettingsPresenter
-    fun getFirstLaunchPresenter(): FirstLaunchPresenter
-    fun getChartPresenter(): ChartPiePresenter
-    fun getEndPeriodPresenter(): EndPeriodPresenter
-    fun getStackedPresenter(): ChartStackedPresenter
-    fun getBalancePresenter(): ChartBalancePresenter
-    fun getTopbarPresenter(): TopbarPresenter
-    fun getCategoryPickerPresenter(): CategoryPickerPresenter
-    fun getEditCategoryPresenter(): EditCategoryPresenter
     fun inject(app: App)
+    fun inject(fragment: CategoryPickerFragment)
+    fun inject(fragment: CostsFragment)
+    fun inject(fragment: CategoryCreateFragment)
+    fun inject(fragment: CreateSubcategoryFragment)
+    fun inject(fragment: EditCategoryFragment)
+    fun inject(fragment: EndPeriodFragment)
+    fun inject(fragment: KeyboardPartFragment)
+    fun inject(fragment: KeyboardFragment)
+    fun inject(fragment: LimitsFragment)
+    fun inject(fragment: SettingsFragment)
+    fun inject(fragment: TopbarFragment)
+    fun inject(fragment: ChartFragment)
+    fun inject(fragment: ChartBalanceFragment)
+    fun inject(fragment: ChartPieFragment)
+    fun inject(fragment: ChartStackedFragment)
+    fun inject(fragment: CategoryDetailFragment)
     fun inject(activity: MainActivity)
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
-    fun inject(keyboardFr: KeyboardPartFragment)
 
     @Component(
         dependencies = [CoreTools::class]

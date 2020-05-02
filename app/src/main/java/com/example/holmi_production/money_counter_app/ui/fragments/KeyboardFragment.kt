@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.getDayAddition
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
@@ -26,7 +28,7 @@ import moxy.presenter.ProvidePresenter
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class KeyboardFragment : MvpAppCompatFragment(),
+class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard),
     KeyboardFragmnetView,
     IKeyboardListener,
     IDatePickerCallback {
@@ -38,6 +40,10 @@ class KeyboardFragment : MvpAppCompatFragment(),
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    override fun inject() {
+        AppComponent.instance.inject(this)
     }
 
     override fun onCreateView(
@@ -159,7 +165,5 @@ class KeyboardFragment : MvpAppCompatFragment(),
     @InjectPresenter
     lateinit var presenter: KeyboardPresenter
 
-    @ProvidePresenter
-    fun initPresenter(): KeyboardPresenter = App.component.getKeyboardPresenter()
 }
 

@@ -7,21 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.ui.adapter.ChartFragmentAdapter
 import kotlinx.android.synthetic.main.fragment_bottom_chart.*
 import moxy.MvpAppCompatFragment
 
-class ChartFragment : MvpAppCompatFragment() {
+class ChartFragment : BaseFragment(R.layout.fragment_bottom_chart) {
 
     companion object{
         fun newInstance(): ChartFragment {
             return ChartFragment()
         }
     }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_bottom_chart, container, false)
+    override fun inject() {
+        AppComponent.instance.inject(this)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

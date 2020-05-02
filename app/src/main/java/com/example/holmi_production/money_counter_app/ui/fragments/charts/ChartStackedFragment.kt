@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartStackedPresenter
@@ -28,7 +30,7 @@ import moxy.presenter.ProvidePresenter
 import org.joda.time.DateTime
 import kotlin.collections.ArrayList
 
-class ChartStackedFragment : MvpAppCompatFragment(),
+class ChartStackedFragment : BaseFragment(R.layout.chart_bar),
     StackedView {
     companion object {
         fun newInstance(): ChartStackedFragment {
@@ -36,12 +38,9 @@ class ChartStackedFragment : MvpAppCompatFragment(),
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.chart_bar, container, false)
+    override fun inject() {
+        AppComponent.instance.inject(this)
     }
-
-    @ProvidePresenter
-    fun providePresenter() = App.component.getStackedPresenter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

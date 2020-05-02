@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.main.Navigation
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_category_picker.*
 import kotlinx.android.synthetic.main.include_category_picker_fragment.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
+import javax.inject.Inject
 
 class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
     CategoryPickerView {
@@ -58,6 +60,10 @@ class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
 
     private var isFabOpen = false
 
+    override fun inject() {
+        AppComponent.instance.inject(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fabOpen = AnimationUtils.loadAnimation(requireContext(), R.anim.fab_open)
@@ -68,6 +74,8 @@ class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        AppComponent.instance.inject(this)
         adapter = CategoryPickerAdapter(categoryPickerCallback)
         val layoutManager = GridLayoutManager(context, 3)
 
@@ -136,14 +144,10 @@ class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
             tv_empty_categories.text = getString(messageResId)
     }
 
-    @InjectPresenter
+    @Inject
     lateinit var presenter: CategoryPickerPresenter
-    lateinit var adapter: CategoryPickerAdapter
 
-    @ProvidePresenter
-    fun initPresenter(): CategoryPickerPresenter {
-        return App.component.getCategoryPickerPresenter()
-    }
+    lateinit var adapter: CategoryPickerAdapter
 
     companion object {
         fun newInstance(): CategoryPickerFragment {

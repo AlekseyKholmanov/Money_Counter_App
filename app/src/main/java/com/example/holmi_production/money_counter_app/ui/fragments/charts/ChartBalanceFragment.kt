@@ -12,8 +12,10 @@ import androidx.core.view.isVisible
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.custom.ChartMarkerView
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalancePresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalanceView
@@ -33,17 +35,17 @@ import moxy.presenter.ProvidePresenter
 import org.joda.time.DateTime
 import kotlin.collections.ArrayList
 
-class ChartBalanceFragment : MvpAppCompatFragment(),
+class ChartBalanceFragment : BaseFragment(R.layout.chart_balance),
     ChartBalanceView {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.chart_balance, container, false)
+
+    override fun inject() {
+        AppComponent.instance.inject(this)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AppComponent.instance.inject(this)
         presenter.observeBalances()
         chart = view.findViewById(R.id.line_chart)
         chart.xAxis.disableGridDashedLine()
@@ -59,8 +61,6 @@ class ChartBalanceFragment : MvpAppCompatFragment(),
         Log.d("M_BalanceChartFragment", "on view created")
     }
 
-    @ProvidePresenter
-    fun providePresenter() = App.component.getBalancePresenter()
 
     override fun showChart(balances: List<BalanceEntity>) {
         hidePlaceholder()

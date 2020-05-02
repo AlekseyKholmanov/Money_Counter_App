@@ -3,15 +3,14 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.Vibrator
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.ButtonTypeEnums
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.SquareImageView
@@ -21,22 +20,18 @@ import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.part_fragment_keyboard.*
 import kotlinx.android.synthetic.main.view_splitted_button.*
-import moxy.MvpAppCompatFragment
 import javax.inject.Inject
 
-class KeyboardPartFragment : MvpAppCompatFragment() {
+class KeyboardPartFragment : BaseFragment(R.layout.part_fragment_keyboard) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.part_fragment_keyboard, container, false)
+    override fun inject() {
+        AppComponent.instance.inject(this)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        App.component.inject(this)
+        AppComponent.instance.inject(this)
         numbers_keyboard.visibility = View.GONE
         key_progress_bar.max = 100f
         key0.setOnClickListener { pressed(ButtonTypeEnums.ZERO, "0") }
@@ -57,14 +52,14 @@ class KeyboardPartFragment : MvpAppCompatFragment() {
         comment.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                comment?.hideKeyboardFrom(context!!)
+                comment?.hideKeyboardFrom(requireContext())
                 handled = true
             }
             return@OnEditorActionListener handled
         })
         comment.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                comment?.hideKeyboardFrom(context!!)
+                comment?.hideKeyboardFrom(requireContext())
             }
         }
         purshace_sum_textview.text = purshaseSum

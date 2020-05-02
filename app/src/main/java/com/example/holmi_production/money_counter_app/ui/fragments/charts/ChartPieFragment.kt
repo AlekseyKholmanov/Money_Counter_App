@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.PieCharState
 import com.example.holmi_production.money_counter_app.model.entity.GraphEntity
 import com.example.holmi_production.money_counter_app.ui.fragments.PieDialogFragment
@@ -29,7 +31,7 @@ import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 
-class ChartPieFragment() : MvpAppCompatFragment(),
+class ChartPieFragment() : BaseFragment(R.layout.chart_pie),
     ChartPieView {
 
     override fun onCreateView(
@@ -40,8 +42,10 @@ class ChartPieFragment() : MvpAppCompatFragment(),
         return inflater.inflate(R.layout.chart_pie, container, false)
     }
 
-    @ProvidePresenter
-    fun providePresenter() = App.component.getChartPresenter()
+    override fun inject() {
+        AppComponent.instance.inject(this)
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("M_PieChartFragment", "pie view created")

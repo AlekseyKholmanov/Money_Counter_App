@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.main.Navigation
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
@@ -18,6 +19,10 @@ import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 
 class CategoryCreateFragment : BaseFragment(R.layout.part_create_category), CreateCategoryView {
+
+    override fun inject() {
+        AppComponent.instance.inject(this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,8 +38,6 @@ class CategoryCreateFragment : BaseFragment(R.layout.part_create_category), Crea
         btn_create_category.isEnabled = categoryDetail.isValidState
     }
 
-    @ProvidePresenter
-    fun providePresenter() = App.component.getCreateCategoryPresenter()
 
     @InjectPresenter
     lateinit var presenter: CreateCategoryPresenter

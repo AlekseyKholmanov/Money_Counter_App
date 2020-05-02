@@ -33,6 +33,8 @@ abstract class BaseFragment(private val layoutId: Int) : MvpAppCompatFragment() 
         return initToolbar(requireContext().getString(titleRes))
     }
 
+    abstract fun inject()
+
     protected fun initToolbar(title: String = ""): Toolbar {
         val toolbar: Toolbar by bindView(R.id.toolbar)
         with(requireActivity() as AppCompatActivity) {
