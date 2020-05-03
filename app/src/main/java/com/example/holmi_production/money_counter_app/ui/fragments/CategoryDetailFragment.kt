@@ -14,6 +14,7 @@ import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.ui.dialogs.ImageCategoryPicker
+import com.example.holmi_production.money_counter_app.ui.presenters.CategoryDetailPresenter
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
@@ -23,7 +24,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Function4
 import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.container_category_detail.*
+import moxy.ktx.moxyPresenter
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Provider
 import kotlin.random.Random
 
 class CategoryDetailFragment :
@@ -36,6 +40,11 @@ class CategoryDetailFragment :
     override fun inject() {
         AppComponent.instance.inject(this)
     }
+
+    @Inject
+    lateinit var presenterProvider: Provider<CategoryDetailPresenter>
+
+    private val presenter by moxyPresenter { presenterProvider.get() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -109,8 +118,6 @@ class CategoryDetailFragment :
                 isValidState = it
             }
             .addTo(disposables)
-
-
 
 
         btn_generate_color.setOnClickListener {

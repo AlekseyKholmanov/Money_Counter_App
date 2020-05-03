@@ -17,7 +17,7 @@ import org.joda.time.Days
 import javax.inject.Inject
 
 @InjectViewState
-class KeyboardPresenter @Inject constructor(
+class KeyboardPresenter (
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,
     private val spendingInteractor: SpendingInteractor,

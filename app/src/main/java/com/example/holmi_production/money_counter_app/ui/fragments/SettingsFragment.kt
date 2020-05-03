@@ -12,11 +12,14 @@ import androidx.appcompat.app.AlertDialog
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
+import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.SettingsPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.SettingsView
 import kotlinx.android.synthetic.main.frament_settings.*
+import moxy.ktx.moxyPresenter
 import moxy.presenter.InjectPresenter
 import javax.inject.Inject
+import javax.inject.Provider
 
 
 class SettingsFragment : BaseFragment(R.layout.frament_settings),
@@ -25,6 +28,12 @@ class SettingsFragment : BaseFragment(R.layout.frament_settings),
     override fun inject() {
         AppComponent.instance.inject(this)
     }
+
+    @Inject
+    lateinit var presenterProvider: Provider<SettingsPresenter>
+
+    private val presenter by moxyPresenter { presenterProvider.get() }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,10 +69,6 @@ class SettingsFragment : BaseFragment(R.layout.frament_settings),
     override fun updateEndMonth(day: Int) {
         et_end_month_value.setText(day.toString())
     }
-
-    @Inject
-    @InjectPresenter
-    lateinit var presenter: SettingsPresenter
 
 
     private class SpinnerAdapter(context: Context, resource: Int, val datas: Array<Int>) :

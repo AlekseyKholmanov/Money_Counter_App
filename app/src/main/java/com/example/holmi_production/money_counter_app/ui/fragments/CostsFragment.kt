@@ -19,24 +19,28 @@ import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.ui.presenters.CostsPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CostsView
+import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryPresenter
 import com.example.holmi_production.money_counter_app.ui.utils.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.fragment_bottom_costs.*
 import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
+import javax.inject.Inject
+import javax.inject.Provider
 
 class CostsFragment : BaseFragment(R.layout.fragment_bottom_costs),
     CostsView {
 
-    companion object {
-        fun newInstance(): CostsFragment {
-            return CostsFragment()
-        }
-    }
-
     override fun inject() {
         AppComponent.instance.inject(this)
     }
+
+    private lateinit var adapter: CostsAdapter
+    @Inject
+    lateinit var presenterProvider: Provider<CostsPresenter>
+
+    private val presenter by moxyPresenter { presenterProvider.get() }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -96,8 +100,10 @@ class CostsFragment : BaseFragment(R.layout.fragment_bottom_costs),
         spendingList.isVisible = !show
     }
 
-    private lateinit var adapter: CostsAdapter
-    @InjectPresenter
-    lateinit var presenter: CostsPresenter
+    companion object {
+        fun newInstance(): CostsFragment {
+            return CostsFragment()
+        }
+    }
 
 }

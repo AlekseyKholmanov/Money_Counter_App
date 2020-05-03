@@ -7,7 +7,7 @@ import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import javax.inject.Inject
 
 @InjectViewState
-class EndPeriodPresenter @Inject constructor(
+class EndPeriodPresenter (
     private val settingRepository: SettingRepository,
     private val spendingInteractor: SpendingInteractor
 ) : BasePresenter<EndPeriodView>() {

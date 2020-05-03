@@ -14,11 +14,12 @@ import org.joda.time.Days
 import javax.inject.Inject
 
 @InjectViewState
-class FirstLaunchPresenter @Inject constructor(
+class FirstLaunchPresenter (
     private val spendingRepository: SpendingRepository,
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository) :
     BasePresenter<FirstLaunchView>() {
+
     private var sum: Double = 0.0
     private var dif: Int = 0
     private lateinit var endPeriod: DateTime

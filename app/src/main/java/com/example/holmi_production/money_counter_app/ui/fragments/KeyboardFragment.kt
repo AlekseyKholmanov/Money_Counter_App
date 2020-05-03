@@ -23,24 +23,25 @@ import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardPres
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import org.joda.time.DateTime
 import javax.inject.Inject
+import javax.inject.Provider
 
 class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard),
     KeyboardFragmnetView,
     IKeyboardListener,
     IDatePickerCallback {
 
-    companion object {
-        fun newInstance(bundle: Bundle?): KeyboardFragment {
-            val fragment =
-                KeyboardFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
+
+    @Inject
+    lateinit var presenterProvider: Provider<KeyboardPresenter>
+
+    private val presenter by moxyPresenter { presenterProvider.get() }
+
+    private lateinit var keyboardPart: KeyboardPartFragment
 
     override fun inject() {
         AppComponent.instance.inject(this)
@@ -159,11 +160,13 @@ class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard),
         }
     }
 
-    private lateinit var keyboardPart: KeyboardPartFragment
-
-    @Inject
-    @InjectPresenter
-    lateinit var presenter: KeyboardPresenter
-
+    companion object {
+        fun newInstance(bundle: Bundle?): KeyboardFragment {
+            val fragment =
+                KeyboardFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
 }
 

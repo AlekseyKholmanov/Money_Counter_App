@@ -9,7 +9,7 @@ import org.joda.time.DateTime
 import javax.inject.Inject
 
 @InjectViewState
-class ChartBalancePresenter @Inject constructor(private val balanceInteractor: BalanceInteractor) :
+class ChartBalancePresenter (private val balanceInteractor: BalanceInteractor) :
     BasePresenter<ChartBalanceView>() {
 
 

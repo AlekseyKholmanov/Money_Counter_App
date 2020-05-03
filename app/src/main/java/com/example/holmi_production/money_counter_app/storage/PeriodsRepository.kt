@@ -13,7 +13,7 @@ class PeriodsRepository (
     companion object{
         const val key = "DATE"
     }
-    private val dao = database.periodsDao
+    private val dao = database.periodsDao()
 
     fun insert(period: FilterPeriodEntity): Completable {
         return Completable.fromCallable { dao.insert(period.copy(id = key)) }

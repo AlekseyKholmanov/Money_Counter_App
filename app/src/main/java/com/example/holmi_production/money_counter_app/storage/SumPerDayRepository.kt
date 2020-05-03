@@ -16,7 +16,7 @@ class SumPerDayRepository (
         const val AVERAGE = "AVERAGE_SUM"
     }
 
-    private val dao = database.sumPerDayDao
+    private val dao = database.sumPerDayDao()
 
     fun insertToday(todaySum: Double): Completable {
         val sum = SumPerDayEntity(TODAY, todaySum)

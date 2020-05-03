@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.di.components.AppComponent
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums
 import com.example.holmi_production.money_counter_app.ui.dialogs.ITopbarDatePickerCallback
 import com.example.holmi_production.money_counter_app.ui.dialogs.TopbarDatePickerDialog
@@ -13,13 +15,15 @@ import com.example.holmi_production.money_counter_app.ui.presenters.TopbarPresen
 import com.example.holmi_production.money_counter_app.ui.presenters.TopbarView
 import kotlinx.android.synthetic.main.fragment_topbar.*
 import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import org.joda.time.DateTime
 import javax.inject.Inject
+import javax.inject.Provider
 
 
-class TopbarFragment : MvpAppCompatFragment(),
+class TopbarFragment : BaseFragment(R.layout.fragment_topbar),
     TopbarView,
     ITopbarDatePickerCallback {
 
@@ -29,9 +33,11 @@ class TopbarFragment : MvpAppCompatFragment(),
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_topbar, container, false)
+
+    override fun inject() {
+        AppComponent.instance.inject(this)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,6 +70,7 @@ class TopbarFragment : MvpAppCompatFragment(),
 
 
     @Inject
-    @InjectPresenter
-    lateinit var presenter: TopbarPresenter
+    lateinit var presenterProvider: Provider<TopbarPresenter>
+
+    private val presenter by moxyPresenter { presenterProvider.get() }
 }

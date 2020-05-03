@@ -19,12 +19,15 @@ import com.example.holmi_production.money_counter_app.ui.adapter.CategoryPickerA
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.CategoryPickerHolder
 import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPickerPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPickerView
+import com.example.holmi_production.money_counter_app.ui.presenters.CostsPresenter
 import com.example.holmi_production.money_counter_app.ui.utils.ViewAnimation
 import kotlinx.android.synthetic.main.fragment_category_picker.*
 import kotlinx.android.synthetic.main.include_category_picker_fragment.*
+import moxy.ktx.moxyPresenter
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
+import javax.inject.Provider
 
 class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
     CategoryPickerView {
@@ -33,6 +36,14 @@ class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
     private lateinit var fabClose: Animation
     private lateinit var rotateForward: Animation
     private lateinit var rotateBackward: Animation
+
+    @Inject
+    lateinit var presenterProvider: Provider<CategoryPickerPresenter>
+
+    private val presenter by moxyPresenter { presenterProvider.get() }
+
+
+    lateinit var adapter: CategoryPickerAdapter
 
 
     private val categoryPickerCallback = object : CategoryPickerHolder.Callback {
@@ -143,11 +154,6 @@ class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
         if (show && messageResId != null)
             tv_empty_categories.text = getString(messageResId)
     }
-
-    @Inject
-    lateinit var presenter: CategoryPickerPresenter
-
-    lateinit var adapter: CategoryPickerAdapter
 
     companion object {
         fun newInstance(): CategoryPickerFragment {

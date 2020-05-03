@@ -14,9 +14,13 @@ import com.example.holmi_production.money_counter_app.model.entity.CategoryEntit
 import com.example.holmi_production.money_counter_app.ui.presenters.CostsPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryView
+import com.example.holmi_production.money_counter_app.ui.presenters.EditCategoryPresenter
 import kotlinx.android.synthetic.main.part_create_category.*
+import moxy.ktx.moxyPresenter
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
+import javax.inject.Inject
+import javax.inject.Provider
 
 class CategoryCreateFragment : BaseFragment(R.layout.part_create_category), CreateCategoryView {
 
@@ -38,9 +42,10 @@ class CategoryCreateFragment : BaseFragment(R.layout.part_create_category), Crea
         btn_create_category.isEnabled = categoryDetail.isValidState
     }
 
+    @Inject
+    lateinit var presenterProvider: Provider<CreateCategoryPresenter>
 
-    @InjectPresenter
-    lateinit var presenter: CreateCategoryPresenter
+    private val presenter by moxyPresenter { presenterProvider.get() }
 
     companion object {
         fun newInstance(): CategoryCreateFragment {

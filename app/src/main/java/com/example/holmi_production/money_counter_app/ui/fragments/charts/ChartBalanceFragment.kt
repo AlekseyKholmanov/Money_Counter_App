@@ -19,6 +19,7 @@ import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalancePresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalanceView
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
 import com.example.holmi_production.money_counter_app.utils.Point.getLabelIndexes
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
@@ -30,9 +31,12 @@ import com.github.mikephil.charting.utils.Utils
 import kotlinx.android.synthetic.main.chart_balance.*
 import kotlinx.android.synthetic.main.chart_bar.emptyPlaceholder_bar
 import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import org.joda.time.DateTime
+import javax.inject.Inject
+import javax.inject.Provider
 import kotlin.collections.ArrayList
 
 class ChartBalanceFragment : BaseFragment(R.layout.chart_balance),
@@ -41,6 +45,14 @@ class ChartBalanceFragment : BaseFragment(R.layout.chart_balance),
     override fun inject() {
         AppComponent.instance.inject(this)
     }
+
+
+    @Inject
+    lateinit var presenterProvider: Provider<ChartBalancePresenter>
+
+    private val presenter by moxyPresenter { presenterProvider.get() }
+
+    lateinit var chart: LineChart
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -153,10 +165,6 @@ class ChartBalanceFragment : BaseFragment(R.layout.chart_balance),
         line_chart.isVisible = true
     }
 
-    @InjectPresenter
-    lateinit var presenter: ChartBalancePresenter
-
-    lateinit var chart: LineChart
 
 
     inner class XAxisFormatter : ValueFormatter() {

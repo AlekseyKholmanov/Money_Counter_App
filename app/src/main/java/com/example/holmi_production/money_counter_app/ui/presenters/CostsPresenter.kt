@@ -14,7 +14,7 @@ import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import javax.inject.Inject
 
 @InjectViewState
-class CostsPresenter @Inject constructor(
+class CostsPresenter(
     private val spendingInteractor: SpendingInteractor
 
 ) : BasePresenter<CostsView>() {

@@ -12,8 +12,9 @@ import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodPre
 import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodView
 import kotlinx.android.synthetic.main.fragment_end_period.*
 import moxy.MvpAppCompatFragment
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
+import moxy.ktx.moxyPresenter
+import javax.inject.Inject
+import javax.inject.Provider
 
 class EndPeriodFragment : BaseFragment(R.layout.fragment_end_period),
     EndPeriodView {
@@ -52,7 +53,9 @@ class EndPeriodFragment : BaseFragment(R.layout.fragment_end_period),
 //        findNavController().navigate(R.id.action_navEndPeriod_to_navMain)
     }
 
-    @InjectPresenter
-    lateinit var presenter: EndPeriodPresenter
+    @Inject
+    lateinit var presenterProvider: Provider<EndPeriodPresenter>
+
+    private val presenter by moxyPresenter { presenterProvider.get() }
 
 }

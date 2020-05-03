@@ -10,8 +10,12 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.ui.adapter.ChartFragmentAdapter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
 import kotlinx.android.synthetic.main.fragment_bottom_chart.*
 import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
+import javax.inject.Inject
+import javax.inject.Provider
 
 class ChartFragment : BaseFragment(R.layout.fragment_bottom_chart) {
 
@@ -20,9 +24,7 @@ class ChartFragment : BaseFragment(R.layout.fragment_bottom_chart) {
             return ChartFragment()
         }
     }
-    override fun inject() {
-        AppComponent.instance.inject(this)
-    }
+    override fun inject()= Unit
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,26 +40,6 @@ class ChartFragment : BaseFragment(R.layout.fragment_bottom_chart) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d("qwerty", "chart attached")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("qwerty", "chart stopped")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("qwerty", "chart view destroyed")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("qwerty", "chart detached")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("qwerty", "chart resumed")
     }
 
 }

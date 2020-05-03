@@ -12,7 +12,7 @@ import org.joda.time.DateTime
 import javax.inject.Inject
 
 @InjectViewState
-class ChartStackedPresenter @Inject constructor(private val spendingInteractor: SpendingInteractor) :
+class ChartStackedPresenter (private val spendingInteractor: SpendingInteractor) :
     BasePresenter<StackedView>() {
 
     fun observeDatas() {

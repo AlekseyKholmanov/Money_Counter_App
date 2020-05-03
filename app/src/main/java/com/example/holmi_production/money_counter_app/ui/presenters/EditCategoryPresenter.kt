@@ -9,7 +9,7 @@ import javax.inject.Inject
  * @author Alexey Kholmanov (alexey.holmanov@cleverpumpkin.ru)
  */
 @InjectViewState
-class EditCategoryPresenter @Inject constructor(
+class EditCategoryPresenter (
     private val interactor: CategoryInteractor
 ) :    BasePresenter<EditCategoryView>() {
 

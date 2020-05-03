@@ -21,6 +21,11 @@ abstract class BaseFragment(private val layoutId: Int) : MvpAppCompatFragment() 
     private val appbarConfig
         get() = (requireActivity() as MainActivity).appBarConfig
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        inject()
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

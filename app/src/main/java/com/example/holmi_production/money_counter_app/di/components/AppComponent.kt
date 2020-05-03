@@ -4,10 +4,7 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.di.AppDependencies
 import com.example.holmi_production.money_counter_app.di.CoreTools
 import com.example.holmi_production.money_counter_app.di.common.PerFeature
-import com.example.holmi_production.money_counter_app.di.modules.InteractorModule
-import com.example.holmi_production.money_counter_app.di.modules.RepositoryModule
-import com.example.holmi_production.money_counter_app.di.modules.ViewModelModule
-import com.example.holmi_production.money_counter_app.di.modules.WorkerModule
+import com.example.holmi_production.money_counter_app.di.modules.*
 import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.notification.NotificationAlarmReciever
 import com.example.holmi_production.money_counter_app.ui.fragments.*
@@ -15,10 +12,6 @@ import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartB
 import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartPieFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartStackedFragment
-import com.example.holmi_production.money_counter_app.ui.presenters.*
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalancePresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartStackedPresenter
 import dagger.Component
 
 
@@ -27,7 +20,8 @@ import dagger.Component
         ViewModelModule::class,
         RepositoryModule::class,
         InteractorModule::class,
-        WorkerModule::class],
+        WorkerModule::class,
+        PresenterModule::class],
     dependencies = [AppComponent.Dependencies::class]
 )
 @PerFeature
@@ -47,6 +41,7 @@ interface AppComponent {
                 .workerModule(WorkerModule)
                 .repositoryModule(RepositoryModule)
                 .interactorModule(InteractorModule)
+                .presenterModule(PresenterModule)
                 .build()
         }
     }

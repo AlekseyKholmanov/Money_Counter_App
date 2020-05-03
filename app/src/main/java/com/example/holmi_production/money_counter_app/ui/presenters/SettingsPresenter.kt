@@ -9,7 +9,7 @@ import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import javax.inject.Inject
 
 @InjectViewState
-class SettingsPresenter @Inject constructor(
+class SettingsPresenter (
     private val spendingInteractor: SpendingInteractor,
     private val categoryInteractor: CategoryInteractor,
     private val settingRepository: SettingRepository) :

@@ -11,7 +11,7 @@ class CategoryRepository (
    val database: ExpenseDatabase
 ){
 
-    private val dao = database.categoryDao
+    private val dao = database.categoryDao()
 
     fun insert(category: CategoryEntity): Completable {
         return Completable.fromCallable { dao.insert(category) }

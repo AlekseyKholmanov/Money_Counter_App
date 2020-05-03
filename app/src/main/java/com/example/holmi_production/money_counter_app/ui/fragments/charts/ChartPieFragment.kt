@@ -18,7 +18,9 @@ import com.example.holmi_production.money_counter_app.model.entity.GraphEntity
 import com.example.holmi_production.money_counter_app.ui.fragments.PieDialogFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPieView
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartStackedPresenter
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
+import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -28,8 +30,11 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.chart_pie.*
 import moxy.MvpAppCompatFragment
+import moxy.ktx.moxyPresenter
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
+import javax.inject.Inject
+import javax.inject.Provider
 
 class ChartPieFragment() : BaseFragment(R.layout.chart_pie),
     ChartPieView {
@@ -41,6 +46,11 @@ class ChartPieFragment() : BaseFragment(R.layout.chart_pie),
     ): View? {
         return inflater.inflate(R.layout.chart_pie, container, false)
     }
+
+    @Inject
+    lateinit var presenterProvider: Provider<ChartPiePresenter>
+
+    private val presenter by moxyPresenter { presenterProvider.get() }
 
     override fun inject() {
         AppComponent.instance.inject(this)
@@ -192,8 +202,6 @@ class ChartPieFragment() : BaseFragment(R.layout.chart_pie),
         chart_pie.isVisible = false
     }
 
-    @InjectPresenter
-    lateinit var presenter: ChartPiePresenter
 
     companion object {
         fun newInstance(): ChartPieFragment {

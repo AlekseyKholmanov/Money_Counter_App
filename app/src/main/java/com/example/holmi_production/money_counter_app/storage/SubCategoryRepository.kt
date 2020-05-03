@@ -11,7 +11,7 @@ class SubCategoryRepository (
     val database: ExpenseDatabase
 ) {
 
-    private val dao = database.subCategoryDao
+    private val dao = database.subCategoryDao()
 
     fun insert(category: SubCategoryEntity): Completable {
         return Completable.fromCallable { dao.insert(category) }

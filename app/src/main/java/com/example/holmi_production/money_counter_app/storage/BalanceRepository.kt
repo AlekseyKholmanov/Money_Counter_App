@@ -11,7 +11,7 @@ import javax.inject.Inject
 class BalanceRepository(
     database: ExpenseDatabase
 ) {
-    private val dao = database.balanceDao
+    private val dao = database.balanceDao()
 
     fun insert(balance: BalanceEntity): Completable {
         return Completable.fromCallable { dao.insert(balance) }

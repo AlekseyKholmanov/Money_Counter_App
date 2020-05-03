@@ -14,7 +14,7 @@ import org.joda.time.Duration
 import javax.inject.Inject
 
 @InjectViewState
-class TopbarPresenter @Inject constructor(
+class TopbarPresenter (
     private val periodsRepository: PeriodsRepository,
     private val settingRepository: SettingRepository) :
     BasePresenter<TopbarView>() {
