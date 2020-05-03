@@ -14,7 +14,6 @@ import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.ui.dialogs.ImageCategoryPicker
-import com.example.holmi_production.money_counter_app.ui.presenters.CategoryDetailPresenter
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
@@ -30,21 +29,14 @@ import javax.inject.Inject
 import javax.inject.Provider
 import kotlin.random.Random
 
-class CategoryDetailFragment :
+class CategoryDetailsFragment :
     BaseFragment(R.layout.container_category_detail) {
 
     var isValidState = false
 
     private val disposables = CompositeDisposable()
 
-    override fun inject() {
-        AppComponent.instance.inject(this)
-    }
-
-    @Inject
-    lateinit var presenterProvider: Provider<CategoryDetailPresenter>
-
-    private val presenter by moxyPresenter { presenterProvider.get() }
+    override fun inject() = Unit
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -180,16 +172,16 @@ class CategoryDetailFragment :
     }
 
     companion object {
-        fun newInstance(): CategoryDetailFragment {
+        fun newInstance(): CategoryDetailsFragment {
             val fr =
-                CategoryDetailFragment()
+                CategoryDetailsFragment()
             fr.arguments = null
             return fr
         }
 
-        fun newInstance(bundle: Bundle): CategoryDetailFragment {
+        fun newInstance(bundle: Bundle): CategoryDetailsFragment {
             val fr =
-                CategoryDetailFragment()
+                CategoryDetailsFragment()
             fr.arguments = bundle
             return fr
         }

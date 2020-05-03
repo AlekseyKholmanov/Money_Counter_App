@@ -32,7 +32,7 @@ class EditCategoryFragment : BaseFragment(R.layout.dialog_edit_category), EditCa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val categoryDetail = CategoryDetailFragment.newInstance(requireArguments())
+        val categoryDetail = CategoryDetailsFragment.newInstance(requireArguments())
         childFragmentManager.beginTransaction().apply {
             replace(R.id.container, categoryDetail)
             commit()

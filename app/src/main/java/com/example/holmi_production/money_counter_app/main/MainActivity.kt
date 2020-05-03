@@ -15,7 +15,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
 import moxy.MvpAppCompatActivity
-import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.hideDelayed
@@ -24,7 +23,7 @@ import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.CostsFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.KeyboardFragment
-import com.example.holmi_production.money_counter_app.ui.fragments.CategoryPickerFragment
+import com.example.holmi_production.money_counter_app.ui.fragments.SelectCategoryFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.LimitsFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.TopbarFragment
 import com.example.holmi_production.money_counter_app.worker.WorkerInteractor
@@ -229,8 +228,8 @@ class MainActivity : MvpAppCompatActivity(), Navigation {
     }
 
     fun showCategoryPicker() {
-        val fragment = CategoryPickerFragment.newInstance()
-        loadFragment(fragment, withTopbar = false, withBottomBar = false)
+        val fragment = SelectCategoryFragment.newInstance()
+        loadFragment(fragment,isAddedToBackstack = true, withTopbar = false, withBottomBar = false)
     }
 
     private fun showDatePickerBar() {

@@ -47,10 +47,10 @@ interface AppComponent {
     }
 
     fun inject(app: App)
-    fun inject(fragment: CategoryPickerFragment)
+    fun inject(fragment: SelectCategoryFragment)
     fun inject(fragment: CostsFragment)
-    fun inject(fragment: CategoryCreateFragment)
     fun inject(fragment: CreateSubcategoryFragment)
+    fun inject(fragment: CreateCategoryFragment)
     fun inject(fragment: EditCategoryFragment)
     fun inject(fragment: EndPeriodFragment)
     fun inject(fragment: KeyboardPartFragment)
@@ -62,7 +62,7 @@ interface AppComponent {
     fun inject(fragment: ChartBalanceFragment)
     fun inject(fragment: ChartPieFragment)
     fun inject(fragment: ChartStackedFragment)
-    fun inject(fragment: CategoryDetailFragment)
+    fun inject(fragment: CategoryDetailsFragment)
     fun inject(activity: MainActivity)
     fun inject(notificationAlarmReciever: NotificationAlarmReciever)
 

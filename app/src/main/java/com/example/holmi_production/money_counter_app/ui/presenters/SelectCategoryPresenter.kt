@@ -8,11 +8,10 @@ import com.example.holmi_production.money_counter_app.interactor.CategoryInterac
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
-import javax.inject.Inject
 
 @InjectViewState
-class CategoryPickerPresenter(private val interactor: CategoryInteractor) :
-    BasePresenter<CategoryPickerView>() {
+class SelectCategoryPresenter(private val interactor: CategoryInteractor) :
+    BasePresenter<SelectCategoryView>() {
     fun observeCategories() {
         interactor.observeCategoriesAndSubCategories()
             .async()

@@ -7,7 +7,6 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
@@ -17,20 +16,17 @@ import com.example.holmi_production.money_counter_app.model.entity.CategoryEntit
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.ui.adapter.CategoryPickerAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.CategoryPickerHolder
-import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPickerPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.CategoryPickerView
-import com.example.holmi_production.money_counter_app.ui.presenters.CostsPresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.SelectCategoryPresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.SelectCategoryView
 import com.example.holmi_production.money_counter_app.ui.utils.ViewAnimation
 import kotlinx.android.synthetic.main.fragment_category_picker.*
 import kotlinx.android.synthetic.main.include_category_picker_fragment.*
 import moxy.ktx.moxyPresenter
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
-class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
-    CategoryPickerView {
+class SelectCategoryFragment : BaseFragment(R.layout.fragment_category_picker),
+    SelectCategoryView {
 
     private lateinit var fabOpen: Animation
     private lateinit var fabClose: Animation
@@ -38,7 +34,7 @@ class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
     private lateinit var rotateBackward: Animation
 
     @Inject
-    lateinit var presenterProvider: Provider<CategoryPickerPresenter>
+    lateinit var presenterProvider: Provider<SelectCategoryPresenter>
 
     private val presenter by moxyPresenter { presenterProvider.get() }
 
@@ -98,7 +94,7 @@ class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
         }
         categoryFab.setOnClickListener {
             (requireActivity() as Navigation).loadFragment(
-                CategoryCreateFragment.newInstance(),
+                CreateCategoryFragment.newInstance(),
                 isAddedToBackstack = true,
                 withBottomBar = false,
                 withTopbar = false,
@@ -156,8 +152,8 @@ class CategoryPickerFragment : BaseFragment(R.layout.fragment_category_picker),
     }
 
     companion object {
-        fun newInstance(): CategoryPickerFragment {
-            return CategoryPickerFragment()
+        fun newInstance(): SelectCategoryFragment {
+            return SelectCategoryFragment()
         }
 
         private const val CREATE_DIALOG_TAG = "create dialog"

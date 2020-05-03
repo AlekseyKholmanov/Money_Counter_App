@@ -25,8 +25,8 @@ object PresenterModule {
     @PerFeature
     fun provideCategoryPickerPresenter(
         interactor: CategoryInteractor
-    ): CategoryPickerPresenter {
-        return CategoryPickerPresenter(interactor)
+    ): SelectCategoryPresenter {
+        return SelectCategoryPresenter(interactor)
     }
 
     @Provides
@@ -152,12 +152,5 @@ object PresenterModule {
         spendingInteractor: SpendingInteractor
     ): ChartStackedPresenter {
         return ChartStackedPresenter(spendingInteractor)
-    }
-
-    @Provides
-    @PerFeature
-    fun provideCategoryDetailPresenter(
-    ): CategoryDetailPresenter {
-        return CategoryDetailPresenter()
     }
 }
