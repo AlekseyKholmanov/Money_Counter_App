@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.di.modules
 
 import com.example.holmi_production.money_counter_app.di.common.PerFeature
+import com.example.holmi_production.money_counter_app.interactor.BalanceInteractor
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
@@ -8,6 +9,9 @@ import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import com.example.holmi_production.money_counter_app.ui.presenters.*
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalancePresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartStackedPresenter
 import dagger.Module
 import dagger.Provides
 
@@ -123,6 +127,31 @@ object PresenterModule {
             periodsRepository,
             settingRepository
         )
+    }
+
+
+    @Provides
+    @PerFeature
+    fun provideChartBalancePresenter(
+        balanceInteractor: BalanceInteractor
+    ): ChartBalancePresenter {
+        return ChartBalancePresenter(balanceInteractor)
+    }
+
+    @Provides
+    @PerFeature
+    fun provideChartPiePresenter(
+        spendingInteractor: SpendingInteractor
+    ): ChartPiePresenter {
+        return ChartPiePresenter(spendingInteractor)
+    }
+
+    @Provides
+    @PerFeature
+    fun provideStackedPresenter(
+        spendingInteractor: SpendingInteractor
+    ): ChartStackedPresenter {
+        return ChartStackedPresenter(spendingInteractor)
     }
 
     @Provides
