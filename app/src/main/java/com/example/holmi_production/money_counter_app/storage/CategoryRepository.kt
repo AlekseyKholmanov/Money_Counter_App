@@ -1,10 +1,10 @@
 package com.example.holmi_production.money_counter_app.storage
 
+import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Single
+import io.reactivex.*
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class CategoryRepository (
@@ -17,8 +17,8 @@ class CategoryRepository (
         return Completable.fromCallable { dao.insert(category) }
     }
 
-    fun getCategory(id:Int) :Single<CategoryEntity>{
-        return  Single.fromCallable{dao.getCategory(id)}
+    fun getCategory(id:Int) :Maybe<CategoryEntity>{
+        return  Maybe.fromCallable{dao.getCategory(id)}.subscribeOn(Schedulers.io())
     }
 
     fun getCategories():Single<List<CategoryEntity>>{

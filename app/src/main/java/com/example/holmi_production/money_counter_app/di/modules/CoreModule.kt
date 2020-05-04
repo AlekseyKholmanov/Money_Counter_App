@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Vibrator
 import androidx.core.content.getSystemService
+import com.f2prateek.rx.preferences2.RxSharedPreferences
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -22,6 +23,12 @@ object CoreModule {
     @Singleton
     fun provideSharedPreference(context: Context): SharedPreferences {
         return context.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRXSharedPreference(sharedPreferences: SharedPreferences): RxSharedPreferences {
+        return RxSharedPreferences.create(sharedPreferences)
     }
 
     @Provides

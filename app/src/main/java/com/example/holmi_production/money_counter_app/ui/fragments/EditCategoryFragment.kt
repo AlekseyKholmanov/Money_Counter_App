@@ -38,7 +38,6 @@ class EditCategoryFragment : BaseFragment(R.layout.dialog_edit_category), EditCa
             commit()
         }
 
-        btn_update.isEnabled = categoryDetail.isValidState
 
         val subcategories = arguments?.getParcelableArray("subcategories") as Array<*>
         subcategories.forEach { subcategory ->

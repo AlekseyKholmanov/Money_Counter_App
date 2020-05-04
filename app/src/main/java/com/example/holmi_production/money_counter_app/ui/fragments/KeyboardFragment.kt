@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.di.components.AppComponent
@@ -35,7 +36,6 @@ class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard),
     IKeyboardListener,
     IDatePickerCallback {
 
-
     @Inject
     lateinit var presenterProvider: Provider<KeyboardPresenter>
 
@@ -58,6 +58,7 @@ class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeKeyboard()
+        initToolbar()
         left_days.setOnClickListener {
             presenter.observeEndPeriodDate()
         }
@@ -110,7 +111,7 @@ class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard),
     }
 
     override fun showCategoryDialog() {
-        (activity as MainActivity).showCategoryPicker()
+        findNavController().navigate(R.id.selectCategoryFragment)
     }
 
     override fun showAverageSum(sum: String, isDisplayed: Boolean) {

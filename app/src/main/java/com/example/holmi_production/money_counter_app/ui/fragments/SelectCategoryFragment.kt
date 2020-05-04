@@ -5,12 +5,11 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.main.MainActivity
 import com.example.holmi_production.money_counter_app.main.Navigation
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
@@ -19,13 +18,12 @@ import com.example.holmi_production.money_counter_app.ui.adapter.holder.Category
 import com.example.holmi_production.money_counter_app.ui.presenters.SelectCategoryPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.SelectCategoryView
 import com.example.holmi_production.money_counter_app.ui.utils.ViewAnimation
-import kotlinx.android.synthetic.main.fragment_category_picker.*
-import kotlinx.android.synthetic.main.include_category_picker_fragment.*
+import kotlinx.android.synthetic.main.fragment_select_category.*
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
-class SelectCategoryFragment : BaseFragment(R.layout.fragment_category_picker),
+class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category),
     SelectCategoryView {
 
     private lateinit var fabOpen: Animation
@@ -44,8 +42,7 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_category_picker),
 
     private val categoryPickerCallback = object : CategoryPickerHolder.Callback {
         override fun categoryPicked(categoryId: Int) {
-            val bundle = bundleOf("categoryId" to categoryId)
-            (activity as MainActivity).showMain(bundle = bundle)
+            presenter.categorySelected(categoryId)
         }
 
         override fun categoryEdited(pair: Pair<CategoryEntity, List<SubCategoryEntity>>) {
@@ -57,8 +54,7 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_category_picker),
                     EditCategoryFragment.newInstance(bundle),
                     isAddedToBackstack = true,
                     withBottomBar = false,
-                    withTopbar = false,
-                    withAppBar = false
+                    withDatePickerFragment = false
                 )
                 animateFab()
             }
@@ -81,7 +77,7 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_category_picker),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        initToolbar("Выберите категорию")
         AppComponent.instance.inject(this)
         adapter = CategoryPickerAdapter(categoryPickerCallback)
         val layoutManager = GridLayoutManager(context, 3)
@@ -93,13 +89,7 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_category_picker),
             animateFab()
         }
         categoryFab.setOnClickListener {
-            (requireActivity() as Navigation).loadFragment(
-                CreateCategoryFragment.newInstance(),
-                isAddedToBackstack = true,
-                withBottomBar = false,
-                withTopbar = false,
-                withAppBar = false
-            )
+            findNavController().navigate(R.id.createCategoryFragment)
             animateFab()
         }
         subcategoryFab.setOnClickListener {
@@ -128,15 +118,12 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_category_picker),
         subcategoryFab.isClickable = isFabOpen
     }
 
-    //Only for update subcategories in edit Dialog
-    override fun updateSubcategories(subcategories: List<SubCategoryEntity>) {
-        val dialog = childFragmentManager.findFragmentByTag(EDIT_DIALOG_TAG)
-        if (dialog != null)
-            (dialog as EditCategoryFragment).updateSubcategories(subcategories)
-    }
-
     override fun showToast(text: String) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun popUp() {
+        findNavController().popBackStack()
     }
 
     override fun showCategories(categories: ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>>) {
@@ -149,15 +136,6 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_category_picker),
         tv_empty_categories.visibility = if (show) View.VISIBLE else View.GONE
         if (show && messageResId != null)
             tv_empty_categories.text = getString(messageResId)
-    }
-
-    companion object {
-        fun newInstance(): SelectCategoryFragment {
-            return SelectCategoryFragment()
-        }
-
-        private const val CREATE_DIALOG_TAG = "create dialog"
-        private const val EDIT_DIALOG_TAG = "edit dialog"
     }
 
 }

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       android:background="@color/design_default_color_primary_variant">
     <item
-            android:id="@+id/mainFragment"
+            android:id="@+id/keyboardFragment"
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/text_main"/>

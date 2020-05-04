@@ -10,6 +10,7 @@ import com.example.holmi_production.money_counter_app.storage.SubCategoryReposit
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.Flowables
@@ -83,12 +84,12 @@ class CategoryInteractor(
         }
     }
 
-    fun getCategory(id: Int): Single<CategoryEntity> {
+    fun getCategory(id: Int): Maybe<CategoryEntity> {
         return categoryRepository.getCategory(id)
     }
 
     fun getCategoryWithSub(id: Int): Single<Pair<CategoryEntity, List<SubCategoryEntity>>> {
-        return Singles.zip(categoryRepository.getCategory(id), subCategoryRepository.getSubcategoriesWithParentId(id))
+        return Singles.zip(categoryRepository.getCategory(id).toSingle(), subCategoryRepository.getSubcategoriesWithParentId(id))
     }
 
     fun updateUsageCount(categoryId: Int): Disposable {

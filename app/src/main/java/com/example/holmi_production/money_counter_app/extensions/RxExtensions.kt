@@ -1,9 +1,6 @@
 package com.example.holmi_production.money_counter_app.extensions
 
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Maybe
-import io.reactivex.Single
+import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -15,6 +12,11 @@ fun <T> Single<T>.async(): Single<T> {
 }
 
 fun <T> Flowable<T>.async(): Flowable<T> {
+    return subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+}
+
+fun <T> Observable<T>.async(): Observable<T> {
     return subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
 }

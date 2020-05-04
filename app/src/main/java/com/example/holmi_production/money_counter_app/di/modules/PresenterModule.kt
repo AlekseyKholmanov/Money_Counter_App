@@ -24,9 +24,10 @@ object PresenterModule {
     @Provides
     @PerFeature
     fun provideCategoryPickerPresenter(
-        interactor: CategoryInteractor
+        interactor: CategoryInteractor,
+        settingRepository: SettingRepository
     ): SelectCategoryPresenter {
-        return SelectCategoryPresenter(interactor)
+        return SelectCategoryPresenter(interactor, settingRepository)
     }
 
     @Provides

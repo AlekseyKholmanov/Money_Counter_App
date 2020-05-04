@@ -1,100 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/fragment_keyboard"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/include_toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusableInTouchMode="true"
-        android:clickable="true"
-        android:focusable="true">
-    <LinearLayout
-            android:id="@+id/sum_per_day_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-        <TextView
-                android:id="@+id/sum_per_day_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="НА СЕГОДНЯ:"
-                android:layout_margin="8dp"/>
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
 
-        <TextView
-                android:id="@+id/sum_per_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="500 p"
-                android:textSize="30sp"
-                android:layout_margin="8dp"/>
-    </LinearLayout>
-    <LinearLayout
-            android:id="@+id/left_sum_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/sum_per_day_container"
-            app:layout_constraintRight_toRightOf="parent"
-            android:orientation="horizontal"
-            android:layout_margin="8dp"
-            android:gravity="center_vertical">
-
-        <TextView
-                android:id="@+id/left_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginRight="8dp"
-                android:textSize="20sp"
-                android:text="Всего осталось:"/>
-        <TextView
-                android:id="@+id/left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@+id/left_text"
-                app:layout_constraintBaseline_toBaselineOf="@id/left_text"
-                app:layout_constraintLeft_toRightOf="@id/left_text"
-                android:textSize="28sp"
-                tools:text="1000 P"/>
-    </LinearLayout>
-
-    <TextView
-            android:id="@+id/left_days"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            app:layout_constraintEnd_toEndOf="@id/left_sum_container"
-            app:layout_constraintTop_toBottomOf="@id/left_sum_container"
-            android:hint=" на n дней"/>
-    <TextView
-            android:id="@+id/new_sum_per_day_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toLeftOf="@id/new_sum_per_day"
-            app:layout_constraintBottom_toTopOf="@id/keyboard"
-            android:visibility="gone"
-            android:textSize="20sp"
-            android:text="Добавится завтра:"/>
-
-    <TextView
-            android:id="@+id/new_sum_per_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/keyboard"
-            android:textSize="20sp"
-            android:visibility="gone"/>
-    <FrameLayout
-            android:id="@+id/keyboard"
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/fragment_keyboard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-    </FrameLayout>
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:layout_constraintTop_toBottomOf="@id/appBar">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/sum_per_day_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/sum_per_day_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="НА СЕГОДНЯ:"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/sum_per_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:textSize="30sp"
+                    tools:text="500 p" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/left_sum_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sum_per_day_container">
+
+                <TextView
+                    android:id="@+id/left_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:text="Всего осталось:"
+                    android:textSize="20sp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="28sp"
+                    app:layout_constraintBaseline_toBaselineOf="@id/left_text"
+                    app:layout_constraintLeft_toRightOf="@id/left_text"
+                    app:layout_constraintTop_toTopOf="@+id/left_text"
+                    tools:text="1000 P" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/left_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:hint=" на n дней"
+                app:layout_constraintEnd_toEndOf="@id/left_sum_container"
+                app:layout_constraintTop_toBottomOf="@id/left_sum_container" />
+
+            <TextView
+                android:id="@+id/new_sum_per_day_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Добавится завтра:"
+                android:textSize="20sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/keyboard"
+                app:layout_constraintRight_toLeftOf="@id/new_sum_per_day" />
+
+            <TextView
+                android:id="@+id/new_sum_per_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/keyboard"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/keyboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

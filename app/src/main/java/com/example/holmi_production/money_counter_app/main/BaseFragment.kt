@@ -19,7 +19,7 @@ import moxy.MvpAppCompatFragment
 abstract class BaseFragment(private val layoutId: Int) : MvpAppCompatFragment() {
 
     private val appbarConfig
-        get() = (requireActivity() as MainActivity).appBarConfig
+        get() = (requireActivity() as MainActivity).appBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         inject()
@@ -54,6 +54,7 @@ abstract class BaseFragment(private val layoutId: Int) : MvpAppCompatFragment() 
             findNavController(),
             appbarConfig
         )
+
         return toolbar
     }
 }

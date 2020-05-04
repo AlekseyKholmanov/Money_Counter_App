@@ -1,40 +1,31 @@
 package com.example.holmi_production.money_counter_app.main
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import moxy.MvpAppCompatActivity
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupWithNavController
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.di.components.AppComponent
-import com.example.holmi_production.money_counter_app.extensions.hideDelayed
-import com.example.holmi_production.money_counter_app.extensions.showDelayed
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartFragment
-import com.example.holmi_production.money_counter_app.ui.fragments.CostsFragment
-import com.example.holmi_production.money_counter_app.ui.fragments.KeyboardFragment
-import com.example.holmi_production.money_counter_app.ui.fragments.SelectCategoryFragment
-import com.example.holmi_production.money_counter_app.ui.fragments.LimitsFragment
-import com.example.holmi_production.money_counter_app.ui.fragments.TopbarFragment
 import com.example.holmi_production.money_counter_app.worker.WorkerInteractor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.include_menu_currency_converting.*
-import kotlinx.android.synthetic.main.menu_drawer_custom.*
 import kotlinx.android.synthetic.main.include_menu_end_period_date.*
+import kotlinx.android.synthetic.main.menu_drawer_custom.*
+import moxy.MvpAppCompatActivity
 import javax.inject.Inject
 
-class MainActivity : MvpAppCompatActivity(), Navigation {
+class MainActivity : MvpAppCompatActivity() {
 
     @Inject
     lateinit var settingRepository: SettingRepository
@@ -42,34 +33,24 @@ class MainActivity : MvpAppCompatActivity(), Navigation {
     @Inject
     lateinit var workerInteractor: WorkerInteractor
 
-    private lateinit var toggle: ActionBarDrawerToggle
+    lateinit var appBarConfiguration: AppBarConfiguration
 
-    val navDrawer: DrawerLayout
-        get() = drawer
-
-    val appBarConfig: AppBarConfiguration
-        get() = AppBarConfiguration(
-            setOf(
-                R.id.keyboardFragment,
-                R.id.costsFragment,
-                R.id.limitsFragment,
-                R.id.chartFragment
-            ), drawer
-        ) { false }
+    val navController by lazy {
+        val host = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        host.navController
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         AppComponent.instance.inject(this)
-        Log.d("M_MainActivity", "setting: $settingRepository")
-        initializeDrawers()
-        initializeFragments()
+        initializeNavigation()
         initializeSettings()
-        setBottomNavigationController()
-        workerInteractor.cancelAll()
-        workerInteractor.startBalanceWorker()
-        workerInteractor.startNotificationWorker()
+//        initView()
 
+    }
+
+    private fun initView() {
         et_end_month_value.text = settingRepository.getEndMonth().toString()
 
         //settings listener
@@ -90,16 +71,6 @@ class MainActivity : MvpAppCompatActivity(), Navigation {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean { // The action bar home/up action should open or close the drawer.
-        when (item.itemId) {
-            R.id.home -> {
-                drawer.openDrawer(GravityCompat.START)
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun setConverterState(state: Boolean) {
 
         if (state) {
@@ -109,30 +80,38 @@ class MainActivity : MvpAppCompatActivity(), Navigation {
         }
     }
 
-    private fun initializeDrawers() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        toggle = ActionBarDrawerToggle(
-            this,
-            drawer,
-            toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
+    private fun initializeNavigation() {
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.keyboardFragment,
+                R.id.costsFragment,
+                R.id.limitsFragment,
+                R.id.chartFragment
+            ), drawer
         )
-        drawer.addDrawerListener(toggle)
-        toggle.isDrawerIndicatorEnabled = true
-        toggle.syncState()
+        navViewBottom.setupWithNavController(navController)
+        navViewDrawer.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when(destination.id){
+                R.id.selectCategoryFragment -> hideBottomNav()
+                else -> showBottomNav()
+            }
+        }
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onPostCreate(savedInstanceState, persistentState)
-        toggle.syncState()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return item.onNavDestinationSelected(findNavController(R.id.navHostFragment))
+                || super.onOptionsItemSelected(item)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.navHostFragment)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     private fun initializeSettings() {
 
-        val converterState = settingRepository.getConverter()
+        val converterState = settingRepository.isConverterEnable()
         val defValue = settingRepository.getConverterValue()
         converter_value.text = Editable.Factory.getInstance().newEditable(defValue)
         converter_checkbox.isChecked = converterState
@@ -154,97 +133,15 @@ class MainActivity : MvpAppCompatActivity(), Navigation {
         })
     }
 
-    private fun initializeFragments() {
-        val topbar = TopbarFragment.newInstance()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container_topbar, topbar)
-        transaction.commit()
-        showMain()
-    }
-
-    private fun setBottomNavigationController() {
-        main_navigation.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.mainFragment -> {
-                    showMain()
-                }
-                R.id.costsFragment -> {
-                    loadFragment(CostsFragment.newInstance())
-                }
-                R.id.chartFragment -> {
-                    loadFragment(ChartFragment.newInstance())
-                }
-                R.id.limitsFragment -> {
-                    loadFragment(LimitsFragment.newInstance(), withTopbar = false)
-                }
-                else -> {
-                    throw Exception("uncorrect id")
-                }
-            }
-            return@setOnNavigationItemSelectedListener true
-        }
-    }
-
-    override fun loadFragment(
-        fragment: Fragment,
-        isAddedToBackstack: Boolean,
-        withTopbar: Boolean,
-        withBottomBar: Boolean,
-        withAppBar: Boolean
-    ) {
-        if (withBottomBar) showBottomNav() else hideBottomNav()
-        if (withTopbar) showDatePickerBar() else hideDatePickerBar()
-        if (withAppBar) {
-            supportActionBar!!.show()
-        } else
-            supportActionBar!!.hide()
-
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-        if (isAddedToBackstack) {
-            transaction.addToBackStack(null)
-        }
-        transaction.replace(R.id.container_main, fragment)
-        transaction.commit()
-    }
-
-    override fun popUp() {
-        supportFragmentManager.popBackStack()
-    }
-
-    override fun onBackPressed() {
-        val current = supportFragmentManager.findFragmentById(R.id.container_main)
-        if (current is KeyboardFragment) {
-            moveTaskToBack(true)
-        } else {
-            showMain()
-            main_navigation.selectedItemId = R.id.mainFragment
-        }
-    }
-
-    fun showMain(bundle: Bundle? = null) {
-        val main = KeyboardFragment.newInstance(bundle)
-        loadFragment(main, withTopbar = false, withAppBar = true)
-    }
-
-    fun showCategoryPicker() {
-        val fragment = SelectCategoryFragment.newInstance()
-        loadFragment(fragment,isAddedToBackstack = true, withTopbar = false, withBottomBar = false)
-    }
-
-    private fun showDatePickerBar() {
-        container_topbar.showDelayed()
-    }
-
     private fun showBottomNav() {
-        main_navigation.showDelayed()
+        navViewBottom.visibility = View.VISIBLE
+
     }
 
     private fun hideBottomNav() {
-        main_navigation.hideDelayed()
+        navViewBottom.visibility = View.GONE
+
     }
 
-    private fun hideDatePickerBar() {
-        container_topbar.hideDelayed()
-    }
+
 }

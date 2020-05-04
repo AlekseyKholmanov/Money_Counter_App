@@ -11,7 +11,6 @@ interface SelectCategoryView : MvpView {
     fun showMessage(show: Boolean, messageResId: Int? = null)
 
     fun showToast(text: String)
-
-    fun updateSubcategories(subcategories: List<SubCategoryEntity>)
+    fun popUp()
 
 }

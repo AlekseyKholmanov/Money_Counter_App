@@ -5,6 +5,8 @@ import android.util.Log
 import com.example.holmi_production.money_counter_app.extensions.withNextMonthDate
 import com.example.holmi_production.money_counter_app.extensions.withPreviousMonthDate
 import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfDay
+import com.f2prateek.rx.preferences2.Preference
+import com.f2prateek.rx.preferences2.RxSharedPreferences
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
@@ -13,7 +15,8 @@ import org.joda.time.Days
 
 
 class SettingRepository(
-    private val pref: SharedPreferences
+    private val pref: SharedPreferences,
+    private val rxPrefs: RxSharedPreferences
 ) {
 
     val settingSubject by lazy { PublishSubject.create<Int>() }
@@ -63,12 +66,15 @@ class SettingRepository(
         pref.edit().putInt(PERIOD_TYPE, type).apply()
     }
 
-    fun setCategoryButtonType(type: Int) {
+    fun setCategoryId(type: Int) {
         pref.edit().putInt(CATEGORY_VALUE, type).apply()
     }
 
+    fun observeCategoryId(): Preference<Int> = rxPrefs.getInteger(CATEGORY_VALUE, -1)
+
+
     fun getCategoryValue(): Int {
-        return pref.getInt(CATEGORY_VALUE, 8)
+        return pref.getInt(CATEGORY_VALUE, -1)
     }
 
     fun setAppOpened() {
@@ -91,7 +97,7 @@ class SettingRepository(
         pref.edit().putBoolean(Converter, state).apply()
     }
 
-    fun getConverter(): Boolean {
+    fun isConverterEnable(): Boolean {
         return pref.getBoolean(Converter, false)
     }
 

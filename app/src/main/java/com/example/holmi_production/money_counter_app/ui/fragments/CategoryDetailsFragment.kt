@@ -8,7 +8,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.custom.ColorSeekBar
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.SpDirection
@@ -22,17 +21,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Function4
 import io.reactivex.rxkotlin.addTo
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.container_category_detail.*
-import moxy.ktx.moxyPresenter
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
-import javax.inject.Provider
 import kotlin.random.Random
 
 class CategoryDetailsFragment :
     BaseFragment(R.layout.container_category_detail) {
 
-    var isValidState = false
+    val isValidState by lazy { PublishSubject.create<Boolean>() }
 
     private val disposables = CompositeDisposable()
 
@@ -80,37 +77,30 @@ class CategoryDetailsFragment :
             dialog.show()
         }
 
-        val categoryNameObservable = et_category_name
+        et_category_name
             .textChanges()
             .debounce(300, TimeUnit.MILLISECONDS)
             .map { it.isNotBlank() }
-
-        val accumulationObservable = ch_accumulation
-            .clicks()
-            .map {
-                ch_accumulation.isChecked
-            }
-        val incomeObservable = ch_income
-            .clicks()
-            .map {
-                ch_income.isChecked
-            }
-        val spendingObservable = ch_spending
-            .clicks()
-            .map { ch_spending.isChecked }
-
-        Observable.combineLatest(
-            categoryNameObservable, accumulationObservable, incomeObservable,
-            spendingObservable,
-            Function4 { categoryNameOk: Boolean, incomeChecked: Boolean, accumulationChecked: Boolean, spendingChecked: Boolean ->
-                categoryNameOk && incomeChecked && accumulationChecked && spendingChecked
-            })
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe{
-                isValidState = it
+                isValidState.onNext(isCheckboxesChecked())
             }
             .addTo(disposables)
 
+        ch_accumulation
+            .setOnClickListener {
+                ch_accumulation.isChecked = !ch_accumulation.isChecked
+                isValidState.onNext(isCheckboxesChecked())
+            }
+        ch_income
+            .setOnClickListener {
+                ch_income.isChecked = !ch_income.isChecked
+                isValidState.onNext(isCheckboxesChecked())
+            }
+        ch_spending
+            .setOnClickListener {
+                ch_spending.isChecked = !ch_spending.isChecked
+                isValidState.onNext(isCheckboxesChecked())
+            }
 
         btn_generate_color.setOnClickListener {
             val rand = Random.nextInt(0, color_seek_bar.width)
@@ -136,7 +126,12 @@ class CategoryDetailsFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
+        isValidState.onComplete()
         disposables.dispose()
+    }
+
+    fun isCheckboxesChecked(): Boolean {
+        return (ch_income.isChecked or ch_accumulation.isChecked or ch_spending.isChecked) and et_category_name.text.isNotBlank()
     }
 
     fun getCurrentState(): CategoryEntity {
@@ -154,10 +149,6 @@ class CategoryDetailsFragment :
             isDeleted = false,
             spendingDirection = getDirections()
         )
-    }
-
-    fun isCheckboxesChecked(): Boolean {
-        return (ch_income.isChecked or ch_accumulation.isChecked or ch_spending.isChecked) and et_category_name.text.isNotBlank()
     }
 
     private fun getDirections(): List<SpDirection> {

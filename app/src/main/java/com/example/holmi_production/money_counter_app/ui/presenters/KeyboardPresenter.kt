@@ -2,7 +2,6 @@ package com.example.holmi_production.money_counter_app.ui.presenters
 
 import android.graphics.Color
 import android.util.Log
-import moxy.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.*
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
@@ -12,19 +11,18 @@ import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
+import moxy.InjectViewState
 import org.joda.time.DateTime
 import org.joda.time.Days
-import javax.inject.Inject
 
 @InjectViewState
-class KeyboardPresenter (
+class KeyboardPresenter(
     private val sumPerDayRepository: SumPerDayRepository,
     private val settingRepository: SettingRepository,
     private val spendingInteractor: SpendingInteractor,
     private val categoryInteractor: CategoryInteractor,
     private val spendingRepository: SpendingRepository
-) :
-    BasePresenter<KeyboardFragmnetView>() {
+) : BasePresenter<KeyboardFragmnetView>() {
 
     fun undoAdding(spending: SpendingEntity) {
         spendingInteractor.delete(spending)
@@ -37,10 +35,9 @@ class KeyboardPresenter (
         val (startDate, endDate) = settingRepository.getCurrentPeriods()
         val diff = Days.daysBetween(DateTime(), endDate)
         // if currency converter enable
-        val sumWithConverter = if (settingRepository.getConverter()) {
+        val sumWithConverter = if (settingRepository.isConverterEnable()) {
             val coef = settingRepository.getConverterValue()
             sum * coef.toDouble()
-
         } else {
             sum
         }
@@ -105,7 +102,9 @@ class KeyboardPresenter (
             .subscribe({ list ->
                 val spending = list.filter { it.isSpending == SpDirection.SPENDING }.map { it.sum }
                 val income = list.filter { it.isSpending == SpDirection.INCOME }.map { it.sum }
-                viewState.showIncomeSum((income.sum() - spending.sum()).toCurencyFormat().withRubleSign())
+                viewState.showIncomeSum(
+                    (income.sum() - spending.sum()).toCurencyFormat().withRubleSign()
+                )
             }, { Log.d("qwerty", it.message) })
             .keep()
 
@@ -125,6 +124,16 @@ class KeyboardPresenter (
                 )
             }, { Log.d("qwerty", it.message) })
             .keep()
+        settingRepository.observeCategoryId().asObservable()
+            .switchMapMaybe {
+                categoryInteractor.getCategory(it)
+            }
+            .async()
+            .subscribe { entity ->
+                viewState.updateCategoryPickerButton(entity)
+            }
+            .keep()
+
     }
 
     fun observeEndPeriodDate() {
@@ -149,7 +158,7 @@ class KeyboardPresenter (
 
     fun setCategoryButonType(id: Int) {
         Log.d("M_KeyboardPresenter", "set type $id")
-        settingRepository.setCategoryButtonType(id)
+        settingRepository.setCategoryId(id)
         updateKeyboardUI(id)
     }
 

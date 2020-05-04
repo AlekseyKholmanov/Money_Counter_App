@@ -9,9 +9,8 @@ interface Navigation {
     fun loadFragment(
         fragment: Fragment,
         isAddedToBackstack: Boolean = false,
-        withTopbar: Boolean = true,
-        withBottomBar: Boolean = true,
-        withAppBar: Boolean = false
+        withDatePickerFragment: Boolean = true,
+        withBottomBar: Boolean = true
     )
     fun popUp()
 }
