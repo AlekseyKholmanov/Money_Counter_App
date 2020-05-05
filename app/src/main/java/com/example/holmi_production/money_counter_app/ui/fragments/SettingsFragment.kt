@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.SettingsPresenter
@@ -26,34 +25,31 @@ class SettingsFragment : BaseFragment(R.layout.frament_settings),
     SettingsView {
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
     }
 
-    @Inject
-    lateinit var presenterProvider: Provider<SettingsPresenter>
 
-    private val presenter by moxyPresenter { presenterProvider.get() }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_clear_spending.setOnClickListener {
-            presenter.deleteData()
-        }
-        btn_clear_spending.setOnClickListener {
-            presenter.deleteCategory()
-        }
-        presenter.getEndMonth()
-        et_end_month_value.setOnClickListener {
-            val b = AlertDialog.Builder(requireContext())
-            b.setTitle("DATE of END PERIOD")
-            val array = Array(28) { "$it" }
-            b.setItems(array) { dialog, which ->
-                presenter.saveEndMonth(array[which].toInt())
-                dialog!!.dismiss()
-            }
-            b.show()
-        }
+//        btn_clear_spending.setOnClickListener {
+//            presenter.deleteData()
+//        }
+//        btn_clear_spending.setOnClickListener {
+//            presenter.deleteCategory()
+//        }
+//        presenter.getEndMonth()
+//        et_end_month_value.setOnClickListener {
+//            val b = AlertDialog.Builder(requireContext())
+//            b.setTitle("DATE of END PERIOD")
+//            val array = Array(28) { "$it" }
+//            b.setItems(array) { dialog, which ->
+//                presenter.saveEndMonth(array[which].toInt())
+//                dialog!!.dismiss()
+//            }
+//            b.show()
+//        }
     }
 
 

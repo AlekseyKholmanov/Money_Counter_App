@@ -1,12 +1,10 @@
 package com.example.holmi_production.money_counter_app.model.entity
 
-import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Relation
 import com.example.holmi_production.money_counter_app.model.ListItem
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+
 data class SpendingDetails(
     @Embedded
     var spending: SpendingEntity,
@@ -22,5 +20,4 @@ data class SpendingDetails(
         entityColumn = "id"
     )
     var subcategory: SubCategoryEntity?
-):ListItem,
-Parcelable
+):ListItem

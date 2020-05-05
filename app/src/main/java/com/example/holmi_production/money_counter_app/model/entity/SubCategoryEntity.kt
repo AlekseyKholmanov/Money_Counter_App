@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Entity
-@Parcelize
 data class SubCategoryEntity(
     @PrimaryKey(autoGenerate = true)
     override val id: Int = 0,
@@ -14,4 +13,4 @@ data class SubCategoryEntity(
     override val description: String,
     override val isDeleted: Boolean = false,
     override val color: Int
-) : Nameble, Parcelable
+) : Nameble

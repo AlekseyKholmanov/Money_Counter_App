@@ -1,39 +1,40 @@
 package com.example.holmi_production.money_counter_app.ui.presenters.charts
 
-import moxy.InjectViewState
+import androidx.lifecycle.ViewModel
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.BalanceInteractor
 import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
-import com.example.holmi_production.money_counter_app.mvp.BasePresenter
+import moxy.InjectViewState
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-@InjectViewState
-class ChartBalancePresenter (private val balanceInteractor: BalanceInteractor) :
-    BasePresenter<ChartBalanceView>() {
+
+class ChartBalanceViewModel @Inject constructor(private val balanceInteractor: BalanceInteractor) :
+    ViewModel() {
 
 
     fun observeBalances() {
-        balanceInteractor.observeBalances()
-            .async()
-            .subscribe({
-                if (it.count() < 2) {
-                    viewState.showError()
-                } else {
-                    viewState.showChart(it)
-                }
-            }, {
-                viewState.showError()
-            })
-            .keep()
+//        balanceInteractor.observeBalances()
+//            .async()
+//            .subscribe({
+//                if (it.count() < 2) {
+//                    viewState.showError()
+//                } else {
+//                    viewState.showChart(it)
+//                }
+//            }, {
+//                viewState.showError()
+//            })
+//            .keep()
     }
-    private fun getTestObj():List<BalanceEntity>{
+
+    private fun getTestObj(): List<BalanceEntity> {
         val balances = arrayListOf<BalanceEntity>()
         val Date = DateTime.now().minusDays(180)
         var amount = 5000.0
-        for (i in 0..18){
+        for (i in 0..18) {
             amount += 100
-            if(i%21 == 0) amount -= 1400
+            if (i % 21 == 0) amount -= 1400
             val balance = BalanceEntity(Date.plusDays(i), amount = amount)
             balances.add(balance)
         }

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.main.BaseFragment
@@ -33,22 +32,22 @@ class CostsFragment : BaseFragment(R.layout.fragment_bottom_costs),
     CostsView {
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
     }
 
     private lateinit var adapter: CostsAdapter
-    @Inject
-    lateinit var presenterProvider: Provider<CostsPresenter>
-
-    private val presenter by moxyPresenter { presenterProvider.get() }
+//    @Inject
+//    lateinit var presenterProvider: Provider<CostsPresenter>
+//
+//    private val presenter by moxyPresenter { presenterProvider.get() }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
         adapter =
             CostsAdapter()
-        presenter.observeSpengings()
+//        presenter.observeSpengings()
         spendingList.layoutManager = LinearLayoutManager(requireContext())
 
         spendingList.adapter = adapter
@@ -57,7 +56,7 @@ class CostsFragment : BaseFragment(R.layout.fragment_bottom_costs),
                 val item = adapter.items[viewHolder.adapterPosition]
                 if (item is SpendingDetails) {
                     adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                    presenter.delete(item.spending)
+//                    presenter.delete(item.spending)
                 }
             }
         }

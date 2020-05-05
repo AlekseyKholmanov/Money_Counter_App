@@ -10,7 +10,6 @@ import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
@@ -23,7 +22,7 @@ class CreateSubcategoryFragment : BaseFragment(R.layout.part_create_subcategory)
     companion object {
         fun newInstance(categories: Array<CategoryEntity>): CreateSubcategoryFragment {
             val bundle = Bundle()
-            bundle.putParcelableArray("categories", categories)
+//            bundle.putParcelableArray("categories", categories)
             val fragment =
                 CreateSubcategoryFragment()
             fragment.arguments = bundle
@@ -32,7 +31,7 @@ class CreateSubcategoryFragment : BaseFragment(R.layout.part_create_subcategory)
     }
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -9,7 +9,7 @@ import com.example.holmi_production.money_counter_app.utils.Time
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class WorkerInteractor @Inject constructor(private val workManager: WorkManager) {
+class WorkerInteractor (private val workManager: WorkManager) {
     companion object {
 
         val NOTIFICATION_WORK_TAG = "NOTIFICATION_TASK"

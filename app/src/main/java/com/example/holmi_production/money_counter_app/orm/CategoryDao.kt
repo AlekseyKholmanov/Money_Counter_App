@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.orm
 
 import androidx.room.*
+import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import io.reactivex.Flowable
 
@@ -23,4 +24,9 @@ interface CategoryDao {
 
     @Query("DELETE FROM CategoryEntity")
     fun deleteAll()
+    //---------
+
+    @Query("SELECT * FROM CategoryEntity WHERE id=:categoryId")
+    suspend fun getCategoryDetails(categoryId: Int): CategoryDetails
+
 }

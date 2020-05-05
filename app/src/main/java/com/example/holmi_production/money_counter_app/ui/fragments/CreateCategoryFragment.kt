@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.main.Navigation
 import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryPresenter
@@ -20,7 +19,7 @@ import javax.inject.Provider
 class CreateCategoryFragment : BaseFragment(R.layout.part_create_category), CreateCategoryView {
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+//        AppComponent.instance.inject(this)
     }
     private val disposables = CompositeDisposable()
 
@@ -33,7 +32,7 @@ class CreateCategoryFragment : BaseFragment(R.layout.part_create_category), Crea
         }
         btn_create_category.setOnClickListener {
            val category =  categoryDetail.getCurrentState()
-            presenter.createCategory(category)
+//            presenter.createCategory(category)
         }
          categoryDetail.isValidState
              .observeOn(AndroidSchedulers.mainThread())
@@ -47,11 +46,11 @@ class CreateCategoryFragment : BaseFragment(R.layout.part_create_category), Crea
         super.onDestroyView()
         disposables.dispose()
     }
-
-    @Inject
-    lateinit var presenterProvider: Provider<CreateCategoryPresenter>
-
-    private val presenter by moxyPresenter { presenterProvider.get() }
+//
+//    @Inject
+//    lateinit var presenterProvider: Provider<CreateCategoryPresenter>
+//
+//    private val presenter by moxyPresenter { presenterProvider.get() }
 
     companion object {
         fun newInstance(): CreateCategoryFragment {

@@ -1,23 +1,30 @@
 package com.example.holmi_production.money_counter_app.di.modules
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.holmi_production.money_counter_app.di.common.PerFeature
-import com.example.holmi_production.money_counter_app.di.common.ViewModelFactory
+import com.example.holmi_production.money_counter_app.di.common.ViewModelKey
+import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
+import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
+import com.example.holmi_production.money_counter_app.storage.SettingRepository
+import com.example.holmi_production.money_counter_app.storage.SpendingRepository
+import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
+import com.example.holmi_production.money_counter_app.ui.view_models.KeyboardViewModel
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import javax.inject.Provider
+import dagger.multibindings.IntoMap
 
 /**
  * @author Alexey Kholmanov (alexey.holmanov@cleverpumpkin.ru)
  */
 @Module
-object ViewModelModule {
+abstract class ViewModelModule {
 
-    @Provides
-    @PerFeature
-    fun provideViewModelFactory(viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>): ViewModelProvider.Factory {
-        return ViewModelFactory(viewModels)
-    }
+    @Binds
+    @IntoMap
+    @ViewModelKey(KeyboardViewModel::class)
+    abstract fun provideKeyboardViewModel(
+        viewModel: KeyboardViewModel
+    ): ViewModel
 
 }

@@ -1,37 +1,31 @@
 package com.example.holmi_production.money_counter_app.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.bindView
-import moxy.MvpAppCompatFragment
 
 /**
  * @author Alexey Kholmanov (alexey.holmanov@cleverpumpkin.ru)
  */
-abstract class BaseFragment(private val layoutId: Int) : MvpAppCompatFragment() {
+abstract class BaseFragment : Fragment {
+
+    constructor() : super()
+
+    constructor(@LayoutRes layoutRes: Int) : super(layoutRes)
 
     private val appbarConfig
         get() = (requireActivity() as MainActivity).appBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        inject()
+//        inject()
         super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(layoutId, container, false)
     }
 
     protected fun initToolbar(@StringRes titleRes: Int): Toolbar {
@@ -54,7 +48,6 @@ abstract class BaseFragment(private val layoutId: Int) : MvpAppCompatFragment() 
             findNavController(),
             appbarConfig
         )
-
         return toolbar
     }
 }

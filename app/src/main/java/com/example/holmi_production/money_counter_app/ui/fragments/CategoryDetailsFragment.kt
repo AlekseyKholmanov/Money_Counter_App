@@ -37,22 +37,24 @@ class CategoryDetailsFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val category = arguments?.getParcelable("category") as CategoryEntity?
 
-        if (category != null) {
-            category.color.let { iv_category_image.setBackgroundColor(it) }
-            category.imageId?.let { iv_category_image.setImageResource(it) }
-            et_category_name.setText(category.description)
-            iv_category_image.tag = category.imageId
-            for (i in category.spendingDirection) {
-                if (i == SpDirection.INCOME)
-                    ch_income.isChecked = true
-                if (i == SpDirection.SPENDING)
-                    ch_spending.isChecked = true
-                if (i == SpDirection.ACCUMULATION)
-                    ch_accumulation.isChecked = true
-            }
-        }
+        //TODO get id and send request for that category by id
+//        val category = arguments?.getParcelable("category") as CategoryEntity?
+
+//        if (category != null) {
+//            category.color.let { iv_category_image.setBackgroundColor(it) }
+//            category.imageId?.let { iv_category_image.setImageResource(it) }
+//            et_category_name.setText(category.description)
+//            iv_category_image.tag = category.imageId
+//            for (i in category.spendingDirection) {
+//                if (i == SpDirection.INCOME)
+//                    ch_income.isChecked = true
+//                if (i == SpDirection.SPENDING)
+//                    ch_spending.isChecked = true
+//                if (i == SpDirection.ACCUMULATION)
+//                    ch_accumulation.isChecked = true
+//            }
+//        }
         color_seek_bar.setOnColorChangeListener(object : ColorSeekBar.OnColorChangeListener {
             override fun onColorChangeListener(color: Int) {
                 //gives the selected color
@@ -138,8 +140,9 @@ class CategoryDetailsFragment :
         val background = iv_category_image.background
         val color: ColorDrawable? = background as? ColorDrawable
         val imageId = iv_category_image.tag as Int?
-        val category = (arguments?.getParcelable("category") as CategoryEntity?)
-        val categoryId = category?.id ?: 0
+        //TODO getCategoryById
+//        val category = (arguments?.getParcelable("category") as CategoryEntity?)
+        val categoryId =  0
         Log.d("M_CatDetailFragment", "dsada")
         return CategoryEntity(
             id = categoryId,

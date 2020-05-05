@@ -7,20 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import com.example.holmi_production.money_counter_app.App
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.PieCharState
 import com.example.holmi_production.money_counter_app.model.entity.GraphEntity
 import com.example.holmi_production.money_counter_app.ui.fragments.PieDialogFragment
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPieViewModel
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPieView
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartStackedPresenter
+import com.example.holmi_production.money_counter_app.ui.view_models.KeyboardViewModel
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
-import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -29,38 +28,26 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.chart_pie.*
-import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 import javax.inject.Provider
 
-class ChartPieFragment() : BaseFragment(R.layout.chart_pie),
-    ChartPieView {
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.chart_pie, container, false)
-    }
+class ChartPieFragment : BaseFragment(R.layout.chart_pie){
 
     @Inject
-    lateinit var presenterProvider: Provider<ChartPiePresenter>
+    lateinit var vmFactory : ViewModelProvider.Factory
 
-    private val presenter by moxyPresenter { presenterProvider.get() }
+    val viewModel: ChartPieViewModel by viewModels{vmFactory}
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("M_PieChartFragment", "pie view created")
         super.onViewCreated(view, savedInstanceState)
-        presenter.observeData()
+        viewModel.observeData()
         preparePieSettings()
         chart_pie.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onNothingSelected() {}
@@ -68,23 +55,23 @@ class ChartPieFragment() : BaseFragment(R.layout.chart_pie),
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 val categoryId = e!!.data as Int
                 val canDetailed = pieBack.visibility == View.VISIBLE
-                presenter.updateGraph(categoryId, canDetailed)
+                viewModel.updateGraph(categoryId, canDetailed)
                 Log.d("M_PieChartFragment", "VALUE SELECTED index $categoryId")
             }
         })
         pieBack.setOnClickListener {
-            presenter.updateGraph(null, true)
+            viewModel.updateGraph(null, true)
         }
     }
 
 
-    override fun render(state: PieCharState) {
-        when (state) {
-            is PieCharState.DetailsState -> renderDetailsState(state)
-            is PieCharState.ErrorState -> renderError()
-            is PieCharState.NormalState -> renderNormalState(state)
-        }
-    }
+//    override fun render(state: PieCharState) {
+//        when (state) {
+//            is PieCharState.DetailsState -> renderDetailsState(state)
+//            is PieCharState.ErrorState -> renderError()
+//            is PieCharState.NormalState -> renderNormalState(state)
+//        }
+//    }
 
     private fun renderNormalState(state: PieCharState.NormalState) {
         hidePlaceholder()
@@ -108,7 +95,8 @@ class ChartPieFragment() : BaseFragment(R.layout.chart_pie),
     private fun renderDetailsState(state: PieCharState.DetailsState) {
         hidePlaceholder()
         val bundle = Bundle()
-        bundle.putParcelableArray("SPENDINGS", state.spendings)
+        //TODO get data from repository
+//        bundle.putParcelableArray("SPENDINGS", state.spendings)
         val fr =
             PieDialogFragment.newInstance(
                 bundle
@@ -182,13 +170,13 @@ class ChartPieFragment() : BaseFragment(R.layout.chart_pie),
         chip.chipBackgroundColor = ColorStateList.valueOf(color)
         chip.textSize = 20f
         chip.isCheckable = true
-        chip.setOnLongClickListener {
-            presenter.getSpending(id!!)
-            return@setOnLongClickListener true
-        }
-        chip.setOnClickListener {
-            presenter.getSpending(id!!)
-        }
+//        chip.setOnLongClickListener {
+//            presenter.getSpending(id!!)
+//            return@setOnLongClickListener true
+//        }
+//        chip.setOnClickListener {
+//            presenter.getSpending(id!!)
+//        }
         return chip
     }
 

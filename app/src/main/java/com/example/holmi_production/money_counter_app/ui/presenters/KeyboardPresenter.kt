@@ -49,19 +49,6 @@ class KeyboardPresenter(
             isSpending,
             comment
         )
-        spendingInteractor.insert(spending)
-            .doOnComplete {
-                categoryInteractor.getCategoryWithSub(spending.categoryId)
-                    .async()
-                    .subscribe({
-                        viewState.showSnack(it, spending)
-                    }, {
-                        Log.d("M_KeyboardPresenter", "error ${it.message}")
-                    })
-                    .keep()
-            }
-            .complete()
-            .keep()
 
         sumPerDayRepository.getTodayAndAverage()
             .async()
@@ -151,16 +138,6 @@ class KeyboardPresenter(
             .keep()
     }
 
-    fun getCategoryButtonValue() {
-        val categoryId = settingRepository.getCategoryValue()
-        updateKeyboardUI(categoryId)
-    }
-
-    fun setCategoryButonType(id: Int) {
-        Log.d("M_KeyboardPresenter", "set type $id")
-        settingRepository.setCategoryId(id)
-        updateKeyboardUI(id)
-    }
 
     private fun recalculateAverageSum(days: Int) {
         Log.d("M_KeyboardPresenter", "start recalculating")
@@ -179,25 +156,7 @@ class KeyboardPresenter(
             .keep()
     }
 
-    private fun updateKeyboardUI(categoryId: Int) {
-        categoryInteractor.getCategoryWithSub(categoryId)
-            .map { (category, subCategories) ->
-                Pair(category, subCategories.filter { !it.isDeleted })
-            }
-            .async()
-            .subscribe({ pair ->
-                viewState.updateCategoryPickerButton(category = pair.first)
-                viewState.showSubcategoryMenu(
-                    subcategories = pair.second,
-                    color = pair.first.color ?: Color.BLACK
-                )
-                viewState.showActionButtons(directions = pair.first.spendingDirection)
-            }, {
-                Log.d("M_KeyboardPresenter", it.message)
-                viewState.updateCategoryPickerButton(null)
-            })
-            .keep()
-    }
+
 
     private fun updateDayLeft() {
         val now = DateTime()

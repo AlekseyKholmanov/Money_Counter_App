@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.ui.dialogs.CreateSubcategoryDialog
@@ -21,13 +20,13 @@ class EditCategoryFragment : BaseFragment(R.layout.dialog_edit_category), EditCa
 
     lateinit var name: EditText
 
-    @Inject
-    lateinit var presenterProvider: Provider<EditCategoryPresenter>
-
-    private val presenter by moxyPresenter { presenterProvider.get() }
+//    @Inject
+//    lateinit var presenterProvider: Provider<EditCategoryPresenter>
+//
+//    private val presenter by moxyPresenter { presenterProvider.get() }
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

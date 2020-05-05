@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import com.example.holmi_production.money_counter_app.di.common.PerFeature
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import com.example.holmi_production.money_counter_app.storage.*
+import com.example.holmi_production.money_counter_app.storage.impl.CategoryRepositoryImpl
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import dagger.Module
 import dagger.Provides
@@ -26,8 +27,10 @@ object RepositoryModule {
     @PerFeature
     fun provideCategoryRepository(
         db: ExpenseDatabase
-    ): CategoryRepository {
-        return CategoryRepository(db)
+    ): CategoryRepositoryImpl {
+        return CategoryRepositoryImpl(
+            db
+        )
     }
 
     @Provides

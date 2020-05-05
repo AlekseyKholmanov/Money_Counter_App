@@ -5,7 +5,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import javax.inject.Inject
 
-class Vibrator @Inject constructor(private val v: Vibrator) {
+class Vibrator (private val v: Vibrator) {
 
     fun vibrate(milliseconds: Long) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

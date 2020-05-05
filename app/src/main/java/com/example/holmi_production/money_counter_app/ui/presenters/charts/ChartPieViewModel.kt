@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.ui.presenters.charts
 
 import android.graphics.Color
 import android.util.Log
+import androidx.lifecycle.ViewModel
 import moxy.InjectViewState
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
@@ -11,40 +12,40 @@ import com.example.holmi_production.money_counter_app.model.entity.*
 import com.example.holmi_production.money_counter_app.mvp.BasePresenter
 import javax.inject.Inject
 
-@InjectViewState
-class ChartPiePresenter (
+
+class ChartPieViewModel @Inject constructor(
     private val spendingInteractor: SpendingInteractor
-) : BasePresenter<ChartPieView>() {
+) : ViewModel() {
 
     var spendingList = mutableListOf<SpendingDetails>()
     fun observeData() {
-        spendingInteractor.observeSpendingWithType()
-            .map {
-                spendingList = it.toMutableList()
-                filterList(it, null)
-            }
-            .map {
-                return@map getChartEntities(it)
-            }
-            .async()
-            .subscribe({
-                viewState.render(PieCharState.NormalState(it, true))
-            }, {
-                viewState.render(PieCharState.ErrorState)
-                Log.d("qwerty", it.message)
-            })
-            .keep()
+//        spendingInteractor.observeSpendingWithType()
+//            .map {
+//                spendingList = it.toMutableList()
+//                filterList(it, null)
+//            }
+//            .map {
+//                return@map getChartEntities(it)
+//            }
+//            .async()
+//            .subscribe({
+//                viewState.render(PieCharState.NormalState(it, true))
+//            }, {
+//                viewState.render(PieCharState.ErrorState)
+//                Log.d("qwerty", it.message)
+//            })
+//            .keep()
     }
 
     fun getSpending(categoryId: Int) {
-        val filtered = mutableListOf<SpendingDetails>()
-        spendingList.forEach { item ->
-            if (item.category.id == categoryId)
-                filtered.add(item)
-        }
-        filtered.sortByDescending { it.spending.createdDate }
-        Log.d("M_PieChartPresenter", "size: ${filtered.size}")
-        viewState.render(PieCharState.DetailsState(filtered.toTypedArray()))
+//        val filtered = mutableListOf<SpendingDetails>()
+//        spendingList.forEach { item ->
+//            if (item.category.id == categoryId)
+//                filtered.add(item)
+//        }
+//        filtered.sortByDescending { it.spending.createdDate }
+//        Log.d("M_PieChartPresenter", "size: ${filtered.size}")
+//        viewState.render(PieCharState.DetailsState(filtered.toTypedArray()))
     }
 
     private fun filterList(
@@ -74,7 +75,7 @@ class ChartPiePresenter (
     fun updateGraph(categoryId: Int?, canDetailed: Boolean) {
         val sorted = filterList(spendingList, categoryId)
         val output = getChartEntities(sorted)
-        viewState.render(PieCharState.NormalState(output, canDetailed))
+//        viewState.render(PieCharState.NormalState(output, canDetailed))
     }
 
     private fun getChartEntities(values: List<Pair<Nameble?, List<SpendingEntity>>>): List<GraphEntity> {

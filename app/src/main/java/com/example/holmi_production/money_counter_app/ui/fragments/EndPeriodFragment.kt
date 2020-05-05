@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodView
@@ -22,14 +21,14 @@ class EndPeriodFragment : BaseFragment(R.layout.fragment_end_period),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getSum()
+//        presenter.getSum()
         endPeriod_next.setOnClickListener {
-            presenter.goToMain()
+//            presenter.goToMain()
         }
     }
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
     }
 
 
@@ -52,10 +51,10 @@ class EndPeriodFragment : BaseFragment(R.layout.fragment_end_period),
     override fun goToMain() {
 //        findNavController().navigate(R.id.action_navEndPeriod_to_navMain)
     }
-
-    @Inject
-    lateinit var presenterProvider: Provider<EndPeriodPresenter>
-
-    private val presenter by moxyPresenter { presenterProvider.get() }
+//
+//    @Inject
+//    lateinit var presenterProvider: Provider<EndPeriodPresenter>
+//
+//    private val presenter by moxyPresenter { presenterProvider.get() }
 
 }

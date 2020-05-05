@@ -9,8 +9,8 @@ import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.SpendingRepository
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import com.example.holmi_production.money_counter_app.ui.presenters.*
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalancePresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalanceViewModel
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPieViewModel
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartStackedPresenter
 import dagger.Module
 import dagger.Provides
@@ -21,14 +21,6 @@ import dagger.Provides
 @Module
 object PresenterModule {
 
-    @Provides
-    @PerFeature
-    fun provideCategoryPickerPresenter(
-        interactor: CategoryInteractor,
-        settingRepository: SettingRepository
-    ): SelectCategoryPresenter {
-        return SelectCategoryPresenter(interactor, settingRepository)
-    }
 
     @Provides
     @PerFeature
@@ -123,8 +115,8 @@ object PresenterModule {
     fun provideTopbarPresenter(
         periodsRepository: PeriodsRepository,
         settingRepository: SettingRepository
-    ): TopbarPresenter {
-        return TopbarPresenter(
+    ): TopbarViewModel {
+        return TopbarViewModel(
             periodsRepository,
             settingRepository
         )
@@ -135,16 +127,16 @@ object PresenterModule {
     @PerFeature
     fun provideChartBalancePresenter(
         balanceInteractor: BalanceInteractor
-    ): ChartBalancePresenter {
-        return ChartBalancePresenter(balanceInteractor)
+    ): ChartBalanceViewModel {
+        return ChartBalanceViewModel(balanceInteractor)
     }
 
     @Provides
     @PerFeature
     fun provideChartPiePresenter(
         spendingInteractor: SpendingInteractor
-    ): ChartPiePresenter {
-        return ChartPiePresenter(spendingInteractor)
+    ): ChartPieViewModel {
+        return ChartPieViewModel(spendingInteractor)
     }
 
     @Provides

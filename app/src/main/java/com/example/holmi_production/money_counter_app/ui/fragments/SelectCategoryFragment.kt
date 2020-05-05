@@ -5,23 +5,23 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.main.Navigation
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.ui.adapter.CategoryPickerAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.CategoryPickerHolder
-import com.example.holmi_production.money_counter_app.ui.presenters.SelectCategoryPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.SelectCategoryView
+import com.example.holmi_production.money_counter_app.ui.presenters.SelectCategoryViewModel
 import com.example.holmi_production.money_counter_app.ui.utils.ViewAnimation
 import kotlinx.android.synthetic.main.fragment_select_category.*
-import moxy.ktx.moxyPresenter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import javax.inject.Inject
-import javax.inject.Provider
 
 class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category),
     SelectCategoryView {
@@ -31,24 +31,24 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category),
     private lateinit var rotateForward: Animation
     private lateinit var rotateBackward: Animation
 
-    @Inject
-    lateinit var presenterProvider: Provider<SelectCategoryPresenter>
+//    @Inject
+//    lateinit var vmFactory : ViewModelProvider.Factory
 
-    private val presenter by moxyPresenter { presenterProvider.get() }
-
+    val keyboardViewModel: SelectCategoryViewModel by viewModel()
 
     lateinit var adapter: CategoryPickerAdapter
 
 
     private val categoryPickerCallback = object : CategoryPickerHolder.Callback {
         override fun categoryPicked(categoryId: Int) {
-            presenter.categorySelected(categoryId)
+//            presenter.categorySelected(categoryId)
         }
 
         override fun categoryEdited(pair: Pair<CategoryEntity, List<SubCategoryEntity>>) {
             val bundle = Bundle()
-            bundle.putParcelable("category", pair.first)
-            bundle.putParcelableArray("subcategories", pair.second.toTypedArray())
+            //TODO
+//            bundle.putParcelable("category", pair.first)
+//            bundle.putParcelableArray("subcategories", pair.second.toTypedArray())
             categoryFab.setOnClickListener {
                 (requireActivity() as Navigation).loadFragment(
                     EditCategoryFragment.newInstance(bundle),
@@ -64,7 +64,7 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category),
     private var isFabOpen = false
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,7 +78,7 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar("Выберите категорию")
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
         adapter = CategoryPickerAdapter(categoryPickerCallback)
         val layoutManager = GridLayoutManager(context, 3)
 
@@ -95,7 +95,7 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category),
         subcategoryFab.setOnClickListener {
             //TODO open subcategory fragment here
         }
-        presenter.observeCategories()
+//        presenter.observeCategories()
     }
 
     private fun animateFab() {

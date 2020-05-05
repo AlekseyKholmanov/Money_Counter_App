@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/key_accumulation"
+        android:id="@+id/keyAccumulation"
         style="@style/TextButton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -22,7 +22,7 @@
         android:textColor="@color/colorYellow" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/key_spending"
+        android:id="@+id/keySpending"
         style="@style/TextButton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -33,7 +33,7 @@
         app:iconTint="@color/design_default_color_error" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/key_income"
+        android:id="@+id/keyIncome"
         style="@style/TextButton"
         android:layout_width="match_parent"
         android:layout_height="0dp"

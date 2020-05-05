@@ -2,10 +2,11 @@ package com.example.holmi_production.money_counter_app.interactor
 
 import android.graphics.drawable.ColorDrawable
 import com.example.holmi_production.money_counter_app.extensions.async
+import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
-import com.example.holmi_production.money_counter_app.storage.CategoryRepository
+import com.example.holmi_production.money_counter_app.storage.impl.CategoryRepositoryImpl
 import com.example.holmi_production.money_counter_app.storage.SubCategoryRepository
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import io.reactivex.Completable
@@ -15,10 +16,9 @@ import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.Flowables
 import io.reactivex.rxkotlin.Singles
-import javax.inject.Inject
 
 class CategoryInteractor(
-    private val categoryRepository: CategoryRepository,
+    private val categoryRepository: CategoryRepositoryImpl,
     private val subCategoryRepository: SubCategoryRepository) {
 
     fun insert(name: String, types: List<SpDirection>, color: ColorDrawable?, imageId:Int): Completable {
@@ -88,9 +88,13 @@ class CategoryInteractor(
         return categoryRepository.getCategory(id)
     }
 
-    fun getCategoryWithSub(id: Int): Single<Pair<CategoryEntity, List<SubCategoryEntity>>> {
-        return Singles.zip(categoryRepository.getCategory(id).toSingle(), subCategoryRepository.getSubcategoriesWithParentId(id))
+    suspend fun getCateforyDetails(categoryId: Int): CategoryDetails {
+        return categoryRepository.getCategoryDetailsById(categoryId)
     }
+
+//    fun getCategoryWithSub(id: Int): Single<Pair<CategoryEntity, List<SubCategoryEntity>>> {
+//        return Singles.zip(categoryRepository.getCategory(id).toSingle(), subCategoryRepository.getSubcategoriesWithParentId(id))
+//    }
 
     fun updateUsageCount(categoryId: Int): Disposable {
         return getCategory(categoryId)

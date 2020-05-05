@@ -32,22 +32,22 @@ class SplitButtonView @JvmOverloads constructor(
         }
 
         if (state.contains(SpDirection.INCOME)) {
-            key_income.visibility = View.VISIBLE
-            key_income.iconSize = iconSize
+            keyIncome.visibility = View.VISIBLE
+            keyIncome.iconSize = iconSize
         } else {
-            key_income.visibility = View.GONE
+            keyIncome.visibility = View.GONE
         }
         if (state.contains(SpDirection.SPENDING)) {
-            key_spending.visibility = View.VISIBLE
-            key_spending.iconSize = iconSize
+            keySpending.visibility = View.VISIBLE
+            keySpending.iconSize = iconSize
         } else {
-            key_spending.visibility = View.GONE
+            keySpending.visibility = View.GONE
         }
         if (state.contains(SpDirection.ACCUMULATION)) {
-            key_accumulation.visibility = View.VISIBLE
-            key_accumulation.iconSize = iconSize
+            keyAccumulation.visibility = View.VISIBLE
+            keyAccumulation.iconSize = iconSize
         } else {
-            key_accumulation.visibility = View.GONE
+            keyAccumulation.visibility = View.GONE
         }
     }
 

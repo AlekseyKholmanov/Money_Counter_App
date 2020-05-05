@@ -7,6 +7,7 @@ import com.example.holmi_production.money_counter_app.interactor.NotificationInt
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.notification.NotificationManager
 import com.example.holmi_production.money_counter_app.storage.*
+import com.example.holmi_production.money_counter_app.storage.impl.CategoryRepositoryImpl
 import dagger.Module
 import dagger.Provides
 
@@ -33,7 +34,7 @@ object InteractorModule {
     @Provides
     @PerFeature
     fun provideCategoryInteractor(
-        categoryRepository: CategoryRepository,
+        categoryRepository: CategoryRepositoryImpl,
         subCategoryRepository: SubCategoryRepository
     ): CategoryInteractor {
         return CategoryInteractor(

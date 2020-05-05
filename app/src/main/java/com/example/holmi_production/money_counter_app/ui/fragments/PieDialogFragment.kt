@@ -3,14 +3,16 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.ui.adapter.PieAdapter
 import moxy.MvpAppCompatDialogFragment
 
-class PieDialogFragment private constructor(): MvpAppCompatDialogFragment() {
+class PieDialogFragment() : DialogFragment() {
     lateinit var rv:RecyclerView
 
 

@@ -14,7 +14,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.worker.WorkerInteractor
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,15 +22,14 @@ import kotlinx.android.synthetic.main.include_menu_currency_converting.*
 import kotlinx.android.synthetic.main.include_menu_end_period_date.*
 import kotlinx.android.synthetic.main.menu_drawer_custom.*
 import moxy.MvpAppCompatActivity
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class MainActivity : MvpAppCompatActivity() {
 
-    @Inject
-    lateinit var settingRepository: SettingRepository
 
-    @Inject
-    lateinit var workerInteractor: WorkerInteractor
+    private val settingRepository: SettingRepository by inject()
+
+//    private val workerInteractor: WorkerInteractor by inject()
 
     lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -43,7 +41,7 @@ class MainActivity : MvpAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        AppComponent.instance.inject(this)
+//        AppComponent.instance.inject(this)
         initializeNavigation()
         initializeSettings()
 //        initView()
@@ -60,14 +58,14 @@ class MainActivity : MvpAppCompatActivity() {
             val datas = resources.getStringArray(R.array.numbers)
             b.setItems(datas) { dialog, which ->
                 Log.d("M_SettingsFragment", "id: $which ${datas[which]}")
-                workerInteractor.startEndMonthWorker(datas[which].toInt())
+//                workerInteractor.startEndMonthWorker(datas[which].toInt())
                 et_end_month_value.text = datas[which]
                 dialog!!.dismiss()
             }
             b.show()
         }
         balancer.setOnClickListener {
-            workerInteractor.balancePopulateWork()
+//            workerInteractor.balancePopulateWork()
         }
     }
 
@@ -92,7 +90,7 @@ class MainActivity : MvpAppCompatActivity() {
         navViewBottom.setupWithNavController(navController)
         navViewDrawer.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            when(destination.id){
+            when (destination.id) {
                 R.id.selectCategoryFragment -> hideBottomNav()
                 else -> showBottomNav()
             }

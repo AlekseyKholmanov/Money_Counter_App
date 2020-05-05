@@ -4,22 +4,20 @@ import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.example.holmi_production.money_counter_app.App
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.custom.ChartMarkerView
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalancePresenter
+import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalanceViewModel
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalanceView
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPiePresenter
+import com.example.holmi_production.money_counter_app.ui.view_models.KeyboardViewModel
 import com.example.holmi_production.money_counter_app.utils.Point.getLabelIndexes
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
@@ -30,10 +28,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.Utils
 import kotlinx.android.synthetic.main.chart_balance.*
 import kotlinx.android.synthetic.main.chart_bar.emptyPlaceholder_bar
-import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
 import org.joda.time.DateTime
 import javax.inject.Inject
 import javax.inject.Provider
@@ -43,22 +38,22 @@ class ChartBalanceFragment : BaseFragment(R.layout.chart_balance),
     ChartBalanceView {
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
     }
 
 
     @Inject
-    lateinit var presenterProvider: Provider<ChartBalancePresenter>
+    lateinit var vmFactory : ViewModelProvider.Factory
 
-    private val presenter by moxyPresenter { presenterProvider.get() }
+    val viewModel: ChartBalanceViewModel by viewModels{vmFactory}
 
     lateinit var chart: LineChart
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AppComponent.instance.inject(this)
-        presenter.observeBalances()
+   //AppComponent.instance.inject(this)
+        viewModel.observeBalances()
         chart = view.findViewById(R.id.line_chart)
         chart.xAxis.disableGridDashedLine()
         chart.xAxis.disableAxisLineDashedLine()

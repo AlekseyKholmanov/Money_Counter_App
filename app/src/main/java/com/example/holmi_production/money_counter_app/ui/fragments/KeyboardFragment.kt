@@ -2,172 +2,173 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
-import com.example.holmi_production.money_counter_app.extensions.getDayAddition
-import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
-import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.main.MainActivity
+import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
-import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
-import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
-import com.example.holmi_production.money_counter_app.ui.dialogs.IDatePickerCallback
-import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardFragmnetView
-import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardPresenter
-import com.google.android.material.snackbar.Snackbar
+import com.example.holmi_production.money_counter_app.ui.custom.IKeyboardListener
+import com.example.holmi_production.money_counter_app.ui.view_models.KeyboardViewModel
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
-import moxy.MvpAppCompatFragment
-import moxy.ktx.moxyPresenter
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
-import org.joda.time.DateTime
-import javax.inject.Inject
-import javax.inject.Provider
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard),
-    KeyboardFragmnetView,
-    IKeyboardListener,
-    IDatePickerCallback {
+class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard) {
 
-    @Inject
-    lateinit var presenterProvider: Provider<KeyboardPresenter>
+    private val keyboardViewModel: KeyboardViewModel by viewModel()
 
-    private val presenter by moxyPresenter { presenterProvider.get() }
-
-    private lateinit var keyboardPart: KeyboardPartFragment
+//    @Inject
+//    lateinit var presenterProvider: Provider<KeyboardPresenter>
+//
+//    private val presenter by moxyPresenter { presenterProvider.get() }
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+//   //AppComponent.instance.inject(this)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_bottom_keyboard, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        keyboardViewModel.observeCategory()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeKeyboard()
         initToolbar()
-        left_days.setOnClickListener {
-            presenter.observeEndPeriodDate()
+        with(keyboardViewModel) {
+            categoryLiveData.observe(viewLifecycleOwner, Observer(::updateCategory))
         }
-        if (arguments == null)
-            presenter.getCategoryButtonValue()
-        else {
-            val categoryId = requireArguments().getInt("categoryId")
-            presenter.setCategoryButonType(categoryId)
-        }
-        presenter.observeData()
-        presenter.observeEndPeriodDate()
-        Log.d("M_KeyboardFragment", "View Created")
-    }
+        keyboard.setListener(object : IKeyboardListener {
+            override fun enterPressed(
+                money: Double,
+                comment: String,
+                isSpending: SpDirection,
+                subcategoryId: Int?
+            ) {
+                //TODO save spending here
+            }
 
-    override fun showNewSumSnack(sum: Double, days: Int) {
-        val message = "новая сумма: ${sum.toCurencyFormat()} на ${days.getDayAddition()}"
-        Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
-            .show()
-    }
-
-    override fun showActionButtons(directions: List<SpDirection>) {
-        keyboardPart.showActionButtons(directions)
-    }
-
-    override fun showSubcategoryMenu(subcategories: List<SubCategoryEntity>, color: Int) {
-        keyboardPart.showChipsContainer(subcategories, color)
-    }
-
-    override fun showSnack(
-        category: Pair<CategoryEntity, List<SubCategoryEntity>>,
-        spending: SpendingEntity
-    ) {
-        val message = if (spending.isSpending == SpDirection.SPENDING)
-            "Расход. ${category.first.description}. ${spending.sum.toCurencyFormat().withRubleSign()}"
-        else
-            "Доход. ${category.first.description}. ${spending.sum.toCurencyFormat().withRubleSign()}"
-        val snack = Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
-        snack.setAction("Отмена") {
-            presenter.undoAdding(spending)
-        }
-        snack.show()
-    }
-
-    override fun datePicked(date: DateTime) {
-//        presenter.recalculateAverageSum(date)
-    }
-
-    override fun updateCategoryPickerButton(category: CategoryEntity?) {
-        keyboardPart.updateCategoryButton(category = category)
-    }
-
-    override fun showCategoryDialog() {
-        findNavController().navigate(R.id.selectCategoryFragment)
-    }
-
-    override fun showAverageSum(sum: String, isDisplayed: Boolean) {
-        val displayed = if (isDisplayed) View.VISIBLE else View.GONE
-        new_sum_per_day_text.visibility = displayed
-        new_sum_per_day.visibility = displayed
-        new_sum_per_day.text = sum
-    }
-
-    override fun enterPressed(
-        money: Double,
-        comment: String,
-        isSpending: SpDirection,
-        subcategoryId: Int?
-    ) {
-        Log.d("qwerty", money.toString())
-        presenter.saveSpend(money, comment, isSpending, subcategoryId)
-    }
-
-    override fun moneyUpdated(money: Double) {
-    }
-
-    override fun showDaysLeft(days: String) {
-        left_days.text = days
-    }
-
-    override fun showSumPerDay(money: String) {
-        sum_per_day.text = money
-    }
-
-    override fun showIncomeSum(money: String) {
-        left.text = money
-    }
+            override fun showCategoryDialog() {
+                findNavController().navigate(R.id.selectCategoryFragment)
+            }
+        })
 
 
-    override fun showMoney(money: String) {
-//        expense.date = money
+//        left_days.setOnClickListener {
+//            presenter.observeEndPeriodDate()
+//        }
+//        if (arguments == null)
+//            presenter.getCategoryButtonValue()
+//        else {
+//            val categoryId = requireArguments().getInt("categoryId")
+//            presenter.setCategoryButonType(categoryId)
+//        }
+//        presenter.observeData()
+//        presenter.observeEndPeriodDate()
     }
 
-    private fun initializeKeyboard() {
-        keyboardPart =
-            KeyboardPartFragment.newInstance()
-        keyboardPart.setListener(this)
-        childFragmentManager.beginTransaction().apply {
-            replace(R.id.keyboard, keyboardPart)
-            commit()
-        }
+    private fun updateCategory(categoryDetails: CategoryDetails?) {
+
+        keyboard.showActionButtons(categoryDetails?.category?.spendingDirection)
+
+        keyboard.setCategory(categoryDetails?.category )
+
+        //TODO show subcategory here
     }
 
-    companion object {
-        fun newInstance(bundle: Bundle?): KeyboardFragment {
-            val fragment =
-                KeyboardFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        keyboard.setListener(null)
+        Log.d("M_KeyboardFragment", "view destroyed")
     }
+
+//    override fun showNewSumSnack(sum: Double, days: Int) {
+//        val message = "новая сумма: ${sum.toCurencyFormat()} на ${days.getDayAddition()}"
+//        Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
+//            .show()
+//    }
+//
+//    override fun showActionButtons(directions: List<SpDirection>) {
+//        keyboardPart.showActionButtons(directions)
+//    }
+//
+//    override fun showSubcategoryMenu(subcategories: List<SubCategoryEntity>, color: Int) {
+//        keyboardPart.showChipsContainer(subcategories, color)
+//    }
+//
+//    override fun showSnack(
+//        category: Pair<CategoryEntity, List<SubCategoryEntity>>,
+//        spending: SpendingEntity
+//    ) {
+//        val message = if (spending.isSpending == SpDirection.SPENDING)
+//            "Расход. ${category.first.description}. ${spending.sum.toCurencyFormat().withRubleSign()}"
+//        else
+//            "Доход. ${category.first.description}. ${spending.sum.toCurencyFormat().withRubleSign()}"
+//        val snack = Snackbar.make(fragment_keyboard, message, Snackbar.LENGTH_SHORT)
+//        snack.setAction("Отмена") {
+////            presenter.undoAdding(spending)
+//        }
+//        snack.show()
+//    }
+
+//    override fun datePicked(date: DateTime) {
+////        presenter.recalculateAverageSum(date)
+//    }
+//
+//    override fun updateCategoryPickerButton(category: CategoryEntity?) {
+//        keyboardPart.updateCategoryButton(category = category)
+//    }
+
+//    override fun showCategoryDialog() {
+//        findNavController().navigate(R.id.selectCategoryFragment)
+//    }
+
+//    override fun showAverageSum(sum: String, isDisplayed: Boolean) {
+//        val displayed = if (isDisplayed) View.VISIBLE else View.GONE
+//        new_sum_per_day_text.visibility = displayed
+//        new_sum_per_day.visibility = displayed
+//        new_sum_per_day.text = sum
+//    }
+
+//    override fun enterPressed(
+//        money: Double,
+//        comment: String,
+//        isSpending: SpDirection,
+//        subcategoryId: Int?
+//    ) {
+//        Log.d("qwerty", money.toString())
+////        presenter.saveSpend(money, comment, isSpending, subcategoryId)
+//    }
+
+//    override fun moneyUpdated(money: Double) {
+//    }
+
+//    override fun showDaysLeft(days: String) {
+//        left_days.text = days
+//    }
+//
+//    override fun showSumPerDay(money: String) {
+//        sum_per_day.text = money
+//    }
+//
+//    override fun showIncomeSum(money: String) {
+//        left.text = money
+//    }
+//
+//
+//    override fun showMoney(money: String) {
+////        expense.date = money
+//    }
+
+//    private fun initializeKeyboard() {
+//        keyboardPart =
+//            KeyboardPartFragment.newInstance()
+//        keyboardPart.setListener(this)
+//        childFragmentManager.beginTransaction().apply {
+//            replace(R.id.keyboard, keyboardPart)
+//            commit()
+//        }
+//    }
+
 }
 

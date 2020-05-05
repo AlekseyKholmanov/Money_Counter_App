@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.CategoryType
@@ -34,22 +33,19 @@ class ChartStackedFragment : BaseFragment(R.layout.chart_bar),
             return ChartStackedFragment()
         }
     }
-    @Inject
-    lateinit var presenterProvider: Provider<ChartStackedPresenter>
 
-    private val presenter by moxyPresenter { presenterProvider.get() }
 
     lateinit var chart: BarChart
 
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("M_PieChartFragment", "pie bar created")
-        presenter.observeDatas()
+//        presenter.observeDatas()
         chart = view.findViewById(R.id.chart_bar)
         chart.setPinchZoom(false)
 

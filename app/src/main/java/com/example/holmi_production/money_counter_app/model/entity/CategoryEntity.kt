@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+
 @Entity
 data class CategoryEntity(
     @PrimaryKey(autoGenerate = true)
@@ -17,4 +17,4 @@ data class CategoryEntity(
     val imageId: Int? = null,
     var usageCount: Int = 0,
     override var isDeleted:Boolean = false
-) : Nameble, Parcelable
+) : Nameble

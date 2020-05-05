@@ -13,7 +13,7 @@ class ChartFragmentAdapter(fm: FragmentManager, behavior: Int = BEHAVIOR_RESUME_
     override fun getItem(position: Int): Fragment {
         return when (ChartType.values()[position]){
             ChartType.PIE_CHART -> ChartPieFragment.newInstance()
-            ChartType.GRAPH_CHART -> ChartStackedFragment.newInstance()
+//            ChartType.GRAPH_CHART -> ChartStackedFragment.newInstance()
             ChartType.BALANCE_CHART -> ChartBalanceFragment.newInstance()
         }
     }
@@ -23,7 +23,7 @@ class ChartFragmentAdapter(fm: FragmentManager, behavior: Int = BEHAVIOR_RESUME_
     override fun getPageTitle(position: Int): CharSequence {
         return when (ChartType.values()[position]) {
             ChartType.PIE_CHART -> "Pie"
-            ChartType.GRAPH_CHART -> "Stacked bar"
+//            ChartType.GRAPH_CHART -> "Stacked bar"
             ChartType.BALANCE_CHART -> "Balance chart"
         }
     }

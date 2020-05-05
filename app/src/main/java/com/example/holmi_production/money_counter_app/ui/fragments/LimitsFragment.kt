@@ -1,21 +1,21 @@
 package com.example.holmi_production.money_counter_app.ui.fragments
 
+import android.os.Bundle
+import android.view.View
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.di.components.AppComponent
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.LimitsView
 import moxy.MvpAppCompatFragment
 
-class LimitsFragment: BaseFragment(R.layout.fragment_limits),
-    LimitsView {
+class LimitsFragment: BaseFragment(R.layout.fragment_limits){
 
-    companion object{
-        fun newInstance(): LimitsFragment {
-            return LimitsFragment()
-        }
-    }
 
     override fun inject() {
-        AppComponent.instance.inject(this)
+   //AppComponent.instance.inject(this)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initToolbar()
     }
 }
