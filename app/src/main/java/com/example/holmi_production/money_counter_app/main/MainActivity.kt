@@ -7,24 +7,20 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.onNavDestinationSelected
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import com.example.holmi_production.money_counter_app.worker.WorkerInteractor
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.include_menu_currency_converting.*
 import kotlinx.android.synthetic.main.include_menu_end_period_date.*
 import kotlinx.android.synthetic.main.menu_drawer_custom.*
-import moxy.MvpAppCompatActivity
 import org.koin.android.ext.android.inject
 
-class MainActivity : MvpAppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
 
     private val settingRepository: SettingRepository by inject()
@@ -43,10 +39,17 @@ class MainActivity : MvpAppCompatActivity() {
         setContentView(R.layout.activity_main)
 //        AppComponent.instance.inject(this)
         initializeNavigation()
-        initializeSettings()
+        val options = NavOptions.Builder().setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out)
+            .setLaunchSingleTop(true)
+            .build()
+
+//        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+//            controller.navigate(destination.id, options)
+//        }
+    }
+//        initializeSettings()
 //        initView()
 
-    }
 
     private fun initView() {
         et_end_month_value.text = settingRepository.getEndMonth().toString()
@@ -87,14 +90,7 @@ class MainActivity : MvpAppCompatActivity() {
                 R.id.chartFragment
             ), drawer
         )
-        navViewBottom.setupWithNavController(navController)
-        navViewDrawer.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            when (destination.id) {
-                R.id.selectCategoryFragment -> hideBottomNav()
-                else -> showBottomNav()
-            }
-        }
+        NavigationUI.setupWithNavController(navViewDrawer,navController)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -129,16 +125,6 @@ class MainActivity : MvpAppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
-    }
-
-    private fun showBottomNav() {
-        navViewBottom.visibility = View.VISIBLE
-
-    }
-
-    private fun hideBottomNav() {
-        navViewBottom.visibility = View.GONE
-
     }
 
 

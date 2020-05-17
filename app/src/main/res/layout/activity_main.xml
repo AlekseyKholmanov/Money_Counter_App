@@ -10,10 +10,15 @@
     tools:context=".main.MainActivity"
     tools:openDrawer="start">
 
-    <include
-        layout="@layout/app_bar_main"
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/navHostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        android:background="@android:color/white"
+        app:navGraph="@navigation/main_graph" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navViewDrawer"
@@ -21,10 +26,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@android:color/white"
-        android:fitsSystemWindows="true">
-
-        <include layout="@layout/menu_drawer_custom" />
-
-    </com.google.android.material.navigation.NavigationView>
+        android:fitsSystemWindows="true"
+        app:menu="@menu/bottom_navigation_main"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

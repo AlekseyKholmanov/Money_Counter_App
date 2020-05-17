@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.BalanceInteractor
 import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
-import moxy.InjectViewState
+
 import org.joda.time.DateTime
-import javax.inject.Inject
 
 
-class ChartBalanceViewModel @Inject constructor(private val balanceInteractor: BalanceInteractor) :
+
+class ChartBalanceViewModel(private val balanceInteractor: BalanceInteractor) :
     ViewModel() {
 
 

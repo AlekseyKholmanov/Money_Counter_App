@@ -5,7 +5,7 @@ import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
-import javax.inject.Inject
+ 
 
 class SubCategoryRepository (
     val database: ExpenseDatabase

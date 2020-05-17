@@ -8,15 +8,13 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.ui.dialogs.CreateSubcategoryDialog
-import com.example.holmi_production.money_counter_app.ui.presenters.EditCategoryPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.EditCategoryView
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.dialog_edit_category.*
-import moxy.ktx.moxyPresenter
-import javax.inject.Inject
-import javax.inject.Provider
 
-class EditCategoryFragment : BaseFragment(R.layout.dialog_edit_category), EditCategoryView {
+
+
+
+class EditCategoryFragment : BaseFragment(R.layout.dialog_edit_category){
 
     lateinit var name: EditText
 
@@ -84,7 +82,7 @@ class EditCategoryFragment : BaseFragment(R.layout.dialog_edit_category), EditCa
         }
     }
 
-    override fun showState() {
-
-    }
+//    override fun showState() {
+//
+//    }
 }

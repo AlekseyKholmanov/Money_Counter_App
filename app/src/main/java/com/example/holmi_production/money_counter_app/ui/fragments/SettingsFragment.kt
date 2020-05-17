@@ -13,16 +13,14 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardPresenter
 import com.example.holmi_production.money_counter_app.ui.presenters.SettingsPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.SettingsView
 import kotlinx.android.synthetic.main.frament_settings.*
-import moxy.ktx.moxyPresenter
-import moxy.presenter.InjectPresenter
-import javax.inject.Inject
-import javax.inject.Provider
 
 
-class SettingsFragment : BaseFragment(R.layout.frament_settings),
-    SettingsView {
+
+
+
+
+class SettingsFragment : BaseFragment(R.layout.frament_settings){
 
     override fun inject() {
    //AppComponent.instance.inject(this)
@@ -52,19 +50,19 @@ class SettingsFragment : BaseFragment(R.layout.frament_settings),
 //        }
     }
 
-
-    override fun showMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showMessage(resId: Int) {
-        val message = context?.resources?.getText(resId)
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun updateEndMonth(day: Int) {
-        et_end_month_value.setText(day.toString())
-    }
+//
+//    override fun showMessage(message: String) {
+//        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+//    }
+//
+//    override fun showMessage(resId: Int) {
+//        val message = context?.resources?.getText(resId)
+//        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+//    }
+//
+//    override fun updateEndMonth(day: Int) {
+//        et_end_month_value.setText(day.toString())
+//    }
 
 
     private class SpinnerAdapter(context: Context, resource: Int, val datas: Array<Int>) :

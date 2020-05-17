@@ -6,7 +6,7 @@ import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.notification.NotificationManager
 import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
+
 
 class NotificationInteractor(
     private val sumPerDayRepository: SumPerDayRepository,

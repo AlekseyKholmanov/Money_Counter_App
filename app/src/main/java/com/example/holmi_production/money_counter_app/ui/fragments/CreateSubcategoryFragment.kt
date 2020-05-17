@@ -15,7 +15,7 @@ import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.ui.adapter.SpinnerSubcategoryAdapter
 import kotlinx.android.synthetic.main.part_create_subcategory.*
-import moxy.MvpAppCompatFragment
+
 
 class CreateSubcategoryFragment : BaseFragment(R.layout.part_create_subcategory) {
 

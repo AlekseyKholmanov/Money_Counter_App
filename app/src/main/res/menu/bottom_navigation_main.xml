@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      android:background="@color/design_default_color_primary_variant">
-    <item
+    android:background="@color/design_default_color_primary_variant">
+    <group android:checkableBehavior="single">
+        <item
             android:id="@+id/keyboardFragment"
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/text_main"/>
-    <item
+            android:title="@string/text_main" />
+        <item
             android:id="@+id/costsFragment"
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/text_сosts"/>
-    <item
+            android:title="@string/text_сosts" />
+        <item
             android:id="@+id/chartFragment"
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/text_chart"/>
-    <item
+            android:title="@string/text_chart" />
+        <item
             android:id="@+id/limitsFragment"
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/text_limits"/>
+            android:title="@string/text_limits" />
+    </group>
 </menu>

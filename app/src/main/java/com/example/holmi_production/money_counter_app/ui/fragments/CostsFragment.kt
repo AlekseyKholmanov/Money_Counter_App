@@ -17,19 +17,18 @@ import com.example.holmi_production.money_counter_app.ui.adapter.CostsAdapter
 import com.example.holmi_production.money_counter_app.model.ListItem
 import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.ui.presenters.CostsPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.CostsView
 import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryPresenter
 import com.example.holmi_production.money_counter_app.ui.utils.SwipeToDeleteCallback
 import kotlinx.android.synthetic.main.fragment_bottom_costs.*
-import moxy.MvpAppCompatFragment
-import moxy.ktx.moxyPresenter
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
-import javax.inject.Inject
-import javax.inject.Provider
 
-class CostsFragment : BaseFragment(R.layout.fragment_bottom_costs),
-    CostsView {
+
+
+
+
+
+
+class CostsFragment : BaseFragment(R.layout.fragment_bottom_costs)
+     {
 
     override fun inject() {
    //AppComponent.instance.inject(this)
@@ -65,34 +64,34 @@ class CostsFragment : BaseFragment(R.layout.fragment_bottom_costs),
     }
 
 
-    override fun onError(error: Throwable) {
-        showEmptyPlaceholder(show = true)
-    }
-
-    override fun showSpending(spending: List<ListItem>) {
-        adapter.items = spending
-        adapter.notifyDataSetChanged()
-        if (spending.isEmpty())
-            showEmptyPlaceholder(show = true)
-        else {
-            showEmptyPlaceholder(show = false)
-        }
-    }
-
-    override fun showSumByDirection(spending: Double, income: Double) {
-        val incomeText =
-            if (income == 0.0)
-                "+ ${"0".withRubleSign()}"
-            else
-                "+ ${income.toCurencyFormat().withRubleSign()}"
-        val spendingText = if (spending == 0.0)
-            "- ${"0".withRubleSign()}"
-        else
-            "- ${spending.toCurencyFormat().withRubleSign()}"
-        tv_costs_income.text = incomeText
-        tv_costs_spending.text = spendingText
-
-    }
+//    override fun onError(error: Throwable) {
+//        showEmptyPlaceholder(show = true)
+//    }
+//
+//    override fun showSpending(spending: List<ListItem>) {
+//        adapter.items = spending
+//        adapter.notifyDataSetChanged()
+//        if (spending.isEmpty())
+//            showEmptyPlaceholder(show = true)
+//        else {
+//            showEmptyPlaceholder(show = false)
+//        }
+//    }
+//
+//    override fun showSumByDirection(spending: Double, income: Double) {
+//        val incomeText =
+//            if (income == 0.0)
+//                "+ ${"0".withRubleSign()}"
+//            else
+//                "+ ${income.toCurencyFormat().withRubleSign()}"
+//        val spendingText = if (spending == 0.0)
+//            "- ${"0".withRubleSign()}"
+//        else
+//            "- ${spending.toCurencyFormat().withRubleSign()}"
+//        tv_costs_income.text = incomeText
+//        tv_costs_spending.text = spendingText
+//
+//    }
 
     private fun showEmptyPlaceholder(show: Boolean) {
         emptyPlaceholder_costs.isVisible = show

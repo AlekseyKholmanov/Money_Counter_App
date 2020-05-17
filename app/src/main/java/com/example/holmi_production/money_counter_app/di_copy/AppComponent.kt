@@ -6,8 +6,8 @@ package com.example.holmi_production.money_counter_app.di_copy
 
 val appComponent = listOf(
     databaseModule,
-    viewModelsModule,
     repositoryModule,
     interactorModule,
-    toolsModule
+    toolsModule,
+    viewModelsModule
 )

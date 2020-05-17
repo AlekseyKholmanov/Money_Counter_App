@@ -10,14 +10,11 @@ import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums
 import com.example.holmi_production.money_counter_app.ui.dialogs.ITopbarDatePickerCallback
 import com.example.holmi_production.money_counter_app.ui.dialogs.TopbarDatePickerDialog
 import com.example.holmi_production.money_counter_app.ui.presenters.TopbarViewModel
-import com.example.holmi_production.money_counter_app.ui.presenters.TopbarView
 import kotlinx.android.synthetic.main.fragment_topbar.*
 import org.joda.time.DateTime
-import javax.inject.Inject
 
 
 class TopbarFragment : BaseFragment(R.layout.fragment_topbar),
-    TopbarView,
     ITopbarDatePickerCallback {
 
     companion object{
@@ -49,9 +46,9 @@ class TopbarFragment : BaseFragment(R.layout.fragment_topbar),
 //        presenter.getPeriod()
     }
 
-    override fun showDate(date:String) {
-        tv_topbar_text.text = date
-    }
+//    override fun showDate(date:String) {
+//        tv_topbar_text.text = date
+//    }
 
     override fun datePicked(type: PeriodTypeEnums) {
 //        presenter.setPeriod(type)
@@ -61,9 +58,9 @@ class TopbarFragment : BaseFragment(R.layout.fragment_topbar),
 //        presenter.setPeriod(left, right)
     }
 
-    @Inject
-    lateinit var vmFactory : ViewModelProvider.Factory
-
-    val keyboardViewModel: TopbarViewModel by viewModels{vmFactory}
+//    @Inject
+//    lateinit var vmFactory : ViewModelProvider.Factory
+//
+//    val keyboardViewModel: TopbarViewModel by viewModels{vmFactory}
 
 }

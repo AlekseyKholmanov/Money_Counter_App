@@ -10,7 +10,6 @@ import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.CategoryType
 import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartStackedPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.StackedView
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Legend
@@ -20,14 +19,13 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import kotlinx.android.synthetic.main.chart_bar.*
-import moxy.ktx.moxyPresenter
+
 import org.joda.time.DateTime
-import javax.inject.Inject
-import javax.inject.Provider
+
+
 import kotlin.collections.ArrayList
 
-class ChartStackedFragment : BaseFragment(R.layout.chart_bar),
-    StackedView {
+class ChartStackedFragment : BaseFragment(R.layout.chart_bar) {
     companion object {
         fun newInstance(): ChartStackedFragment {
             return ChartStackedFragment()
@@ -78,43 +76,43 @@ class ChartStackedFragment : BaseFragment(R.layout.chart_bar),
         l.textSize = 25f
     }
 
-    override fun showError() {
-        showEmptyPlaceholder()
-    }
-
-    override fun showGraph(list: Map<DateTime, List<SpendingEntity>>) {
-        if (list.isEmpty()) {
-            showEmptyPlaceholder()
-        } else {
-            hidePlaceholder()
-            val keys = list.keys.toTypedArray()
-
-            val dataSets = ArrayList<IBarDataSet>()
-            val labels = ArrayList<String>()
-            for (i in 0 until list.count()) {
-                val groupedSpending = list.getValue(keys[i]).groupBy { CategoryType.values()[it.categoryId] }
-                val sums = ArrayList<Pair<Float, CategoryType>>()
-                groupedSpending.forEach { (type, spendings) ->
-                    sums.add(Pair(spendings.sumByDouble { it.sum }.toFloat(), type))
-
-                    val entry = BarEntry(keys[i].dayOfYear().get().toFloat(), sums.map { it.first }.toFloatArray())
-                    val barDataSet = BarDataSet(listOf(entry), i.toString())
-
-                    barDataSet.colors = sums.map { it.second.color }
-                    dataSets.add(barDataSet)
-                    labels.add(keys[i].toRUformat())
-                }
-                val data = BarData(dataSets)
-
-                chart.data = data
-                chart.barData.setValueTextSize(18f)
-
-                chart.xAxis.labelCount = list.count()
-                chart.animateY(2000, Easing.EaseInOutBack)
-                chart.invalidate()
-            }
-        }
-    }
+//    override fun showError() {
+//        showEmptyPlaceholder()
+//    }
+//
+//    override fun showGraph(list: Map<DateTime, List<SpendingEntity>>) {
+//        if (list.isEmpty()) {
+//            showEmptyPlaceholder()
+//        } else {
+//            hidePlaceholder()
+//            val keys = list.keys.toTypedArray()
+//
+//            val dataSets = ArrayList<IBarDataSet>()
+//            val labels = ArrayList<String>()
+//            for (i in 0 until list.count()) {
+//                val groupedSpending = list.getValue(keys[i]).groupBy { CategoryType.values()[it.categoryId] }
+//                val sums = ArrayList<Pair<Float, CategoryType>>()
+//                groupedSpending.forEach { (type, spendings) ->
+//                    sums.add(Pair(spendings.sumByDouble { it.sum }.toFloat(), type))
+//
+//                    val entry = BarEntry(keys[i].dayOfYear().get().toFloat(), sums.map { it.first }.toFloatArray())
+//                    val barDataSet = BarDataSet(listOf(entry), i.toString())
+//
+//                    barDataSet.colors = sums.map { it.second.color }
+//                    dataSets.add(barDataSet)
+//                    labels.add(keys[i].toRUformat())
+//                }
+//                val data = BarData(dataSets)
+//
+//                chart.data = data
+//                chart.barData.setValueTextSize(18f)
+//
+//                chart.xAxis.labelCount = list.count()
+//                chart.animateY(2000, Easing.EaseInOutBack)
+//                chart.invalidate()
+//            }
+//        }
+//    }
 
     private fun showEmptyPlaceholder() {
         emptyPlaceholder_bar.isVisible = true

@@ -8,15 +8,13 @@ import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodView
 import kotlinx.android.synthetic.main.fragment_end_period.*
-import moxy.MvpAppCompatFragment
-import moxy.ktx.moxyPresenter
-import javax.inject.Inject
-import javax.inject.Provider
 
-class EndPeriodFragment : BaseFragment(R.layout.fragment_end_period),
-    EndPeriodView {
+
+
+
+
+class EndPeriodFragment : BaseFragment(R.layout.fragment_end_period){
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,23 +30,23 @@ class EndPeriodFragment : BaseFragment(R.layout.fragment_end_period),
     }
 
 
-    override fun showDatePeriod(start: String, end: String) {
-        end_period_date_row.text = "За период с $start по $end:"
-    }
-
-    override fun showLeftSum(sum: String) {
-        end_period_left_sum.text = sum
-    }
-
-    override fun showSpendedSum(sum: String) {
-        end_period_spended_sum.text = sum
-    }
-
-    override fun ShowAverageSumForPeriod(sum: String) {
-        end_period_average_sum.text = sum
-    }
-
-    override fun goToMain() {
+//    override fun showDatePeriod(start: String, end: String) {
+//        end_period_date_row.text = "За период с $start по $end:"
+//    }
+//
+//    override fun showLeftSum(sum: String) {
+//        end_period_left_sum.text = sum
+//    }
+//
+//    override fun showSpendedSum(sum: String) {
+//        end_period_spended_sum.text = sum
+//    }
+//
+//    override fun ShowAverageSumForPeriod(sum: String) {
+//        end_period_average_sum.text = sum
+//    }
+//
+//    override fun goToMain() {
 //        findNavController().navigate(R.id.action_navEndPeriod_to_navMain)
     }
 //
@@ -56,5 +54,3 @@ class EndPeriodFragment : BaseFragment(R.layout.fragment_end_period),
 //    lateinit var presenterProvider: Provider<EndPeriodPresenter>
 //
 //    private val presenter by moxyPresenter { presenterProvider.get() }
-
-}

@@ -13,11 +13,10 @@ import androidx.core.app.NotificationManagerCompat
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.main.MainActivity
-import javax.inject.Inject
-import javax.inject.Singleton
 
 
-class NotificationManager @Inject constructor(
+
+class NotificationManager (
     private val notificationManager: NotificationManager,
     private val context: Context) {
 

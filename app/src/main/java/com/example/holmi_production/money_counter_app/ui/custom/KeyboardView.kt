@@ -18,9 +18,10 @@ import com.example.holmi_production.money_counter_app.model.entity.CategoryEntit
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
-import kotlinx.android.synthetic.main.part_fragment_keyboard_2.view.*
+import kotlinx.android.synthetic.main.part_fragment_keyboard_const.view.*
 import kotlinx.android.synthetic.main.view_splitted_button.view.*
-import javax.inject.Inject
+import kotlin.text.category
+
 
 /**
  * @author Alexey Kholmanov (alexey.holmanov@cleverpumpkin.ru)
@@ -34,16 +35,15 @@ class KeyboardView @JvmOverloads constructor(
 
     private var purshaseSum = "0"
 
-    @Inject
-    lateinit var vibrator: Vibrator
+//    @Inject
+//    lateinit var vibrator: Vibrator
 
 
     private var mKeyboardListener: IKeyboardListener? = null
 
     init {
-        View.inflate(context, R.layout.part_fragment_keyboard_2, this)
+        View.inflate(context, R.layout.part_fragment_keyboard_const, this)
         chipsContainer.visibility = View.GONE
-        limitBar.max = 100f
         key0.setOnClickListener { pressed(ButtonTypeEnums.ZERO, "0") }
         key1.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "1") }
         key2.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "2") }
@@ -87,20 +87,20 @@ class KeyboardView @JvmOverloads constructor(
         if (entity == null) {
             image.visibility = View.GONE
             text.visibility = View.VISIBLE
-            limitBar.visibility = View.GONE
+//            limitBar.visibility = View.GONE
             text.text = "Категории не созданы"
         } else {
             image.visibility = View.VISIBLE
             text.visibility = View.GONE
-            limitBar.visibility = View.VISIBLE
+//            limitBar.visibility = View.VISIBLE
             category.setBackgroundColor(entity.color)
             image.load(R.drawable.ic_launcher_foreground)
-            limitBar.apply {
-                setBackgroundColor(entity.color)
-                progress = 55f
-                progressColor = entity.color
-                invalidate()
-            }
+//            limitBar.apply {
+//                setBackgroundColor(entity.color)
+//                progress = 55f
+//                progressColor = entity.color
+//                invalidate()
+//            }
         }
     }
 

@@ -7,15 +7,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
-        android:id="@+id/limitBar"
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        app:rcBackgroundPadding="0dp"
-        app:rcIconHeight="0dp"
-        app:rcIconWidth="0dp"
-        app:rcRadius="0dp" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

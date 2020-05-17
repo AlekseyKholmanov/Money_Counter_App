@@ -7,16 +7,15 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.main.Navigation
 import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.CreateCategoryView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.part_create_category.*
-import moxy.ktx.moxyPresenter
-import javax.inject.Inject
-import javax.inject.Provider
 
-class CreateCategoryFragment : BaseFragment(R.layout.part_create_category), CreateCategoryView {
+
+
+
+class CreateCategoryFragment : BaseFragment(R.layout.part_create_category) {
 
     override fun inject() {
 //        AppComponent.instance.inject(this)
@@ -58,8 +57,8 @@ class CreateCategoryFragment : BaseFragment(R.layout.part_create_category), Crea
         }
     }
 
-    override fun popUp() {
+/*    override fun popUp() {
         findNavController().popBackStack()
-    }
+    }*/
 
 }

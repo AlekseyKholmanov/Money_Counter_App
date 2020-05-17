@@ -17,7 +17,6 @@ import com.example.holmi_production.money_counter_app.model.PieCharState
 import com.example.holmi_production.money_counter_app.model.entity.GraphEntity
 import com.example.holmi_production.money_counter_app.ui.fragments.PieDialogFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPieViewModel
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPieView
 import com.example.holmi_production.money_counter_app.ui.view_models.KeyboardViewModel
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.github.mikephil.charting.data.Entry
@@ -28,16 +27,13 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.chart_pie.*
-import moxy.ktx.moxyPresenter
-import javax.inject.Inject
-import javax.inject.Provider
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class ChartPieFragment : BaseFragment(R.layout.chart_pie){
 
-    @Inject
-    lateinit var vmFactory : ViewModelProvider.Factory
 
-    val viewModel: ChartPieViewModel by viewModels{vmFactory}
+    val myviewModel: ChartPieViewModel by viewModel()
 
     override fun inject() {
    //AppComponent.instance.inject(this)
@@ -47,7 +43,7 @@ class ChartPieFragment : BaseFragment(R.layout.chart_pie){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("M_PieChartFragment", "pie view created")
         super.onViewCreated(view, savedInstanceState)
-        viewModel.observeData()
+        myviewModel.observeData()
         preparePieSettings()
         chart_pie.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onNothingSelected() {}
@@ -55,12 +51,12 @@ class ChartPieFragment : BaseFragment(R.layout.chart_pie){
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 val categoryId = e!!.data as Int
                 val canDetailed = pieBack.visibility == View.VISIBLE
-                viewModel.updateGraph(categoryId, canDetailed)
+                myviewModel.updateGraph(categoryId, canDetailed)
                 Log.d("M_PieChartFragment", "VALUE SELECTED index $categoryId")
             }
         })
         pieBack.setOnClickListener {
-            viewModel.updateGraph(null, true)
+            myviewModel.updateGraph(null, true)
         }
     }
 

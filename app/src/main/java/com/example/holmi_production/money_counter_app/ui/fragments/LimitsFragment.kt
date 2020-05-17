@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.ui.presenters.LimitsView
-import moxy.MvpAppCompatFragment
+
 
 class LimitsFragment: BaseFragment(R.layout.fragment_limits){
 

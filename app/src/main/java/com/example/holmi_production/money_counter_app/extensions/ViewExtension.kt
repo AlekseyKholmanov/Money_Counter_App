@@ -8,7 +8,6 @@ import android.view.ViewPropertyAnimator
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.app_bar_main.*
 
 fun View.hideKeyboard() {
     val inputMethodManager =

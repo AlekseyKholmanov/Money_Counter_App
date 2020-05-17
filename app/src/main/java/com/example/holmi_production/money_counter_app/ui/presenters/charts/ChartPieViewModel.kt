@@ -3,17 +3,16 @@ package com.example.holmi_production.money_counter_app.ui.presenters.charts
 import android.graphics.Color
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import moxy.InjectViewState
+
 import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.PieCharState
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.*
-import com.example.holmi_production.money_counter_app.mvp.BasePresenter
-import javax.inject.Inject
 
 
-class ChartPieViewModel @Inject constructor(
+
+class ChartPieViewModel (
     private val spendingInteractor: SpendingInteractor
 ) : ViewModel() {
 

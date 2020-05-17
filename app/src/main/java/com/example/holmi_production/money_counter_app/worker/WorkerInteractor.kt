@@ -7,7 +7,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.holmi_production.money_counter_app.utils.Time
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
+
 
 class WorkerInteractor (private val workManager: WorkManager) {
     companion object {

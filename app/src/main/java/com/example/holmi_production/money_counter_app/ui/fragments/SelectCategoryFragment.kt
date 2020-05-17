@@ -16,15 +16,13 @@ import com.example.holmi_production.money_counter_app.model.entity.CategoryEntit
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.ui.adapter.CategoryPickerAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.CategoryPickerHolder
-import com.example.holmi_production.money_counter_app.ui.presenters.SelectCategoryView
 import com.example.holmi_production.money_counter_app.ui.presenters.SelectCategoryViewModel
 import com.example.holmi_production.money_counter_app.ui.utils.ViewAnimation
 import kotlinx.android.synthetic.main.fragment_select_category.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import javax.inject.Inject
 
-class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category),
-    SelectCategoryView {
+
+class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
 
     private lateinit var fabOpen: Animation
     private lateinit var fabClose: Animation
@@ -118,24 +116,24 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category),
         subcategoryFab.isClickable = isFabOpen
     }
 
-    override fun showToast(text: String) {
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun popUp() {
-        findNavController().popBackStack()
-    }
-
-    override fun showCategories(categories: ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>>) {
-        adapter.setCategory(categories)
-        adapter.notifyDataSetChanged()
-    }
-
-    override fun showMessage(show: Boolean, messageResId: Int?) {
-        categoryList.visibility = if (show) View.INVISIBLE else View.VISIBLE
-        tv_empty_categories.visibility = if (show) View.VISIBLE else View.GONE
-        if (show && messageResId != null)
-            tv_empty_categories.text = getString(messageResId)
-    }
+//    override fun showToast(text: String) {
+//        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+//    }
+//
+//    override fun popUp() {
+//        findNavController().popBackStack()
+//    }
+//
+//    override fun showCategories(categories: ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>>) {
+//        adapter.setCategory(categories)
+//        adapter.notifyDataSetChanged()
+//    }
+//
+//    override fun showMessage(show: Boolean, messageResId: Int?) {
+//        categoryList.visibility = if (show) View.INVISIBLE else View.VISIBLE
+//        tv_empty_categories.visibility = if (show) View.VISIBLE else View.GONE
+//        if (show && messageResId != null)
+//            tv_empty_categories.text = getString(messageResId)
+//    }
 
 }

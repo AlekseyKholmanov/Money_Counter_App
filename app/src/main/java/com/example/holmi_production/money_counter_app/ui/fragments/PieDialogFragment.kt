@@ -10,8 +10,6 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.ui.adapter.PieAdapter
-import moxy.MvpAppCompatDialogFragment
-
 class PieDialogFragment() : DialogFragment() {
     lateinit var rv:RecyclerView
 

@@ -6,7 +6,7 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.Singles
-import javax.inject.Inject
+
 
 class SumPerDayRepository (
     private val database: ExpenseDatabase

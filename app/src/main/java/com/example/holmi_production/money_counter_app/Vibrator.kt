@@ -3,7 +3,7 @@ package com.example.holmi_production.money_counter_app
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import javax.inject.Inject
+
 
 class Vibrator (private val v: Vibrator) {
 

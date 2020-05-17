@@ -7,7 +7,7 @@ import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.Flowables
 import org.joda.time.DateTime
-import javax.inject.Inject
+
 
 class BalanceInteractor(
     private val spendingInteractor: SpendingInteractor,

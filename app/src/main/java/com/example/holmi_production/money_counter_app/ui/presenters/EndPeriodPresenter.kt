@@ -1,16 +1,14 @@
 package com.example.holmi_production.money_counter_app.ui.presenters
 
-import moxy.InjectViewState
-import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.mvp.BasePresenter
-import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import javax.inject.Inject
 
-@InjectViewState
+import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
+import com.example.holmi_production.money_counter_app.storage.SettingRepository
+
+
 class EndPeriodPresenter (
     private val settingRepository: SettingRepository,
     private val spendingInteractor: SpendingInteractor
-) : BasePresenter<EndPeriodView>() {
+)  {
 //TODO переделать
     fun getSum() {
 //        val startDate = settingRepository.getStartDate().toDateTime()
@@ -33,10 +31,10 @@ class EndPeriodPresenter (
 //            })
 //            .keep()
     }
-
-    fun goToMain() {
-//        settingRepository.setIsEnd(false)
-        viewState.goToMain()
-    }
+//
+//    fun goToMain() {
+////        settingRepository.setIsEnd(false)
+//        viewState.goToMain()
+//    }
 
 }

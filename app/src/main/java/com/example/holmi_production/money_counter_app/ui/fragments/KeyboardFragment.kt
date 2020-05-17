@@ -1,57 +1,62 @@
 package com.example.holmi_production.money_counter_app.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
-import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.ui.custom.IKeyboardListener
 import com.example.holmi_production.money_counter_app.ui.view_models.KeyboardViewModel
-import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard) {
 
     private val keyboardViewModel: KeyboardViewModel by viewModel()
 
-//    @Inject
+    //    @Inject
 //    lateinit var presenterProvider: Provider<KeyboardPresenter>
 //
 //    private val presenter by moxyPresenter { presenterProvider.get() }
-
+    lateinit var part: Fragment
     override fun inject() {
 //   //AppComponent.instance.inject(this)
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        keyboardViewModel.observeCategory()
+//        childFragmentManager.beginTransaction()
+//            .replace(R.id.part_fragment, KeyboardPartFragment())
+//            .commit()
+//        keyboardViewModel.observeCategory()
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+
         initToolbar()
+
         with(keyboardViewModel) {
             categoryLiveData.observe(viewLifecycleOwner, Observer(::updateCategory))
         }
-        keyboard.setListener(object : IKeyboardListener {
-            override fun enterPressed(
-                money: Double,
-                comment: String,
-                isSpending: SpDirection,
-                subcategoryId: Int?
-            ) {
-                //TODO save spending here
-            }
-
-            override fun showCategoryDialog() {
-                findNavController().navigate(R.id.selectCategoryFragment)
-            }
-        })
+//        keyboard.setListener(object : IKeyboardListener {
+//            override fun enterPressed(
+//                money: Double,
+//                comment: String,
+//                isSpending: SpDirection,
+//                subcategoryId: Int?
+//            ) {
+//                //TODO save spending here
+//            }
+//
+//            override fun showCategoryDialog() {
+//                findNavController().navigate(R.id.selectCategoryFragment)
+//            }
+//        })
 
 
 //        left_days.setOnClickListener {
@@ -69,16 +74,16 @@ class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard) {
 
     private fun updateCategory(categoryDetails: CategoryDetails?) {
 
-        keyboard.showActionButtons(categoryDetails?.category?.spendingDirection)
+//        keyboard.showActionButtons(categoryDetails?.category?.spendingDirection)
 
-        keyboard.setCategory(categoryDetails?.category )
+//        keyboard.setCategory(categoryDetails?.category )
 
         //TODO show subcategory here
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
-        keyboard.setListener(null)
+            super.onDestroyView()
+//        keyboard.setListener(null)
         Log.d("M_KeyboardFragment", "view destroyed")
     }
 
