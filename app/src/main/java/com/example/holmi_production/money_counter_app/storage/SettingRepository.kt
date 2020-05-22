@@ -21,6 +21,18 @@ class SettingRepository(
 
     val settingSubject by lazy { PublishSubject.create<Int>() }
 
+    var sumPerDayOption: Boolean
+        get() = pref.getBoolean(OPTION_SUM_PER_DAY, true)
+        set(value) {
+            pref.edit().putBoolean(OPTION_SUM_PER_DAY, value).apply()
+        }
+
+    var isConverterEnabled: Boolean
+        get() = pref.getBoolean(Converter, false)
+        set(value) {
+            pref.edit().putBoolean(Converter, value).apply()
+        }
+
     fun setEndMonth(day: Int) {
         Log.d("M_SettingRepository", "subject $settingSubject")
         Log.d("M_SettingRepository", "repository $this")
@@ -93,28 +105,12 @@ class SettingRepository(
         pref.edit().putBoolean(BALANCE_MIGRATION_TAG, true).apply()
     }
 
-    fun setConverter(state: Boolean) {
-        pref.edit().putBoolean(Converter, state).apply()
-    }
-
-    fun isConverterEnable(): Boolean {
-        return pref.getBoolean(Converter, false)
-    }
-
     fun setConverterValue(value: String) {
         pref.edit().putString(Converter_VALUE, value).apply()
     }
 
     fun getConverterValue(): String {
         return pref.getString(Converter_VALUE, "0.0")
-    }
-
-    fun setSumPerDayOption(isSetted: Boolean) {
-        pref.edit().putBoolean(SUM_PER_DAY, isSetted).apply()
-    }
-
-    fun getSumPerDayOption(): Boolean {
-        return pref.getBoolean(SUM_PER_DAY, false)
     }
 
 
@@ -126,6 +122,6 @@ class SettingRepository(
         val BALANCE_MIGRATION_TAG = "BALANCE_POPULATED"
         val PERIOD_TYPE = "PERIOD_TYPE"
         val END_MONTH = "END_MONTH"
-        val SUM_PER_DAY = "SUM_PER_DAY"
+        val OPTION_SUM_PER_DAY = "SUM_PER_DAY"
     }
 }

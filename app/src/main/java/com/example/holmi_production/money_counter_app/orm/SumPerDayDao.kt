@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.holmi_production.money_counter_app.model.entity.SumPerDayEntity
 import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SumPerDayDao {
@@ -14,8 +15,9 @@ interface SumPerDayDao {
     fun insert(sumPerDay: SumPerDayEntity)
 
     @Query("SELECT * FROM SumPerDayEntity WHERE id=:id")
-    fun observeSum(id:String):Flowable<SumPerDayEntity>
-
-    @Query("SELECT * FROM SumPerDayEntity WHERE id=:id")
     fun getSum(id:String): SumPerDayEntity
+
+    ///
+    @Query("SELECT * FROM SumPerDayEntity WHERE id=:id")
+    fun observeSum(id:String): Flow<SumPerDayEntity>
 }

@@ -1,21 +1,14 @@
 package com.example.holmi_production.money_counter_app.ui.presenters
 
-import android.util.Log
-
-import com.example.holmi_production.money_counter_app.extensions.*
-import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import com.example.holmi_production.money_counter_app.storage.SpendingRepository
-import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
+import com.example.holmi_production.money_counter_app.storage.impl.SpendingDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.impl.SumPerDayDatabaseImpl
 import org.joda.time.DateTime
-import org.joda.time.Days
-
 
 
 class FirstLaunchPresenter (
-    private val spendingRepository: SpendingRepository,
-    private val sumPerDayRepository: SumPerDayRepository,
+    private val spendingDatabase: SpendingDatabaseImpl,
+    private val sumPerDayDatabase: SumPerDayDatabaseImpl,
     private val settingRepository: SettingRepository)
  {
 

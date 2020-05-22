@@ -6,8 +6,8 @@ import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
-import com.example.holmi_production.money_counter_app.storage.impl.CategoryRepositoryImpl
-import com.example.holmi_production.money_counter_app.storage.SubCategoryRepository
+import com.example.holmi_production.money_counter_app.storage.impl.CategoryDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.impl.SubCategoryDatabaseImpl
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -18,8 +18,9 @@ import io.reactivex.rxkotlin.Flowables
 import io.reactivex.rxkotlin.Singles
 
 class CategoryInteractor(
-    private val categoryRepository: CategoryRepositoryImpl,
-    private val subCategoryRepository: SubCategoryRepository) {
+    private val categoryRepository: CategoryDatabaseImpl,
+    private val subCategoryDatabase: SubCategoryDatabaseImpl
+) {
 
     fun insert(name: String, types: List<SpDirection>, color: ColorDrawable?, imageId:Int): Completable {
 
@@ -37,11 +38,11 @@ class CategoryInteractor(
     }
 
     fun insert(subcategory: SubCategoryEntity): Completable {
-        return subCategoryRepository.insert(subcategory)
+        return subCategoryDatabase.insert(subcategory)
     }
 
     fun delete(subcategory: SubCategoryEntity):Completable{
-        return  subCategoryRepository.delete(subcategory)
+        return  subCategoryDatabase.delete(subcategory)
     }
 
     fun observeCategories(): Flowable<MutableList<CategoryEntity>> {
@@ -52,11 +53,11 @@ class CategoryInteractor(
     }
 
     fun observeSubcategories():Flowable<List<SubCategoryEntity>>{
-        return subCategoryRepository.observeSubCategories()
+        return subCategoryDatabase.observeSubCategories()
     }
 
     fun observeCategoriesAndSubCategories(): Flowable<ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>>> {
-        return Flowables.combineLatest(categoryRepository.observeCategories(), subCategoryRepository.observeSubCategories())
+        return Flowables.combineLatest(categoryRepository.observeCategories(), subCategoryDatabase.observeSubCategories())
             .map { (categories, subCategories) ->
                 val zipList = arrayListOf<Pair<CategoryEntity, List<SubCategoryEntity>>>()
                 val sortedlist = categories.sortedByDescending { it.usageCount }
@@ -68,7 +69,7 @@ class CategoryInteractor(
     }
 
     fun getCategoriesAndSubCategories(): Single<ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>>> {
-        return Singles.zip(categoryRepository.getCategories(), subCategoryRepository.getSubCategories())
+        return Singles.zip(categoryRepository.getCategories(), subCategoryDatabase.getSubCategories())
             .map { (categories, subCategories) ->
                 val zipList = arrayListOf<Pair<CategoryEntity, List<SubCategoryEntity>>>()
                 categories.forEach { category ->

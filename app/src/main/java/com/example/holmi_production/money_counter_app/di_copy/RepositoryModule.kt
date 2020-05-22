@@ -1,7 +1,7 @@
 package com.example.holmi_production.money_counter_app.di_copy
 
 import com.example.holmi_production.money_counter_app.storage.*
-import com.example.holmi_production.money_counter_app.storage.impl.CategoryRepositoryImpl
+import com.example.holmi_production.money_counter_app.storage.impl.*
 import org.koin.dsl.module
 
 /**
@@ -10,25 +10,35 @@ import org.koin.dsl.module
 val repositoryModule = module {
 
     single {
-        BalanceRepository(get())
+        BalanceDatabaseImpl(
+            get()
+        )
     }
     single {
-        CategoryRepositoryImpl(get())
+        CategoryDatabaseImpl(get())
     }
     single {
-        PeriodsRepository(get())
+        PeriodsDatabaseImpl(
+            get()
+        )
     }
     single {
         SettingRepository(get(), get())
     }
     single {
-        SpendingRepository(get())
+        SpendingDatabaseImpl(
+            get()
+        )
     }
     single {
-        SubCategoryRepository(get())
+        SubCategoryDatabaseImpl(
+            get()
+        )
     }
     single {
-        SumPerDayRepository(get())
+        SumPerDayDatabaseImpl(
+            get()
+        )
     }
 
 }

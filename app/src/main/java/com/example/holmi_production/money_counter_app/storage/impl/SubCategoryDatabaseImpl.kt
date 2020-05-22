@@ -1,15 +1,16 @@
-package com.example.holmi_production.money_counter_app.storage
+package com.example.holmi_production.money_counter_app.storage.impl
 
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
+import com.example.holmi_production.money_counter_app.storage.SubCategoryDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
- 
 
-class SubCategoryRepository (
+
+class SubCategoryDatabaseImpl(
     val database: ExpenseDatabase
-) {
+) : SubCategoryDatabase {
 
     private val dao = database.subCategoryDao()
 

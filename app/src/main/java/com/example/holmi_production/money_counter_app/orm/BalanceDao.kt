@@ -3,13 +3,14 @@ package com.example.holmi_production.money_counter_app.orm
 import androidx.room.*
 import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 import org.joda.time.DateTime
 
 @Dao
 interface BalanceDao {
 
     @Query("SELECT * FROM BalanceEntity")
-    fun getBalances():Flowable<List<BalanceEntity>>
+    fun getBalances(): Flow<List<BalanceEntity>>
 
     @Query("SELECT * FROM BalanceEntity WHERE id=:id")
     fun getBalance(id:DateTime): BalanceEntity

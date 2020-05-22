@@ -6,10 +6,10 @@ import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
-import com.example.holmi_production.money_counter_app.storage.PeriodsRepository
+import com.example.holmi_production.money_counter_app.storage.impl.PeriodsDatabaseImpl
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import com.example.holmi_production.money_counter_app.storage.SpendingRepository
-import com.example.holmi_production.money_counter_app.storage.SumPerDayRepository
+import com.example.holmi_production.money_counter_app.storage.impl.SpendingDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.impl.SumPerDayDatabaseImpl
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -19,15 +19,15 @@ import org.joda.time.DateTime
 
 
 class SpendingInteractor (
-    private val spendingRepository: SpendingRepository,
-    private val sumPerDayRepository: SumPerDayRepository,
+    private val spendingDatabase: SpendingDatabaseImpl,
+    private val sumPerDayDatabase: SumPerDayDatabaseImpl,
     private val settingRepository: SettingRepository,
-    private val periodsRepository: PeriodsRepository,
+    private val periodsDatabase: PeriodsDatabaseImpl,
     private val categoryInteractor: CategoryInteractor
 ) {
 
     fun insert(spending: SpendingEntity): Completable {
-        return spendingRepository.insert(spending)
+        return spendingDatabase.insert(spending)
             .doOnComplete {
                 categoryInteractor.getCategory(spending.categoryId).doOnSuccess {
                     categoryInteractor.insert(it.copy(usageCount = it.usageCount.plus(1)))
@@ -47,17 +47,17 @@ class SpendingInteractor (
     }
 
     fun getAll(): Single<List<SpendingEntity>> {
-        return spendingRepository.getAll()
+        return spendingDatabase.getAll()
     }
 
     fun observeSpendingWithType(): Flowable<List<SpendingDetails>> {
-        return spendingRepository.observeSpendingsDetails()
+        return spendingDatabase.observeSpendingsDetails()
     }
 
     fun observePeriods(): Flowable<List<SpendingEntity>> {
         return Flowables.combineLatest(
-            periodsRepository.observePeriod(),
-            spendingRepository.observeSpending()
+            periodsDatabase.observePeriod(),
+            spendingDatabase.observeSpending()
         )
             .map { (period, list) ->
                 Log.d("M_SpendingInteractor", "listcount ${list.count()}")
@@ -77,44 +77,44 @@ class SpendingInteractor (
         val endPeriodDays = settingRepository.getDaysToEndPeriod()
         when (spending.isSpending) {
             SpDirection.INCOME -> {
-                return sumPerDayRepository.getTodayAndAverage()
+                return sumPerDayDatabase.getTodayAndAverage()
                     .async()
                     .map { sums ->
                         val today = sums.first.sum
                         val average = sums.second.sum
                         val deltaAverage = spending.sum / endPeriodDays
-                        sumPerDayRepository.insertToday(today - deltaAverage).complete()
-                        sumPerDayRepository.insertAverage(average - deltaAverage).complete()
+                        sumPerDayDatabase.insertToday(today - deltaAverage).complete()
+                        sumPerDayDatabase.insertAverage(average - deltaAverage).complete()
                     }
                     .also {
-                        spendingRepository.delete(spending).complete()
+                        spendingDatabase.delete(spending).complete()
                     }
             }
             else -> {
                 when (spending.createdDate.dayOfYear()) {
                     DateTime.now().dayOfYear() -> {
-                        return sumPerDayRepository.getToday()
+                        return sumPerDayDatabase.getToday()
                             .async()
                             .doOnError { t -> Log.d("qwerty", t.toString()) }
                             .map {
-                                sumPerDayRepository.insertToday(it.inc(spending.sum).sum).complete()
+                                sumPerDayDatabase.insertToday(it.inc(spending.sum).sum).complete()
                             }
                             .also {
-                                spendingRepository.delete(spending).complete()
+                                spendingDatabase.delete(spending).complete()
                             }
                     }
                     else -> {
-                        return sumPerDayRepository.getTodayAndAverage()
+                        return sumPerDayDatabase.getTodayAndAverage()
                             .async()
                             .map { sums ->
                                 val today = sums.first.sum
                                 val average = sums.second.sum
                                 val deltaAverage = spending.sum / endPeriodDays
-                                sumPerDayRepository.insertToday(today + deltaAverage).complete()
-                                sumPerDayRepository.insertAverage(average + deltaAverage).complete()
+                                sumPerDayDatabase.insertToday(today + deltaAverage).complete()
+                                sumPerDayDatabase.insertAverage(average + deltaAverage).complete()
                             }
                             .also {
-                                spendingRepository.delete(spending).complete()
+                                spendingDatabase.delete(spending).complete()
                             }
                     }
                 }
@@ -123,7 +123,7 @@ class SpendingInteractor (
     }
 
     fun deleteAll(): Completable {
-        return spendingRepository.deleteAll().async()
+        return spendingDatabase.deleteAll().async()
     }
 
 }

@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import coil.api.load
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.Vibrator
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.model.ButtonTypeEnums
 import com.example.holmi_production.money_counter_app.model.SpDirection
@@ -20,7 +19,6 @@ import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.part_fragment_keyboard_const.view.*
 import kotlinx.android.synthetic.main.view_splitted_button.view.*
-import kotlin.text.category
 
 
 /**
@@ -81,8 +79,8 @@ class KeyboardView @JvmOverloads constructor(
     }
 
     fun setCategory(entity: CategoryEntity?) {
-        val text = category.findViewById<TextView>(R.id.tv_category_btn_placeholder)
-        val image = category.findViewById<SquareImageView>(R.id.iv_category)
+        val text = category.findViewById<TextView>(R.id.categoryDescription)
+        val image = category.findViewById<SquareImageView>(R.id.categoryImage)
         //ToDO show no categoryImage
         if (entity == null) {
             image.visibility = View.GONE
@@ -203,8 +201,6 @@ class KeyboardView @JvmOverloads constructor(
         chip.tag = subcategory.id
         return chip
     }
-
-
 }
 
 interface IKeyboardListener {

@@ -1,18 +1,20 @@
-package com.example.holmi_production.money_counter_app.storage
+package com.example.holmi_production.money_counter_app.storage.impl
 
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
+import com.example.holmi_production.money_counter_app.storage.PeriodsDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
- 
 
-class PeriodsRepository (
+
+class PeriodsDatabaseImpl(
     database: ExpenseDatabase
-) {
-    companion object{
+) : PeriodsDatabase {
+    companion object {
         const val key = "DATE"
     }
+
     private val dao = database.periodsDao()
 
     fun insert(period: FilterPeriodEntity): Completable {
@@ -20,7 +22,7 @@ class PeriodsRepository (
     }
 
     fun getPeriod(): Single<FilterPeriodEntity> {
-        return Single.fromCallable { dao.getPeriod(key)}
+        return Single.fromCallable { dao.getPeriod(key) }
     }
 
     fun observePeriod(): Flowable<FilterPeriodEntity> {
