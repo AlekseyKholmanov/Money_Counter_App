@@ -25,6 +25,12 @@ class SpendingDatabaseImpl(
         return dao.observeSpending()
     }
 
+    override suspend fun getSpendings(): List<SpendingEntity> {
+        return withContext(Dispatchers.IO){
+            dao.getSpendings()
+        }
+    }
+
     override suspend fun delete(spending: SpendingEntity) {
         withContext(Dispatchers.IO) {
             dao.delete(spending)

@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
-@Entity
+@Entity(tableName = "SubcategoryTable")
 data class SubCategoryEntity(
     @PrimaryKey(autoGenerate = true)
     override val id: Int = 0,

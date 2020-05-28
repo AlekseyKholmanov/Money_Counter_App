@@ -7,7 +7,8 @@ import com.example.holmi_production.money_counter_app.model.SpDirection
 import kotlinx.android.parcel.Parcelize
 
 
-@Entity
+
+@Entity(tableName = "CategoryTable")
 data class CategoryEntity(
     @PrimaryKey(autoGenerate = true)
     override val id: Int = 0,

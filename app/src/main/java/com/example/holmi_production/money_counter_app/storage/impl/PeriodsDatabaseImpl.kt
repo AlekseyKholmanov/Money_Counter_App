@@ -6,6 +6,7 @@ import com.example.holmi_production.money_counter_app.storage.PeriodsDatabase
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
 
 
 class PeriodsDatabaseImpl(
@@ -25,7 +26,7 @@ class PeriodsDatabaseImpl(
         return Single.fromCallable { dao.getPeriod(key) }
     }
 
-    fun observePeriod(): Flowable<FilterPeriodEntity> {
-        return dao.observePeriod(key).distinctUntilChanged()
+    fun observePeriod(): Flow<FilterPeriodEntity> {
+        return dao.observePeriod(key)
     }
 }

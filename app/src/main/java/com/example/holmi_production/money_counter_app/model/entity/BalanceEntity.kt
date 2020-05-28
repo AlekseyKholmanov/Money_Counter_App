@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.joda.time.DateTime
 
-@Entity
+@Entity(tableName = "BalanceTable")
 data class BalanceEntity (
     @PrimaryKey(autoGenerate = false)
     val id: DateTime,

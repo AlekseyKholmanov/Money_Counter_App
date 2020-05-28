@@ -9,10 +9,10 @@ import org.joda.time.DateTime
 @Dao
 interface BalanceDao {
 
-    @Query("SELECT * FROM BalanceEntity")
+    @Query("SELECT * FROM BalanceTable")
     fun getBalances(): Flow<List<BalanceEntity>>
 
-    @Query("SELECT * FROM BalanceEntity WHERE id=:id")
+    @Query("SELECT * FROM BalanceTable WHERE id=:id")
     fun getBalance(id:DateTime): BalanceEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -21,6 +21,6 @@ interface BalanceDao {
     @Delete
     fun delete(balance: BalanceEntity)
 
-    @Query("DELETE FROM BalanceEntity")
+    @Query("DELETE FROM BalanceTable")
     fun deleteAll()
 }

@@ -30,6 +30,10 @@ class CategoryDatabaseImpl(
         return withContext(Dispatchers.IO) { dao.getCategories() }
     }
 
+    override suspend fun increaseUsageCount(categoryId: Int) {
+        withContext(Dispatchers.IO) { dao.increaseUsageCount(categoryId) }
+    }
+
     override suspend fun getCategoryById(id: Int): CategoryEntity {
         return withContext(Dispatchers.IO) { dao.getCategory(id) }
     }
@@ -41,5 +45,7 @@ class CategoryDatabaseImpl(
     override suspend fun getCategoryDetailsById(categoryId: Int): CategoryDetails {
         return dao.getCategoryDetails(categoryId)
     }
+
+
 
 }

@@ -47,20 +47,25 @@ class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard) {
         with(keyboardViewModel) {
             categoryLiveData.observe(viewLifecycleOwner, Observer(::updateCategory))
         }
-        keyboard.setListener(object : IKeyboardListener {
-            override fun enterPressed(
-                money: Double,
-                comment: String,
-                isSpending: SpDirection,
-                subcategoryId: Int?
-            ) {
-                //TODO save spending here
-            }
+        showBottom.setOnClickListener {
+            val direction = KeyboardFragmentDirections.actionKeyboardFragmentToBottomKeyboard()
+            findNavController().navigate(direction)
+        }
 
-            override fun showCategoryDialog() {
-                findNavController().navigate(R.id.selectCategoryFragment)
-            }
-        })
+//        keyboard.setListener(object : IKeyboardListener {
+////            override fun enterPressed(
+////                money: Double,
+////                comment: String,
+////                isSpending: SpDirection,
+////                subcategoryId: Int?
+////            ) {
+////                //TODO save spending here
+////            }
+////
+////            override fun showCategoryDialog() {
+////                findNavController().navigate(R.id.selectCategoryFragment)
+////            }
+////        })
 
 
 //        left_days.setOnClickListener {

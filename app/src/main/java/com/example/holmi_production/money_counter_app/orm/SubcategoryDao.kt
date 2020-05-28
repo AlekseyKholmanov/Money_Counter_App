@@ -6,10 +6,10 @@ import io.reactivex.Flowable
 
 @Dao
 interface SubcategoryDao  {
-    @Query("SELECT * FROM SubCategoryEntity")
+    @Query("SELECT * FROM SubcategoryTable")
     fun observeCategories(): Flowable<List<SubCategoryEntity>>
 
-    @Query("SELECT * FROM SubCategoryEntity")
+    @Query("SELECT * FROM SubcategoryTable")
     fun getCategories():List<SubCategoryEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -18,6 +18,6 @@ interface SubcategoryDao  {
     @Delete
     fun delete(category: SubCategoryEntity)
 
-    @Query("DELETE FROM CategoryEntity")
+    @Query("DELETE FROM SubcategoryTable")
     fun deleteAll()
 }

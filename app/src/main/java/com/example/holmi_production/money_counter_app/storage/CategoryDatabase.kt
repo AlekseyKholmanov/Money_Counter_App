@@ -16,6 +16,8 @@ interface CategoryDatabase {
 
     suspend fun getAllCategories(): List<CategoryEntity>
 
+    suspend fun increaseUsageCount(categoryId: Int)
+
     suspend fun getCategoryById(id:Int): CategoryEntity
 
     suspend fun deleteAll()

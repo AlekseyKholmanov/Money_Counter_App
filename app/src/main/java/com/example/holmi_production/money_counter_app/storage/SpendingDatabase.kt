@@ -13,6 +13,8 @@ interface SpendingDatabase {
 
     fun observeSpendings(): Flow<List<SpendingEntity>>
 
+    suspend fun getSpendings(): List<SpendingEntity>
+
     suspend fun delete(spending: SpendingEntity)
 
     suspend fun deleteAll()

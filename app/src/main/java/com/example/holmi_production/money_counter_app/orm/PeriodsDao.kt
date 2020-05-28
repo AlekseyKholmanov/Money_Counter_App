@@ -6,11 +6,12 @@ import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PeriodsDao {
     @Query("SELECT * FROM FilterPeriodEntity WHERE id=:key")
-    fun observePeriod(key:String):Flowable<FilterPeriodEntity>
+    fun observePeriod(key:String): Flow<FilterPeriodEntity>
 
     @Query("SELECT * FROM FilterPeriodEntity WHERE id=:key")
     fun getPeriod(key:String): FilterPeriodEntity

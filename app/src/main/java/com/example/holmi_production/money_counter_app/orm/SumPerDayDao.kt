@@ -14,10 +14,10 @@ interface SumPerDayDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(sumPerDay: SumPerDayEntity)
 
-    @Query("SELECT * FROM SumPerDayEntity WHERE id=:id")
+    @Query("SELECT * FROM SumPerDayTable WHERE id=:id")
     fun getSum(id:String): SumPerDayEntity
 
     ///
-    @Query("SELECT * FROM SumPerDayEntity WHERE id=:id")
+    @Query("SELECT * FROM SumPerDayTable WHERE id=:id")
     fun observeSum(id:String): Flow<SumPerDayEntity>
 }

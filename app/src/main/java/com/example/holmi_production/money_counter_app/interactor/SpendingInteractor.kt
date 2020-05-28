@@ -6,8 +6,11 @@ import com.example.holmi_production.money_counter_app.extensions.complete
 import com.example.holmi_production.money_counter_app.model.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
+import com.example.holmi_production.money_counter_app.storage.CategoryDatabase
 import com.example.holmi_production.money_counter_app.storage.impl.PeriodsDatabaseImpl
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
+import com.example.holmi_production.money_counter_app.storage.SpendingDatabase
+import com.example.holmi_production.money_counter_app.storage.SumPerDayDatabase
 import com.example.holmi_production.money_counter_app.storage.impl.SpendingDatabaseImpl
 import com.example.holmi_production.money_counter_app.storage.impl.SumPerDayDatabaseImpl
 import io.reactivex.Completable
@@ -15,60 +18,39 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.Flowables
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import org.joda.time.DateTime
 
 
 class SpendingInteractor (
-    private val spendingDatabase: SpendingDatabaseImpl,
-    private val sumPerDayDatabase: SumPerDayDatabaseImpl,
+    private val spendingDatabase: SpendingDatabase,
+    private val sumPerDayDatabase: SumPerDayDatabase,
     private val settingRepository: SettingRepository,
     private val periodsDatabase: PeriodsDatabaseImpl,
-    private val categoryInteractor: CategoryInteractor
+    private val categoryDatabase: CategoryDatabase
 ) {
 
-    fun insert(spending: SpendingEntity): Completable {
-        return spendingDatabase.insert(spending)
-            .doOnComplete {
-                categoryInteractor.getCategory(spending.categoryId).doOnSuccess {
-                    categoryInteractor.insert(it.copy(usageCount = it.usageCount.plus(1)))
-                        .subscribe()
-                }.subscribe()
-            }
+    suspend fun insert(spending: SpendingEntity) {
+        spendingDatabase.insert(spending)
+        categoryDatabase.increaseUsageCount(spending.categoryId)
     }
 
-    fun getIncomesAndSpendings(): Single<Pair<List<SpendingEntity>, List<SpendingEntity>>> {
-        return getAll()
-            .async()
-            .map { list ->
-                val income = list.toMutableList().filter { it.isSpending == SpDirection.INCOME }
-                val spending = list.toMutableList().filter { it.isSpending == SpDirection.SPENDING }
-                Pair(income, spending)
-            }
+    suspend fun getAll(): List<SpendingEntity> {
+        return spendingDatabase.getSpendings()
     }
 
-    fun getAll(): Single<List<SpendingEntity>> {
-        return spendingDatabase.getAll()
-    }
-
-    fun observeSpendingWithType(): Flowable<List<SpendingDetails>> {
+     fun observeSpendingDetails(): Flow<List<SpendingDetails>> {
         return spendingDatabase.observeSpendingsDetails()
     }
 
-    fun observePeriods(): Flowable<List<SpendingEntity>> {
-        return Flowables.combineLatest(
-            periodsDatabase.observePeriod(),
-            spendingDatabase.observeSpending()
-        )
-            .map { (period, list) ->
-                Log.d("M_SpendingInteractor", "listcount ${list.count()}")
-                Log.d(
-                    "M_SpendingInteractor",
-                    "left border ${period.leftBorder}  right border ${period.rightBorder}"
-                )
-                if (period.leftBorder == period.rightBorder) {
-                    list.filter { it.createdDate == period.leftBorder }
+    fun observeWithPeriods(): Flow<List<SpendingEntity>> {
+            return periodsDatabase.observePeriod().combine(spendingDatabase.observeSpendings()){
+                periods, spendings ->
+                if (periods.leftBorder == periods.rightBorder) {
+                    spendings.filter { it.createdDate == periods.leftBorder }
                 } else {
-                    list.filter { it.createdDate >= period.leftBorder && it.createdDate <= period.rightBorder }
+                    spendings.filter { it.createdDate >= periods.leftBorder && it.createdDate <= periods.rightBorder }
                 }
             }
     }
@@ -122,8 +104,8 @@ class SpendingInteractor (
         }
     }
 
-    fun deleteAll(): Completable {
-        return spendingDatabase.deleteAll().async()
+    suspend fun deleteAll() {
+        return spendingDatabase.deleteAll()
     }
 
 }

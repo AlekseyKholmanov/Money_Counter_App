@@ -9,7 +9,7 @@ import com.example.holmi_production.money_counter_app.model.SpDirection
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
 
-@Entity
+@Entity(tableName = "SpendingTable")
 @Parcelize
 data class SpendingEntity(
     @PrimaryKey(autoGenerate = false)

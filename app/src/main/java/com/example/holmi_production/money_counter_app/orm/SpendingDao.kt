@@ -13,29 +13,29 @@ import org.joda.time.DateTime
 @Dao
 abstract class SpendingDao : BaseDao<SpendingEntity>() {
 
-    @Query("SELECT * FROM SpendingEntity")
+    @Query("SELECT * FROM SpendingTable")
     abstract fun observeSpending(): Flow<List<SpendingEntity>>
 
-    @Transaction
-    @Query("Select * From SpendingEntity")
-    abstract fun observeSpendingDetails(): Flow<List<SpendingDetails>>
-
-    @Query("SELECT * FROM SpendingEntity")
+    @Query("SELECT * FROM SpendingTable")
     abstract fun getSpendings(): List<SpendingEntity>
 
     @Transaction
-    @Query("SELECT * FROM SpendingEntity WHERE createdDate=:id")
+    @Query("Select * From SpendingTable")
+    abstract fun observeSpendingDetails(): Flow<List<SpendingDetails>>
+
+    @Transaction
+    @Query("SELECT * FROM SpendingTable WHERE createdDate=:id")
     abstract fun getSpendingWithCategory(id: DateTime): SpendingDetails
 
-    @Query("SELECT * FROM SpendingEntity WHERE createdDate =:date")
+    @Query("SELECT * FROM SpendingTable WHERE createdDate =:date")
     abstract fun getSpending(date: DateTime): Maybe<SpendingEntity>
 
-    @Query("SELECT * FROM SpendingEntity WHERE isSpending != 0")
+    @Query("SELECT * FROM SpendingTable WHERE isSpending != 0")
     abstract fun getSpentSum(): List<SpendingEntity>
 
-    @Query("SELECT * FROM SpendingEntity WHERE isSpending == 0")
+    @Query("SELECT * FROM SpendingTable WHERE isSpending == 0")
     abstract fun getIncomeSum(): List<SpendingEntity>
 
-    @Query("DELETE FROM SpendingEntity")
+    @Query("DELETE FROM SpendingTable")
     abstract fun deleteAll()
 }

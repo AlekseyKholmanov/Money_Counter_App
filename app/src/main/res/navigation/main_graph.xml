@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_keyboardFragment_to_selectCategoryFragment"
             app:destination="@id/selectCategoryFragment" />
+        <action
+            android:id="@+id/action_keyboardFragment_to_bottomKeyboard"
+            app:destination="@id/bottomKeyboard" />
     </fragment>
     <fragment
         android:id="@+id/chartFragment"
@@ -36,4 +39,8 @@
         android:id="@+id/createCategoryFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.CreateCategoryFragment"
         android:label="CreateCategoryFragment" />
+    <dialog
+        android:id="@+id/bottomKeyboard"
+        android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomKeyboard"
+        android:label="BottomKeyboard" />
 </navigation>

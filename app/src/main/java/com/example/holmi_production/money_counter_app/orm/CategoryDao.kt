@@ -8,23 +8,27 @@ import io.reactivex.Flowable
 
 @Dao
 abstract class CategoryDao : BaseDao<CategoryEntity>() {
-    @Query("SELECT * FROM CategoryEntity")
+    @Query("SELECT * FROM CategoryTable")
     abstract fun observeCategories(): Flowable<List<CategoryEntity>>
 
-    @Query("SELECT * FROM CategoryEntity")
+    @Query("SELECT * FROM CategoryTable")
     abstract fun getCategories(): List<CategoryEntity>
 
-    @Query("SELECT * FROM CategoryEntity WHERE id=:id")
+    @Query("SELECT * FROM CategoryTable WHERE id=:id")
     abstract fun getCategory(id: Int): CategoryEntity
 
-    @Query("DELETE FROM CategoryEntity")
+    @Query("DELETE FROM CategoryTable")
     abstract fun deleteAll()
     //---------
 
-    @Query("SELECT * FROM CategoryEntity WHERE id=:categoryId")
-    abstract suspend fun getCategoryDetails(categoryId: Int): CategoryDetails
+    @Query("SELECT * FROM CategoryTable WHERE id=:categoryId")
+    abstract fun getCategoryDetails(categoryId: Int): CategoryDetails
 
-    @Query("SELECT * FROM CategoryEntity")
-    abstract suspend fun getAllCategoriesDetails():List<CategoryDetails>
+    @Query("SELECT * FROM CategoryTable")
+    abstract fun getAllCategoriesDetails(): List<CategoryDetails>
+
+    // update
+    @Query("UPDATE CategoryTable SET usageCount = usageCount + 1 WHERE id =:categoryId")
+    abstract fun increaseUsageCount(categoryId: Int)
 
 }
