@@ -83,9 +83,9 @@ class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard) {
 
     private fun updateCategory(categoryDetails: CategoryDetails?) {
 
-        keyboard.showActionButtons(categoryDetails?.category?.spendingDirection)
-
-        keyboard.setCategory(categoryDetails?.category )
+//        keyboard.showActionButtons(categoryDetails?.category?.spendingDirection)
+//
+//        keyboard.setCategory(categoryDetails?.category )
 
         //TODO show subcategory here
     }

@@ -19,7 +19,7 @@ class NotificationTask constructor(
 
     override fun doWork(): Result {
         Log.d("M_WorkerTask", "notification tasks start work")
-        notificationInteractor.alarmTriggered()
+//        notificationInteractor.alarmTriggered()
         Log.d("M_WorkerTask", "notification tasks end work")
         return Result.success()
     }

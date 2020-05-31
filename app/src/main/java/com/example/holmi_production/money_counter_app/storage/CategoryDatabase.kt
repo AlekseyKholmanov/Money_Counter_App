@@ -26,4 +26,6 @@ interface CategoryDatabase {
     suspend fun deleteAll()
 
     abstract suspend fun getCategories(): List<CategoryEntity>
+
+    fun observeCategoriesDetails(): Flow<List<CategoryDetails>>
 }

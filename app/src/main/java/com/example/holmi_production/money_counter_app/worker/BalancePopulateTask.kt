@@ -22,24 +22,24 @@ class BalancePopulateTask(context: Context, params: WorkerParameters) : Worker(c
     //TODO
     @SuppressLint("CheckResult")
     override fun doWork(): Result {
-        spendingInteractor.getAll()
-            .map {
-                it.groupBy { it.createdDate.withTimeAtStartOfDay() }
-                    .toSortedMap(Comparator { o1, o2 -> o1.compareTo(o2) })
-            }
-            .async()
-            .subscribe { list ->
-                //TODO перенести в бэкграунд работы и подготовить данные заранее, после в doOnCOmplete заинсертить их
-                var daylyBalance = 0.0
-                list.forEach { (t, u) ->
-                    u.forEach {
-                        if (it.isSpending == SpDirection.INCOME) daylyBalance += it.sum else daylyBalance -= it.sum
-                    }
-                    val balance = BalanceEntity(t, daylyBalance)
-                    balanceInteractor.insert(balance)
-                    Log.d("M_NotAlarmReciever", "${t.toRUformat()} $daylyBalance")
-                }
-            }
+//        spendingInteractor.getAll()
+//            .map {
+//                it.groupBy { it.createdDate.withTimeAtStartOfDay() }
+//                    .toSortedMap(Comparator { o1, o2 -> o1.compareTo(o2) })
+//            }
+//            .async()
+//            .subscribe { list ->
+//                //TODO перенести в бэкграунд работы и подготовить данные заранее, после в doOnCOmplete заинсертить их
+//                var daylyBalance = 0.0
+//                list.forEach { (t, u) ->
+//                    u.forEach {
+//                        if (it.isSpending == SpDirection.INCOME) daylyBalance += it.sum else daylyBalance -= it.sum
+//                    }
+//                    val balance = BalanceEntity(t, daylyBalance)
+//                    balanceInteractor.insert(balance)
+//                    Log.d("M_NotAlarmReciever", "${t.toRUformat()} $daylyBalance")
+//                }
+//            }
         return Result.success()
     }
 }

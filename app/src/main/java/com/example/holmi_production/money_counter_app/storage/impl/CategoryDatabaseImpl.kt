@@ -50,6 +50,10 @@ class CategoryDatabaseImpl(
         return dao.getCategories()
     }
 
+    override fun observeCategoriesDetails(): Flow<List<CategoryDetails>> {
+        return dao.observeCategoriesDetails()
+    }
+
     override suspend fun getCategoryDetailsById(categoryId: Int): CategoryDetails {
         return dao.getCategoryDetails(categoryId)
     }

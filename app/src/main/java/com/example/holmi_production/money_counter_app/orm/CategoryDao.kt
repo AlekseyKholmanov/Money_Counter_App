@@ -34,4 +34,7 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
     @Query("UPDATE CategoryTable SET usageCount = usageCount + 1 WHERE id =:categoryId")
     abstract fun increaseUsageCount(categoryId: Int)
 
+    @Query("SELECT * FROM CategoryTable")
+    abstract fun observeCategoriesDetails(): Flow<List<CategoryDetails>>
+
 }

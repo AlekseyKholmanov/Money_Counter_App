@@ -19,26 +19,26 @@ class BalanceTask constructor(
     lateinit var balanceDatabase: BalanceDatabaseImpl
 
     override fun doWork(): Result {
-        Log.d("BalanceTask", "start work")
-        var todayBalance = 0.0
-        spendingDatabase.getAll()
-            .map {
-                it.forEach { spending ->
-                    if (spending.isSpending == SpDirection.SPENDING) {
-                        todayBalance -= spending.sum
-                    } else {
-                        todayBalance += spending.sum
-                    }
-                }
-            }
-            .doAfterTerminate {
-                val balance = BalanceEntity(DateTime().withTimeAtStartOfDay(), todayBalance)
-                balanceDatabase.insert(balance)
-                    .subscribe()
-                Log.d("M_SaveBalanceTask", "wnd work $todayBalance")
-            }
-            .async()
-            .subscribe()
+//        Log.d("BalanceTask", "start work")
+//        var todayBalance = 0.0
+//        spendingDatabase.getAll()
+//            .map {
+//                it.forEach { spending ->
+//                    if (spending.isSpending == SpDirection.SPENDING) {
+//                        todayBalance -= spending.sum
+//                    } else {
+//                        todayBalance += spending.sum
+//                    }
+//                }
+//            }
+//            .doAfterTerminate {
+//                val balance = BalanceEntity(DateTime().withTimeAtStartOfDay(), todayBalance)
+//                balanceDatabase.insert(balance)
+//                    .subscribe()
+//                Log.d("M_SaveBalanceTask", "wnd work $todayBalance")
+//            }
+//            .async()
+//            .subscribe()
         return Result.success()
     }
 

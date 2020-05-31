@@ -105,14 +105,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeSettings() {
 
-        val converterState = settingRepository.isConverterEnable()
+        val converterState = settingRepository.isConverterEnabled
         val defValue = settingRepository.getConverterValue()
         converter_value.text = Editable.Factory.getInstance().newEditable(defValue)
         converter_checkbox.isChecked = converterState
         setConverterState(converterState)
         converter_checkbox.setOnCheckedChangeListener { _, isChecked ->
             setConverterState(isChecked)
-            settingRepository.setConverter(isChecked)
+            settingRepository.isConverterEnabled = isChecked
         }
         converter_value.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
