@@ -18,35 +18,31 @@ class SumPerDayDatabaseImpl(
 
     private val dao = database.sumPerDayDao()
 
-    suspend fun insertToday(todaySum: Double) {
+    override suspend fun insertToday(todaySum: Double) {
         withContext(Dispatchers.IO) {
             val sum = SumPerDayEntity(TODAY, todaySum)
             dao.insert(sum)
         }
     }
 
-    suspend fun insertAverage(averageSum: Double) {
+    override suspend fun insertAverage(averageSum: Double) {
         withContext(Dispatchers.IO) {
             val sum = SumPerDayEntity(AVERAGE, averageSum)
             dao.insert(sum)
         }
     }
 
-    fun observeToday(): Flow<SumPerDayEntity> = dao.observeSum(TODAY)
+    override fun observeToday(): Flow<SumPerDayEntity> = dao.observeSum(TODAY)
 
-    fun observeAverage(): Flow<SumPerDayEntity> = dao.observeSum(AVERAGE)
+    override fun observeAverage(): Flow<SumPerDayEntity> = dao.observeSum(AVERAGE)
 
 
-//    fun getToday(): Single<SumPerDayEntity> {
-//        return Single.fromCallable { dao.getSum(TODAY) }
-//    }
-//
-//    fun getTodayAndAverage(): Single<Pair<SumPerDayEntity, SumPerDayEntity>> {
-//        return Singles.zip(getToday(), getAverage())
-//    }
-//
-//    fun getAverage(): Single<SumPerDayEntity> {
-//        return Single.fromCallable { dao.getSum(AVERAGE) }
-//    }
-//
+    override suspend fun getToday(): SumPerDayEntity {
+        return dao.getSum(TODAY)
+    }
+
+    override suspend fun getAverage(): SumPerDayEntity {
+        return dao.getSum(AVERAGE)
+    }
+    
 }

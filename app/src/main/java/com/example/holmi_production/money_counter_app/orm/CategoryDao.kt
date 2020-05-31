@@ -5,11 +5,10 @@ import androidx.room.Query
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import io.reactivex.Flowable
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class CategoryDao : BaseDao<CategoryEntity>() {
-    @Query("SELECT * FROM CategoryTable")
-    abstract fun observeCategories(): Flowable<List<CategoryEntity>>
 
     @Query("SELECT * FROM CategoryTable")
     abstract fun getCategories(): List<CategoryEntity>
@@ -20,6 +19,10 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
     @Query("DELETE FROM CategoryTable")
     abstract fun deleteAll()
     //---------
+
+
+    @Query("SELECT * FROM CategoryTable")
+    abstract fun observeCategories(): Flow<List<CategoryEntity>>
 
     @Query("SELECT * FROM CategoryTable WHERE id=:categoryId")
     abstract fun getCategoryDetails(categoryId: Int): CategoryDetails

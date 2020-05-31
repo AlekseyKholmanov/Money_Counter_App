@@ -10,6 +10,7 @@ import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class CategoryDatabaseImpl(
@@ -17,6 +18,9 @@ class CategoryDatabaseImpl(
 ) : CategoryDatabase {
 
     private val dao = database.categoryDao()
+    override fun observeCategories(): Flow<List<CategoryEntity>> {
+        return dao.observeCategories()
+    }
 
     override suspend fun insert(category: CategoryEntity) {
         withContext(Dispatchers.IO) { dao.insert(category) }
@@ -40,6 +44,10 @@ class CategoryDatabaseImpl(
 
     override suspend fun deleteAll() {
         return withContext(Dispatchers.IO) { dao.deleteAll() }
+    }
+
+    override suspend fun getCategories(): List<CategoryEntity> {
+        return dao.getCategories()
     }
 
     override suspend fun getCategoryDetailsById(categoryId: Int): CategoryDetails {

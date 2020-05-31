@@ -3,10 +3,9 @@ package com.example.holmi_production.money_counter_app.storage.impl
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import com.example.holmi_production.money_counter_app.storage.PeriodsDatabase
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Single
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
 
 class PeriodsDatabaseImpl(
@@ -18,12 +17,12 @@ class PeriodsDatabaseImpl(
 
     private val dao = database.periodsDao()
 
-    fun insert(period: FilterPeriodEntity): Completable {
-        return Completable.fromCallable { dao.insert(period.copy(id = key)) }
+    suspend fun insert(period: FilterPeriodEntity) {
+        withContext(Dispatchers.IO) { dao.insert(period.copy(id = key)) }
     }
 
-    fun getPeriod(): Single<FilterPeriodEntity> {
-        return Single.fromCallable { dao.getPeriod(key) }
+    suspend fun getPeriod(): FilterPeriodEntity {
+        return withContext(Dispatchers.IO) { dao.getPeriod(key) }
     }
 
     fun observePeriod(): Flow<FilterPeriodEntity> {
