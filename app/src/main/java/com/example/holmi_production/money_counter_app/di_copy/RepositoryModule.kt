@@ -9,12 +9,12 @@ import org.koin.dsl.module
  */
 val repositoryModule = module {
 
-    single {
+    single<BalanceDatabase> {
         BalanceDatabaseImpl(
             get()
         )
     }
-    single {
+    single<CategoryDatabase> {
         CategoryDatabaseImpl(get())
     }
     single {
@@ -22,20 +22,22 @@ val repositoryModule = module {
             get()
         )
     }
+
     single {
         SettingRepository(get(), get())
     }
-    single {
+
+    single<SpendingDatabase> {
         SpendingDatabaseImpl(
             get()
         )
     }
-    single {
+    single<SubCategoryDatabase> {
         SubCategoryDatabaseImpl(
             get()
         )
     }
-    single {
+    single<SumPerDayDatabase> {
         SumPerDayDatabaseImpl(
             get()
         )
