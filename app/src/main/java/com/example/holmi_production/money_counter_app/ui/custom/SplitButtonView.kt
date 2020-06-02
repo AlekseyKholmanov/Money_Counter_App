@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import kotlinx.android.synthetic.main.view_splitted_button.view.*
 
 /**

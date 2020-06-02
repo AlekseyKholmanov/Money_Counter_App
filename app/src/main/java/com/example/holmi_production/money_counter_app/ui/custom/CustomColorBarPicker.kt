@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.custom
+package com.example.holmi_production.money_counter_app.ui.custom
 
 import android.content.Context
 

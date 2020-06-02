@@ -3,8 +3,7 @@ package com.example.holmi_production.money_counter_app.ui.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.example.holmi_production.money_counter_app.model.ChartType
-import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartStackedFragment
+import com.example.holmi_production.money_counter_app.model.enums.ChartType
 import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartPieFragment
 import com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartBalanceFragment
 

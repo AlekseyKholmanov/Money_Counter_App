@@ -1,14 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.presenters
 
-import android.util.Log
-import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.model.CostTimeDivider
-import com.example.holmi_production.money_counter_app.model.DailyExpenses
-import com.example.holmi_production.money_counter_app.model.ListItem
-import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
-import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 
 
 class CostsPresenter(

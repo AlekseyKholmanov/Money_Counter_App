@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.model
+package com.example.holmi_production.money_counter_app.model.enums
 
 enum class ChartType (val number:Int){
     PIE_CHART(0),

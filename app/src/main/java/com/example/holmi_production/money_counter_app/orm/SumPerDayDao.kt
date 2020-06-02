@@ -17,7 +17,6 @@ interface SumPerDayDao {
     @Query("SELECT * FROM SumPerDayTable WHERE id=:id")
     fun getSum(id:String): SumPerDayEntity
 
-    ///
     @Query("SELECT * FROM SumPerDayTable WHERE id=:id")
     fun observeSum(id:String): Flow<SumPerDayEntity>
 }

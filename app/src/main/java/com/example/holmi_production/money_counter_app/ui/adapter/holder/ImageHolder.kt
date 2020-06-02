@@ -1,11 +1,8 @@
 package com.example.holmi_production.money_counter_app.ui.adapter.holder
 
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
-import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.SquareImageView
 import kotlinx.android.synthetic.main.item_category.view.*
 
 /**

@@ -1,6 +1,6 @@
-package com.example.holmi_production.money_counter_app.model
+package com.example.holmi_production.money_counter_app.model.enums
 
-enum class ButtonTypeEnums {
+enum class ButtonType {
     ZERO,
     ENTER_UP,
     ENTER_DOWN,

@@ -1,13 +1,10 @@
 package com.example.holmi_production.money_counter_app.ui.presenters.charts
 
 import android.graphics.Color
-import android.util.Log
 import androidx.lifecycle.ViewModel
 
-import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.model.PieCharState
-import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.*
 
 

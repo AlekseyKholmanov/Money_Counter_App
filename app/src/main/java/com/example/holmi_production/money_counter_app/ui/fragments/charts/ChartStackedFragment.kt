@@ -5,25 +5,11 @@ import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.model.CategoryType
-import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartStackedPresenter
-import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import kotlinx.android.synthetic.main.chart_bar.*
-
-import org.joda.time.DateTime
-
-
-import kotlin.collections.ArrayList
 
 class ChartStackedFragment : BaseFragment(R.layout.chart_bar) {
     companion object {

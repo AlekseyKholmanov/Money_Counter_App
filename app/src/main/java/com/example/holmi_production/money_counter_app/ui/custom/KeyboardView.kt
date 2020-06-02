@@ -10,9 +10,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import coil.api.load
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
-import com.example.holmi_production.money_counter_app.model.ButtonTypeEnums
-import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.SquareImageView
+import com.example.holmi_production.money_counter_app.model.enums.ButtonType
+import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
@@ -42,21 +41,21 @@ class KeyboardView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.part_fragment_keyboard_const, this)
         chipsContainer.visibility = View.GONE
-        key0.setOnClickListener { pressed(ButtonTypeEnums.ZERO, "0") }
-        key1.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "1") }
-        key2.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "2") }
-        key3.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "3") }
-        key4.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "4") }
-        key5.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "5") }
-        key6.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "6") }
-        key7.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "7") }
-        key_8.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "8") }
-        key9.setOnClickListener { pressed(ButtonTypeEnums.NUMERIC, "9") }
-        keyDivider.setOnClickListener { pressed(ButtonTypeEnums.DIVIDER, ".") }
-        keyDelete.setOnClickListener { pressed(ButtonTypeEnums.DELETE) }
-        keySpending.setOnClickListener { pressed(ButtonTypeEnums.ENTER_UP) }
-        keyIncome.setOnClickListener { pressed(ButtonTypeEnums.ENTER_DOWN) }
-        category.setOnClickListener { pressed(ButtonTypeEnums.CATEGORY) }
+        key0.setOnClickListener { pressed(ButtonType.ZERO, "0") }
+        key1.setOnClickListener { pressed(ButtonType.NUMERIC, "1") }
+        key2.setOnClickListener { pressed(ButtonType.NUMERIC, "2") }
+        key3.setOnClickListener { pressed(ButtonType.NUMERIC, "3") }
+        key4.setOnClickListener { pressed(ButtonType.NUMERIC, "4") }
+        key5.setOnClickListener { pressed(ButtonType.NUMERIC, "5") }
+        key6.setOnClickListener { pressed(ButtonType.NUMERIC, "6") }
+        key7.setOnClickListener { pressed(ButtonType.NUMERIC, "7") }
+        key_8.setOnClickListener { pressed(ButtonType.NUMERIC, "8") }
+        key9.setOnClickListener { pressed(ButtonType.NUMERIC, "9") }
+        keyDivider.setOnClickListener { pressed(ButtonType.DIVIDER, ".") }
+        keyDelete.setOnClickListener { pressed(ButtonType.DELETE) }
+        keySpending.setOnClickListener { pressed(ButtonType.ENTER_UP) }
+        keyIncome.setOnClickListener { pressed(ButtonType.ENTER_DOWN) }
+        category.setOnClickListener { pressed(ButtonType.CATEGORY) }
         comment.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -121,10 +120,10 @@ class KeyboardView @JvmOverloads constructor(
         }
     }
 
-    private fun pressed(type: ButtonTypeEnums, value: String? = null) {
+    private fun pressed(type: ButtonType, value: String? = null) {
 
         when (type) {
-            ButtonTypeEnums.DELETE -> {
+            ButtonType.DELETE -> {
                 if (purshaseSum == "0") return
                 else {
                     purshaseSum = purshaseSum.dropLast(1)
@@ -135,33 +134,33 @@ class KeyboardView @JvmOverloads constructor(
                         purshaseSum = "0"
                 }
             }
-            ButtonTypeEnums.DIVIDER -> {
+            ButtonType.DIVIDER -> {
                 when {
                     value == "." && purshaseSum.contains(".") -> return
                     purshaseSum == "" -> purshaseSum = "0."
                     else -> purshaseSum += value
                 }
             }
-            ButtonTypeEnums.ZERO -> {
+            ButtonType.ZERO -> {
                 if (purshaseSum == "0") return
                 if (purshaseSum.contains(Regex("[.].*"))) return
                 else purshaseSum += value
 
             }
-            ButtonTypeEnums.ENTER_UP -> {
+            ButtonType.ENTER_UP -> {
                 enterPressed(SpDirection.SPENDING)
             }
-            ButtonTypeEnums.ENTER_DOWN -> {
+            ButtonType.ENTER_DOWN -> {
                 enterPressed(SpDirection.INCOME)
             }
-            ButtonTypeEnums.NUMERIC -> {
+            ButtonType.NUMERIC -> {
                 if (purshaseSum == "0")
                     purshaseSum = ""
                 if (purshaseSum.contains('.') && purshaseSum.takeLast(1) != ".")
                     purshaseSum = purshaseSum.dropLast(1)
                 purshaseSum += value
             }
-            ButtonTypeEnums.CATEGORY -> {
+            ButtonType.CATEGORY -> {
                 mKeyboardListener?.showCategoryDialog()
             }
         }

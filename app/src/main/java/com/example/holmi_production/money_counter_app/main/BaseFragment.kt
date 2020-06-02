@@ -24,7 +24,6 @@ abstract class BaseFragment : Fragment {
         get() = (requireActivity() as MainActivity).appBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        inject()
         super.onCreate(savedInstanceState)
     }
 

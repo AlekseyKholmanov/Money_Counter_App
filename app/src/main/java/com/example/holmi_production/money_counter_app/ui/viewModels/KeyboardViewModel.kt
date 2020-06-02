@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.view_models
+package com.example.holmi_production.money_counter_app.ui.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
-import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.impl.SpendingDatabaseImpl
 import com.example.holmi_production.money_counter_app.storage.impl.SumPerDayDatabaseImpl

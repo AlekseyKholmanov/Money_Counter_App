@@ -4,8 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.holmi_production.money_counter_app.model.ListItem
-import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
 

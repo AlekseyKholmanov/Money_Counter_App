@@ -18,8 +18,6 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
 
     @Query("DELETE FROM CategoryTable")
     abstract fun deleteAll()
-    //---------
-
 
     @Query("SELECT * FROM CategoryTable")
     abstract fun observeCategories(): Flow<List<CategoryEntity>>

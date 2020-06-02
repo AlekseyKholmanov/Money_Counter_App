@@ -14,7 +14,7 @@ import com.example.holmi_production.money_counter_app.extensions.getTime
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.ListItem
-import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate

@@ -1,6 +1,5 @@
 package com.example.holmi_production.money_counter_app.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,9 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
-import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.ui.custom.IKeyboardListener
-import com.example.holmi_production.money_counter_app.ui.view_models.KeyboardViewModel
+import com.example.holmi_production.money_counter_app.ui.viewModels.KeyboardViewModel
 import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -33,10 +30,6 @@ class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        childFragmentManager.beginTransaction()
-//            .replace(R.id.part_fragment, KeyboardPartFragment())
-//            .commit()
-//        keyboardViewModel.observeCategory()
     }
 
 

@@ -18,7 +18,7 @@
             android:id="@+id/spending_item_shape_container"
             android:background="@drawable/spending_background">
 
-        <com.example.holmi_production.money_counter_app.model.SquareImageView
+        <com.example.holmi_production.money_counter_app.ui.custom.SquareImageView
                 android:id="@+id/cost_item_image"
                 android:layout_width="48dp"
                 android:layout_height="48dp"

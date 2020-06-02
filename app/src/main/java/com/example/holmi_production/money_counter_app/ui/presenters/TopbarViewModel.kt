@@ -2,8 +2,8 @@ package com.example.holmi_production.money_counter_app.ui.presenters
 
 import androidx.lifecycle.ViewModel
 import com.example.holmi_production.money_counter_app.extensions.*
-import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums
-import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums.*
+import com.example.holmi_production.money_counter_app.model.enums.PeriodType
+import com.example.holmi_production.money_counter_app.model.enums.PeriodType.*
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import com.example.holmi_production.money_counter_app.storage.impl.PeriodsDatabaseImpl
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
@@ -43,7 +43,7 @@ class TopbarViewModel (
 //        }.keep()
     }
 
-    fun setPeriod(type: PeriodTypeEnums) {
+    fun setPeriod(type: PeriodType) {
         val period = FilterPeriodEntity("")
         when (type) {
             DAY -> {
@@ -81,7 +81,8 @@ class TopbarViewModel (
     private fun getNewPeriod(
         oldPeriod: FilterPeriodEntity,
         isRightDirection: Boolean,
-        currentPeriod: PeriodTypeEnums): FilterPeriodEntity {
+        currentPeriod: PeriodType
+    ): FilterPeriodEntity {
         if (currentPeriod == MONTH) {
             val date =
                 if (isRightDirection) oldPeriod.leftBorder.withNextMonthDate() else oldPeriod.leftBorder.withPreviousMonthDate()
@@ -106,7 +107,7 @@ class TopbarViewModel (
         }
     }
 
-    private fun getPeriodText(period: FilterPeriodEntity, type: PeriodTypeEnums): String {
+    private fun getPeriodText(period: FilterPeriodEntity, type: PeriodType): String {
         return if (type == DAY) period.leftBorder.toRUformat() else
             " ${period.leftBorder.toRUformat()} - ${period.rightBorder.toRUformat()}"
     }

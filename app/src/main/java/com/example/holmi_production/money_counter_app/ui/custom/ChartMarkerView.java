@@ -1,5 +1,5 @@
 
-package com.example.holmi_production.money_counter_app.custom;
+package com.example.holmi_production.money_counter_app.ui.custom;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

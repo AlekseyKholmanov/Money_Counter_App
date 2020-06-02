@@ -1,35 +1,21 @@
 package com.example.holmi_production.money_counter_app.ui.fragments.charts
 
-import android.graphics.Color
-import android.graphics.DashPathEffect
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.custom.ChartMarkerView
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalanceViewModel
-import com.example.holmi_production.money_counter_app.utils.Point.getLabelIndexes
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.github.mikephil.charting.utils.Utils
 import kotlinx.android.synthetic.main.chart_balance.*
 import kotlinx.android.synthetic.main.chart_bar.emptyPlaceholder_bar
 
 import org.joda.time.DateTime
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
-
-import kotlin.collections.ArrayList
 
 class ChartBalanceFragment : BaseFragment(R.layout.chart_balance) {
 

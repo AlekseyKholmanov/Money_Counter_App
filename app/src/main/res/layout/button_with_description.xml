@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.example.holmi_production.money_counter_app.model.SquareImageView
+    <com.example.holmi_production.money_counter_app.ui.custom.SquareImageView
         android:padding="4dp"
         android:id="@+id/categoryImage"
         android:layout_height="wrap_content"

@@ -44,5 +44,5 @@ class SumPerDayDatabaseImpl(
     override suspend fun getAverage(): SumPerDayEntity {
         return dao.getSum(AVERAGE)
     }
-    
+
 }

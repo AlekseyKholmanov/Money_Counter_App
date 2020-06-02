@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/app/Money_Counter_App-app.iml" filepath="$PROJECT_DIR$/app/Money_Counter_App-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/My-Money_Counter_App.iml" filepath="$PROJECT_DIR$/My-Money_Counter_App.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Money_Counter_App/app" />
+      <module fileurl="file://$PROJECT_DIR$/pet-Money_Counter_App.iml" filepath="$PROJECT_DIR$/pet-Money_Counter_App.iml" group="Money_Counter_App" />
+      <module fileurl="file://$PROJECT_DIR$/app/pet-Money_Counter_App-app.iml" filepath="$PROJECT_DIR$/app/pet-Money_Counter_App-app.iml" group="Money_Counter_App/app" />
     </modules>
   </component>
 </project>

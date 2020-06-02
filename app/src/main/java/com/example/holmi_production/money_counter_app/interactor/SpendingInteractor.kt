@@ -1,6 +1,6 @@
 package com.example.holmi_production.money_counter_app.interactor
 
-import com.example.holmi_production.money_counter_app.model.SpDirection
+import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
 import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
 import com.example.holmi_production.money_counter_app.storage.CategoryDatabase

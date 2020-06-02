@@ -1,11 +1,8 @@
 package com.example.holmi_production.money_counter_app.model.entity
 
-import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.holmi_production.money_counter_app.model.SpDirection
-import kotlinx.android.parcel.Parcelize
-
+import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 
 
 @Entity(tableName = "CategoryTable")

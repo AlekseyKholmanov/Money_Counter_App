@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.view_models
+package com.example.holmi_production.money_counter_app.ui.viewModels
 
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
 import com.example.holmi_production.money_counter_app.storage.impl.SpendingDatabaseImpl

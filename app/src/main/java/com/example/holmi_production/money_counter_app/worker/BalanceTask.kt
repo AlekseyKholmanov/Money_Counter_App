@@ -1,15 +1,10 @@
 package com.example.holmi_production.money_counter_app.worker
 
 import android.content.Context
-import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.example.holmi_production.money_counter_app.extensions.async
-import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 import com.example.holmi_production.money_counter_app.storage.impl.BalanceDatabaseImpl
 import com.example.holmi_production.money_counter_app.storage.impl.SpendingDatabaseImpl
-import org.joda.time.DateTime
 
 class BalanceTask constructor(
     private val context: Context,

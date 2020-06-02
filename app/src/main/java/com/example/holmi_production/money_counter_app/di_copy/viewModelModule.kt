@@ -1,7 +1,7 @@
 package com.example.holmi_production.money_counter_app.di_copy
 
 import com.example.holmi_production.money_counter_app.ui.presenters.SelectCategoryViewModel
-import com.example.holmi_production.money_counter_app.ui.view_models.KeyboardViewModel
+import com.example.holmi_production.money_counter_app.ui.viewModels.KeyboardViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

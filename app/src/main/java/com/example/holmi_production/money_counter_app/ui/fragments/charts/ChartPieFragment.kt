@@ -3,12 +3,8 @@ package com.example.holmi_production.money_counter_app.ui.fragments.charts
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
@@ -17,7 +13,6 @@ import com.example.holmi_production.money_counter_app.model.PieCharState
 import com.example.holmi_production.money_counter_app.model.entity.GraphEntity
 import com.example.holmi_production.money_counter_app.ui.fragments.PieDialogFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPieViewModel
-import com.example.holmi_production.money_counter_app.ui.view_models.KeyboardViewModel
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData

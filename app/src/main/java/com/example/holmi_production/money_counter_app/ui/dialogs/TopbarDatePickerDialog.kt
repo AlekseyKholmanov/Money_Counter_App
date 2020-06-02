@@ -6,7 +6,7 @@ import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.PeriodTypeEnums
+import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import org.joda.time.DateTime
 
 class TopbarDatePickerDialog : AppCompatDialogFragment(){
@@ -24,17 +24,17 @@ class TopbarDatePickerDialog : AppCompatDialogFragment(){
         btnMonth = view.findViewById(R.id.btn_category_month)
         btnCustom = view.findViewById(R.id.btn_custom_date)
         btnDay.setOnClickListener {
-            callback?.datePicked(PeriodTypeEnums.DAY)
+            callback?.datePicked(PeriodType.DAY)
             dismiss()
         }
 
         btnWeek.setOnClickListener {
-            callback?.datePicked(PeriodTypeEnums.WEEK)
+            callback?.datePicked(PeriodType.WEEK)
             dismiss()
         }
 
         btnMonth.setOnClickListener {
-            callback?.datePicked(PeriodTypeEnums.MONTH)
+            callback?.datePicked(PeriodType.MONTH)
             dismiss()
         }
         btnCustom.setOnClickListener{
@@ -62,6 +62,6 @@ class TopbarDatePickerDialog : AppCompatDialogFragment(){
     }
 }
 interface ITopbarDatePickerCallback{
-    fun datePicked(type:PeriodTypeEnums)
+    fun datePicked(type: PeriodType)
     fun datePicked(start:DateTime, end:DateTime)
 }

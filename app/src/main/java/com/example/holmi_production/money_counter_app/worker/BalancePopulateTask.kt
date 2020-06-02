@@ -2,15 +2,10 @@ package com.example.holmi_production.money_counter_app.worker
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.example.holmi_production.money_counter_app.extensions.async
-import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.interactor.BalanceInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.model.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 
 class BalancePopulateTask(context: Context, params: WorkerParameters) : Worker(context, params) {
     companion object {
