@@ -22,10 +22,6 @@ import kotlinx.android.synthetic.main.frament_settings.*
 
 class SettingsFragment : BaseFragment(R.layout.frament_settings){
 
-    override fun inject() {
-   //AppComponent.instance.inject(this)
-    }
-
 
 
 

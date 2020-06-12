@@ -19,9 +19,6 @@ class TopbarFragment : BaseFragment(R.layout.fragment_topbar),
     }
 
 
-    override fun inject() {
-   //AppComponent.instance.inject(this)
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

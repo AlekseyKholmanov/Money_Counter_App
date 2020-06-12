@@ -8,19 +8,19 @@ import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
 
-@Entity(tableName = "SpendingTable")
+@Entity(tableName = "TransactionTable")
 @Parcelize
-data class SpendingEntity(
+data class TransactionEntity(
     @PrimaryKey(autoGenerate = false)
     val createdDate: DateTime,
 
     val sum: Double,
-    @ColumnInfo(name = "categoryId")
-    val categoryId: Int,
+
+    val accountId: String,
+
+    val categoryId: Int?,
 
     val subcategoryId:Int?,
-
-    val isSpending: SpDirection,
 
     val comment:String?
 

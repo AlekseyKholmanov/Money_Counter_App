@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
+import com.example.holmi_production.money_counter_app.ui.adapter.items.CategoryItem
 
 /**
  * @author Alexey Kholmanov (alexey.holmanov@cleverpumpkin.ru)
@@ -18,3 +19,14 @@ data class CategoryDetails(
     )
     val subcategory: List<SubCategoryEntity>?
 )
+
+fun CategoryDetails.toItem():CategoryItem{
+    return CategoryItem(
+
+    categoryId = this.category.id,
+    description= this.category.description,
+    color = this.category.color,
+    imageId = this.category.imageId,
+    withSubcategory = !this.subcategory.isNullOrEmpty()
+    )
+}

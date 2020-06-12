@@ -16,7 +16,6 @@ class ChartFragment : BaseFragment(R.layout.fragment_bottom_chart) {
             return ChartFragment()
         }
     }
-    override fun inject()= Unit
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

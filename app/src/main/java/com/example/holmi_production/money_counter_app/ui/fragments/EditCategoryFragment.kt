@@ -23,9 +23,6 @@ class EditCategoryFragment : BaseFragment(R.layout.dialog_edit_category){
 //
 //    private val presenter by moxyPresenter { presenterProvider.get() }
 
-    override fun inject() {
-   //AppComponent.instance.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

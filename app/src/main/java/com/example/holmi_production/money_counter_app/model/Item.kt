@@ -1,3 +1,5 @@
 package com.example.holmi_production.money_counter_app.model
 
-interface ListItem
+interface Item{
+    val viewType: Int
+}

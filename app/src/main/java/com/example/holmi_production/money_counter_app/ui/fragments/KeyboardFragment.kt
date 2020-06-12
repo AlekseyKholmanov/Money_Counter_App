@@ -22,9 +22,6 @@ class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard) {
 //
 //    private val presenter by moxyPresenter { presenterProvider.get() }
     lateinit var part: Fragment
-    override fun inject() {
-//   //AppComponent.instance.inject(this)
-    }
 
 
 
@@ -38,7 +35,6 @@ class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard) {
         initToolbar()
 
         with(keyboardViewModel) {
-            categoryLiveData.observe(viewLifecycleOwner, Observer(::updateCategory))
         }
         showBottom.setOnClickListener {
             val direction = KeyboardFragmentDirections.actionKeyboardFragmentToBottomKeyboard()

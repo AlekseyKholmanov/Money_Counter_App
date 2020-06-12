@@ -1,39 +1,38 @@
 package com.example.holmi_production.money_counter_app.storage.impl
 
-import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
-import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
+import com.example.holmi_production.money_counter_app.model.TransactionDetails
+import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
-import com.example.holmi_production.money_counter_app.storage.SpendingDatabase
-import io.reactivex.Single
+import com.example.holmi_production.money_counter_app.storage.TransactionDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 
-class SpendingDatabaseImpl(
+class TransactionDatabaseImpl(
     database: ExpenseDatabase
-) : SpendingDatabase {
+) : TransactionDatabase {
     private val dao = database.spendingDao()
 
-    override suspend fun insert(spending: SpendingEntity) {
+    override suspend fun insert(transaction: TransactionEntity) {
         withContext(Dispatchers.IO) {
-            dao.forceInsert(spending)
+            dao.forceInsert(transaction)
         }
     }
 
-    override fun observeSpendings(): Flow<List<SpendingEntity>> {
+    override fun observeSpendings(): Flow<List<TransactionEntity>> {
         return dao.observeSpending()
     }
 
-    override suspend fun getSpendings(): List<SpendingEntity> {
+    override suspend fun getSpendings(): List<TransactionEntity> {
         return withContext(Dispatchers.IO){
             dao.getSpendings()
         }
     }
 
-    override suspend fun delete(spending: SpendingEntity) {
+    override suspend fun delete(transaction: TransactionEntity) {
         withContext(Dispatchers.IO) {
-            dao.delete(spending)
+            dao.delete(transaction)
         }
     }
 
@@ -43,7 +42,7 @@ class SpendingDatabaseImpl(
         }
     }
 
-    override fun observeSpendingsDetails(): Flow<List<SpendingDetails>> {
+    override fun observeSpendingsDetails(): Flow<List<TransactionDetails>> {
         return dao.observeSpendingDetails()
     }
 }

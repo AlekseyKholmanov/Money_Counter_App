@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.orm
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import io.reactivex.Flowable
@@ -22,9 +23,11 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
     @Query("SELECT * FROM CategoryTable")
     abstract fun observeCategories(): Flow<List<CategoryEntity>>
 
+    @Transaction
     @Query("SELECT * FROM CategoryTable WHERE id=:categoryId")
     abstract fun getCategoryDetails(categoryId: Int): CategoryDetails
 
+    @Transaction
     @Query("SELECT * FROM CategoryTable")
     abstract fun getAllCategoriesDetails(): List<CategoryDetails>
 
@@ -32,6 +35,7 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
     @Query("UPDATE CategoryTable SET usageCount = usageCount + 1 WHERE id =:categoryId")
     abstract fun increaseUsageCount(categoryId: Int)
 
+    @Transaction
     @Query("SELECT * FROM CategoryTable")
     abstract fun observeCategoriesDetails(): Flow<List<CategoryDetails>>
 

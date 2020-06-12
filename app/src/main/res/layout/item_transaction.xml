@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    app:show_mode="lay_down">
+
+    <LinearLayout
+        android:id="@+id/bottomWrapper"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/taskDeleteButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_red_light"
+            android:src="@drawable/ic_delete"
+            android:tint="@android:color/white"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/spending_item">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/spending_item_shape_container"
+            android:background="@drawable/spending_background">
+
+            <com.example.holmi_production.money_counter_app.ui.custom.SquareImageView
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/cost_item_container"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/cost_item_image"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp" />
+
+            <LinearLayout
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/cost_item_image"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/cost_item_container"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintBottom_toBottomOf="@id/tv_cost_item_comment"
+                    app:layout_constraintLeft_toRightOf="@id/cost_item_image"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Категория"
+                    android:id="@+id/tv_cost_item_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:textSize="19sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/cost_item_image"
+                    app:layout_constraintTop_toBottomOf="@id/tv_cost_item_category"
+                    tools:text="beer"
+                    android:id="@+id/tv_cost_item_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:gravity="top"
+                    android:maxLines="1"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    app:textAllCaps="true"
+                    tools:text="1500"
+                    android:id="@+id/cost_item_sum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:textSize="22sp" />
+
+                <TextView
+                    tools:text="1500"
+                    android:id="@+id/cost_item_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="right"
+                    android:layout_weight="2"
+                    android:gravity="top"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</com.daimajia.swipe.SwipeLayout>

@@ -8,19 +8,6 @@
     android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/keyAccumulation"
-        style="@style/TextButton"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:background="?attr/selectableItemBackground"
-        android:gravity="center"
-        android:scaleType="fitCenter"
-        app:iconTint="@color/colorYellow"
-        app:iconGravity="textStart"
-        app:icon="@drawable/ic_trending_up_black_24dp"
-        android:textColor="@color/colorYellow" />
-
-    <com.google.android.material.button.MaterialButton
         android:id="@+id/keySpending"
         style="@style/TextButton"
         android:layout_width="match_parent"

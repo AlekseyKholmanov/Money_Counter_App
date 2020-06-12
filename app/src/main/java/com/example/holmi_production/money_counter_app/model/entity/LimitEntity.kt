@@ -13,4 +13,5 @@ data class LimitEntity(
     val month: Int,
     val amount: Double,
     val startDate:DateTime,
-    val endDate:DateTime)
+    val endDate:DateTime
+)

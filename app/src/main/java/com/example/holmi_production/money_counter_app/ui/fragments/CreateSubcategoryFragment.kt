@@ -30,9 +30,6 @@ class CreateSubcategoryFragment : BaseFragment(R.layout.part_create_subcategory)
         }
     }
 
-    override fun inject() {
-   //AppComponent.instance.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

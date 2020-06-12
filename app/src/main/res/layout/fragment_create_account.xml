@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/accountNameInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:hint="название счета"
+        android:transitionGroup="true"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/accountNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:lineSpacingExtra="8sp"
+            android:maxLength="100"
+            android:maxLines="1"
+            android:textColor="@android:color/holo_green_dark"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/accountBalanceInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:hint="стартовый баланс"
+        android:transitionGroup="true"
+        app:layout_constraintTop_toBottomOf="@id/accountNameInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/accountBalanceEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:lineSpacingExtra="8sp"
+            android:maxLength="100"
+            android:maxLines="1"
+            android:textColor="@android:color/holo_green_dark"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/hiddenMode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:checked="false"
+        android:text="Отображать скрыто?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/accountBalanceInputLayout" />
+
+    <ImageView
+        android:id="@+id/hiddenModeDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_baseline_whatshot_24"
+        app:layout_constraintBottom_toBottomOf="@id/hiddenMode"
+        app:layout_constraintStart_toEndOf="@id/hiddenMode"
+        app:layout_constraintTop_toTopOf="@id/hiddenMode" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/sumPerDayMode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:checked="true"
+        android:text="Отображать сумму в день?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hiddenMode" />
+
+    <ImageView
+        android:id="@+id/sumPerDayModeDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_baseline_whatshot_24"
+        app:layout_constraintBottom_toBottomOf="@id/sumPerDayMode"
+        app:layout_constraintStart_toEndOf="@id/sumPerDayMode"
+        app:layout_constraintTop_toTopOf="@id/sumPerDayMode" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:hint="день окончания периода"
+        android:textSize="16dp"
+        android:alpha="0"
+        app:layout_constraintTop_toBottomOf="@id/sumPerDayMode" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_rounded_16dp"
+        android:backgroundTint="@color/colorYellow"
+        android:gravity="center"
+        android:text="создать"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

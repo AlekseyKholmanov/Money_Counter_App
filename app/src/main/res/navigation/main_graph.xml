@@ -21,7 +21,7 @@
         android:label="ChartFragment" />
     <fragment
         android:id="@+id/costsFragment"
-        android:name="com.example.holmi_production.money_counter_app.ui.fragments.CostsFragment"
+        android:name="com.example.holmi_production.money_counter_app.ui.fragments.TransactionFragment"
         android:label="CostsFragment" />
     <fragment
         android:id="@+id/selectCategoryFragment"

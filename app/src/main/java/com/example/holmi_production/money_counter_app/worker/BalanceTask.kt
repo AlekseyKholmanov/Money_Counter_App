@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.holmi_production.money_counter_app.storage.impl.BalanceDatabaseImpl
-import com.example.holmi_production.money_counter_app.storage.impl.SpendingDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.impl.TransactionDatabaseImpl
 
 class BalanceTask constructor(
     private val context: Context,
     private val params: WorkerParameters
 ) : Worker(context, params) {
-    lateinit var spendingDatabase: SpendingDatabaseImpl
+    lateinit var spendingDatabase: TransactionDatabaseImpl
     lateinit var balanceDatabase: BalanceDatabaseImpl
 
     override fun doWork(): Result {

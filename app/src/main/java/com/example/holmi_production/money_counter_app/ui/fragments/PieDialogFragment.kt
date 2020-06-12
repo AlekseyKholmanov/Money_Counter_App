@@ -7,8 +7,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.model.entity.SpendingDetails
+import com.example.holmi_production.money_counter_app.model.TransactionDetails
 import com.example.holmi_production.money_counter_app.ui.adapter.PieAdapter
 class PieDialogFragment() : DialogFragment() {
     lateinit var rv:RecyclerView
@@ -17,7 +16,7 @@ class PieDialogFragment() : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
         val view = requireActivity().layoutInflater.inflate(R.layout.dialog_pie_spendings, null)
-        val items = arguments?.getParcelableArray("SPENDINGS") as Array<SpendingDetails>
+        val items = arguments?.getParcelableArray("SPENDINGS") as Array<TransactionDetails>
         rv = view.findViewById(R.id.rv_spendings)
         val adapter  = PieAdapter()
             .apply {

@@ -8,7 +8,7 @@ import com.example.holmi_production.money_counter_app.model.entity.*
 @TypeConverters(Converters::class)
 @Database(
     entities = [
-        SpendingEntity::class,
+        TransactionEntity::class,
         SumPerDayEntity::class,
         FilterPeriodEntity::class,
         CategoryEntity::class,
@@ -20,7 +20,7 @@ import com.example.holmi_production.money_counter_app.model.entity.*
 )
 abstract class ExpenseDatabase : RoomDatabase() {
 
-    abstract fun spendingDao(): SpendingDao
+    abstract fun spendingDao(): TransactionDao
     abstract fun sumPerDayDao(): SumPerDayDao
     abstract fun periodsDao(): PeriodsDao
     abstract fun categoryDao(): CategoryDao

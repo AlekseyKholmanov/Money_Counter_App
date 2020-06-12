@@ -10,7 +10,7 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.PieCharState
-import com.example.holmi_production.money_counter_app.model.entity.GraphEntity
+import com.example.holmi_production.money_counter_app.model.GraphItem
 import com.example.holmi_production.money_counter_app.ui.fragments.PieDialogFragment
 import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPieViewModel
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
@@ -30,9 +30,6 @@ class ChartPieFragment : BaseFragment(R.layout.chart_pie){
 
     val myviewModel: ChartPieViewModel by viewModel()
 
-    override fun inject() {
-   //AppComponent.instance.inject(this)
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -96,7 +93,7 @@ class ChartPieFragment : BaseFragment(R.layout.chart_pie){
     }
 
 
-    private fun showChips(data: List<GraphEntity>) {
+    private fun showChips(data: List<GraphItem>) {
         chip_group.removeAllViews()
         data.forEach {
             chip_group.addView(
@@ -110,7 +107,7 @@ class ChartPieFragment : BaseFragment(R.layout.chart_pie){
         }
     }
 
-    private fun showPie(data: List<GraphEntity>) {
+    private fun showPie(data: List<GraphItem>) {
         if (data.isEmpty()) {
             showEmptyPlaceholder()
         } else {

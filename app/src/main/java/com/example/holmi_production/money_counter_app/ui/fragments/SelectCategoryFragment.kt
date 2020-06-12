@@ -4,20 +4,18 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.main.Navigation
-import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
-import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
-import com.example.holmi_production.money_counter_app.ui.adapter.CategoryPickerAdapter
-import com.example.holmi_production.money_counter_app.ui.adapter.holder.CategoryPickerHolder
-import com.example.holmi_production.money_counter_app.ui.presenters.SelectCategoryViewModel
+import com.example.holmi_production.money_counter_app.model.Item
+import com.example.holmi_production.money_counter_app.ui.adapter.SelectCategoryAdapter
+import com.example.holmi_production.money_counter_app.ui.adapter.holder.SelectCategoryHolder
+import com.example.holmi_production.money_counter_app.ui.adapter.items.ZeroItem
 import com.example.holmi_production.money_counter_app.ui.utils.ViewAnimation
+import com.example.holmi_production.money_counter_app.ui.viewModels.SelectCategoryViewModel
 import kotlinx.android.synthetic.main.fragment_select_category.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,21 +30,20 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
 //    @Inject
 //    lateinit var vmFactory : ViewModelProvider.Factory
 
-    val keyboardViewModel: SelectCategoryViewModel by viewModel()
+    val selectCategoryViewModel: SelectCategoryViewModel by viewModel()
 
-    lateinit var adapter: CategoryPickerAdapter
+    lateinit var adapter: SelectCategoryAdapter
 
 
-    private val categoryPickerCallback = object : CategoryPickerHolder.Callback {
+    private val categoryPickerCallback = object : SelectCategoryHolder.Callback {
         override fun categoryPicked(categoryId: Int) {
-//            presenter.categorySelected(categoryId)
+            selectCategoryViewModel.categorySelected(categoryId)
+            findNavController().popBackStack()
         }
 
-        override fun categoryEdited(pair: Pair<CategoryEntity, List<SubCategoryEntity>>) {
+        override fun categoryEdited(categoryId: Int) {
             val bundle = Bundle()
-            //TODO
-//            bundle.putParcelable("category", pair.first)
-//            bundle.putParcelableArray("subcategories", pair.second.toTypedArray())
+            bundle.putInt("categoryId", categoryId)
             categoryFab.setOnClickListener {
                 (requireActivity() as Navigation).loadFragment(
                     EditCategoryFragment.newInstance(bundle),
@@ -61,9 +58,6 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
 
     private var isFabOpen = false
 
-    override fun inject() {
-   //AppComponent.instance.inject(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +70,10 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar("Выберите категорию")
-   //AppComponent.instance.inject(this)
-        adapter = CategoryPickerAdapter(categoryPickerCallback)
+        with(selectCategoryViewModel) {
+            categories.observe(viewLifecycleOwner, Observer(::setCategories))
+        }
+        adapter = SelectCategoryAdapter(categoryPickerCallback)
         val layoutManager = GridLayoutManager(context, 3)
 
         categoryList.layoutManager = layoutManager
@@ -93,7 +89,14 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
         subcategoryFab.setOnClickListener {
             //TODO open subcategory fragment here
         }
-//        presenter.observeCategories()
+    }
+
+    private fun setCategories(categories: List<Item>) {
+        adapter.items = if (categories.isEmpty()) {
+            listOf(ZeroItem(R.layout.item_category_0data))
+        } else {
+            categories
+        }
     }
 
     private fun animateFab() {

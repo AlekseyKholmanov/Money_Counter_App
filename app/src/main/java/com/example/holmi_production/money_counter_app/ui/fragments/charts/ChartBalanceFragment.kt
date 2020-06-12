@@ -19,9 +19,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChartBalanceFragment : BaseFragment(R.layout.chart_balance) {
 
-    override fun inject() {
-   //AppComponent.instance.inject(this)
-    }
 
 
     val meViewModel: ChartBalanceViewModel by viewModel()

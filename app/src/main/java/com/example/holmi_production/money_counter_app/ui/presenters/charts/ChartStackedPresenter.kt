@@ -2,7 +2,7 @@ package com.example.holmi_production.money_counter_app.ui.presenters.charts
 
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.enums.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
+import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
 import org.joda.time.DateTime
 
 
@@ -22,9 +22,9 @@ class ChartStackedPresenter (private val spendingInteractor: SpendingInteractor)
 
     }
 
-    private fun prepareDatas(spendings: List<SpendingEntity>): Map<DateTime, List<SpendingEntity>> {
-        return spendings
-            .filter { it.isSpending == SpDirection.SPENDING }
+    private fun prepareDatas(transactions: List<TransactionEntity>): Map<DateTime, List<TransactionEntity>> {
+        return transactions
+            .filter { it.sum > 0 }
             .sortedByDescending { it.sum }
             .groupBy { it.createdDate.withTimeAtStartOfDay() }
     }

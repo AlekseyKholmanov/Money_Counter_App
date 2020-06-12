@@ -27,8 +27,8 @@ val repositoryModule = module {
         SettingRepository(get(), get())
     }
 
-    single<SpendingDatabase> {
-        SpendingDatabaseImpl(
+    single<TransactionDatabase> {
+        TransactionDatabaseImpl(
             get()
         )
     }

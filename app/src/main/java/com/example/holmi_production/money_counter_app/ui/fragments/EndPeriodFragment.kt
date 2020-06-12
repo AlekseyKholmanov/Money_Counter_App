@@ -25,9 +25,6 @@ class EndPeriodFragment : BaseFragment(R.layout.fragment_end_period){
         }
     }
 
-    override fun inject() {
-   //AppComponent.instance.inject(this)
-    }
 
 
 //    override fun showDatePeriod(start: String, end: String) {

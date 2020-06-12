@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.orm
 
 import androidx.room.TypeConverter
+import com.example.holmi_production.money_counter_app.model.enums.AccountType
 import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import org.joda.time.DateTime
 
@@ -41,5 +42,17 @@ class Converters {
         return list.filter { it.isNotBlank() }
             .map { SpDirection.valueOf(it) }
     }
+
+    @TypeConverter
+    fun toAccountType(type:Int):AccountType{
+        return AccountType.values()[type]
+    }
+
+    @TypeConverter
+    fun fromAccountType(type:AccountType):Int{
+        return type.ordinal
+    }
+
+
 
 }

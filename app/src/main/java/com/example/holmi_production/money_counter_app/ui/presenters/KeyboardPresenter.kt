@@ -3,9 +3,9 @@ package com.example.holmi_production.money_counter_app.ui.presenters
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
 import com.example.holmi_production.money_counter_app.model.enums.SpDirection
-import com.example.holmi_production.money_counter_app.model.entity.SpendingEntity
+import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import com.example.holmi_production.money_counter_app.storage.impl.SpendingDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.impl.TransactionDatabaseImpl
 import com.example.holmi_production.money_counter_app.storage.impl.SumPerDayDatabaseImpl
 
 
@@ -14,10 +14,10 @@ class KeyboardPresenter(
     private val settingRepository: SettingRepository,
     private val spendingInteractor: SpendingInteractor,
     private val categoryInteractor: CategoryInteractor,
-    private val spendingDatabase: SpendingDatabaseImpl
+    private val spendingDatabase: TransactionDatabaseImpl
 ) {
 
-    fun undoAdding(spending: SpendingEntity) {
+    fun undoAdding(transaction: TransactionEntity) {
 //        spendingInteractor.delete(spending)
 //            .subscribe({ Log.d("qwerty", "delete") }, { Log.d("qwerty", "error" + it.message) })
 //            .keep()

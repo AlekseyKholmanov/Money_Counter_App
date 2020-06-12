@@ -27,7 +27,6 @@ class SplitButtonView @JvmOverloads constructor(
         val iconSize = when (state.size) {
             1 -> 144
             2 -> 96
-            3 -> 72
             else -> throw Exception("out of range buton state")
         }
 
@@ -42,12 +41,6 @@ class SplitButtonView @JvmOverloads constructor(
             keySpending.iconSize = iconSize
         } else {
             keySpending.visibility = View.GONE
-        }
-        if (state.contains(SpDirection.ACCUMULATION)) {
-            keyAccumulation.visibility = View.VISIBLE
-            keyAccumulation.iconSize = iconSize
-        } else {
-            keyAccumulation.visibility = View.GONE
         }
     }
 

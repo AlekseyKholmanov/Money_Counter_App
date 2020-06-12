@@ -1,6 +1,6 @@
-package com.example.holmi_production.money_counter_app.model.entity
+package com.example.holmi_production.money_counter_app.model
 
-class GraphEntity(
+class GraphItem(
     val id: Int?,
     val description: String,
     val sum: Double,

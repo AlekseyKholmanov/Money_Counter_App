@@ -14,7 +14,7 @@
             android:layout_marginStart="8dp"
             android:padding="4dp">
         <TextView
-                android:id="@+id/costs_divider_date"
+                android:id="@+id/headerDate"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -23,7 +23,7 @@
                 android:textSize="18sp"
                 tools:text="23 сентября, 2019"/>
         <TextView
-                android:id="@+id/costs_divider_day_of_week"
+                android:id="@+id/headerDayOfWeek"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -33,19 +33,7 @@
     </LinearLayout>
 
     <TextView
-            android:id="@+id/costs_divider_sign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/costs_divider_sum"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="+" />
-
-    <TextView
-            android:id="@+id/costs_divider_sum"
+            android:id="@+id/headerSum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -54,5 +42,5 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="2500" />
+            tools:text="-2500" />
 </androidx.constraintlayout.widget.ConstraintLayout>

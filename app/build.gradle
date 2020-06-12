@@ -111,7 +111,7 @@ dependencies {
     implementation 'joda-time:joda-time:2.10.5'
 
     //adapter delegates
-    implementation 'com.hannesdorfmann:adapterdelegates3:3.0.1'
+    implementation "com.hannesdorfmann:adapterdelegates4:4.0.0"
 
     //charts
     implementation 'com.github.PhilJay:MPAndroidChart:3.1.0'

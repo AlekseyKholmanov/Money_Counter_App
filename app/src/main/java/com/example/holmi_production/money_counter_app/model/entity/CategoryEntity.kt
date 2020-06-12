@@ -14,5 +14,5 @@ data class CategoryEntity(
     override val color: Int,
     val imageId: Int? = null,
     var usageCount: Int = 0,
-    override var isDeleted:Boolean = false
+    override var isDeleted: Boolean = false
 ) : Nameble

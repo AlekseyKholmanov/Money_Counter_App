@@ -23,7 +23,7 @@ class CategoryDatabaseImpl(
     }
 
     override suspend fun insert(category: CategoryEntity) {
-        withContext(Dispatchers.IO) { dao.insert(category) }
+        withContext(Dispatchers.IO) { dao.upsert(category) }
     }
 
     override suspend fun getAllCategoryDetails(): List<CategoryDetails> {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/appBar"
@@ -29,31 +29,18 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintTop_toTopOf="parent"
+                app:spanCount="3" />
 
             <FrameLayout
                 android:id="@+id/frameBackground"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha="0.0"
+                android:background="@android:color/black"
                 android:clickable="false"
                 android:focusable="true"
-                android:background="@android:color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
-            <TextView
-                android:id="@+id/tv_empty_categories"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/validation_empty_categories"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -62,7 +49,6 @@
 
             <LinearLayout
                 android:id="@+id/categoryFab"
-                tools:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
@@ -70,9 +56,10 @@
                 android:layout_marginBottom="16dp"
                 android:background="@android:color/transparent"
                 android:orientation="horizontal"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@id/subcategoryFab"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="invisible">
+                tools:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -86,18 +73,17 @@
                     android:textSize="14sp" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    tools:visibility="visible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_delete"
                     app:backgroundTint="@color/Gray"
                     app:elevation="6dp"
-                    app:fabSize="mini" />
+                    app:fabSize="mini"
+                    tools:visibility="visible" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/subcategoryFab"
-                tools:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
@@ -105,9 +91,10 @@
                 android:layout_marginBottom="16dp"
                 android:background="@android:color/transparent"
                 android:orientation="horizontal"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@id/addFab"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="invisible">
+                tools:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -121,14 +108,14 @@
                     android:textSize="14sp" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    tools:visibility="visible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
                     android:src="@drawable/ic_delete"
                     app:backgroundTint="@color/colorYellow"
                     app:elevation="6dp"
-                    app:fabSize="mini" />
+                    app:fabSize="mini"
+                    tools:visibility="visible" />
             </LinearLayout>
 
 

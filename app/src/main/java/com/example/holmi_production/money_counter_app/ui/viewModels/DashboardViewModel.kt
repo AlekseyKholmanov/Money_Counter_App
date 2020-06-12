@@ -1,7 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui.viewModels
 
 import com.example.holmi_production.money_counter_app.storage.SettingRepository
-import com.example.holmi_production.money_counter_app.storage.impl.SpendingDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.impl.TransactionDatabaseImpl
 import com.example.holmi_production.money_counter_app.storage.impl.SumPerDayDatabaseImpl
 
 /**
@@ -9,7 +9,7 @@ import com.example.holmi_production.money_counter_app.storage.impl.SumPerDayData
  */
 class DashboardViewModel(
     private val sumPerDayDatabase: SumPerDayDatabaseImpl,
-    private val spendingDatabase: SpendingDatabaseImpl,
+    private val spendingDatabase: TransactionDatabaseImpl,
     private val settingRepository: SettingRepository
 ) {
 

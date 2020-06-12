@@ -1,12 +1,12 @@
 package com.example.holmi_production.money_counter_app.ui.adapter
 
-import com.example.holmi_production.money_counter_app.model.ListItem
-import com.example.holmi_production.money_counter_app.ui.adapter.delegates.CostsItemDelegate
-import com.hannesdorfmann.adapterdelegates3.ListDelegationAdapter
+import com.example.holmi_production.money_counter_app.model.Item
+import com.example.holmi_production.money_counter_app.ui.adapter.delegates.TransactionItemDelegate
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 
 class PieAdapter(
-) : ListDelegationAdapter<List<ListItem>>() {
+) : ListDelegationAdapter<List<Item>>() {
     init {
-        delegatesManager.addDelegate(CostsItemDelegate())
+        delegatesManager.addDelegate(TransactionItemDelegate())
     }
 }

@@ -2,10 +2,10 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.ui.custom.ColorSeekBar
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
@@ -17,19 +17,20 @@ import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.container_category_detail.*
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 class CategoryDetailsFragment :
     BaseFragment(R.layout.container_category_detail) {
 
-    val isValidState by lazy { PublishSubject.create<Boolean>() }
+    val isValid = BroadcastChannel<Boolean>(0)
+
 
     private val disposables = CompositeDisposable()
 
-    override fun inject() = Unit
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,24 +81,32 @@ class CategoryDetailsFragment :
             .debounce(300, TimeUnit.MILLISECONDS)
             .map { it.isNotBlank() }
             .subscribe{
-                isValidState.onNext(isCheckboxesChecked())
+                viewLifecycleOwner.lifecycleScope.launch {
+                    isValid.send(isCheckboxesChecked())
+                }
             }
             .addTo(disposables)
 
         ch_accumulation
             .setOnClickListener {
                 ch_accumulation.isChecked = !ch_accumulation.isChecked
-                isValidState.onNext(isCheckboxesChecked())
+                viewLifecycleOwner.lifecycleScope.launch {
+                    isValid.send(isCheckboxesChecked())
+                }
             }
         ch_income
             .setOnClickListener {
                 ch_income.isChecked = !ch_income.isChecked
-                isValidState.onNext(isCheckboxesChecked())
+                viewLifecycleOwner.lifecycleScope.launch {
+                    isValid.send(isCheckboxesChecked())
+                }
             }
         ch_spending
             .setOnClickListener {
                 ch_spending.isChecked = !ch_spending.isChecked
-                isValidState.onNext(isCheckboxesChecked())
+                viewLifecycleOwner.lifecycleScope.launch {
+                    isValid.send(isCheckboxesChecked())
+                }
             }
 
         btn_generate_color.setOnClickListener {
@@ -124,7 +133,7 @@ class CategoryDetailsFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        isValidState.onComplete()
+        isValid.close()
         disposables.dispose()
     }
 
@@ -139,7 +148,6 @@ class CategoryDetailsFragment :
         //TODO getCategoryById
 //        val category = (arguments?.getParcelable("category") as CategoryEntity?)
         val categoryId =  0
-        Log.d("M_CatDetailFragment", "dsada")
         return CategoryEntity(
             id = categoryId,
             imageId = imageId,

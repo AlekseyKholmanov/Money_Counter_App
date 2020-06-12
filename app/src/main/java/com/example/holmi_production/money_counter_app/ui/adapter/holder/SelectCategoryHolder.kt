@@ -4,38 +4,37 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
-import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
+import com.example.holmi_production.money_counter_app.model.CategoryDetails
+import com.example.holmi_production.money_counter_app.ui.adapter.items.CategoryItem
 import kotlinx.android.synthetic.main.item_category.view.*
 
 /**
  * @author Alexey Kholmanov (alexey.holmanov@cleverpumpkin.ru)
  */
-class CategoryPickerHolder(
+class SelectCategoryHolder(
     view: View,
     private val callback: Callback
 ) : RecyclerView.ViewHolder(view) {
 
-    fun bind(pair: Pair<CategoryEntity, List<SubCategoryEntity>>) {
+    fun bind(item: CategoryItem) {
         with(itemView) {
-            val (category, subcategories) = pair
-            text_category_dialog.text = category.description
-            setBackgroundColor(category.color)
+            text_category_dialog.text = item.description
+            setBackgroundColor(item.color)
             setOnClickListener {
-                callback.categoryPicked(category.id)
+                callback.categoryPicked(item.categoryId)
             }
             setOnLongClickListener {
-                callback.categoryEdited(pair)
+                callback.categoryEdited(item.categoryId)
                 return@setOnLongClickListener true
             }
-            image_subcategory_indicator.visibility = if (subcategories.isNotEmpty()) {
+            image_subcategory_indicator.visibility = if (item.withSubcategory) {
                 View.VISIBLE
             } else {
                 View.GONE
             }
             val array = resources.obtainTypedArray(R.array.images)
-            val image = if (category.imageId != null) {
-                array.getResourceId(category.imageId, R.drawable.ic_launcher_foreground)
+            val image = if (item.imageId != null) {
+                array.getResourceId(item.imageId, R.drawable.ic_launcher_foreground)
             } else {
                 R.drawable.ic_launcher_foreground
             }
@@ -49,6 +48,6 @@ class CategoryPickerHolder(
 
     interface Callback {
         fun categoryPicked(categoryId: Int)
-        fun categoryEdited(pair: Pair<CategoryEntity, List<SubCategoryEntity>>)
+        fun categoryEdited(categoryId: Int)
     }
 }

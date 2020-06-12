@@ -22,9 +22,6 @@ class ChartStackedFragment : BaseFragment(R.layout.chart_bar) {
     lateinit var chart: BarChart
 
 
-    override fun inject() {
-   //AppComponent.instance.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
