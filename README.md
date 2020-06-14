@@ -5,12 +5,11 @@
 Плюс имеется небольшая аналитика в виде нескольких графиков.
 
 Использованные библиотеки:
-- Dagger 2
-- RxJava
-- Room 
-- Moxy
-- AndroidDelegates
-- Android navigation 
-- Canary Leaks
-- AdapterDelegates
-- MPAndroidChart
+MVVM + LiveData + Coroutines + SingleActivity
+
+with:
+	- Room
+	- JetpackNavigation
+	- WorkManager
+	- AdapterDelegates
+	- Koin
