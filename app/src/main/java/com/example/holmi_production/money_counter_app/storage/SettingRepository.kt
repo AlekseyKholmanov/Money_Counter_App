@@ -78,17 +78,6 @@ class SettingRepository(
         pref.edit().putInt(PERIOD_TYPE, type).apply()
     }
 
-    fun setCategoryId(type: Int) {
-        pref.edit().putInt(CATEGORY_VALUE, type).apply()
-    }
-
-    fun observeCategoryId(): Preference<Int> = rxPrefs.getInteger(CATEGORY_VALUE, -1)
-
-
-    fun getCategoryValue(): Int {
-        return pref.getInt(CATEGORY_VALUE, -1)
-    }
-
     fun setAppOpened() {
         pref.edit().putBoolean(FIRST_OPEN, true).apply()
     }
@@ -118,7 +107,6 @@ class SettingRepository(
         val Converter_VALUE = "Converter_VALUE"
         val Converter = "Converter"
         val FIRST_OPEN = "FirstOpen"
-        val CATEGORY_VALUE = "Category_value"
         val BALANCE_MIGRATION_TAG = "BALANCE_POPULATED"
         val PERIOD_TYPE = "PERIOD_TYPE"
         val END_MONTH = "END_MONTH"

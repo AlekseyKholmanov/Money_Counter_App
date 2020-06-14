@@ -36,21 +36,17 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
 
 
     private val categoryPickerCallback = object : SelectCategoryHolder.Callback {
-        override fun categoryPicked(categoryId: Int) {
+        override fun categoryPicked(categoryId: String) {
             selectCategoryViewModel.categorySelected(categoryId)
             findNavController().popBackStack()
         }
 
-        override fun categoryEdited(categoryId: Int) {
+        override fun categoryEdited(categoryId: String) {
             val bundle = Bundle()
-            bundle.putInt("categoryId", categoryId)
+            bundle.putString("categoryId", categoryId)
             categoryFab.setOnClickListener {
-                (requireActivity() as Navigation).loadFragment(
-                    EditCategoryFragment.newInstance(bundle),
-                    isAddedToBackstack = true,
-                    withBottomBar = false,
-                    withDatePickerFragment = false
-                )
+                val direction = SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryDetailsFragment(categoryId)
+                findNavController().navigate(direction)
                 animateFab()
             }
         }
@@ -83,7 +79,8 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
             animateFab()
         }
         categoryFab.setOnClickListener {
-            findNavController().navigate(R.id.createCategoryFragment)
+            val direction = SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryDetailsFragment(null)
+            findNavController().navigate(direction)
             animateFab()
         }
         subcategoryFab.setOnClickListener {
@@ -118,25 +115,5 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
         categoryFab.isClickable = isFabOpen
         subcategoryFab.isClickable = isFabOpen
     }
-
-//    override fun showToast(text: String) {
-//        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-//    }
-//
-//    override fun popUp() {
-//        findNavController().popBackStack()
-//    }
-//
-//    override fun showCategories(categories: ArrayList<Pair<CategoryEntity, List<SubCategoryEntity>>>) {
-//        adapter.setCategory(categories)
-//        adapter.notifyDataSetChanged()
-//    }
-//
-//    override fun showMessage(show: Boolean, messageResId: Int?) {
-//        categoryList.visibility = if (show) View.INVISIBLE else View.VISIBLE
-//        tv_empty_categories.visibility = if (show) View.VISIBLE else View.GONE
-//        if (show && messageResId != null)
-//            tv_empty_categories.text = getString(messageResId)
-//    }
 
 }

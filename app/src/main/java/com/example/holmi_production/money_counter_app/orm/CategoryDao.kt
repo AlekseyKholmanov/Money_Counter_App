@@ -15,7 +15,7 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
     abstract fun getCategories(): List<CategoryEntity>
 
     @Query("SELECT * FROM CategoryTable WHERE id=:id")
-    abstract fun getCategory(id: Int): CategoryEntity
+    abstract fun getCategory(id: String): CategoryEntity
 
     @Query("DELETE FROM CategoryTable")
     abstract fun deleteAll()
@@ -25,7 +25,7 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
 
     @Transaction
     @Query("SELECT * FROM CategoryTable WHERE id=:categoryId")
-    abstract fun getCategoryDetails(categoryId: Int): CategoryDetails
+    abstract fun getCategoryDetails(categoryId: String): CategoryDetails
 
     @Transaction
     @Query("SELECT * FROM CategoryTable")
@@ -33,10 +33,14 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
 
     // update
     @Query("UPDATE CategoryTable SET usageCount = usageCount + 1 WHERE id =:categoryId")
-    abstract fun increaseUsageCount(categoryId: Int)
+    abstract fun increaseUsageCount(categoryId: String)
 
     @Transaction
-    @Query("SELECT * FROM CategoryTable")
+    @Query("SELECT * FROM CategoryTable WHERE isDeleted = 0")
     abstract fun observeCategoriesDetails(): Flow<List<CategoryDetails>>
+
+    @Transaction
+    @Query("SELECT * FROM CategoryTable WHERE id=:categoryId")
+    abstract fun observeCategoryDetailsById(categoryId: String): Flow<CategoryDetails>
 
 }

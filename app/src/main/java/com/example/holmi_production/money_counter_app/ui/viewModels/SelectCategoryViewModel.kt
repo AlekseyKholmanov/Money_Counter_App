@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.toItem
-import com.example.holmi_production.money_counter_app.storage.SettingRepository
+import com.example.holmi_production.money_counter_app.useCases.SetRecentCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class SelectCategoryViewModel(
     private val interactor: CategoryInteractor,
-    private val settingRepository: SettingRepository
+    private val setRecentCategoryUseCase: SetRecentCategoryUseCase
 ) : ViewModel() {
 
     private val _categories: MutableLiveData<List<Item>> = MutableLiveData()
@@ -34,7 +34,9 @@ class SelectCategoryViewModel(
         }
     }
 
-    fun categorySelected(categoryId: Int) {
-        settingRepository.setCategoryId(categoryId)
+    fun categorySelected(categoryId: String) {
+        viewModelScope.launch {
+            setRecentCategoryUseCase.setRecentCategory(categoryId)
+        }
     }
 }

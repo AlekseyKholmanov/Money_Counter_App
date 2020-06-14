@@ -3,16 +3,16 @@ package com.example.holmi_production.money_counter_app.model.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.holmi_production.money_counter_app.model.enums.SpDirection
+import java.util.*
 
 
 @Entity(tableName = "CategoryTable")
 data class CategoryEntity(
-    @PrimaryKey(autoGenerate = true)
-    override val id: Int = 0,
-    val spendingDirection: List<SpDirection>,
-    override val description: String,
-    override val color: Int,
+    @PrimaryKey
+    val id: String = UUID.randomUUID().toString(),
+    val description: String,
+    val color: Int,
     val imageId: Int? = null,
     var usageCount: Int = 0,
-    override var isDeleted: Boolean = false
-) : Nameble
+    var isDeleted: Boolean = false
+)

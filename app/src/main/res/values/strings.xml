@@ -17,14 +17,14 @@
     <string name="validation_empty_categories">Отсутствуют добавленные категории</string>
     <string name="information_empty_list">Данные отсутствуют</string>
     <string name="error_list">Произошла ошибка</string>
-    <string name="btn_getColor">случайный цвет</string>
+    <string name="button_generate_color">Generate</string>
     <string name="text_color">Цвет:</string>
     <string name="et_text_enter_category_name">введите название категории</string>
     <string name="text_choose_type">Выберите тип:</string>
     <string name="text_income">Доходы</string>
     <string name="text_spending">Расходы</string>
     <string name="text_accumulation">Накопления</string>
-    <string name="text_save">Сохранить</string>
+    <string name="save">Сохранить</string>
     <string name="et_text_enter_subcategory_name">название подкатегории</string>
     <string name="text_update">Обновить</string>
     <string name="txt_add_subcategory">Добавить подкатегорию</string>

@@ -47,33 +47,34 @@ class SpendingInteractor(
             }
     }
 
+    //TODO it can have different type of account
     suspend fun delete(transaction: TransactionEntity) {
-        val endPeriodDays = settingRepository.getDaysToEndPeriod()
-        val today = sumPerDayDatabase.getToday()
-        val average = sumPerDayDatabase.getAverage()
-        when (transaction.sum) {
-            SpDirection.INCOME -> {
-                val deltaAverage = transaction.sum / endPeriodDays
-                sumPerDayDatabase.insertToday(today.sum - deltaAverage)
-                sumPerDayDatabase.insertAverage(average.sum - deltaAverage)
-                transactionDatabase.delete(transaction)
-            }
-            else -> {
-                when (transaction.createdDate.dayOfYear()) {
-                    DateTime.now().dayOfYear() -> {
-
-                        sumPerDayDatabase.insertToday(today.inc(transaction.sum).sum)
-                        transactionDatabase.delete(transaction)
-                    }
-                    else -> {
-                        val deltaAverage = transaction.sum / endPeriodDays
-                        sumPerDayDatabase.insertToday(today.sum + deltaAverage)
-                        sumPerDayDatabase.insertAverage(average.sum + deltaAverage)
-                        transactionDatabase.delete(transaction)
-                    }
-                }
-            }
-        }
+//        val endPeriodDays = settingRepository.getDaysToEndPeriod()
+//        val today = sumPerDayDatabase.getToday()
+//        val average = sumPerDayDatabase.getAverage()
+//        when (transaction.sum) {
+//            SpDirection.INCOME -> {
+//                val deltaAverage = transaction.sum / endPeriodDays
+//                sumPerDayDatabase.insertToday(today.sum - deltaAverage)
+//                sumPerDayDatabase.insertAverage(average.sum - deltaAverage)
+//                transactionDatabase.delete(transaction)
+//            }
+//            else -> {
+//                when (transaction.createdDate.dayOfYear()) {
+//                    DateTime.now().dayOfYear() -> {
+//
+//                        sumPerDayDatabase.insertToday(today.inc(transaction.sum).sum)
+//                        transactionDatabase.delete(transaction)
+//                    }
+//                    else -> {
+//                        val deltaAverage = transaction.sum / endPeriodDays
+//                        sumPerDayDatabase.insertToday(today.sum + deltaAverage)
+//                        sumPerDayDatabase.insertAverage(average.sum + deltaAverage)
+//                        transactionDatabase.delete(transaction)
+//                    }
+//                }
+//            }
+//        }
     }
 
     suspend fun deleteAll() {

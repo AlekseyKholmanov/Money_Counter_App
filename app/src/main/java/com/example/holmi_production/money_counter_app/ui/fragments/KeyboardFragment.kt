@@ -16,11 +16,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard) {
 
     private val keyboardViewModel: KeyboardViewModel by viewModel()
-
-    //    @Inject
-//    lateinit var presenterProvider: Provider<KeyboardPresenter>
-//
-//    private val presenter by moxyPresenter { presenterProvider.get() }
     lateinit var part: Fragment
 
 

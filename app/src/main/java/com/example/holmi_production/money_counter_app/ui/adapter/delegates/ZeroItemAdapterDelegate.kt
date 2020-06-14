@@ -7,7 +7,7 @@ import com.example.holmi_production.money_counter_app.ui.adapter.holder.ZeroItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.ZeroItem
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 
-class ZeroItemAdapterDelegates(val resId: Int) :
+class ZeroItemAdapterDelegate(val resId: Int) :
     AbsListItemAdapterDelegate<ZeroItem, Item, ZeroItemHolder>() {
 
 

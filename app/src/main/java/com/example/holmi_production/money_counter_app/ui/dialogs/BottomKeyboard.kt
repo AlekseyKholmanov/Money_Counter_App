@@ -38,7 +38,6 @@ class BottomKeyboard : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bottomViewModel.observeCategory()
     }
 
     override fun onCreateView(
@@ -51,7 +50,7 @@ class BottomKeyboard : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bottomViewModel.categoryLiveData.observe(viewLifecycleOwner, Observer(::setCategory))
+        bottomViewModel.category.observe(viewLifecycleOwner, Observer(::setCategory))
         key0.setOnClickListener { pressed(ButtonType.ZERO, "0") }
         key1.setOnClickListener { pressed(ButtonType.NUMERIC, "1") }
         key2.setOnClickListener { pressed(ButtonType.NUMERIC, "2") }

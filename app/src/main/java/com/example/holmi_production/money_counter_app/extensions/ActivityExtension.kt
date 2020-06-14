@@ -3,6 +3,7 @@ package com.example.holmi_production.money_counter_app.extensions
 import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 
@@ -13,7 +14,7 @@ fun Activity.hideKeyboard() {
     }
 }
 
-fun EditText.hideKeyboardFrom(context: Context){
+fun View.hideKeyboardFrom(context: Context){
     val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(this.windowToken, 0)
 }

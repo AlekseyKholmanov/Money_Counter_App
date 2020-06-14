@@ -2,9 +2,7 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.TextView
@@ -62,7 +60,7 @@ class CreateSubcategoryFragment : BaseFragment(R.layout.part_create_subcategory)
             }
         btn_create_subcategory.setOnClickListener {
             val pickedCategory = spinner_parentCategory.selectedItem as CategoryEntity
-            callback!!.subcategoryCreated(et_subcategory_name.text.toString(), pickedCategory.id, colot = pickedCategory.color)
+            callback!!.subcategoryCreated(et_subcategory_name.text.toString(), pickedCategory.id, color = pickedCategory.color)
         }
         et_subcategory_name.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             var handled = false
@@ -96,5 +94,5 @@ class CreateSubcategoryFragment : BaseFragment(R.layout.part_create_subcategory)
 }
 
 interface ISubcategoryCreateCallback {
-    fun subcategoryCreated(categoryName: String, parentId: Int, colot: Int)
+    fun subcategoryCreated(categoryName: String, parentId: String, color: Int)
 }

@@ -34,11 +34,11 @@ class CategoryDatabaseImpl(
         return withContext(Dispatchers.IO) { dao.getCategories() }
     }
 
-    override suspend fun increaseUsageCount(categoryId: Int) {
+    override suspend fun increaseUsageCount(categoryId: String) {
         withContext(Dispatchers.IO) { dao.increaseUsageCount(categoryId) }
     }
 
-    override suspend fun getCategoryById(id: Int): CategoryEntity {
+    override suspend fun getCategoryById(id: String): CategoryEntity {
         return withContext(Dispatchers.IO) { dao.getCategory(id) }
     }
 
@@ -54,10 +54,12 @@ class CategoryDatabaseImpl(
         return dao.observeCategoriesDetails()
     }
 
-    override suspend fun getCategoryDetailsById(categoryId: Int): CategoryDetails {
+    override suspend fun getCategoryDetailsById(categoryId: String): CategoryDetails {
         return dao.getCategoryDetails(categoryId)
     }
 
-
+    override fun observeCategoryDetailsById(categoryId: String): Flow<CategoryDetails> {
+        return dao.observeCategoryDetailsById(categoryId)
+    }
 
 }

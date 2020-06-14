@@ -11,8 +11,6 @@ import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.PieCharState
 import com.example.holmi_production.money_counter_app.model.GraphItem
-import com.example.holmi_production.money_counter_app.ui.fragments.PieDialogFragment
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartPieViewModel
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
@@ -28,14 +26,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ChartPieFragment : BaseFragment(R.layout.chart_pie){
 
 
-    val myviewModel: ChartPieViewModel by viewModel()
+//    val myviewModel: ChartPieViewModel by viewModel()
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.d("M_PieChartFragment", "pie view created")
         super.onViewCreated(view, savedInstanceState)
-        myviewModel.observeData()
+//        myviewModel.observeData()
         preparePieSettings()
         chart_pie.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onNothingSelected() {}
@@ -43,12 +41,12 @@ class ChartPieFragment : BaseFragment(R.layout.chart_pie){
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 val categoryId = e!!.data as Int
                 val canDetailed = pieBack.visibility == View.VISIBLE
-                myviewModel.updateGraph(categoryId, canDetailed)
+//                myviewModel.updateGraph(categoryId, canDetailed)
                 Log.d("M_PieChartFragment", "VALUE SELECTED index $categoryId")
             }
         })
         pieBack.setOnClickListener {
-            myviewModel.updateGraph(null, true)
+//            myviewModel.updateGraph(null, true)
         }
     }
 
@@ -85,11 +83,11 @@ class ChartPieFragment : BaseFragment(R.layout.chart_pie){
         val bundle = Bundle()
         //TODO get data from repository
 //        bundle.putParcelableArray("SPENDINGS", state.spendings)
-        val fr =
-            PieDialogFragment.newInstance(
-                bundle
-            )
-        fr.show(childFragmentManager, "Spending dialog")
+//        val fr =
+//            PieDialogFragment.newInstance(
+//                bundle
+//            )
+//        fr.show(childFragmentManager, "Spending dialog")
     }
 
 

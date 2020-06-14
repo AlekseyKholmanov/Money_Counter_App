@@ -13,15 +13,17 @@ interface CategoryDatabase {
 
     suspend fun insert(category: CategoryEntity)
 
-    suspend fun increaseUsageCount(categoryId: Int)
+    suspend fun increaseUsageCount(categoryId: String)
 
-    suspend fun getCategoryDetailsById(categoryId:Int): CategoryDetails
+    suspend fun getCategoryDetailsById(categoryId: String): CategoryDetails
+
+    fun observeCategoryDetailsById(categoryId: String): Flow<CategoryDetails>
 
     suspend fun getAllCategoryDetails(): List<CategoryDetails>
 
     suspend fun getAllCategories(): List<CategoryEntity>
 
-    suspend fun getCategoryById(id:Int): CategoryEntity
+    suspend fun getCategoryById(id:String): CategoryEntity
 
     suspend fun deleteAll()
 

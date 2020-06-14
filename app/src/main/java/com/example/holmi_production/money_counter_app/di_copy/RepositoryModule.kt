@@ -14,6 +14,7 @@ val repositoryModule = module {
             get()
         )
     }
+
     single<CategoryDatabase> {
         CategoryDatabaseImpl(get())
     }

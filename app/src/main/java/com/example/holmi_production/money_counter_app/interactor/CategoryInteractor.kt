@@ -15,13 +15,12 @@ class CategoryInteractor(
     private val subCategoryDatabase: SubCategoryDatabase
 ) {
 
-    suspend fun insert(name: String, types: List<SpDirection>, color: ColorDrawable?, imageId:Int) {
+    suspend fun insert(name: String, color: ColorDrawable?, imageId:Int) {
 
         val category = CategoryEntity(
             description = name,
             imageId = imageId,
-            color = color?.color ?: ColorUtils.getColor(),
-            spendingDirection = types
+            color = color?.color ?: ColorUtils.getColor()
         )
         insert(category)
     }
@@ -54,11 +53,11 @@ class CategoryInteractor(
         return categoryDatabase.getCategories()
     }
 
-    suspend fun getCateforyDetails(categoryId: Int): CategoryDetails {
+    suspend fun getCateforyDetails(categoryId: String): CategoryDetails {
         return categoryDatabase.getCategoryDetailsById(categoryId)
     }
 
-    suspend fun increaseUsageCount(categoryId: Int)  {
+    suspend fun increaseUsageCount(categoryId: String)  {
             categoryDatabase.increaseUsageCount(categoryId)
     }
 

@@ -28,19 +28,24 @@
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.SelectCategoryFragment"
         android:label="SelectCategoryFragment" >
         <action
-            android:id="@+id/action_selectCategoryFragment_to_createCategoryFragment"
-            app:destination="@id/createCategoryFragment" />
+            android:id="@+id/action_selectCategoryFragment_to_categoryDetailsFragment"
+            app:destination="@id/categoryDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/limitsFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.LimitsFragment"
         android:label="LimitsFragment" />
-    <fragment
-        android:id="@+id/createCategoryFragment"
-        android:name="com.example.holmi_production.money_counter_app.ui.fragments.CreateCategoryFragment"
-        android:label="CreateCategoryFragment" />
     <dialog
         android:id="@+id/bottomKeyboard"
         android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomKeyboard"
         android:label="BottomKeyboard" />
+    <fragment
+        android:id="@+id/categoryDetailsFragment"
+        android:name="com.example.holmi_production.money_counter_app.ui.fragments.CategoryDetailsFragment"
+        android:label="CategoryDetailsFragment" >
+        <argument
+            android:name="categoryId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>
