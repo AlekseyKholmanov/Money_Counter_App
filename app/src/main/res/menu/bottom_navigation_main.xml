@@ -3,7 +3,7 @@
     android:background="@color/design_default_color_primary_variant">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/keyboardFragment"
+            android:id="@+id/dashboardFragment"
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/text_main" />

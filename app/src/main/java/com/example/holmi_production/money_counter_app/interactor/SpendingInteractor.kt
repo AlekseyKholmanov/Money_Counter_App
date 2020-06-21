@@ -2,21 +2,19 @@ package com.example.holmi_production.money_counter_app.interactor
 
 import com.example.holmi_production.money_counter_app.model.TransactionDetails
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
-import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import com.example.holmi_production.money_counter_app.storage.CategoryDatabase
-import com.example.holmi_production.money_counter_app.storage.SettingRepository
+import com.example.holmi_production.money_counter_app.storage.AppPreference
 import com.example.holmi_production.money_counter_app.storage.SumPerDayDatabase
 import com.example.holmi_production.money_counter_app.storage.TransactionDatabase
 import com.example.holmi_production.money_counter_app.storage.impl.PeriodsDatabaseImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import org.joda.time.DateTime
 
 
 class SpendingInteractor(
     private val transactionDatabase: TransactionDatabase,
     private val sumPerDayDatabase: SumPerDayDatabase,
-    private val settingRepository: SettingRepository,
+    private val appPreference: AppPreference,
     private val periodsDatabase: PeriodsDatabaseImpl,
     private val categoryDatabase: CategoryDatabase
 ) {

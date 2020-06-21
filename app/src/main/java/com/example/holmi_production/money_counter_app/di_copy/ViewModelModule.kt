@@ -1,8 +1,6 @@
 package com.example.holmi_production.money_counter_app.di_copy
 
-import com.example.holmi_production.money_counter_app.ui.viewModels.BottomKeyboardViewModel
-import com.example.holmi_production.money_counter_app.ui.viewModels.KeyboardViewModel
-import com.example.holmi_production.money_counter_app.ui.viewModels.SelectCategoryViewModel
+import com.example.holmi_production.money_counter_app.ui.viewModels.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,7 +18,7 @@ val viewModelsModule = module {
 
     viewModel {
         SelectCategoryViewModel(
-            interactor = get(),
+            getCategoriesUseCase = get(),
             setRecentCategoryUseCase = get()
         )
     }
@@ -28,6 +26,34 @@ val viewModelsModule = module {
     viewModel {
         BottomKeyboardViewModel(
             getRecentCategoryUseCase = get()
+        )
+    }
+
+
+    viewModel {
+        CategoryDetailsViewModel(
+            getCategoryUseCase = get(),
+            addCategoryUseCase = get()
+        )
+    }
+
+    viewModel {
+        DashboardViewModel(
+            getAccountsUseCase = get()
+        )
+    }
+
+    viewModel {
+        CreateAccountViewModel(
+            appPreference = get(),
+            createAccountViewModel = get()
+        )
+    }
+
+    viewModel {
+        OnBoardingViewModel(
+            createAccountViewModel = get(),
+            appPreference = get()
         )
     }
 }

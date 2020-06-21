@@ -37,25 +37,6 @@ class CategoryInteractor(
         subCategoryDatabase.delete(subcategory)
     }
 
-    fun observeCategories(): Flow<List<CategoryEntity>> {
-        return categoryDatabase.observeCategories()
-    }
-
-    fun observeSubcategories():Flow<List<SubCategoryEntity>>{
-        return subCategoryDatabase.observeSubCategories()
-    }
-
-    fun observeCategoriesDetails(): Flow<List<CategoryDetails>>{
-        return categoryDatabase.observeCategoriesDetails()
-    }
-
-    suspend fun getCategories(): List<CategoryEntity> {
-        return categoryDatabase.getCategories()
-    }
-
-    suspend fun getCateforyDetails(categoryId: String): CategoryDetails {
-        return categoryDatabase.getCategoryDetailsById(categoryId)
-    }
 
     suspend fun increaseUsageCount(categoryId: String)  {
             categoryDatabase.increaseUsageCount(categoryId)

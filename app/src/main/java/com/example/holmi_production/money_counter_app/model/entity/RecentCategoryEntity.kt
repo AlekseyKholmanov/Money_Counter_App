@@ -6,6 +6,7 @@ import com.example.holmi_production.money_counter_app.utils.currentTime
 
 @Entity(tableName = "RecentCategory")
 class RecentCategoryEntity(
+
     @PrimaryKey
     val categoryId: String,
 

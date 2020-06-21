@@ -6,6 +6,10 @@ import org.joda.time.DateTime
 
 @Entity(tableName = "BalanceTable")
 data class BalanceEntity (
+
     @PrimaryKey(autoGenerate = false)
     val id: DateTime,
-    val amount:Double)
+
+    val amount:Double
+
+)

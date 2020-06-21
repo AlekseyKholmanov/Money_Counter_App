@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/include_toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/accountViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <TableLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toBottomOf="@id/accountViewPager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    android:text="show bottom"
+    android:id="@+id/showBottom"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:backgroundTint="@color/colorPrimary"
+    android:textAllCaps="true"
+    android:paddingHorizontal="16dp"
+    android:layout_gravity="bottom|center"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    android:textSize="14sp"
+    android:gravity="center"
+    android:textColor="@android:color/white"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

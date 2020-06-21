@@ -2,15 +2,15 @@ package com.example.holmi_production.money_counter_app.storage.impl
 
 import com.example.holmi_production.money_counter_app.model.AccountDetails
 import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
+import com.example.holmi_production.money_counter_app.orm.AccountDao
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import com.example.holmi_production.money_counter_app.storage.AccountDatabase
 import kotlinx.coroutines.flow.Flow
 
 class AccountDatabaseImpl(
-    database: ExpenseDatabase
+    private val dao: AccountDao
 ) : AccountDatabase {
 
-    val dao = database.accountDao()
     override suspend fun insert(account: AccountEntity) {
         dao.upsert(account)
     }
@@ -28,12 +28,15 @@ class AccountDatabaseImpl(
     }
 
     override suspend fun getAccountsDetails(): List<AccountDetails> {
-        return dao.getAccontsDetails()
+        return dao.getAccountsDetails()
     }
 
     override fun observeAccountDetailsById(accountId: String): Flow<AccountDetails> {
         return dao.observeAccountDetailsById(accountId)
     }
 
+    override fun observeAccountsDetailsById(): Flow<List<AccountDetails>> {
+        return dao.observeAccountsDetails()
+    }
 
 }

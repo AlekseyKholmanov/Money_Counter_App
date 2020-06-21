@@ -9,10 +9,17 @@ import java.util.*
 @Entity(tableName = "CategoryTable")
 data class CategoryEntity(
     @PrimaryKey
+
     val id: String = UUID.randomUUID().toString(),
+
     val description: String,
+
     val color: Int,
+
     val imageId: Int? = null,
+
     var usageCount: Int = 0,
+
     var isDeleted: Boolean = false
+
 )

@@ -1,6 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.presenters
 
-import com.example.holmi_production.money_counter_app.storage.SettingRepository
+import com.example.holmi_production.money_counter_app.storage.AppPreference
 import com.example.holmi_production.money_counter_app.storage.impl.TransactionDatabaseImpl
 import com.example.holmi_production.money_counter_app.storage.impl.SumPerDayDatabaseImpl
 import org.joda.time.DateTime
@@ -9,7 +9,7 @@ import org.joda.time.DateTime
 class FirstLaunchPresenter (
     private val spendingDatabase: TransactionDatabaseImpl,
     private val sumPerDayDatabase: SumPerDayDatabaseImpl,
-    private val settingRepository: SettingRepository)
+    private val appPreference: AppPreference)
  {
 
     private var sum: Double = 0.0

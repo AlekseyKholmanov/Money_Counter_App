@@ -2,11 +2,11 @@ package com.example.holmi_production.money_counter_app.ui.presenters
 
 
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.storage.SettingRepository
+import com.example.holmi_production.money_counter_app.storage.AppPreference
 
 
 class EndPeriodPresenter (
-    private val settingRepository: SettingRepository,
+    private val appPreference: AppPreference,
     private val spendingInteractor: SpendingInteractor
 )  {
 //TODO переделать

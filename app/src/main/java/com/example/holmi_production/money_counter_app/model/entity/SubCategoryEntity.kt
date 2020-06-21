@@ -9,8 +9,12 @@ data class SubCategoryEntity(
 
     @PrimaryKey
     val id: String = UUID.randomUUID().toString(),
+
     val categoryId: String,
+
     val description: String,
+
     val isDeleted: Boolean = false,
+
     val color: Int
 )

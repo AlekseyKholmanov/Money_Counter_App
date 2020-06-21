@@ -12,6 +12,7 @@ import java.util.*
 @Entity(tableName = "TransactionTable")
 @Parcelize
 data class TransactionEntity(
+
     @PrimaryKey
     val id: String = UUID.randomUUID().toString(),
 

@@ -7,14 +7,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
+import com.example.holmi_production.money_counter_app.useCases.AddCategoryUseCase
+import com.example.holmi_production.money_counter_app.useCases.GetCategoriesUseCase
 import com.example.holmi_production.money_counter_app.useCases.GetCategoryUseCase
+import com.example.holmi_production.money_counter_app.useCases.GetRecentCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class CategoryDetailsViewModel(
-    private val categoryInteractor: CategoryInteractor,
+    private val addCategoryUseCase: AddCategoryUseCase,
     private val getCategoryUseCase: GetCategoryUseCase
 ) : ViewModel() {
 
@@ -23,13 +26,13 @@ class CategoryDetailsViewModel(
 
     fun createCategory(categoryEntity: CategoryEntity) {
         viewModelScope.launch {
-            categoryInteractor.insert(categoryEntity)
+            addCategoryUseCase.insert(categoryEntity)
         }
     }
 
     fun observeCategoryById(categoryId: String?) {
         viewModelScope.launch {
-            getCategoryUseCase.observeCategoryById(categoryId)
+            getCategoryUseCase.observeCategoryDetailsById(categoryId)
                 .flowOn(Dispatchers.IO)
                 .collect {
                     _categories.value = it

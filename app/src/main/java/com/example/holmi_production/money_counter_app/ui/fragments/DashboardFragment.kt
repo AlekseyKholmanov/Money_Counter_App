@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
-import com.example.holmi_production.money_counter_app.ui.viewModels.KeyboardViewModel
-import kotlinx.android.synthetic.main.fragment_bottom_keyboard.*
+import com.example.holmi_production.money_counter_app.ui.viewModels.DashboardViewModel
+import kotlinx.android.synthetic.main.fragment_dashboard_old.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard) {
+class DashboardFragment : BaseFragment(R.layout.fragment_dashboard_old) {
 
-    private val keyboardViewModel: KeyboardViewModel by viewModel()
+    private val dashboardViewModel: DashboardViewModel by viewModel()
     lateinit var part: Fragment
 
 
@@ -29,10 +28,10 @@ class KeyboardFragment : BaseFragment(R.layout.fragment_bottom_keyboard) {
 
         initToolbar()
 
-        with(keyboardViewModel) {
+        with(dashboardViewModel) {
         }
         showBottom.setOnClickListener {
-            val direction = KeyboardFragmentDirections.actionKeyboardFragmentToBottomKeyboard()
+            val direction = DashboardFragmentDirections.actionKeyboardFragmentToBottomKeyboard()
             findNavController().navigate(direction)
         }
 

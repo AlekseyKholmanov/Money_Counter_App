@@ -5,7 +5,6 @@ import android.util.Log
 import com.example.holmi_production.money_counter_app.extensions.withNextMonthDate
 import com.example.holmi_production.money_counter_app.extensions.withPreviousMonthDate
 import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfDay
-import com.f2prateek.rx.preferences2.Preference
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -14,7 +13,7 @@ import org.joda.time.DateTime
 import org.joda.time.Days
 
 
-class SettingRepository(
+class AppPreference(
     private val pref: SharedPreferences,
     private val rxPrefs: RxSharedPreferences
 ) {
@@ -31,6 +30,12 @@ class SettingRepository(
         get() = pref.getBoolean(Converter, false)
         set(value) {
             pref.edit().putBoolean(Converter, value).apply()
+        }
+
+    var isOnboardingCompleted: Boolean
+        get() = pref.getBoolean(IS_ONBOARDING_COMPLETED, false)
+        set(value) {
+            pref.edit().putBoolean(IS_ONBOARDING_COMPLETED, value).apply()
         }
 
     fun setEndMonth(day: Int) {
@@ -104,6 +109,7 @@ class SettingRepository(
 
 
     companion object {
+        const val IS_ONBOARDING_COMPLETED = "is onboarding completed"
         val Converter_VALUE = "Converter_VALUE"
         val Converter = "Converter"
         val FIRST_OPEN = "FirstOpen"

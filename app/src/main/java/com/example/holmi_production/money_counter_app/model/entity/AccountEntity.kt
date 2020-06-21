@@ -7,12 +7,18 @@ import java.util.*
 
 @Entity(tableName = "AccountTable")
 data class AccountEntity(
+
     @PrimaryKey
     val id: String = UUID.randomUUID().toString(),
+
     val description: String,
+
     val isHidden: Boolean,
-    val isCalculatePerDaySam: Boolean,
+
+    val isCalculatePerDaySum: Boolean,
+
     val accountType: AccountType,
+
     val password: String? = null
 
 )

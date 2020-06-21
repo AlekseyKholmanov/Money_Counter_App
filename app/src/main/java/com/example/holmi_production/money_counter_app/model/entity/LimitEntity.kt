@@ -10,9 +10,15 @@ data class LimitEntity(
 
     @PrimaryKey
     val id: String = UUID.randomUUID().toString(),
+
     val categoryId:Int,
+
     val month: Int,
+
     val amount: Double,
+
     val startDate:DateTime,
+
     val endDate:DateTime
+
 )

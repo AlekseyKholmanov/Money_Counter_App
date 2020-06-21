@@ -8,12 +8,11 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.storage.SettingRepository
+import com.example.holmi_production.money_counter_app.storage.AppPreference
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_menu_currency_converting.*
 import kotlinx.android.synthetic.main.include_menu_end_period_date.*
@@ -23,7 +22,7 @@ import org.koin.android.ext.android.inject
 class MainActivity : AppCompatActivity() {
 
 
-    private val settingRepository: SettingRepository by inject()
+    private val appPreference: AppPreference by inject()
 
 //    private val workerInteractor: WorkerInteractor by inject()
 
@@ -37,22 +36,27 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        AppComponent.instance.inject(this)
+        initNavController()
         initializeNavigation()
-        val options = NavOptions.Builder().setEnterAnim(R.anim.fade_in).setExitAnim(R.anim.fade_out)
-            .setLaunchSingleTop(true)
-            .build()
+    }
 
-//        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-//            controller.navigate(destination.id, options)
-//        }
+    private fun initNavController() {
+        val mainGraph = navController.navInflater.inflate(R.navigation.main_graph)
+        if(appPreference.isOnboardingCompleted.not()){
+            val onBoardingGraph = navController.navInflater.inflate(R.navigation.onboarding_graph)
+            mainGraph.addAll(onBoardingGraph)
+            mainGraph.startDestination= R.id.onBoardingFragment
+        } else {
+            mainGraph.startDestination = R.id.dashboardFragment
+        }
+        navController.graph = mainGraph
     }
 //        initializeSettings()
 //        initView()
 
 
     private fun initView() {
-        et_end_month_value.text = settingRepository.getEndMonth().toString()
+        et_end_month_value.text = appPreference.getEndMonth().toString()
 
         //settings listener
         end_month_container.setOnClickListener {
@@ -84,11 +88,12 @@ class MainActivity : AppCompatActivity() {
     private fun initializeNavigation() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.keyboardFragment,
+                R.id.dashboardFragment,
                 R.id.costsFragment,
                 R.id.limitsFragment,
                 R.id.chartFragment
             ), drawer
+
         )
         NavigationUI.setupWithNavController(navViewDrawer,navController)
     }
@@ -105,18 +110,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeSettings() {
 
-        val converterState = settingRepository.isConverterEnabled
-        val defValue = settingRepository.getConverterValue()
+        val converterState = appPreference.isConverterEnabled
+        val defValue = appPreference.getConverterValue()
         converter_value.text = Editable.Factory.getInstance().newEditable(defValue)
         converter_checkbox.isChecked = converterState
         setConverterState(converterState)
         converter_checkbox.setOnCheckedChangeListener { _, isChecked ->
             setConverterState(isChecked)
-            settingRepository.isConverterEnabled = isChecked
+            appPreference.isConverterEnabled = isChecked
         }
         converter_value.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                settingRepository.setConverterValue(s.toString())
+                appPreference.setConverterValue(s.toString())
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

@@ -17,4 +17,6 @@ interface AccountDatabase {
 
     fun observeAccountDetailsById(accountId: String): Flow<AccountDetails>
 
+    fun observeAccountsDetailsById(): Flow<List<AccountDetails>>
+
 }

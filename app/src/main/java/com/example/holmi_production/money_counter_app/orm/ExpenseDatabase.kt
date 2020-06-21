@@ -15,13 +15,14 @@ import com.example.holmi_production.money_counter_app.model.entity.*
         SubCategoryEntity::class,
         BalanceEntity::class,
         AccountEntity::class,
-        RecentCategoryEntity::class],
+        RecentCategoryEntity::class,
+        RecentAccountEntity::class],
     version = 1,
     exportSchema = false
 )
 abstract class ExpenseDatabase : RoomDatabase() {
 
-    abstract fun spendingDao(): TransactionDao
+    abstract fun transactionDao(): TransactionDao
     abstract fun sumPerDayDao(): SumPerDayDao
     abstract fun periodsDao(): PeriodsDao
     abstract fun categoryDao(): CategoryDao
@@ -29,5 +30,6 @@ abstract class ExpenseDatabase : RoomDatabase() {
     abstract fun balanceDao(): BalanceDao
     abstract fun accountDao(): AccountDao
     abstract fun recentCategoryDao(): RecentCategoryDao
+    abstract fun recentAccountDao(): RecentAccountDao
 
 }

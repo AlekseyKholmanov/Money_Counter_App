@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface GetCategoryUseCase {
 
-    fun observeCategoryById(categoryId:String?): Flow<CategoryDetails?>
+    fun observeCategoryDetailsById(categoryId:String?): Flow<CategoryDetails?>
 
+    suspend fun getCategoryDetailsById(categoryId: String): CategoryDetails
 }

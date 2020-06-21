@@ -8,19 +8,19 @@
         android:id="@+id/createManual"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
-        android:text="создать счет"
+        android:text="manual create"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/createDefault"
+        app:layout_constraintEnd_toStartOf="@+id/createAuto"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/createDefault"
+        android:id="@+id/createAuto"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
-        android:text="не создавать"
+        android:text="auto create"
         android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

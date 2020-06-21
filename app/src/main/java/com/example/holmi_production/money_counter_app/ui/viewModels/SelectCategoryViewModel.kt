@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.toItem
+import com.example.holmi_production.money_counter_app.useCases.GetCategoriesUseCase
 import com.example.holmi_production.money_counter_app.useCases.SetRecentCategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 
 class SelectCategoryViewModel(
-    private val interactor: CategoryInteractor,
+    private val getCategoriesUseCase: GetCategoriesUseCase,
     private val setRecentCategoryUseCase: SetRecentCategoryUseCase
 ) : ViewModel() {
 
@@ -25,7 +25,7 @@ class SelectCategoryViewModel(
 
     fun observeCategories() {
         viewModelScope.launch {
-            interactor.observeCategoriesDetails()
+            getCategoriesUseCase.observeCategoriesDetails()
                 .map { it.map { it.toItem() } }
                 .flowOn(Dispatchers.IO)
                 .collect {

@@ -8,16 +8,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class GetRecentCategoryUseCaseImpl(
-    private val recentDb: RecentCategoryDatabase,
-    private val categoriesDb: CategoryDatabase
+    private val recentDatabase: RecentCategoryDatabase,
+    private val categoriesDatabase: CategoryDatabase
 ) : GetRecentCategoryUseCase {
+
     override fun observeResentCategory(): Flow<CategoryDetails?> {
-        return recentDb.observeRecentCategory()
+        return recentDatabase.observeRecentCategory()
             .map {
                 if (it == null) {
                     null
                 } else {
-                    categoriesDb.getCategoryDetailsById(it)
+                    categoriesDatabase.getCategoryDetailsById(it)
                 }
             }
     }

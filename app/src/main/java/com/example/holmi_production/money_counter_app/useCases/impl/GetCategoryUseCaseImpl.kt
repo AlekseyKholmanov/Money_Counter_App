@@ -7,13 +7,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 class GetCategoryUseCaseImpl(
-    private val categoryDb: CategoryDatabase
+    private val categoryDatabase: CategoryDatabase
 ) : GetCategoryUseCase {
 
-    override fun observeCategoryById(categoryId: String?): Flow<CategoryDetails?> {
+    override fun observeCategoryDetailsById(categoryId: String?): Flow<CategoryDetails?> {
         return if (categoryId == null) flowOf(null) else {
-            categoryDb.observeCategoryDetailsById(categoryId)
+            categoryDatabase.observeCategoryDetailsById(categoryId)
         }
+    }
+
+
+    override suspend fun getCategoryDetailsById(categoryId: String): CategoryDetails {
+        return categoryDatabase.getCategoryDetailsById(categoryId)
     }
 
 }

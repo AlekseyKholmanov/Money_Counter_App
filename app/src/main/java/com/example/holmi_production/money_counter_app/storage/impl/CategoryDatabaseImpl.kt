@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.storage.impl
 
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
+import com.example.holmi_production.money_counter_app.orm.CategoryDao
 import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import com.example.holmi_production.money_counter_app.storage.CategoryDatabase
 import io.reactivex.Completable
@@ -14,10 +15,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class CategoryDatabaseImpl(
-    val database: ExpenseDatabase
+    private val dao: CategoryDao
 ) : CategoryDatabase {
 
-    private val dao = database.categoryDao()
     override fun observeCategories(): Flow<List<CategoryEntity>> {
         return dao.observeCategories()
     }

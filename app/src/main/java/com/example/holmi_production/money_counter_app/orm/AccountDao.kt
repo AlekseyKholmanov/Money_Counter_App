@@ -18,7 +18,7 @@ abstract class AccountDao : BaseDao<AccountEntity>() {
 
     @Transaction
     @Query("SELECT * FROM AccountTable")
-    abstract fun getAccontsDetails(): List<AccountDetails>
+    abstract fun getAccountsDetails(): List<AccountDetails>
 
     @Transaction
     @Query("SELECT * FROM AccountTable WHERE id=:accountId")
@@ -27,5 +27,9 @@ abstract class AccountDao : BaseDao<AccountEntity>() {
     @Transaction
     @Query("SELECT * FROM AccountTable WHERE id=:accountId")
     abstract fun observeAccountDetailsById(accountId: String): Flow<AccountDetails>
+
+    @Transaction
+    @Query("SELECT * FROM AccountTable")
+    abstract fun observeAccountsDetails(): Flow<List<AccountDetails>>
 
 }

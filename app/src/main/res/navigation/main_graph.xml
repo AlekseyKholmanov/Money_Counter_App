@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_graph"
-    app:startDestination="@id/keyboardFragment">
+    app:startDestination="@id/dashboardFragment">
 
     <fragment
-        android:id="@+id/keyboardFragment"
-        android:name="com.example.holmi_production.money_counter_app.ui.fragments.KeyboardFragment"
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.holmi_production.money_counter_app.ui.fragments.DashboardFragment"
         android:label="KeyboardFragment" >
         <action
             android:id="@+id/action_keyboardFragment_to_selectCategoryFragment"

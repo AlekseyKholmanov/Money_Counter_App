@@ -1,17 +1,16 @@
 package com.example.holmi_production.money_counter_app.ui.presenters
 
 
-import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.storage.SettingRepository
+import com.example.holmi_production.money_counter_app.storage.AppPreference
 
 
 
 class SettingsPresenter (
     private val spendingInteractor: SpendingInteractor,
     private val categoryInteractor: CategoryInteractor,
-    private val settingRepository: SettingRepository) {
+    private val appPreference: AppPreference) {
     fun deleteData() {
 //        spendingInteractor.deleteAll()
 //            .subscribe {

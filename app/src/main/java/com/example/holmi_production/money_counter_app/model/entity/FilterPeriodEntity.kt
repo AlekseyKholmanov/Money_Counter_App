@@ -8,7 +8,11 @@ import org.joda.time.DateTime
 @Entity
 data class FilterPeriodEntity(
     @PrimaryKey(autoGenerate = false)
+
     val id: String,
+
     var leftBorder: DateTime = DateTime().withTimeAtStartOfDay(),
+
     var rightBorder: DateTime = DateTime().withTimeAtEndOfDay()
+
 )
