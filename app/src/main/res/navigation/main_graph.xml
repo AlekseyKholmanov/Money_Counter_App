@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
     app:startDestination="@id/dashboardFragment">
 
@@ -14,13 +15,16 @@
         <action
             android:id="@+id/action_keyboardFragment_to_bottomKeyboard"
             app:destination="@id/bottomKeyboard" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_simpleBottomKeyboard"
+            app:destination="@id/simpleBottomKeyboard" />
     </fragment>
     <fragment
         android:id="@+id/chartFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartFragment"
         android:label="ChartFragment" />
     <fragment
-        android:id="@+id/costsFragment"
+        android:id="@+id/transactionFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.TransactionFragment"
         android:label="CostsFragment" />
     <fragment
@@ -37,6 +41,7 @@
         android:label="LimitsFragment" />
     <dialog
         android:id="@+id/bottomKeyboard"
+        tools:layout="@layout/bottom_keyboard_full"
         android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomKeyboard"
         android:label="BottomKeyboard" />
     <fragment
@@ -48,4 +53,17 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <dialog
+        android:id="@+id/simpleBottomKeyboard"
+        tools:layout="@layout/bottom_keyboard_simple"
+        android:name="com.example.holmi_production.money_counter_app.ui.dialogs.SimpleBottomKeyboard"
+        android:label="SimpleBottomKeyboard" >
+        <argument
+            android:name="accountId"
+            app:argType="string" />
+        <argument
+            android:name="isSubstraction"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </dialog>
 </navigation>

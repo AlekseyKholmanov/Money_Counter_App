@@ -4,7 +4,7 @@ import com.example.holmi_production.money_counter_app.useCases.*
 import com.example.holmi_production.money_counter_app.useCases.impl.*
 import org.koin.dsl.module
 
-val useCasesModule = module{
+val useCasesModule = module {
 
     single<GetRecentCategoryUseCase> {
         GetRecentCategoryUseCaseImpl(
@@ -46,6 +46,25 @@ val useCasesModule = module{
     single<CreateAccountUseCase> {
         CreateAccountUseCaseImpl(
             accountDatabase = get()
+        )
+    }
+
+    single<SaveTransactionUseCase> {
+        SaveTransactionUseCaseImpl(
+            categoryDatabase = get(),
+            transactionDatabase = get()
+        )
+    }
+
+    single<GetTransactionUseCase> {
+        GetTransactionUseCaseImpl(
+            transactionDatabase = get()
+        )
+    }
+
+    single<EditTransactionUseCase> {
+        EditTransactionUseCaseImpl(
+            transactionDatabase = get()
         )
     }
 }

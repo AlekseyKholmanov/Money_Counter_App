@@ -22,7 +22,7 @@ import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.button_with_description.*
-import kotlinx.android.synthetic.main.part_fragment_keyboard_const.*
+import kotlinx.android.synthetic.main.bottom_keyboard_full.*
 import kotlinx.android.synthetic.main.view_splitted_button.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -45,7 +45,7 @@ class BottomKeyboard : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.part_fragment_keyboard_const, container, false)
+        return inflater.inflate(R.layout.bottom_keyboard_full, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,18 +65,18 @@ class BottomKeyboard : BottomSheetDialogFragment() {
         keyDelete.setOnClickListener { pressed(ButtonType.DELETE) }
         keySpending.setOnClickListener { pressed(ButtonType.ENTER_UP) }
         keyIncome.setOnClickListener { pressed(ButtonType.ENTER_DOWN) }
-        category.setOnClickListener { pressed(ButtonType.CATEGORY) }
-        comment.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+        itemCategory.setOnClickListener { pressed(ButtonType.CATEGORY) }
+        itemComment.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                comment?.hideKeyboardFrom(requireContext())
+                itemComment?.hideKeyboardFrom(requireContext())
                 handled = true
             }
             return@OnEditorActionListener handled
         })
-        comment.setOnFocusChangeListener { _, hasFocus ->
+        itemComment.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                comment?.hideKeyboardFrom(requireContext())
+                itemComment?.hideKeyboardFrom(requireContext())
             }
         }
         summary.text = displayedSum
@@ -93,7 +93,7 @@ class BottomKeyboard : BottomSheetDialogFragment() {
         } else {
             categoryImage.visibility = View.VISIBLE
             categoryDescription.visibility = View.GONE
-            category.setBackgroundColor(categoryDetails.category.color)
+            itemCategory.setBackgroundColor(categoryDetails.category.color)
             categoryImage.load(
                 ContextCompat.getDrawable(
                     requireContext(),
@@ -154,7 +154,7 @@ class BottomKeyboard : BottomSheetDialogFragment() {
         when (displayedSum) {
             "0" -> return
             else -> {
-                val text = comment.text.toString()
+                val text = itemComment.text.toString()
                 val checkedId = cg_subcategory_group.checkedChipId
                 val tag: Int? = if (checkedId != View.NO_ID) {
                     val chips = cg_subcategory_group.findViewById<Chip>(checkedId)
@@ -162,10 +162,10 @@ class BottomKeyboard : BottomSheetDialogFragment() {
                 } else {
                     null
                 }
-                bottomViewModel.saveSending(displayedSum.toDouble(), direction, text, tag)
+                bottomViewModel.saveTransaction(displayedSum.toDouble(), text, tag)
 
                 displayedSum = "0"
-                comment.setText("")
+                itemComment.setText("")
                 cg_subcategory_group.clearCheck()
             }
         }

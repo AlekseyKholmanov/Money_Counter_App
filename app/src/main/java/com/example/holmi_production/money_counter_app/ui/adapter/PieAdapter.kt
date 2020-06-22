@@ -7,6 +7,6 @@ import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 class PieAdapter(
 ) : ListDelegationAdapter<List<Item>>() {
     init {
-        delegatesManager.addDelegate(TransactionItemDelegate())
+//        delegatesManager.addDelegate(TransactionItemDelegate())
     }
 }

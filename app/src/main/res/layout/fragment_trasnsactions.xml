@@ -1,61 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/fragment_cost"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <TextView
-            android:id="@+id/emptyPlaceholder_costs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/colorPrimary"
-            android:text="@string/information_empty_list"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"/>
-    <TextView
-            android:gravity="end"
-            tools:text="+25 Р"
-            android:textColor="@color/colorAccent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" android:id="@+id/tv_costs_spending"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/tv_costs_income" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp"
-            android:textSize="28sp"
-            android:textStyle="bold"/>
-    <TextView
-            tools:text="+100 Р"
-            android:textColor="@color/colorPrimary"
-            android:gravity="start"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" android:id="@+id/tv_costs_income"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tv_costs_spending" android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:textSize="28sp"
-            android:textStyle="bold" android:layout_marginStart="8dp"/>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/spendingList"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="#fff"
-            app:layout_constraintTop_toBottomOf="@+id/view2"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
-    >
-    </androidx.recyclerview.widget.RecyclerView>
-    <View
+    <include
+        android:id="@+id/appBar"
+        layout="@layout/include_datepicker_toolbar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:id="@+id/tv_costs_spending"
+            tools:text="+25 Р"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="end"
+            android:textColor="@color/colorAccent"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_costs_income"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_costs_income"
+            tools:text="+100 Р"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="start"
+            android:textColor="@color/colorPrimary"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_costs_spending"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:id="@+id/view2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_costs_spending" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_costs_spending" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/transactionList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:layout_marginTop="8dp"
+            android:background="#fff"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/view2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -9,3 +9,12 @@ enum class ButtonType {
     DELETE,
     CATEGORY
 }
+
+enum class ShortButtonType{
+    ZERO,
+    ENTER,
+    DIVIDER,
+    NUMERIC,
+    DELETE
+
+}

@@ -15,14 +15,18 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.66" />
 
-    <include
-        android:id="@+id/category"
-        layout="@layout/button_with_description"
+    <TextView
+        android:id="@+id/sign"
         android:layout_width="0dp"
         android:layout_height="60dp"
         app:layout_constraintEnd_toStartOf="@+id/summary"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintHorizontal_weight="1"
+        android:background="@color/design_default_color_primary_variant"
+        android:textColor="@android:color/white"
+        tool:text="+"
+        android:gravity="center"
+        android:textSize="46sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,31 +41,12 @@
         android:textAllCaps="true"
         android:textColor="#FFFFFF"
         android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="@id/category"
+        app:layout_constraintBottom_toBottomOf="@id/sign"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintStart_toEndOf="@+id/category"
-        app:layout_constraintTop_toTopOf="@id/category" />
+        app:layout_constraintStart_toEndOf="@+id/sign"
+        app:layout_constraintTop_toTopOf="@id/sign" />
 
-    <HorizontalScrollView
-        android:id="@+id/chipsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:animateLayoutChanges="true"
-        android:scrollbars="none"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category">
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/cg_subcategory_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            app:chipSpacingVertical="8dp"
-            app:singleSelection="true" />
-    </HorizontalScrollView>
 
     <EditText
         android:id="@+id/comment"
@@ -75,7 +60,7 @@
         android:paddingEnd="8dp"
         android:textColor="@color/design_default_color_primary_dark"
         android:textSize="26sp"
-        app:layout_constraintTop_toBottomOf="@id/chipsContainer"
+        app:layout_constraintTop_toBottomOf="@id/summary"
         tool:layout_editor_absoluteY="60dp"
         tool:text="комментарий" />
 
@@ -123,15 +108,17 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="@id/v66"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comment" />
+        app:layout_constraintTop_toBottomOf="@+id/itemComment" />
     <!-- end first keyboard row -->
 
-    <com.example.holmi_production.money_counter_app.ui.custom.SplitButtonView
-        android:id="@+id/splittedButton"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/enter"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        style="@style/TextButton"
         android:layout_marginRight="1dp"
         android:gravity="center"
+        android:text="Enter"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@id/key0"
         app:layout_constraintHorizontal_bias="0.5"

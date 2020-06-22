@@ -16,7 +16,7 @@ import com.example.holmi_production.money_counter_app.model.entity.CategoryEntit
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
-import kotlinx.android.synthetic.main.part_fragment_keyboard_const.view.*
+import kotlinx.android.synthetic.main.bottom_keyboard_full.view.*
 import kotlinx.android.synthetic.main.view_splitted_button.view.*
 
 
@@ -39,7 +39,7 @@ class KeyboardView @JvmOverloads constructor(
     private var mKeyboardListener: IKeyboardListener? = null
 
     init {
-        View.inflate(context, R.layout.part_fragment_keyboard_const, this)
+        View.inflate(context, R.layout.bottom_keyboard_full, this)
         chipsContainer.visibility = View.GONE
         key0.setOnClickListener { pressed(ButtonType.ZERO, "0") }
         key1.setOnClickListener { pressed(ButtonType.NUMERIC, "1") }
@@ -55,18 +55,18 @@ class KeyboardView @JvmOverloads constructor(
         keyDelete.setOnClickListener { pressed(ButtonType.DELETE) }
         keySpending.setOnClickListener { pressed(ButtonType.ENTER_UP) }
         keyIncome.setOnClickListener { pressed(ButtonType.ENTER_DOWN) }
-        category.setOnClickListener { pressed(ButtonType.CATEGORY) }
-        comment.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+        itemCategory.setOnClickListener { pressed(ButtonType.CATEGORY) }
+        itemComment.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                comment?.hideKeyboardFrom(context)
+                itemComment?.hideKeyboardFrom(context)
                 handled = true
             }
             return@OnEditorActionListener handled
         })
-        comment.setOnFocusChangeListener { _, hasFocus ->
+        itemComment.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                comment?.hideKeyboardFrom(context)
+                itemComment?.hideKeyboardFrom(context)
             }
         }
         summary.text = purshaseSum
@@ -78,8 +78,8 @@ class KeyboardView @JvmOverloads constructor(
     }
 
     fun setCategory(entity: CategoryEntity?) {
-        val text = category.findViewById<TextView>(R.id.categoryDescription)
-        val image = category.findViewById<SquareImageView>(R.id.categoryImage)
+        val text = itemCategory.findViewById<TextView>(R.id.categoryDescription)
+        val image = itemCategory.findViewById<SquareImageView>(R.id.categoryImage)
         //ToDO show no categoryImage
         if (entity == null) {
             image.visibility = View.GONE
@@ -90,7 +90,7 @@ class KeyboardView @JvmOverloads constructor(
             image.visibility = View.VISIBLE
             text.visibility = View.GONE
 //            limitBar.visibility = View.VISIBLE
-            category.setBackgroundColor(entity.color)
+            itemCategory.setBackgroundColor(entity.color)
             image.load(R.drawable.ic_launcher_foreground)
 //            limitBar.apply {
 //                setBackgroundColor(entity.color)
@@ -171,7 +171,7 @@ class KeyboardView @JvmOverloads constructor(
         when (purshaseSum) {
             "0" -> return
             else -> {
-                val text = comment.text.toString()
+                val text = itemComment.text.toString()
                 val checkedId = cg_subcategory_group.checkedChipId
                 var tag: Int? = null
                 if (checkedId != View.NO_ID) {
@@ -182,7 +182,7 @@ class KeyboardView @JvmOverloads constructor(
                 mKeyboardListener?.enterPressed(purshaseSum.toDouble(), text, isSpending, tag)
 
                 purshaseSum = "0"
-                comment.setText("")
+                itemComment.setText("")
                 cg_subcategory_group.clearCheck()
             }
         }

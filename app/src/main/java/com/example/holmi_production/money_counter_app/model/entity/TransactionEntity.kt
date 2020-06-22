@@ -22,11 +22,13 @@ data class TransactionEntity(
 
     val accountId: String,
 
-    val categoryId: String?,
+    val categoryId: String? = null,
 
-    val subcategoryId:Int?,
+    val subcategoryId:Int? = null,
 
-    val comment:String?
+    val comment:String? = null,
+
+    val isDeleted:Boolean = false
 
 ) : Parcelable
 

@@ -27,16 +27,16 @@ class SpendingInteractor(
     }
 
     suspend fun getAll(): List<TransactionEntity> {
-        return transactionDatabase.getSpendings()
+        return transactionDatabase.getTransactions()
     }
 
     fun observeSpendingDetails(): Flow<List<TransactionDetails>> {
-        return transactionDatabase.observeSpendingsDetails()
+        return transactionDatabase.observeTransactionsDetails()
     }
 
     fun observeWithPeriods(): Flow<List<TransactionEntity>> {
         return periodsDatabase.observePeriod()
-            .combine(transactionDatabase.observeSpendings()) { periods, spendings ->
+            .combine(transactionDatabase.observeTransactions()) { periods, spendings ->
                 if (periods.leftBorder == periods.rightBorder) {
                     spendings.filter { it.createdDate == periods.leftBorder }
                 } else {

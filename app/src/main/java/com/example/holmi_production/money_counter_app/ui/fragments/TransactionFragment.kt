@@ -2,11 +2,12 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.Observer
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
+import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.ui.adapter.TransactionAdapter
+import com.example.holmi_production.money_counter_app.ui.adapter.items.ZeroItem
 import com.example.holmi_production.money_counter_app.ui.viewModels.TransactionViewModel
 import kotlinx.android.synthetic.main.fragment_trasnsactions.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -15,17 +16,38 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
     private lateinit var adapter: TransactionAdapter
 
-    private val keyboardViewModel: TransactionViewModel by viewModel()
+    private val viewModel: TransactionViewModel by viewModel()
 
+    private val transactionAdapterCallback = object: TransactionAdapter.TransactionAdapterCallback{
+        override fun openTransactionDetails(transactionId: String) {
+        }
+
+        override fun deleteTransaction(transactionId: String) {
+            viewModel.deleteTransaction(transactionId)
+        }
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.observeTransaction()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter =
-            TransactionAdapter()
-//        presenter.observeSpengings()
-        spendingList.layoutManager = LinearLayoutManager(requireContext())
+        adapter = TransactionAdapter(transactionAdapterCallback)
+        transactionList.adapter = adapter
+        with(viewModel) {
+            transactions.observe(viewLifecycleOwner, Observer(::updateTransactions))
+        }
+    }
 
-        spendingList.adapter = adapter
+    private fun updateTransactions(transactions: List<Item>) {
+        adapter.items = if (transactions.isEmpty()) {
+            listOf(ZeroItem(R.layout.item_transaction_0data))
+        } else {
+            transactions
+        }
     }
 
 
@@ -57,11 +79,6 @@ class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
 //        tv_costs_spending.text = spendingText
 //
 //    }
-
-    private fun showEmptyPlaceholder(show: Boolean) {
-        emptyPlaceholder_costs.isVisible = show
-        spendingList.isVisible = !show
-    }
 
     companion object {
         fun newInstance(): TransactionFragment {

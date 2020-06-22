@@ -11,13 +11,15 @@ interface TransactionDatabase {
 
     suspend fun insert(transaction: TransactionEntity)
 
-    fun observeSpendings(): Flow<List<TransactionEntity>>
+    fun observeTransactions(): Flow<List<TransactionEntity>>
 
-    suspend fun getSpendings(): List<TransactionEntity>
+    suspend fun getTransactions(): List<TransactionEntity>
 
     suspend fun delete(transaction: TransactionEntity)
 
     suspend fun deleteAll()
 
-    fun observeSpendingsDetails(): Flow<List<TransactionDetails>>
+    suspend fun markDeleted(transactionId:String)
+
+    fun observeTransactionsDetails(): Flow<List<TransactionDetails>>
 }

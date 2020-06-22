@@ -56,4 +56,18 @@ val viewModelsModule = module {
             appPreference = get()
         )
     }
+
+    viewModel {
+        SimpleBottomKeyboardViewModel(
+            getRecentCategoryUseCase = get(),
+            saveTransactionUseCase = get()
+        )
+    }
+
+    viewModel {
+        TransactionViewModel(
+            getTransactionUseCase = get(),
+            editTransactionUSeCase = get()
+        )
+    }
 }

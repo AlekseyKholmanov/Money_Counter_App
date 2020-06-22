@@ -11,44 +11,47 @@
         layout="@layout/include_toolbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_keyboard"
+        android:id="@+id/dashboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         app:layout_constraintTop_toBottomOf="@id/appBar">
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/accountViewPager"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"/>
-        <TableLayout
-            android:id="@+id/tabs"
+        
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/indicator"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="24dp"
             app:layout_constraintTop_toBottomOf="@id/accountViewPager"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:ci_drawable="@drawable/dot_selected"
+            app:ci_drawable_unselected="@drawable/dot_unselected"
+            app:ci_gravity="center"
+            app:ci_height="6dp"
+            app:ci_margin="8dp"
+            app:ci_width="6dp"/>
 
 
-<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-    android:text="show bottom"
-    android:id="@+id/showBottom"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:layout_width="wrap_content"
-    android:layout_height="48dp"
-    android:backgroundTint="@color/colorPrimary"
-    android:textAllCaps="true"
-    android:paddingHorizontal="16dp"
-    android:layout_gravity="bottom|center"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    android:textSize="14sp"
-    android:gravity="center"
-    android:textColor="@android:color/white"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginBottom="16dp"/>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/showBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:text="show bottom"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

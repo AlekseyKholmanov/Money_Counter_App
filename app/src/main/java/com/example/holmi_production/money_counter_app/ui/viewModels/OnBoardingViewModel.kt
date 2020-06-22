@@ -23,8 +23,8 @@ class OnBoardingViewModel(
             accountType = AccountType.DEBET
         )
         viewModelScope.launch {
-            createAccountViewModel.createAccount(entity)
             appPreference.isOnboardingCompleted = true
+            createAccountViewModel.createAccount(entity)
         }
     }
 

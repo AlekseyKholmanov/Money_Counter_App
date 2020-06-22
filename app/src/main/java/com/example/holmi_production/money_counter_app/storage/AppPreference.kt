@@ -35,7 +35,7 @@ class AppPreference(
     var isOnboardingCompleted: Boolean
         get() = pref.getBoolean(IS_ONBOARDING_COMPLETED, false)
         set(value) {
-            pref.edit().putBoolean(IS_ONBOARDING_COMPLETED, value).apply()
+            pref.edit().putBoolean(IS_ONBOARDING_COMPLETED, value).commit()
         }
 
     fun setEndMonth(day: Int) {

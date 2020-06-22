@@ -3,33 +3,60 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
+import com.example.holmi_production.money_counter_app.model.AccountDetails
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
+import com.example.holmi_production.money_counter_app.ui.adapter.AccountAdapter
+import com.example.holmi_production.money_counter_app.ui.adapter.holder.Callback
 import com.example.holmi_production.money_counter_app.ui.viewModels.DashboardViewModel
-import kotlinx.android.synthetic.main.fragment_dashboard_old.*
+import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.fragment_dashboard_old.showBottom
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DashboardFragment : BaseFragment(R.layout.fragment_dashboard_old) {
+class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     private val dashboardViewModel: DashboardViewModel by viewModel()
-    lateinit var part: Fragment
 
+    private val accountCallback = object : Callback {
+        override fun minusClicked(accountId: String) {
+            val directions =
+                DashboardFragmentDirections.actionDashboardFragmentToSimpleBottomKeyboard(
+                    accountId = accountId,
+                    isSubstraction = true
+                )
+            findNavController().navigate(directions)
+        }
 
+        override fun plusClicked(accountId: String) {
+            val directions =
+                DashboardFragmentDirections.actionDashboardFragmentToSimpleBottomKeyboard(
+                    accountId = accountId,
+                    isSubstraction = false
+                )
+            findNavController().navigate(directions)
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        dashboardViewModel.observeAccounts()
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         initToolbar()
-
         with(dashboardViewModel) {
+            accounts.observe(viewLifecycleOwner, Observer(::updateAccounts))
         }
+        val adapter = AccountAdapter(accountCallback)
+        adapter.registerAdapterDataObserver(indicator.adapterDataObserver)
+        accountViewPager.adapter = adapter
+        indicator.setViewPager(accountViewPager)
+
         showBottom.setOnClickListener {
             val direction = DashboardFragmentDirections.actionKeyboardFragmentToBottomKeyboard()
             findNavController().navigate(direction)
@@ -64,6 +91,11 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard_old) {
 //        presenter.observeEndPeriodDate()
     }
 
+    private fun updateAccounts(accounts: List<AccountDetails>) {
+        (accountViewPager.adapter as AccountAdapter).setItems(accounts)
+
+    }
+
     private fun updateCategory(categoryDetails: CategoryDetails?) {
 
 //        keyboard.showActionButtons(categoryDetails?.category?.spendingDirection)
@@ -74,7 +106,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard_old) {
     }
 
     override fun onDestroyView() {
-            super.onDestroyView()
+        super.onDestroyView()
 //        keyboard.setListener(null)
         Log.d("M_KeyboardFragment", "view destroyed")
     }

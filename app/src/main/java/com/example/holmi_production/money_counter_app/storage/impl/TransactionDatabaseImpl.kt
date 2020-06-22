@@ -19,13 +19,13 @@ class TransactionDatabaseImpl(
         }
     }
 
-    override fun observeSpendings(): Flow<List<TransactionEntity>> {
-        return dao.observeSpending()
+    override fun observeTransactions(): Flow<List<TransactionEntity>> {
+        return dao.observeTransactions()
     }
 
-    override suspend fun getSpendings(): List<TransactionEntity> {
+    override suspend fun getTransactions(): List<TransactionEntity> {
         return withContext(Dispatchers.IO) {
-            dao.getSpendings()
+            dao.getTransactions()
         }
     }
 
@@ -41,7 +41,11 @@ class TransactionDatabaseImpl(
         }
     }
 
-    override fun observeSpendingsDetails(): Flow<List<TransactionDetails>> {
-        return dao.observeSpendingDetails()
+    override suspend fun markDeleted(transactionId: String) = withContext(Dispatchers.IO){
+        dao.markDeleted(transactionId)
+    }
+
+    override fun observeTransactionsDetails(): Flow<List<TransactionDetails>> {
+        return dao.observeTransactionDetails()
     }
 }

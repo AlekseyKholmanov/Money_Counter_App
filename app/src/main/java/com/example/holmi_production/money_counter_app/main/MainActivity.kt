@@ -1,8 +1,6 @@
 package com.example.holmi_production.money_counter_app.main
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -17,12 +15,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_menu_currency_converting.*
 import kotlinx.android.synthetic.main.include_menu_end_period_date.*
 import kotlinx.android.synthetic.main.menu_drawer_custom.*
-import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.get
 
 class MainActivity : AppCompatActivity() {
 
 
-    private val appPreference: AppPreference by inject()
 
 //    private val workerInteractor: WorkerInteractor by inject()
 
@@ -42,7 +39,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavController() {
         val mainGraph = navController.navInflater.inflate(R.navigation.main_graph)
-        if(appPreference.isOnboardingCompleted.not()){
+        val appPrefs: AppPreference = get()
+        if(appPrefs.isOnboardingCompleted.not()){
             val onBoardingGraph = navController.navInflater.inflate(R.navigation.onboarding_graph)
             mainGraph.addAll(onBoardingGraph)
             mainGraph.startDestination= R.id.onBoardingFragment
@@ -56,8 +54,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initView() {
-        et_end_month_value.text = appPreference.getEndMonth().toString()
-
+        et_end_month_value.text = ""
         //settings listener
         end_month_container.setOnClickListener {
             val b = AlertDialog.Builder(this)
@@ -89,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.dashboardFragment,
-                R.id.costsFragment,
+                R.id.transactionFragment,
                 R.id.limitsFragment,
                 R.id.chartFragment
             ), drawer
@@ -107,30 +104,30 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.navHostFragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-    private fun initializeSettings() {
-
-        val converterState = appPreference.isConverterEnabled
-        val defValue = appPreference.getConverterValue()
-        converter_value.text = Editable.Factory.getInstance().newEditable(defValue)
-        converter_checkbox.isChecked = converterState
-        setConverterState(converterState)
-        converter_checkbox.setOnCheckedChangeListener { _, isChecked ->
-            setConverterState(isChecked)
-            appPreference.isConverterEnabled = isChecked
-        }
-        converter_value.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                appPreference.setConverterValue(s.toString())
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-    }
+//
+//    private fun initializeSettings() {
+//
+//        val converterState = appPreference.isConverterEnabled
+//        val defValue = appPreference.getConverterValue()
+//        converter_value.text = Editable.Factory.getInstance().newEditable(defValue)
+//        converter_checkbox.isChecked = converterState
+//        setConverterState(converterState)
+//        converter_checkbox.setOnCheckedChangeListener { _, isChecked ->
+//            setConverterState(isChecked)
+//            appPreference.isConverterEnabled = isChecked
+//        }
+//        converter_value.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(s: Editable?) {
+//                appPreference.setConverterValue(s.toString())
+//            }
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//        })
+//    }
 
 
 }
