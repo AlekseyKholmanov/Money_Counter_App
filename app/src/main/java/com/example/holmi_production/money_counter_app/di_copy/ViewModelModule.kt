@@ -19,7 +19,7 @@ val viewModelsModule = module {
     viewModel {
         SelectCategoryViewModel(
             getCategoriesUseCase = get(),
-            setRecentCategoryUseCase = get()
+            addRecentCategoryUseCase = get()
         )
     }
 
@@ -60,14 +60,16 @@ val viewModelsModule = module {
     viewModel {
         SimpleBottomKeyboardViewModel(
             getRecentCategoryUseCase = get(),
-            saveTransactionUseCase = get()
+            addTransactionUseCase = get()
         )
     }
 
     viewModel {
         TransactionViewModel(
             getTransactionUseCase = get(),
-            editTransactionUSeCase = get()
+            editTransactionUSeCase = get(),
+            getLatestActivePeriodUseCase = get(),
+            addActivePeriodUseCase = get()
         )
     }
 }

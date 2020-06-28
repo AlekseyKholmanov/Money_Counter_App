@@ -13,8 +13,8 @@ val useCasesModule = module {
         )
     }
 
-    single<SetRecentCategoryUseCase> {
-        SetRecentCategoryUseCaseImpl(
+    single<AddRecentCategoryUseCase> {
+        AddRecentCategoryUseCaseImpl(
             recentCategoryDatabase = get()
         )
     }
@@ -43,14 +43,14 @@ val useCasesModule = module {
         )
     }
 
-    single<CreateAccountUseCase> {
-        CreateAccountUseCaseImpl(
+    single<AddAccountUseCase> {
+        AddAccountUseCaseImpl(
             accountDatabase = get()
         )
     }
 
-    single<SaveTransactionUseCase> {
-        SaveTransactionUseCaseImpl(
+    single<AddTransactionUseCase> {
+        AddTransactionUseCaseImpl(
             categoryDatabase = get(),
             transactionDatabase = get()
         )
@@ -65,6 +65,18 @@ val useCasesModule = module {
     single<EditTransactionUseCase> {
         EditTransactionUseCaseImpl(
             transactionDatabase = get()
+        )
+    }
+
+    single<GetLatestActivePeriodUseCase> {
+        GetLatestActivePeriodUseCaseImpl(
+            periodsDatabase = get()
+        )
+    }
+
+    single<AddActivePeriodUseCase> {
+        AddActivePeriodUseCaseImpl(
+            periodsDatabase = get()
         )
     }
 }

@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
 import com.example.holmi_production.money_counter_app.model.enums.AccountType
 import com.example.holmi_production.money_counter_app.storage.AppPreference
-import com.example.holmi_production.money_counter_app.useCases.CreateAccountUseCase
+import com.example.holmi_production.money_counter_app.useCases.AddAccountUseCase
 import kotlinx.coroutines.launch
 
 class OnBoardingViewModel(
-    private val createAccountViewModel: CreateAccountUseCase,
+    private val createAccountViewModel: AddAccountUseCase,
     private val appPreference: AppPreference
 ): ViewModel() {
 

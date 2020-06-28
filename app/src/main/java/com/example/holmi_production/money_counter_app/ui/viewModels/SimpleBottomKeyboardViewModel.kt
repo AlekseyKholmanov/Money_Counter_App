@@ -7,8 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
 import com.example.holmi_production.money_counter_app.useCases.GetRecentCategoryUseCase
-import com.example.holmi_production.money_counter_app.useCases.SaveTransactionUseCase
-import com.example.holmi_production.money_counter_app.utils.currentTime
+import com.example.holmi_production.money_counter_app.useCases.AddTransactionUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
@@ -17,7 +16,7 @@ import org.joda.time.DateTime
 
 class SimpleBottomKeyboardViewModel(
     private val getRecentCategoryUseCase: GetRecentCategoryUseCase,
-    private val saveTransactionUseCase: SaveTransactionUseCase
+    private val addTransactionUseCase: AddTransactionUseCase
 ) : ViewModel() {
 
     private val _category = MutableLiveData<CategoryDetails?>()
@@ -41,7 +40,7 @@ class SimpleBottomKeyboardViewModel(
             accountId = accountId
         )
         viewModelScope.launch {
-            saveTransactionUseCase.save(transaction)
+            addTransactionUseCase.save(transaction)
         }
     }
 }

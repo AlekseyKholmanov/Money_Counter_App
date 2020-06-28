@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.Item
+import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import com.example.holmi_production.money_counter_app.ui.adapter.TransactionAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.items.ZeroItem
 import com.example.holmi_production.money_counter_app.ui.viewModels.TransactionViewModel
 import kotlinx.android.synthetic.main.fragment_trasnsactions.*
+import kotlinx.android.synthetic.main.include_datepicker_toolbar.*
+import org.joda.time.DateTime
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -18,19 +22,23 @@ class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
 
     private val viewModel: TransactionViewModel by viewModel()
 
-    private val transactionAdapterCallback = object: TransactionAdapter.TransactionAdapterCallback{
-        override fun openTransactionDetails(transactionId: String) {
-        }
+    private val transactionAdapterCallback =
+        object : TransactionAdapter.TransactionAdapterCallback {
+            override fun openTransactionDetails(transactionId: String) {
+            }
 
-        override fun deleteTransaction(transactionId: String) {
-            viewModel.deleteTransaction(transactionId)
-        }
+            override fun deleteTransaction(transactionId: String) {
+                viewModel.deleteTransaction(transactionId)
+            }
 
-    }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.observeTransaction()
+        with(viewModel) {
+            observeTransaction()
+            observeActivePeriod()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +47,18 @@ class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
         transactionList.adapter = adapter
         with(viewModel) {
             transactions.observe(viewLifecycleOwner, Observer(::updateTransactions))
+            activePeriod.observe(viewLifecycleOwner, Observer(::updatePeriod))
         }
+    }
+
+    private fun updatePeriod(filterPeriodEntity: FilterPeriodEntity) {
+        val text =
+            if (filterPeriodEntity.leftBorder.toRUformat() == filterPeriodEntity.rightBorder.toRUformat()) {
+                "Today ${DateTime.now().toRUformat()}"
+            } else {
+                "${filterPeriodEntity.leftBorder.toRUformat()} - ${filterPeriodEntity.rightBorder.toRUformat()}"
+            }
+        period.text = text
     }
 
     private fun updateTransactions(transactions: List<Item>) {

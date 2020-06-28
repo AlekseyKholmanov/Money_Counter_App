@@ -5,10 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.model.Item
+import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionDayHeaderItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.toItem
+import com.example.holmi_production.money_counter_app.useCases.AddActivePeriodUseCase
 import com.example.holmi_production.money_counter_app.useCases.EditTransactionUseCase
+import com.example.holmi_production.money_counter_app.useCases.GetLatestActivePeriodUseCase
 import com.example.holmi_production.money_counter_app.useCases.GetTransactionUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -18,11 +21,16 @@ import kotlinx.coroutines.launch
 
 class TransactionViewModel(
     private val getTransactionUseCase: GetTransactionUseCase,
-    private val editTransactionUSeCase: EditTransactionUseCase
+    private val editTransactionUSeCase: EditTransactionUseCase,
+    private val getLatestActivePeriodUseCase: GetLatestActivePeriodUseCase,
+    private val addActivePeriodUseCase: AddActivePeriodUseCase
 ) : ViewModel() {
 
     private val _transactions = MutableLiveData<List<Item>>()
     val transactions: LiveData<List<Item>> = _transactions
+
+    private val _activePeriod = MutableLiveData<FilterPeriodEntity>()
+    val activePeriod: LiveData<FilterPeriodEntity> = _activePeriod
 
     fun observeTransaction() {
         viewModelScope.launch {
@@ -40,6 +48,17 @@ class TransactionViewModel(
                 .collect {
                     _transactions.value = it
                 }
+        }
+    }
+
+    fun observeActivePeriod(){
+        viewModelScope.launch {
+            getLatestActivePeriodUseCase.observeLatestPeriod()
+                .flowOn(Dispatchers.IO)
+                .collect {
+                    _activePeriod.value = it
+                }
+
         }
     }
 

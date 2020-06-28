@@ -1,12 +1,14 @@
 package com.example.holmi_production.money_counter_app.storage.impl
 
+import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfDay
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
-import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import com.example.holmi_production.money_counter_app.orm.PeriodsDao
 import com.example.holmi_production.money_counter_app.storage.PeriodsDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import org.joda.time.DateTime
 
 
 class PeriodsDatabaseImpl(
@@ -16,15 +18,31 @@ class PeriodsDatabaseImpl(
         const val key = "DATE"
     }
 
-    suspend fun insert(period: FilterPeriodEntity) {
-        withContext(Dispatchers.IO) { dao.insert(period.copy(id = key)) }
+    override suspend fun addPeriod(left: DateTime, right: DateTime) {
+        val entity = FilterPeriodEntity(
+            id = key,
+            leftBorder = left,
+            rightBorder = right
+        )
+        withContext(Dispatchers.IO) { dao.insert(entity) }
     }
 
-    suspend fun getPeriod(): FilterPeriodEntity {
+    override suspend fun getPeriod(): FilterPeriodEntity {
         return withContext(Dispatchers.IO) { dao.getPeriod(key) }
     }
 
-    fun observePeriod(): Flow<FilterPeriodEntity> {
+    override fun observePeriod(): Flow<FilterPeriodEntity> {
         return dao.observePeriod(key)
+            .map {
+                if (it == null) {
+                    FilterPeriodEntity(
+                        key,
+                        leftBorder = DateTime().withTimeAtStartOfDay(),
+                        rightBorder = DateTime().withTimeAtEndOfDay()
+                    )
+                } else {
+                    it
+                }
+            }
     }
 }

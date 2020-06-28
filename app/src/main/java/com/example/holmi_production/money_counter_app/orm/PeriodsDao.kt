@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PeriodsDao {
     @Query("SELECT * FROM FilterPeriodEntity WHERE id=:key")
-    fun observePeriod(key:String): Flow<FilterPeriodEntity>
+    fun observePeriod(key:String): Flow<FilterPeriodEntity?>
 
     @Query("SELECT * FROM FilterPeriodEntity WHERE id=:key")
     fun getPeriod(key:String): FilterPeriodEntity

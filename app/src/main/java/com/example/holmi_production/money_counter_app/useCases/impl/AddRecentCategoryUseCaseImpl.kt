@@ -1,11 +1,11 @@
 package com.example.holmi_production.money_counter_app.useCases.impl
 
 import com.example.holmi_production.money_counter_app.storage.RecentCategoryDatabase
-import com.example.holmi_production.money_counter_app.useCases.SetRecentCategoryUseCase
+import com.example.holmi_production.money_counter_app.useCases.AddRecentCategoryUseCase
 
-class SetRecentCategoryUseCaseImpl(
+class AddRecentCategoryUseCaseImpl(
     private val recentCategoryDatabase: RecentCategoryDatabase
-) : SetRecentCategoryUseCase {
+) : AddRecentCategoryUseCase {
 
     override suspend fun setRecentCategory(categoryId: String) {
         recentCategoryDatabase.updateTimestamp(categoryId)

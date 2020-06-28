@@ -28,9 +28,10 @@ val databaseModule = module {
 
     single<CategoryDatabase> {
         CategoryDatabaseImpl(
-            dao = get())
+            dao = get()
+        )
     }
-    single {
+    single<PeriodsDatabase> {
         PeriodsDatabaseImpl(
             dao = get()
         )
