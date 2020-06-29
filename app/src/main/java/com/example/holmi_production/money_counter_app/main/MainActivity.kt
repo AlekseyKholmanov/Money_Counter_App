@@ -4,22 +4,36 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.findBehavior
 import com.example.holmi_production.money_counter_app.storage.AppPreference
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_menu_currency_converting.*
 import kotlinx.android.synthetic.main.include_menu_end_period_date.*
 import kotlinx.android.synthetic.main.menu_drawer_custom.*
 import org.koin.android.ext.android.get
+import ru.semper_viventem.backdrop.BackdropBehavior
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        private const val ARG_LAST_MENU_ITEM = "last_menu_item"
 
+        private const val MENU_DASHBOARD = R.id.dashboardFragment
+        private const val MENU_TRANSACTIONS = R.id.transactionFragment
+        private const val MENU_CHARTS = R.id.chartFragment
+        private const val MENU_LIMITS = R.id.limitsFragment
+
+        private const val FRAGMENT_CONTAINER = R.id.navHostFragment
+
+        private const val DEFAULT_ITEM = MENU_DASHBOARD
+    }
 
 //    private val workerInteractor: WorkerInteractor by inject()
 
@@ -34,7 +48,40 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initNavController()
-        initializeNavigation()
+        initializeBackdrop()
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            if(destination.id == R.id.onBoardingFragment){
+                backLayout.visibility = View.GONE
+            }
+            else{
+                backLayout.visibility = View.VISIBLE
+            }
+        }
+
+
+        val currentItem = savedInstanceState?.getInt(ARG_LAST_MENU_ITEM) ?: DEFAULT_ITEM
+        navigationView.setCheckedItem(currentItem)
+        checkMenuPosition(navigationView.checkedItem!!.itemId)
+        //initializeNavigation()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(ARG_LAST_MENU_ITEM, navigationView.checkedItem!!.itemId)
+
+        super.onSaveInstanceState(outState)
+    }
+
+    private fun initializeBackdrop() {
+        val backdropBehavior: BackdropBehavior = navHostFragment.findBehavior()
+        with(backdropBehavior){
+            attachBackLayout(R.id.backLayout)
+        }
+        navigationView.setNavigationItemSelectedListener{item ->
+            navigationView.setCheckedItem(item.itemId)
+            checkMenuPosition(item.itemId)
+            backdropBehavior.close()
+            true
+        }
     }
 
     private fun initNavController() {
@@ -47,8 +94,18 @@ class MainActivity : AppCompatActivity() {
         } else {
             mainGraph.startDestination = R.id.dashboardFragment
         }
-        navController.graph = mainGraph
+        navController.graph = mainGraphч
+
+    private fun checkMenuPosition(@IdRes menuItemId: Int) {
+        when (menuItemId) {
+            MENU_DASHBOARD -> {}
+                    MENU_TRANSACTIONS -> {}
+                    MENU_CHARTS -> {}
+                    MENU_LIMITS   -> {}
+        }
     }
+
+
 //        initializeSettings()
 //        initView()
 
@@ -83,16 +140,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeNavigation() {
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.dashboardFragment,
-                R.id.transactionFragment,
-                R.id.limitsFragment,
-                R.id.chartFragment
-            ), drawer
-
-        )
-        NavigationUI.setupWithNavController(navViewDrawer,navController)
+//        appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.dashboardFragment,
+//                R.id.transactionFragment,
+//                R.id.limitsFragment,
+//                R.id.chartFragment
+//            ), drawer
+//
+//        )
+        NavigationUI.setupWithNavController(navigationView,navController)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

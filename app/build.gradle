@@ -152,6 +152,9 @@ dependencies {
     implementation "com.jakewharton.rxbinding3:rxbinding-recyclerview:$rxBingings"
     implementation "com.jakewharton.rxbinding3:rxbinding-material:$rxBingings"
 
+
+    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.7'
+
     //UI
     implementation 'me.relex:circleindicator:2.1.4'
     implementation "com.mikepenz:materialdrawer:$navigationDrawer"

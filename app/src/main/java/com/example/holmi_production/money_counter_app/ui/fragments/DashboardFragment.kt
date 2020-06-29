@@ -48,7 +48,6 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initToolbar()
         with(dashboardViewModel) {
             accounts.observe(viewLifecycleOwner, Observer(::updateAccounts))
         }
