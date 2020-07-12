@@ -8,13 +8,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.model.AccountDetails
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
+import com.example.holmi_production.money_counter_app.model.uiModels.AccountInfo
 import com.example.holmi_production.money_counter_app.ui.adapter.AccountAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.Callback
 import com.example.holmi_production.money_counter_app.ui.viewModels.DashboardViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
-import kotlinx.android.synthetic.main.fragment_dashboard_old.showBottom
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
@@ -66,6 +65,11 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             showFullBottomKeyboard()
         }
 
+        addAccount.setOnClickListener {
+            val destinatination = DashboardFragmentDirections.actionDashboardFragmentToCreateAccountFragment2()
+            findNavController().navigate(destinatination)
+        }
+
 //        keyboard.setListener(object : IKeyboardListener {
 ////            override fun enterPressed(
 ////                money: Double,
@@ -100,7 +104,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         findNavController().navigate(direction)
     }
 
-    private fun updateAccounts(accounts: List<AccountDetails>) {
+    private fun updateAccounts(accounts: List<AccountInfo>) {
         (accountViewPager.adapter as AccountAdapter).setItems(accounts)
 
     }

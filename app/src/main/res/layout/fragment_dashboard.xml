@@ -5,31 +5,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dashboard"
     android:layout_width="match_parent"
-    tools:showPaths="true"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:showPaths="true">
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/addAccount"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:textSize="12sp"
-        android:insetTop="0dp"
+        android:layout_margin="8dp"
         android:clickable="true"
         android:focusable="true"
-        app:rippleColor="@color/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="8dp"
+        android:insetTop="0dp"
         android:insetBottom="0dp"
+        android:text="Добавить счет"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimaryDark"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:text="Добавить счет"/>
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@color/colorPrimary" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/accountViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/addAccount"/>
+        app:layout_constraintTop_toBottomOf="@id/addAccount" />
 
     <me.relex.circleindicator.CircleIndicator3
         android:id="@+id/indicator"
@@ -44,18 +45,18 @@
         app:layout_constraintTop_toBottomOf="@id/accountViewPager" />
 
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <Button
         android:id="@+id/showBottom"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="bottom|center"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/bg_rounded_16dp"
+        android:backgroundTint="@color/colorYellow"
         android:gravity="center"
         android:text="show bottom"
         android:textAllCaps="true"
-        android:textColor="@android:color/white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout >
+</androidx.constraintlayout.widget.ConstraintLayout>

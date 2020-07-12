@@ -4,23 +4,23 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.model.AccountDetails
 import com.example.holmi_production.money_counter_app.model.enums.AccountType
+import com.example.holmi_production.money_counter_app.model.uiModels.AccountInfo
 import kotlinx.android.synthetic.main.item_account.view.*
 
 class AccountViewHolder(v: View, val callback: Callback) : RecyclerView.ViewHolder(v) {
 
 
-    fun bind(item: AccountDetails) {
+    fun bind(item: AccountInfo) {
         with(itemView){
-            accountName.text = item.account.description
-            val balance = item.transactions.sumByDouble { it.sum }
-            accountBalance.text = balance.toString()
+            accountName.text = item.description
+            accountBalance.text = item.balance.toString()
             plus.setOnClickListener {
-                callback.plusClicked(item.account.id)
+                callback.plusClicked(item.id)
             }
             minus.setOnClickListener {
-                callback.minusClicked(item.account.id)
+                callback.minusClicked(item.id)
             }
-            accountType.text = when(item.account.accountType){
+            accountType.text = when(item.accountType){
                 AccountType.DEBET -> "D"
                 AccountType.FUNDED -> "F"
                 AccountType.CREDIT -> "K"

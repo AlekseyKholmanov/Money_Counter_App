@@ -17,7 +17,8 @@ class CreateAccountViewModel(
         description: String,
         isHidden: Boolean,
         isCalculatePerDay: Boolean,
-        password: String?
+        password: String?,
+        startBalance:Double
     ) {
         val entity = AccountEntity(
             description = description,

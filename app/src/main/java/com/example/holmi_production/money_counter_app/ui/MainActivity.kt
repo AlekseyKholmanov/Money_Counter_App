@@ -7,6 +7,7 @@ import android.view.View
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -64,6 +65,12 @@ class MainActivity : AppCompatActivity() {
         outState.putInt(ARG_LAST_MENU_ITEM, navigationView.checkedItem!!.itemId)
 
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onBackPressed() {
+        if (!navController.popBackStack()) {
+            super.onBackPressed()
+        }
     }
 
     private fun initializeBackdrop() {

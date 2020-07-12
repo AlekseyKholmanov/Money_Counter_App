@@ -20,6 +20,9 @@
             android:name="showBottom"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_createAccountFragment2"
+            app:destination="@id/createAccountFragment2" />
     </fragment>
     <fragment
         android:id="@+id/chartFragment"
@@ -78,4 +81,10 @@
             android:id="@+id/action_simpleBottomKeyboard_to_selectCategoryFragment"
             app:destination="@id/selectCategoryFragment" />
     </dialog>
+
+    <fragment
+        android:id="@+id/createAccountFragment2"
+        android:name="com.example.holmi_production.money_counter_app.ui.fragments.onboarding.CreateAccountFragment"
+        tools:layout="@layout/fragment_onboarding_account_create"
+        android:label="CreateAccountFragment" />
 </navigation>
