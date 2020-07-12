@@ -12,8 +12,10 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
+import com.example.holmi_production.money_counter_app.model.Images
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
+import com.example.holmi_production.money_counter_app.ui.custom.ColorSeekBar
 import com.example.holmi_production.money_counter_app.ui.dialogs.ImageCategoryPicker
 import com.example.holmi_production.money_counter_app.ui.viewModels.CategoryDetailsViewModel
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
@@ -21,11 +23,7 @@ import com.google.android.material.chip.Chip
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import kotlinx.android.synthetic.main.button_with_description.categoryImage
-import kotlinx.android.synthetic.main.container_category_detail.*
-import kotlinx.android.synthetic.main.dialog_edit_category.*
 import kotlinx.android.synthetic.main.fragment_category_details.*
-import kotlinx.android.synthetic.main.part_fragment_keyboard.chipsContainer
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -53,48 +51,53 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
             val dialog =
                 ImageCategoryPicker(
                     requireContext()
-                ) { imageArrayPosition ->
-                    val imageId = requireContext().resources.obtainTypedArray(R.array.images)
-                    val id = imageId.getResourceId(imageArrayPosition, -1)
-                    iv_category_image.setImageResource(id)
+                ) { imageId ->
+                    val image = Images.getImageById(imageId)
+                    categoryImage.setImageResource(image)
 
-                    categoryImage.tag = imageArrayPosition
+                    categoryImage.tag = imageId
                     categoryImage.invalidate()
-                    imageId.recycle()
                 }
-
-            categoryName
-                .textChanges()
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .map { it.isNotBlank() }
-                .subscribe {
-                    saveCategory.isSelected = it
-                }
-                .addTo(disposables)
             dialog.show()
+        }
 
-            generateColor.setOnClickListener {
-                val rand = Random.nextInt(0, color_seek_bar.width)
-                color_seek_bar.setColor(rand.toFloat())
+        seekBar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
+            override fun onColorChangeListener(color: Int) {
+                categoryImage.setBackgroundColor(color)
+            }
 
+        })
+
+        categoryName
+            .textChanges()
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .map { it.isNotBlank() }
+            .subscribe {
+                saveCategory.isSelected = it
             }
-            with(categoryName) {
-                setOnEditorActionListener { v, actionId, event ->
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        et_category_name?.hideKeyboardFrom(requireContext())
-                    }
-                    false
+            .addTo(disposables)
+
+        generateColor.setOnClickListener {
+            val rand = Random.nextInt(0, seekBar.width)
+            seekBar.setColor(rand.toFloat())
+        }
+        with(categoryName) {
+            setOnEditorActionListener { v, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    categoryName?.hideKeyboardFrom(requireContext())
                 }
-                setOnFocusChangeListener { v, hasFocus ->
-                    if (!hasFocus)
-                        et_category_name?.hideKeyboardFrom(requireContext())
-                }
+                false
             }
-            saveCategory.setOnClickListener {
-                categoryDetailsViewModel.createCategory(getCurrentState())
-                findNavController().popBackStack()
+            setOnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus)
+                    categoryName?.hideKeyboardFrom(requireContext())
             }
         }
+        saveCategory.setOnClickListener {
+            categoryDetailsViewModel.createCategory(getCurrentState())
+            findNavController().popBackStack()
+        }
+
     }
 
 
@@ -104,9 +107,9 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
         val imageId = categoryImage.tag as Int?
         return CategoryEntity(
             id = args.categoryId ?: UUID.randomUUID().toString(),
-            imageId = imageId,
+            imageId = imageId ?: Images.NO_IMAGE,
             color = color?.color ?: ColorUtils.getColor(),
-            description = et_category_name.text.toString()
+            description = categoryName.text.toString()
         )
     }
 
@@ -138,7 +141,7 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
         chip.textSize = 20f
         chip.isCloseIconVisible = true
         chip.setOnCloseIconClickListener {
-            chips_group.removeView(chip)
+            chips.removeView(chip)
         }
         return chip
     }

@@ -2,15 +2,34 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dashboard"
     android:layout_width="match_parent"
+    tools:showPaths="true"
     android:layout_height="match_parent">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:textSize="12sp"
+        android:insetTop="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:rippleColor="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="8dp"
+        android:insetBottom="0dp"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:text="Добавить счет"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/accountViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/addAccount"/>
 
     <me.relex.circleindicator.CircleIndicator3
         android:id="@+id/indicator"
@@ -27,20 +46,16 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/showBottom"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="bottom|center"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:gravity="center"
-        android:paddingHorizontal="16dp"
         android:text="show bottom"
         android:textAllCaps="true"
         android:textColor="@android:color/white"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout >

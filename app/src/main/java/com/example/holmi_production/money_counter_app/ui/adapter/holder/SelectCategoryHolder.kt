@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.adapter.holder
 
+import android.content.res.ColorStateList
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
@@ -19,7 +20,7 @@ class SelectCategoryHolder(
     fun bind(item: CategoryItem) {
         with(itemView) {
             text_category_dialog.text = item.description
-            setBackgroundColor(item.color)
+            container.backgroundTintList = ColorStateList.valueOf(item.color)
             setOnClickListener {
                 callback.categoryPicked(item.categoryId)
             }

@@ -8,16 +8,18 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.DashboardFragment"
+        tools:layout="@layout/fragment_dashboard"
         android:label="KeyboardFragment" >
-        <action
-            android:id="@+id/action_keyboardFragment_to_selectCategoryFragment"
-            app:destination="@id/selectCategoryFragment" />
         <action
             android:id="@+id/action_keyboardFragment_to_bottomKeyboard"
             app:destination="@id/bottomKeyboard" />
         <action
             android:id="@+id/action_dashboardFragment_to_simpleBottomKeyboard"
             app:destination="@id/simpleBottomKeyboard" />
+        <argument
+            android:name="showBottom"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/chartFragment"
@@ -34,6 +36,9 @@
         <action
             android:id="@+id/action_selectCategoryFragment_to_categoryDetailsFragment"
             app:destination="@id/categoryDetailsFragment" />
+        <action
+            android:id="@+id/action_selectCategoryFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
     </fragment>
     <fragment
         android:id="@+id/limitsFragment"
@@ -43,7 +48,11 @@
         android:id="@+id/bottomKeyboard"
         tools:layout="@layout/bottom_keyboard_full"
         android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomKeyboard"
-        android:label="BottomKeyboard" />
+        android:label="BottomKeyboard" >
+        <action
+            android:id="@+id/action_bottomKeyboard_to_selectCategoryFragment"
+            app:destination="@id/selectCategoryFragment" />
+    </dialog>
     <fragment
         android:id="@+id/categoryDetailsFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.CategoryDetailsFragment"
@@ -65,5 +74,8 @@
             android:name="isSubstraction"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_simpleBottomKeyboard_to_selectCategoryFragment"
+            app:destination="@id/selectCategoryFragment" />
     </dialog>
 </navigation>

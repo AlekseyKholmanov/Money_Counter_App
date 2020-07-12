@@ -14,6 +14,7 @@ import coil.api.load
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
+import com.example.holmi_production.money_counter_app.model.Images
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.model.enums.ButtonType
 import com.example.holmi_production.money_counter_app.model.enums.SpDirection
@@ -95,10 +96,7 @@ class BottomKeyboard : BottomSheetDialogFragment() {
             categoryDescription.visibility = View.GONE
             itemCategory.setBackgroundColor(categoryDetails.category.color)
             categoryImage.load(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    categoryDetails.category.imageId ?: R.drawable.ic_launcher_background
-                )
+                Images.getImageById(categoryDetails.category.imageId)
             )
         }
     }
@@ -143,7 +141,8 @@ class BottomKeyboard : BottomSheetDialogFragment() {
                 displayedSum += value
             }
             ButtonType.CATEGORY -> {
-                findNavController().navigate(R.id.selectCategoryFragment)
+                val direction = BottomKeyboardDirections.actionBottomKeyboardToSelectCategoryFragment()
+                findNavController().navigate(direction)
             }
         }
         summary.text = displayedSum

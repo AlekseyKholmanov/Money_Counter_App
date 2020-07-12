@@ -12,6 +12,5 @@ class LimitsFragment: BaseFragment(R.layout.fragment_limits){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initToolbar()
     }
 }

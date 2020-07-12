@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
-import com.example.holmi_production.money_counter_app.main.MainActivity
+import com.example.holmi_production.money_counter_app.ui.MainActivity
 
 
 

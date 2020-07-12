@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.AccountDetails
@@ -19,6 +20,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     private val dashboardViewModel: DashboardViewModel by viewModel()
+
+    private val args:DashboardFragmentArgs by navArgs()
 
     private val accountCallback = object : Callback {
         override fun minusClicked(accountId: String) {
@@ -51,14 +54,16 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         with(dashboardViewModel) {
             accounts.observe(viewLifecycleOwner, Observer(::updateAccounts))
         }
+        if(args.showBottom){
+            showFullBottomKeyboard()
+        }
         val adapter = AccountAdapter(accountCallback)
         adapter.registerAdapterDataObserver(indicator.adapterDataObserver)
         accountViewPager.adapter = adapter
         indicator.setViewPager(accountViewPager)
 
         showBottom.setOnClickListener {
-            val direction = DashboardFragmentDirections.actionKeyboardFragmentToBottomKeyboard()
-            findNavController().navigate(direction)
+            showFullBottomKeyboard()
         }
 
 //        keyboard.setListener(object : IKeyboardListener {
@@ -88,6 +93,11 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 //        }
 //        presenter.observeData()
 //        presenter.observeEndPeriodDate()
+    }
+
+    private fun showFullBottomKeyboard(){
+        val direction = DashboardFragmentDirections.actionKeyboardFragmentToBottomKeyboard()
+        findNavController().navigate(direction)
     }
 
     private fun updateAccounts(accounts: List<AccountDetails>) {

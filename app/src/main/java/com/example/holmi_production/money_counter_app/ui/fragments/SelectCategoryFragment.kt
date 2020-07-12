@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,18 +28,15 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
     private lateinit var rotateForward: Animation
     private lateinit var rotateBackward: Animation
 
-//    @Inject
-//    lateinit var vmFactory : ViewModelProvider.Factory
-
     val selectCategoryViewModel: SelectCategoryViewModel by viewModel()
 
-    lateinit var adapter: SelectCategoryAdapter
 
 
     private val categoryPickerCallback = object : SelectCategoryHolder.Callback {
         override fun categoryPicked(categoryId: String) {
             selectCategoryViewModel.categorySelected(categoryId)
-            findNavController().popBackStack()
+            val direction = SelectCategoryFragmentDirections.actionSelectCategoryFragmentToDashboardFragment(showBottom = true)
+            findNavController().navigate(direction)
         }
 
         override fun categoryEdited(categoryId: String) {
@@ -52,11 +50,14 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
         }
     }
 
+    val adapter: SelectCategoryAdapter = SelectCategoryAdapter(categoryPickerCallback)
+
     private var isFabOpen = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        selectCategoryViewModel.observeCategories()
         fabOpen = AnimationUtils.loadAnimation(requireContext(), R.anim.fab_open)
         fabClose = AnimationUtils.loadAnimation(requireContext(), R.anim.fab_close)
         rotateForward = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_forward)
@@ -65,16 +66,10 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initToolbar("Выберите категорию")
         with(selectCategoryViewModel) {
             categories.observe(viewLifecycleOwner, Observer(::setCategories))
         }
-        adapter = SelectCategoryAdapter(categoryPickerCallback)
-        val layoutManager = GridLayoutManager(context, 3)
-
-        categoryList.layoutManager = layoutManager
         categoryList.adapter = adapter
-
         addFab.setOnClickListener {
             animateFab()
         }
@@ -94,6 +89,7 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
         } else {
             categories
         }
+        adapter.notifyDataSetChanged()
     }
 
     private fun animateFab() {

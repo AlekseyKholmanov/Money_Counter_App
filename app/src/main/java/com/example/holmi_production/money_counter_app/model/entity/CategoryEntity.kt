@@ -16,7 +16,7 @@ data class CategoryEntity(
 
     val color: Int,
 
-    val imageId: Int? = null,
+    val imageId: Int,
 
     var usageCount: Int = 0,
 

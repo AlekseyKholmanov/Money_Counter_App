@@ -13,6 +13,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.getTime
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
+import com.example.holmi_production.money_counter_app.model.Images
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionItem
 import com.example.holmi_production.money_counter_app.utils.SwipeLayoutListenerImpl
 import kotlinx.android.synthetic.main.item_transaction.view.*
@@ -63,7 +64,7 @@ class TransactionItemHolder(
             val backgroundColor = category?.color ?: Color.LTGRAY
             shapeContainer.backgroundTintList = ColorStateList.valueOf(backgroundColor)
 
-            val sum = "${transaction.sum.toCurencyFormat().withRubleSign()}"
+            val sum = transaction.sum.toCurencyFormat().withRubleSign()
 
             itemComment.visibility = if (transaction.comment.isNullOrEmpty()) {
                 View.GONE
@@ -72,7 +73,7 @@ class TransactionItemHolder(
                 View.VISIBLE
             }
 
-            itemImage.setImageResource(category?.imageId ?: R.drawable.ic_launcher_foreground)
+            itemImage.setImageResource(Images.getImageById(item.category?.imageId ?: Images.NO_IMAGE))
             with(itemSum) {
                 setText(sum)
                 setTextColor(directionColor)

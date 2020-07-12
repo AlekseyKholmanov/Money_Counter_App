@@ -17,12 +17,12 @@ class SelectCategoryDelegate(private val callback: SelectCategoryHolder.Callback
 
     override fun onCreateViewHolder(parent: ViewGroup): SelectCategoryHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(TransactionDayHeaderDelegate.VIEW_TYPE, parent, false)
+            .inflate(VIEW_TYPE, parent, false)
         return SelectCategoryHolder(view, callback)
     }
 
     override fun isForViewType(item: Item, items: MutableList<Item>, position: Int): Boolean =
-        item.viewType == TransactionDayHeaderDelegate.VIEW_TYPE
+        item.viewType == VIEW_TYPE
 
     override fun onBindViewHolder(
         item: CategoryItem,

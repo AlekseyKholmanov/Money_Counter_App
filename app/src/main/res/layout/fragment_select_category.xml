@@ -5,135 +5,119 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/appBar"
-        layout="@layout/include_toolbar" />
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScroll"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:overScrollMode="never"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintTop_toBottomOf="@id/appBar">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categoryList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginTop="8dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintTop_toTopOf="parent"
+            app:spanCount="3" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/categoryList"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintTop_toTopOf="parent"
-                app:spanCount="3" />
+        <FrameLayout
+            android:id="@+id/frameBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.0"
+            android:background="@android:color/black"
+            android:clickable="false"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
-            <FrameLayout
-                android:id="@+id/frameBackground"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.0"
-                android:background="@android:color/black"
-                android:clickable="false"
-                android:focusable="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
+        <LinearLayout
+            android:id="@+id/categoryFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/subcategoryFab"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:visibility="visible">
 
-            <LinearLayout
-                android:id="@+id/categoryFab"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
-                android:background="@android:color/transparent"
-                android:orientation="horizontal"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@id/subcategoryFab"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:visibility="visible">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_rounded_8dp"
-                    android:padding="10dp"
-                    android:text="@string/label_category"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_delete"
-                    app:backgroundTint="@color/Gray"
-                    app:elevation="6dp"
-                    app:fabSize="mini"
-                    tools:visibility="visible" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/subcategoryFab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
-                android:background="@android:color/transparent"
-                android:orientation="horizontal"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@id/addFab"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:visibility="visible">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/bg_rounded_8dp"
-                    android:padding="10dp"
-                    android:text="@string/label_subcategory"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:src="@drawable/ic_delete"
-                    app:backgroundTint="@color/colorYellow"
-                    app:elevation="6dp"
-                    app:fabSize="mini"
-                    tools:visibility="visible" />
-            </LinearLayout>
-
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_rounded_8dp_stroked"
+                android:padding="10dp"
+                android:text="@string/label_category"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/addFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete"
+                app:backgroundTint="@color/Gray"
+                app:elevation="6dp"
+                app:fabSize="mini"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/subcategoryFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/addFab"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_rounded_8dp_stroked"
+                android:padding="10dp"
+                android:text="@string/label_subcategory"
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:layout_margin="16dp"
-                android:src="@drawable/ic_24_add"
-                android:tint="@android:color/white"
-                app:backgroundTint="@android:color/black"
+                android:src="@drawable/ic_delete"
+                app:backgroundTint="@color/colorYellow"
                 app:elevation="6dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:pressedTranslationZ="12dp"
-                app:rippleColor="@color/colorAccent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                app:fabSize="mini"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_24_add"
+            android:tint="@android:color/white"
+            app:backgroundTint="@android:color/black"
+            app:elevation="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="@color/colorAccent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
