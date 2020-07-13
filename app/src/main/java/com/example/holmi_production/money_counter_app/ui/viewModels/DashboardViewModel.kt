@@ -4,13 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.holmi_production.money_counter_app.model.AccountDetails
 import com.example.holmi_production.money_counter_app.model.uiModels.AccountInfo
 import com.example.holmi_production.money_counter_app.model.uiModels.toInfo
 import com.example.holmi_production.money_counter_app.useCases.GetAccountsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -20,13 +18,13 @@ import kotlinx.coroutines.launch
  */
 class DashboardViewModel(
     private val getAccountsUseCase: GetAccountsUseCase
-): ViewModel(){
+) : ViewModel() {
 
 
     private val _accounts = MutableLiveData<List<AccountInfo>>()
     val accounts: LiveData<List<AccountInfo>> = _accounts
 
-    fun observeAccounts(){
+    fun observeAccounts() {
         viewModelScope.launch {
             getAccountsUseCase.observeAccountsDetails()
                 .map {
@@ -39,5 +37,9 @@ class DashboardViewModel(
                     _accounts.value = it
                 }
         }
+    }
+
+    fun setRecentAccount(accountId: Int) {
+        val account = accounts.value!![accountId].id
     }
 }

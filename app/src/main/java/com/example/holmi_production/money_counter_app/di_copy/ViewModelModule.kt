@@ -25,7 +25,8 @@ val viewModelsModule = module {
 
     viewModel {
         BottomKeyboardViewModel(
-            getRecentCategoryUseCase = get()
+            getRecentCategoryUseCase = get(),
+            addTransactionUseCase = get()
         )
     }
 

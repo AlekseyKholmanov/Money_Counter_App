@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.widget.ViewPager2
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
@@ -43,6 +44,12 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     }
 
+    private val viewPagerCallback = object:ViewPager2.OnPageChangeCallback(){
+        override fun onPageSelected(position: Int) {
+            dashboardViewModel.setRecentAccount(position)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dashboardViewModel.observeAccounts()
@@ -53,13 +60,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         with(dashboardViewModel) {
             accounts.observe(viewLifecycleOwner, Observer(::updateAccounts))
         }
-        if(args.showBottom){
-            showFullBottomKeyboard()
-        }
         val adapter = AccountAdapter(accountCallback)
         adapter.registerAdapterDataObserver(indicator.adapterDataObserver)
-        accountViewPager.adapter = adapter
-        indicator.setViewPager(accountViewPager)
+        accounts.adapter = adapter
+        indicator.setViewPager(accounts)
 
         showBottom.setOnClickListener {
             showFullBottomKeyboard()
@@ -69,6 +73,10 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             val destinatination = DashboardFragmentDirections.actionDashboardFragmentToCreateAccountFragment2()
             findNavController().navigate(destinatination)
         }
+        if(args.showBottom){
+            showFullBottomKeyboard()
+        }
+        accounts.registerOnPageChangeCallback(viewPagerCallback)
 
 //        keyboard.setListener(object : IKeyboardListener {
 ////            override fun enterPressed(
@@ -100,12 +108,13 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     }
 
     private fun showFullBottomKeyboard(){
-        val direction = DashboardFragmentDirections.actionKeyboardFragmentToBottomKeyboard()
+        val currentAccount = (accounts.adapter as AccountAdapter).items[accounts.currentItem].id
+        val direction = DashboardFragmentDirections.actionKeyboardFragmentToBottomKeyboard(currentAccount)
         findNavController().navigate(direction)
     }
 
-    private fun updateAccounts(accounts: List<AccountInfo>) {
-        (accountViewPager.adapter as AccountAdapter).setItems(accounts)
+    private fun updateAccounts(accountItems: List<AccountInfo>) {
+        (accounts.adapter as AccountAdapter).setItems(accountItems)
 
     }
 

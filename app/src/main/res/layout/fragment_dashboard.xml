@@ -27,7 +27,7 @@
         app:rippleColor="@color/colorPrimary" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/accountViewPager"
+        android:id="@+id/accounts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/addAccount" />
@@ -42,7 +42,7 @@
         app:ci_height="6dp"
         app:ci_margin="8dp"
         app:ci_width="6dp"
-        app:layout_constraintTop_toBottomOf="@id/accountViewPager" />
+        app:layout_constraintTop_toBottomOf="@id/accounts" />
 
 
     <Button

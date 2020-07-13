@@ -55,6 +55,9 @@
         <action
             android:id="@+id/action_bottomKeyboard_to_selectCategoryFragment"
             app:destination="@id/selectCategoryFragment" />
+        <argument
+            android:name="accountId"
+            app:argType="string" />
     </dialog>
     <fragment
         android:id="@+id/categoryDetailsFragment"

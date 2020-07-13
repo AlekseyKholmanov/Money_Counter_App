@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import coil.api.load
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
@@ -22,8 +22,8 @@ import com.example.holmi_production.money_counter_app.ui.viewModels.BottomKeyboa
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
-import kotlinx.android.synthetic.main.button_with_description.*
 import kotlinx.android.synthetic.main.bottom_keyboard_full.*
+import kotlinx.android.synthetic.main.button_with_description.*
 import kotlinx.android.synthetic.main.view_splitted_button.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,6 +36,8 @@ class BottomKeyboard : BottomSheetDialogFragment() {
     private var displayedSum = "0"
 
     private val bottomViewModel: BottomKeyboardViewModel by viewModel()
+
+    val args: BottomKeyboardArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -141,7 +143,8 @@ class BottomKeyboard : BottomSheetDialogFragment() {
                 displayedSum += value
             }
             ButtonType.CATEGORY -> {
-                val direction = BottomKeyboardDirections.actionBottomKeyboardToSelectCategoryFragment()
+                val direction =
+                    BottomKeyboardDirections.actionBottomKeyboardToSelectCategoryFragment()
                 findNavController().navigate(direction)
             }
         }
@@ -161,7 +164,9 @@ class BottomKeyboard : BottomSheetDialogFragment() {
                 } else {
                     null
                 }
-                bottomViewModel.saveTransaction(displayedSum.toDouble(), text, tag)
+                val spendingSum =
+                    if (direction == SpDirection.SPENDING) -1 * displayedSum.toDouble() else displayedSum.toDouble()
+                bottomViewModel.saveTransaction(args.accountId, spendingSum, text, tag)
 
                 displayedSum = "0"
                 itemComment.setText("")
