@@ -78,7 +78,7 @@ class TransactionItemHolder(
                 setText(sum)
                 setTextColor(directionColor)
             }
-            accountId.text = transaction.accountId
+            accountId.text = item.account.description
             with(itemCategory) {
                 setText(text)
             }

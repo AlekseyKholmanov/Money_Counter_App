@@ -8,9 +8,7 @@ import com.example.holmi_production.money_counter_app.model.uiModels.AccountInfo
 import com.example.holmi_production.money_counter_app.model.uiModels.toInfo
 import com.example.holmi_production.money_counter_app.useCases.GetAccountsUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
@@ -23,6 +21,8 @@ class DashboardViewModel(
 
     private val _accounts = MutableLiveData<List<AccountInfo>>()
     val accounts: LiveData<List<AccountInfo>> = _accounts
+
+
 
     fun observeAccounts() {
         viewModelScope.launch {
@@ -39,7 +39,7 @@ class DashboardViewModel(
         }
     }
 
-    fun setRecentAccount(accountId: Int) {
-        val account = accounts.value!![accountId].id
+    fun observeSelectedAccount(){
+
     }
 }

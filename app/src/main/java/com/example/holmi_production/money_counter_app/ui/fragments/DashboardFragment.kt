@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
@@ -21,9 +22,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     private val dashboardViewModel: DashboardViewModel by viewModel()
 
-    private val args:DashboardFragmentArgs by navArgs()
-
-    private val accountCallback = object : Callback {
+    private val accountsCallback = object : Callback {
         override fun minusClicked(accountId: String) {
             val directions =
                 DashboardFragmentDirections.actionDashboardFragmentToSimpleBottomKeyboard(
@@ -44,9 +43,8 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 
     }
 
-    private val viewPagerCallback = object:ViewPager2.OnPageChangeCallback(){
+    private val viewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
-            dashboardViewModel.setRecentAccount(position)
         }
     }
 
@@ -60,7 +58,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         with(dashboardViewModel) {
             accounts.observe(viewLifecycleOwner, Observer(::updateAccounts))
         }
-        val adapter = AccountAdapter(accountCallback)
+        val adapter = AccountAdapter(accountsCallback)
         adapter.registerAdapterDataObserver(indicator.adapterDataObserver)
         accounts.adapter = adapter
         indicator.setViewPager(accounts)
@@ -70,11 +68,9 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         }
 
         addAccount.setOnClickListener {
-            val destinatination = DashboardFragmentDirections.actionDashboardFragmentToCreateAccountFragment2()
+            val destinatination =
+                DashboardFragmentDirections.actionDashboardFragmentToCreateAccountFragment2()
             findNavController().navigate(destinatination)
-        }
-        if(args.showBottom){
-            showFullBottomKeyboard()
         }
         accounts.registerOnPageChangeCallback(viewPagerCallback)
 
@@ -107,15 +103,15 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
 //        presenter.observeEndPeriodDate()
     }
 
-    private fun showFullBottomKeyboard(){
-        val currentAccount = (accounts.adapter as AccountAdapter).items[accounts.currentItem].id
-        val direction = DashboardFragmentDirections.actionKeyboardFragmentToBottomKeyboard(currentAccount)
+    private fun showFullBottomKeyboard(selectedId: String? = null) {
+        val accountId = selectedId ?: (accounts.adapter as AccountAdapter).items[accounts.currentItem].id
+        val direction =
+            DashboardFragmentDirections.actionKeyboardFragmentToBottomKeyboard(accountId)
         findNavController().navigate(direction)
     }
 
     private fun updateAccounts(accountItems: List<AccountInfo>) {
         (accounts.adapter as AccountAdapter).setItems(accountItems)
-
     }
 
     private fun updateCategory(categoryDetails: CategoryDetails?) {

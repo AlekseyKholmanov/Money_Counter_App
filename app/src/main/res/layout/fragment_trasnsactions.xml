@@ -43,7 +43,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_costs_spending"
+        android:id="@+id/spendingSummary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -54,12 +54,12 @@
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_costs_income"
+        app:layout_constraintStart_toEndOf="@+id/incomeSummary"
         app:layout_constraintTop_toBottomOf="@id/dateSelector"
         tools:text="+25 Р" />
 
     <TextView
-        android:id="@+id/tv_costs_income"
+        android:id="@+id/incomeSummary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -69,7 +69,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/tv_costs_spending"
+        app:layout_constraintEnd_toStartOf="@+id/spendingSummary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dateSelector"
         tools:text="+100 Р" />
@@ -80,7 +80,7 @@
         android:layout_height="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_costs_spending" />
+        app:layout_constraintTop_toBottomOf="@+id/spendingSummary" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionList"

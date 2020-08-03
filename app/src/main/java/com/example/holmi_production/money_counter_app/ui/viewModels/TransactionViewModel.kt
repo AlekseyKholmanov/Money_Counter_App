@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionDayHeaderItem
-import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.toItem
 import com.example.holmi_production.money_counter_app.useCases.AddActivePeriodUseCase
 import com.example.holmi_production.money_counter_app.useCases.EditTransactionUseCase
@@ -17,7 +16,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TransactionViewModel(
     private val getTransactionUseCase: GetTransactionUseCase,
@@ -32,14 +33,28 @@ class TransactionViewModel(
     private val _activePeriod = MutableLiveData<FilterPeriodEntity>()
     val activePeriod: LiveData<FilterPeriodEntity> = _activePeriod
 
+    private val _summary = MutableLiveData<Pair<Double, Double>>()
+    val summary: LiveData<Pair<Double, Double>> = _summary
+
     fun observeTransaction() {
         viewModelScope.launch {
             getTransactionUseCase.observeTransactionsDetails()
+                .onEach {
+                    val divided = it.partition { it.transaction.sum >= 0 }
+                    withContext(Dispatchers.Main) {
+                        _summary.value =
+                            divided.first.sumByDouble { it.transaction.sum } to divided.second.sumByDouble { it.transaction.sum }
+                    }
+                }
                 .map {
                     val grouped = it.groupBy { it.transaction.createdDate.withTimeAtStartOfDay() }
                     val items = mutableListOf<Item>()
                     grouped.forEach { (dateTime, list) ->
-                        items.add(TransactionDayHeaderItem(dateTime, list.sumByDouble { it.transaction.sum }))
+                        items.add(
+                            TransactionDayHeaderItem(
+                                dateTime,
+                                list.sumByDouble { it.transaction.sum })
+                        )
                         items.addAll(list.map { it.toItem() })
                     }
                     items
@@ -51,7 +66,7 @@ class TransactionViewModel(
         }
     }
 
-    fun observeActivePeriod(){
+    fun observeActivePeriod() {
         viewModelScope.launch {
             getLatestActivePeriodUseCase.observeLatestPeriod()
                 .flowOn(Dispatchers.IO)
@@ -62,7 +77,7 @@ class TransactionViewModel(
         }
     }
 
-    fun deleteTransaction(transactionId: String){
+    fun deleteTransaction(transactionId: String) {
         viewModelScope.launch {
             editTransactionUSeCase.deleteTransaction(transactionId)
         }

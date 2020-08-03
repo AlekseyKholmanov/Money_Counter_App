@@ -55,7 +55,6 @@ class KeyboardView @JvmOverloads constructor(
         keyDelete.setOnClickListener { pressed(ButtonType.DELETE) }
         keySpending.setOnClickListener { pressed(ButtonType.ENTER_UP) }
         keyIncome.setOnClickListener { pressed(ButtonType.ENTER_DOWN) }
-        itemCategory.setOnClickListener { pressed(ButtonType.CATEGORY) }
         itemComment.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -77,29 +76,6 @@ class KeyboardView @JvmOverloads constructor(
         mKeyboardListener = listener
     }
 
-    fun setCategory(entity: CategoryEntity?) {
-        val text = itemCategory.findViewById<TextView>(R.id.categoryDescription)
-        val image = itemCategory.findViewById<SquareImageView>(R.id.categoryImage)
-        //ToDO show no categoryImage
-        if (entity == null) {
-            image.visibility = View.GONE
-            text.visibility = View.VISIBLE
-//            limitBar.visibility = View.GONE
-            text.text = "Категории не созданы"
-        } else {
-            image.visibility = View.VISIBLE
-            text.visibility = View.GONE
-//            limitBar.visibility = View.VISIBLE
-            itemCategory.setBackgroundColor(entity.color)
-            image.load(R.drawable.ic_launcher_foreground)
-//            limitBar.apply {
-//                setBackgroundColor(entity.color)
-//                progress = 55f
-//                progressColor = entity.color
-//                invalidate()
-//            }
-        }
-    }
 
     fun showActionButtons(directions: List<SpDirection>?) {
         if(directions != null){

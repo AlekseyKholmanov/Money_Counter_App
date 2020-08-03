@@ -16,10 +16,6 @@
         <action
             android:id="@+id/action_dashboardFragment_to_simpleBottomKeyboard"
             app:destination="@id/simpleBottomKeyboard" />
-        <argument
-            android:name="showBottom"
-            app:argType="boolean"
-            android:defaultValue="false" />
         <action
             android:id="@+id/action_dashboardFragment_to_createAccountFragment2"
             app:destination="@id/createAccountFragment2" />

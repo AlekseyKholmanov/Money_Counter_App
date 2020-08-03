@@ -15,15 +15,20 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.Images
+import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.model.enums.ButtonType
 import com.example.holmi_production.money_counter_app.model.enums.SpDirection
+import com.example.holmi_production.money_counter_app.ui.adapter.SelectCategoryAdapter
+import com.example.holmi_production.money_counter_app.ui.adapter.holder.SelectCategoryHolder
+import com.example.holmi_production.money_counter_app.ui.adapter.items.ZeroItem
 import com.example.holmi_production.money_counter_app.ui.viewModels.BottomKeyboardViewModel
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.bottom_keyboard_full.*
 import kotlinx.android.synthetic.main.button_with_description.*
+import kotlinx.android.synthetic.main.fragment_select_category.*
 import kotlinx.android.synthetic.main.view_splitted_button.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -39,8 +44,21 @@ class BottomKeyboard : BottomSheetDialogFragment() {
 
     val args: BottomKeyboardArgs by navArgs()
 
+
+    private val categoryPickerCallback = object : SelectCategoryHolder.Callback {
+        override fun categoryPicked(categoryId: String?) {
+        }
+
+        override fun categoryEdited(categoryId: String?) {
+        }
+    }
+
+    val adapter: SelectCategoryAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        SelectCategoryAdapter(categoryPickerCallback)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        bottomViewModel.observeCategories()
     }
 
     override fun onCreateView(
@@ -51,9 +69,20 @@ class BottomKeyboard : BottomSheetDialogFragment() {
         return inflater.inflate(R.layout.bottom_keyboard_full, container, false)
     }
 
+    private fun setCategories(categories: List<Item>) {
+        adapter.items = if (categories.isEmpty()) {
+            listOf(ZeroItem(R.layout.item_category_0data))
+        } else {
+            categories
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bottomViewModel.category.observe(viewLifecycleOwner, Observer(::setCategory))
+        with(bottomViewModel){
+            categories.observe(viewLifecycleOwner, Observer(::setCategories))
+        }
+        categories.adapter = adapter
         key0.setOnClickListener { pressed(ButtonType.ZERO, "0") }
         key1.setOnClickListener { pressed(ButtonType.NUMERIC, "1") }
         key2.setOnClickListener { pressed(ButtonType.NUMERIC, "2") }
@@ -68,7 +97,6 @@ class BottomKeyboard : BottomSheetDialogFragment() {
         keyDelete.setOnClickListener { pressed(ButtonType.DELETE) }
         keySpending.setOnClickListener { pressed(ButtonType.ENTER_UP) }
         keyIncome.setOnClickListener { pressed(ButtonType.ENTER_DOWN) }
-        itemCategory.setOnClickListener { pressed(ButtonType.CATEGORY) }
         itemComment.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -86,22 +114,6 @@ class BottomKeyboard : BottomSheetDialogFragment() {
         cg_subcategory_group.clearCheck()
     }
 
-    private fun setCategory(categoryDetails: CategoryDetails?) {
-
-        //ToDO show no categoryImage
-        if (categoryDetails == null) {
-            categoryImage.visibility = View.GONE
-            categoryDescription.visibility = View.VISIBLE
-            categoryDescription.text = "Категории не созданы"
-        } else {
-            categoryImage.visibility = View.VISIBLE
-            categoryDescription.visibility = View.GONE
-            itemCategory.setBackgroundColor(categoryDetails.category.color)
-            categoryImage.load(
-                Images.getImageById(categoryDetails.category.imageId)
-            )
-        }
-    }
 
     private fun pressed(type: ButtonType, value: String? = null) {
         when (type) {

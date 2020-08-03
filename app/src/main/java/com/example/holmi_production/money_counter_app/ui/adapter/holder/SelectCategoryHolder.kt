@@ -48,7 +48,7 @@ class SelectCategoryHolder(
     }
 
     interface Callback {
-        fun categoryPicked(categoryId: String)
-        fun categoryEdited(categoryId: String)
+        fun categoryPicked(categoryId: String?)
+        fun categoryEdited(categoryId: String?)
     }
 }

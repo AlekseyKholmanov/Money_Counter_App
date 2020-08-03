@@ -12,7 +12,6 @@ import com.example.holmi_production.money_counter_app.ui.adapter.TransactionAdap
 import com.example.holmi_production.money_counter_app.ui.adapter.items.ZeroItem
 import com.example.holmi_production.money_counter_app.ui.viewModels.TransactionViewModel
 import kotlinx.android.synthetic.main.fragment_trasnsactions.*
-import kotlinx.android.synthetic.main.include_datepicker_toolbar.*
 import org.joda.time.DateTime
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -48,7 +47,13 @@ class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
         with(viewModel) {
             transactions.observe(viewLifecycleOwner, Observer(::updateTransactions))
             activePeriod.observe(viewLifecycleOwner, Observer(::updatePeriod))
+            summary.observe(viewLifecycleOwner, Observer(::updateSummary))
         }
+    }
+
+    private fun updateSummary(pair: Pair<Double, Double>) {
+        incomeSummary.text = pair.first.toString()
+        spendingSummary.text = pair.second.toString()
     }
 
     private fun updatePeriod(filterPeriodEntity: FilterPeriodEntity) {

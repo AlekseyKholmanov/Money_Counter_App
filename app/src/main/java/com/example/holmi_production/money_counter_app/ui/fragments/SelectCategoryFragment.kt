@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
@@ -31,22 +32,11 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
     val selectCategoryViewModel: SelectCategoryViewModel by viewModel()
 
 
-
     private val categoryPickerCallback = object : SelectCategoryHolder.Callback {
-        override fun categoryPicked(categoryId: String) {
-            selectCategoryViewModel.categorySelected(categoryId)
-            val direction = SelectCategoryFragmentDirections.actionSelectCategoryFragmentToDashboardFragment(showBottom = true)
-            findNavController().navigate(direction)
+        override fun categoryPicked(categoryId: String?) {
         }
 
-        override fun categoryEdited(categoryId: String) {
-            val bundle = Bundle()
-            bundle.putString("categoryId", categoryId)
-            categoryFab.setOnClickListener {
-                val direction = SelectCategoryFragmentDirections.actionSelectCategoryFragmentToCategoryDetailsFragment(categoryId)
-                findNavController().navigate(direction)
-                animateFab()
-            }
+        override fun categoryEdited(categoryId: String?) {
         }
     }
 
