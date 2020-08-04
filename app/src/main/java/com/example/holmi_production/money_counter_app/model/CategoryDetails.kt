@@ -20,9 +20,9 @@ data class CategoryDetails(
     val subcategory: List<SubCategoryEntity>?
 )
 
-fun CategoryDetails.toItem():CategoryItem{
+fun CategoryDetails.toItem(index: Int):CategoryItem{
     return CategoryItem(
-
+    index = index,
     categoryId = this.category.id,
     description= this.category.description,
     color = this.category.color,

@@ -18,7 +18,7 @@ class SelectCategoryDelegate(private val callback: SelectCategoryHolder.Callback
     override fun onCreateViewHolder(parent: ViewGroup): SelectCategoryHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(VIEW_TYPE, parent, false)
-        return SelectCategoryHolder(view, callback)
+        return SelectCategoryHolder(view)
     }
 
     override fun isForViewType(item: Item, items: MutableList<Item>, position: Int): Boolean =
@@ -29,6 +29,12 @@ class SelectCategoryDelegate(private val callback: SelectCategoryHolder.Callback
         holder: SelectCategoryHolder,
         payloads: MutableList<Any>
     ) {
-        holder.bind(item)
+        with(holder){
+            itemView.setOnClickListener {
+                if(item.index != 0){
+                callback.categoryPicked(item.index)
+            }}
+            bind(item)
+        }
     }
 }

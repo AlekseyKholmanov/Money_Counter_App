@@ -11,7 +11,7 @@ class IconPickerAdapter(private val imageIds: List<Int>, val callback: ImageHold
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
 
         val inflater = LayoutInflater.from(parent.context)
-        val item = inflater.inflate(R.layout.item_category, parent, false)
+        val item = inflater.inflate(R.layout.view_checkable_category, parent, false)
         return ImageHolder(item, callback)
     }
 

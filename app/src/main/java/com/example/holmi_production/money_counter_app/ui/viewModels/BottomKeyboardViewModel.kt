@@ -49,9 +49,11 @@ class BottomKeyboardViewModel(
         viewModelScope.launch {
             getCategoriesUseCase.observeCategoriesDetails()
                 .map {
-                    val items = it.map { it.toItem() }.toMutableList()
-                    items.add(0, CategoryItem(categoryId = null, description = "Добавить", withSubcategory = false, imageId = null, color = R.color.colorPrimaryDark))
-                    items
+                    val newItems = mutableListOf<CategoryItem>()
+                    val items = it.mapIndexed { index, categoryDetails ->   categoryDetails.toItem(index + 1) }
+                    newItems.add( CategoryItem(index = 0, categoryId = null, description = "Добавить", withSubcategory = false, imageId = null, color = R.color.colorPrimaryDark))
+                    newItems.addAll(items)
+                    newItems
                 }
                 .flowOn(Dispatchers.IO)
                 .onEach {

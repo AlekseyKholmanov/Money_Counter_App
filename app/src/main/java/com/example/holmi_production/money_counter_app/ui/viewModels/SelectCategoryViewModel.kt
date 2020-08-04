@@ -26,7 +26,7 @@ class SelectCategoryViewModel(
     fun observeCategories() {
         viewModelScope.launch {
             getCategoriesUseCase.observeCategoriesDetails()
-                .map { it.map { it.toItem() } }
+                .map { it.map { it.toItem(1) } }
                 .flowOn(Dispatchers.IO)
                 .collect {
                     _categories.value = it

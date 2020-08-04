@@ -33,7 +33,7 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
 
 
     private val categoryPickerCallback = object : SelectCategoryHolder.Callback {
-        override fun categoryPicked(categoryId: String?) {
+        override fun categoryPicked(index: Int) {
         }
 
         override fun categoryEdited(categoryId: String?) {

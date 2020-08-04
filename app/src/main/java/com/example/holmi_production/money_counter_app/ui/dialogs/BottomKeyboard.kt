@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.ui.dialogs
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import com.example.holmi_production.money_counter_app.ui.adapter.SelectCategoryAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.SelectCategoryHolder
 import com.example.holmi_production.money_counter_app.ui.adapter.items.ZeroItem
+import com.example.holmi_production.money_counter_app.ui.custom.SingleSelectionGridLayutManager
 import com.example.holmi_production.money_counter_app.ui.viewModels.BottomKeyboardViewModel
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -46,12 +48,22 @@ class BottomKeyboard : BottomSheetDialogFragment() {
 
 
     private val categoryPickerCallback = object : SelectCategoryHolder.Callback {
-        override fun categoryPicked(categoryId: String?) {
+        override fun categoryPicked(index: Int) {
+            checkedListener.onCheckedChange(index)
         }
 
         override fun categoryEdited(categoryId: String?) {
         }
     }
+    private val checkedListener = object : SingleSelectionGridLayutManager.OnCheckedListener{
+        override fun onCheckedChange(checkedId: Int) {
+            manager.check(checkedId)
+        }
+
+    }
+    val manager by lazy(LazyThreadSafetyMode.NONE) {   SingleSelectionGridLayutManager(requireContext()).apply {
+        spanCount = 5
+    }}
 
     val adapter: SelectCategoryAdapter by lazy(LazyThreadSafetyMode.NONE) {
         SelectCategoryAdapter(categoryPickerCallback)
@@ -79,9 +91,13 @@ class BottomKeyboard : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        manager.setListener(checkedListener)
+        categories.layoutManager = manager
         with(bottomViewModel){
             categories.observe(viewLifecycleOwner, Observer(::setCategories))
         }
+
         categories.adapter = adapter
         key0.setOnClickListener { pressed(ButtonType.ZERO, "0") }
         key1.setOnClickListener { pressed(ButtonType.NUMERIC, "1") }
