@@ -9,15 +9,16 @@
     android:background="@drawable/bg_rounded_8dp_stroked"
     android:clickable="true"
     android:focusable="true"
+    android:animateLayoutChanges="true"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <CheckBox
-        android:id="@+id/checkbox"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:clickable="false"
-        android:focusable="false"
+        android:visibility="gone"
+        android:src="@drawable/ic_tick_filled"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

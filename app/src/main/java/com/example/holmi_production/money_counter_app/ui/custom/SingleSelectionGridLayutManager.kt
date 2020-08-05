@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.ui.custom
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.Checkable
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,21 +29,25 @@ class SingleSelectionGridLayutManager @JvmOverloads constructor(
     }
 
     private fun setChecked(checkedId: Int) {
+        Log.d("M_BottomKeyboard", "setChecked")
         this.checkedId = checkedId
         listener?.onCheckedChange(checkedId)
     }
 
     override fun addView(child: View?) {
-        super.addView(child)
-        (child as Checkable).isChecked = false
+        if (child is MCheckable) {
+            super.addView(child)
+        }
     }
 
     override fun addView(child: View?, index: Int) {
-        super.addView(child, index)
-        (child as Checkable).isChecked = false
+        if (child is MCheckable) {
+            super.addView(child,index)
+        }
     }
 
     fun check(id: Int) {
+        Log.d("M_BottomKeyboard", "check $id")
         if (id == checkedId) {
             return
         }
@@ -59,9 +64,10 @@ class SingleSelectionGridLayutManager @JvmOverloads constructor(
         viewId: Int,
         checked: Boolean
     ) {
+        Log.d("M_BottomKeyboard", "checkedState $viewId")
         val checkedView: View? = getChildAt(viewId)
-        if (checkedView is Checkable) {
-            checkedView.isChecked = checked
+        if (checkedView is MCheckable) {
+            checkedView.setChecked(checked)
         }
     }
 

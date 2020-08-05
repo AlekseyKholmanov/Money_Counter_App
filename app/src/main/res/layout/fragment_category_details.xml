@@ -30,7 +30,7 @@
                 android:layout_marginTop="32dp"
                 android:padding="12dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_24_add"
+                android:src="@drawable/img_no_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

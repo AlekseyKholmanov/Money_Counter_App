@@ -29,11 +29,14 @@ class SelectCategoryDelegate(private val callback: SelectCategoryHolder.Callback
         holder: SelectCategoryHolder,
         payloads: MutableList<Any>
     ) {
-        with(holder){
+        with(holder) {
             itemView.setOnClickListener {
-                if(item.index != 0){
-                callback.categoryPicked(item.index)
-            }}
+                if (item.index != 0) {
+                    callback.categoryPicked(item.index, item.categoryId)
+                } else {
+                    callback.createCategorySelected()
+                }
+            }
             bind(item)
         }
     }

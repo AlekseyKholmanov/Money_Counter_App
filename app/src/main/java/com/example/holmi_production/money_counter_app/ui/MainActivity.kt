@@ -132,13 +132,13 @@ class MainActivity : AppCompatActivity() {
             end_month_container.setOnClickListener {
                 val b = AlertDialog.Builder(this)
                 b.setTitle("День окончания месяца")
-                val datas = resources.getStringArray(R.array.numbers)
-                b.setItems(datas) { dialog, which ->
-                    Log.d("M_SettingsFragment", "id: $which ${datas[which]}")
-//                workerInteractor.startEndMonthWorker(datas[which].toInt())
-                    et_end_month_value.text = datas[which]
-                    dialog!!.dismiss()
-                }
+                val datas = IntArray(28).map { it.toString() }
+//                b.setItems(datas) { dialog, which ->
+//                    Log.d("M_SettingsFragment", "id: $which ${datas[which]}")
+////                workerInteractor.startEndMonthWorker(datas[which].toInt())
+//                    et_end_month_value.text = datas[which].toString()
+//                    dialog!!.dismiss()
+//                }
                 b.show()
             }
             balancer.setOnClickListener {

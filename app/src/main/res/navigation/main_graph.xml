@@ -48,12 +48,12 @@
         tools:layout="@layout/bottom_keyboard_full"
         android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomKeyboard"
         android:label="BottomKeyboard" >
-        <action
-            android:id="@+id/action_bottomKeyboard_to_selectCategoryFragment"
-            app:destination="@id/selectCategoryFragment" />
         <argument
             android:name="accountId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_bottomKeyboard_to_categoryDetailsFragment"
+            app:destination="@id/categoryDetailsFragment" />
     </dialog>
     <fragment
         android:id="@+id/categoryDetailsFragment"
@@ -77,8 +77,8 @@
             app:argType="boolean"
             android:defaultValue="false" />
         <action
-            android:id="@+id/action_simpleBottomKeyboard_to_selectCategoryFragment"
-            app:destination="@id/selectCategoryFragment" />
+            android:id="@+id/action_simpleBottomKeyboard_to_categoryDetailsFragment"
+            app:destination="@id/categoryDetailsFragment" />
     </dialog>
 
     <fragment

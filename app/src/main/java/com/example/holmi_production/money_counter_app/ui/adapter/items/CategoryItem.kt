@@ -8,7 +8,7 @@ class CategoryItem(
     val categoryId: String?,
     val description: String,
     val color: Int,
-    val imageId: Int?,
+    val imageResId: Int,
     val withSubcategory: Boolean
 ) : Item {
     override val viewType: Int

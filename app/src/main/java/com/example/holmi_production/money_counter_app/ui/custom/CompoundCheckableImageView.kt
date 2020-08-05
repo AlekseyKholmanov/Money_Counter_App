@@ -1,10 +1,8 @@
 package com.example.holmi_production.money_counter_app.ui.custom
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.View
-import android.widget.Checkable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import coil.api.load
@@ -19,7 +17,7 @@ class CompoundCheckableImageView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyle: Int = 0,
     defStyleRes: Int = 0
-) : ConstraintLayout(context, attrs, defStyle, defStyleRes), Checkable {
+) : ConstraintLayout(context, attrs, defStyle, defStyleRes), MCheckable {
 
     init {
         inflate(context, R.layout.view_checkable_category, this)
@@ -33,11 +31,23 @@ class CompoundCheckableImageView @JvmOverloads constructor(
         layoutParams = lp
         isClickable = true
         isFocusable = true
+
     }
+
+    private var mChecked = false
+        set(value) {
+            field = value
+            imageIndicator.visibility = if (value) View.VISIBLE else View.GONE
+        }
 
     fun setText(text: String) {
         text_category_dialog.text = text
     }
+
+    fun setTextVisibility(isShowed: Boolean) {
+        text_category_dialog.visibility = if (isShowed) View.VISIBLE else View.GONE
+    }
+
 
     fun setImage(drawable: Int) {
         image_category_dialog.load(drawable) {
@@ -46,20 +56,34 @@ class CompoundCheckableImageView @JvmOverloads constructor(
         }
     }
 
-    fun setChecboxVisibility(isVisible: Boolean){
-        checkbox.visibility = if(isVisible) View.VISIBLE else View.GONE
-    }
-
-    override fun isChecked(): Boolean {
-        return checkbox.isChecked
-    }
+    override fun isChecked(): Boolean = mChecked
 
     override fun toggle() {
-        checkbox.isChecked = !checkbox.isChecked
+        mChecked = !mChecked
     }
 
     override fun setChecked(checked: Boolean) {
-        checkbox.isChecked = checked
+        mChecked = checked
     }
 
+}
+
+interface MCheckable {
+    /**
+     * @return The current checked state of the view
+     */
+    fun isChecked(): Boolean
+
+    /**
+     * Change the checked state of the view
+     *
+     * @param checked The new checked state
+     */
+    fun setChecked(checked: Boolean)
+
+    /**
+     * Change the checked state of the view to the inverse of its current state
+     *
+     */
+    fun toggle()
 }

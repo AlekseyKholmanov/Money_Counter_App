@@ -136,9 +136,6 @@ class KeyboardView @JvmOverloads constructor(
                     purshaseSum = purshaseSum.dropLast(1)
                 purshaseSum += value
             }
-            ButtonType.CATEGORY -> {
-                mKeyboardListener?.showCategoryDialog()
-            }
         }
         summary.text = purshaseSum
     }

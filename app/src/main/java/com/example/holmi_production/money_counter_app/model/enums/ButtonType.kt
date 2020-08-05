@@ -6,8 +6,7 @@ enum class ButtonType {
     ENTER_DOWN,
     DIVIDER,
     NUMERIC,
-    DELETE,
-    CATEGORY
+    DELETE
 }
 
 enum class ShortButtonType{

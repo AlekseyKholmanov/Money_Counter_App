@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
+import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.ui.adapter.items.CategoryItem
 
 /**
@@ -26,7 +27,7 @@ fun CategoryDetails.toItem(index: Int):CategoryItem{
     categoryId = this.category.id,
     description= this.category.description,
     color = this.category.color,
-    imageId = this.category.imageId,
+    imageResId = Images.getImageById(this.category.imageId),
     withSubcategory = !this.subcategory.isNullOrEmpty()
     )
 }

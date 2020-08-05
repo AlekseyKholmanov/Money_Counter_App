@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.GridLayoutManager
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.main.Navigation
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.ui.adapter.SelectCategoryAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.SelectCategoryHolder
@@ -33,7 +29,11 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
 
 
     private val categoryPickerCallback = object : SelectCategoryHolder.Callback {
-        override fun categoryPicked(index: Int) {
+        override fun categoryPicked(index: Int, categoryId: String?) {
+        }
+
+        override fun createCategorySelected() {
+            TODO("Not yet implemented")
         }
 
         override fun categoryEdited(categoryId: String?) {

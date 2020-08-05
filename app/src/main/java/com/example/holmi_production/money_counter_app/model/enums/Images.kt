@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.model
+package com.example.holmi_production.money_counter_app.model.enums
 
 import androidx.annotation.DrawableRes
 import com.example.holmi_production.money_counter_app.R
@@ -32,7 +32,7 @@ enum class Images(@DrawableRes val imageResId: Int) {
 
         fun getImageById(id: Int): Int {
             return if (id == NO_IMAGE) {
-                R.drawable.background_splash
+                R.drawable.img_no_image
             } else {
                 values()[id].imageResId
             }

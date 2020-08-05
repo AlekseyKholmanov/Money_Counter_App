@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl
@@ -13,7 +12,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.getTime
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
-import com.example.holmi_production.money_counter_app.model.Images
+import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionItem
 import com.example.holmi_production.money_counter_app.utils.SwipeLayoutListenerImpl
 import kotlinx.android.synthetic.main.item_transaction.view.*

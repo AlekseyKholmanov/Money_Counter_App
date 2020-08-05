@@ -5,7 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.WindowManager
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.Images
+import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.ui.adapter.IconPickerAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.ImageHolder
 import kotlinx.android.synthetic.main.fragment_category_icon_picker.*

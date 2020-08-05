@@ -1,14 +1,14 @@
 package com.example.holmi_production.money_counter_app.ui.viewModels
 
+import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.CategoryDetails
+import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
-import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import com.example.holmi_production.money_counter_app.model.toItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.CategoryItem
 import com.example.holmi_production.money_counter_app.useCases.AddTransactionUseCase
@@ -28,22 +28,11 @@ class BottomKeyboardViewModel(
     private val addTransactionUseCase: AddTransactionUseCase
 ) : ViewModel() {
 
-    private val _category = MutableLiveData<CategoryDetails?>()
-    val category: LiveData<CategoryDetails?> = _category
-
-
     private val _categories: MutableLiveData<List<Item>> = MutableLiveData()
     val categories: LiveData<List<Item>> = _categories
 
-    init {
-        viewModelScope.launch {
-            getRecentCategoryUseCase.observeResentCategory()
-                .flowOn(Dispatchers.IO)
-                .collect {
-                    _category.value = it
-                }
-        }
-    }
+    var selectedCategoryId:String? = null
+
 
     fun observeCategories() {
         viewModelScope.launch {
@@ -51,7 +40,7 @@ class BottomKeyboardViewModel(
                 .map {
                     val newItems = mutableListOf<CategoryItem>()
                     val items = it.mapIndexed { index, categoryDetails ->   categoryDetails.toItem(index + 1) }
-                    newItems.add( CategoryItem(index = 0, categoryId = null, description = "Добавить", withSubcategory = false, imageId = null, color = R.color.colorPrimaryDark))
+                    newItems.add( CategoryItem(index = 0, categoryId = null, description = "Добавить", withSubcategory = false, imageResId = R.drawable.ic_add, color = Color.TRANSPARENT))
                     newItems.addAll(items)
                     newItems
                 }
@@ -70,7 +59,7 @@ class BottomKeyboardViewModel(
             sum = sum,
             comment = comment,
             accountId = accountId,
-            categoryId = _category.value?.category?.id
+            categoryId = selectedCategoryId
         )
         viewModelScope.launch {
             addTransactionUseCase.save(transaction)
