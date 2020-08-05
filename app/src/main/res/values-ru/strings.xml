@@ -51,4 +51,6 @@
     <string name="hint_comment">комментарий</string>
     <string name="label_category">Категория</string>
     <string name="label_subcategory">Подкатегория</string>
+    <string name="process_income">Пополнение</string>
+    <string name="process_spending">Списание</string>
 </resources>

@@ -48,6 +48,7 @@ val viewModelsModule = module {
     viewModel {
         CreateAccountViewModel(
             appPreference = get(),
+            addTransactionUseCase = get(),
             createAccountViewModel = get()
         )
     }

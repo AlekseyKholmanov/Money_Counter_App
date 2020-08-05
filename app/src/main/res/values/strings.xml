@@ -51,4 +51,6 @@
     <string name="hint_comment">comment</string>
     <string name="label_category">Category</string>
     <string name="label_subcategory">Subcategory</string>
+    <string name="process_income">Income</string>
+    <string name="process_spending">Spending</string>
 </resources>

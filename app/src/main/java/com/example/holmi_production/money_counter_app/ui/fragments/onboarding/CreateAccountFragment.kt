@@ -21,7 +21,7 @@ class CreateAccountFragment : BaseFragment(R.layout.fragment_onboarding_account_
                 isHidden = hiddenMode.isChecked,
                 isCalculatePerDay = sumPerDayMode.isChecked,
                 password = null,
-                startBalance = 0.0
+                startBalance = accountBalanceEditText.text.toString().toDouble()
             )
             findNavController().navigate(R.id.dashboardFragment)
         }

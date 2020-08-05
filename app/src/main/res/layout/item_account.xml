@@ -79,4 +79,16 @@
         app:layout_constraintBottom_toBottomOf="@id/plus"
         app:layout_constraintStart_toEndOf="@id/plus" />
 
+    <ImageButton
+        android:id="@+id/between"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bg_rounded_12dp_stroked"
+        android:elevation="8dp"
+        android:src="@drawable/ic_24_sync"
+        android:translationY="-16dp"
+        app:layout_constraintBottom_toBottomOf="@id/plus"
+        app:layout_constraintStart_toEndOf="@id/minus" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -52,38 +52,46 @@ class TransactionItemHolder(
                 if (transaction.sum < 0) Color.parseColor("#c62828") else Color.parseColor(
                     "#2e7d32"
                 )
+
             val text = if (category == null) {
-                if (transaction.sum > 0) "Пополнение"
-                else "Списание"
+                if (transaction.sum > 0) context.getString(R.string.process_income)
+                else context.getString(R.string.process_spending)
             } else if (subcategory == null) {
                 category.description
             } else {
                 "${category.description} \u2799 ${subcategory.description}"
             }
+
             val backgroundColor = category?.color ?: Color.LTGRAY
-            shapeContainer.backgroundTintList = ColorStateList.valueOf(backgroundColor)
 
             val sum = transaction.sum.toCurencyFormat().withRubleSign()
-
+            //comment
             itemComment.visibility = if (transaction.comment.isNullOrEmpty()) {
                 View.GONE
             } else {
                 itemComment.text = transaction.comment
                 View.VISIBLE
             }
+            //image
+            if (category == null) {
+                itemImage.visibility = View.GONE
+                indicator.visibility = View.GONE
+            } else {
+                itemImage.visibility = View.VISIBLE
+                itemImage.setImageResource(Images.getImageById(item.category.imageId))
+                indicator.visibility = View.VISIBLE
+                indicator.setColors(listOf(backgroundColor))
+            }
 
-            itemImage.setImageResource(Images.getImageById(item.category?.imageId ?: Images.NO_IMAGE))
+            //sum
             with(itemSum) {
                 setText(sum)
                 setTextColor(directionColor)
             }
+            //text field
             accountId.text = item.account.description
-            with(itemCategory) {
-                setText(text)
-            }
-            with(itemDate) {
-                setText(transaction.createdDate.getTime())
-            }
+            itemCategory.text = text
+            itemDate.text = transaction.createdDate.getTime()
 
             deleteButton.setOnClickListener {
                 itemManager.closeAllItems()
