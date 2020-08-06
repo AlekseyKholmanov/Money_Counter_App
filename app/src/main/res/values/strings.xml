@@ -53,4 +53,5 @@
     <string name="label_subcategory">Subcategory</string>
     <string name="process_income">Income</string>
     <string name="process_spending">Spending</string>
+    <string name="subcategories">Subcategories:</string>
 </resources>

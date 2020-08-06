@@ -86,7 +86,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="3"
                     android:gravity="center_vertical"
-                    android:textSize="19sp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="@id/itemComment"
                     app:layout_constraintLeft_toRightOf="@id/image"
                     app:layout_constraintTop_toTopOf="parent"
@@ -99,7 +100,8 @@
                     android:layout_weight="2"
                     android:gravity="top"
                     android:maxLines="1"
-                    android:textSize="13sp"
+                    android:textStyle="italic"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/image"
                     app:layout_constraintTop_toBottomOf="@id/itemCategory"
@@ -113,7 +115,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:lines="1"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     tools:text="12werw-rew-qwerty3456" />
             </LinearLayout>
 

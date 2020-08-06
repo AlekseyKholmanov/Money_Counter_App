@@ -14,7 +14,5 @@ data class SubCategoryEntity(
 
     val description: String,
 
-    val isDeleted: Boolean = false,
-
-    val color: Int
+    val isDeleted: Boolean = false
 )

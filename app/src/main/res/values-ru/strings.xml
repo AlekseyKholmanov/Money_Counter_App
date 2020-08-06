@@ -53,4 +53,5 @@
     <string name="label_subcategory">Подкатегория</string>
     <string name="process_income">Пополнение</string>
     <string name="process_spending">Списание</string>
+    <string name="subcategories">Подкатегории:</string>
 </resources>

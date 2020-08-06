@@ -1,32 +1,34 @@
 package com.example.holmi_production.money_counter_app.ui.fragments
 
-import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.size
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
-import com.example.holmi_production.money_counter_app.model.enums.Images
-import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
+import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.ui.custom.ColorSeekBar
+import com.example.holmi_production.money_counter_app.ui.dialogs.CreateSubcategoryDialog
 import com.example.holmi_production.money_counter_app.ui.dialogs.ImageCategoryPicker
 import com.example.holmi_production.money_counter_app.ui.viewModels.CategoryDetailsViewModel
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
-import com.jakewharton.rxbinding3.widget.textChanges
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.fragment_category_details.*
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import reactivecircus.flowbinding.android.widget.textChanges
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details) {
@@ -36,7 +38,6 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
 
     private val args: CategoryDetailsFragmentArgs by navArgs()
 
-    private val disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +61,14 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
                 }
             dialog.show()
         }
+        addSubcategory.setOnClickListener {
+            CreateSubcategoryDialog() {
+                val chip = buildChip(it)
+                chips.addView(chip)
+            }.show(childFragmentManager, "CreateSubcategory")
+        }
 
-        seekBar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
+        seekBar.setOnColorChangeListener(object : ColorSeekBar.OnColorChangeListener {
             override fun onColorChangeListener(color: Int) {
                 categoryImage.setBackgroundColor(color)
             }
@@ -70,12 +77,12 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
 
         categoryName
             .textChanges()
-            .debounce(300, TimeUnit.MILLISECONDS)
+            .debounce(300)
             .map { it.isNotBlank() }
-            .subscribe {
+            .onEach {
                 saveCategory.isSelected = it
             }
-            .addTo(disposables)
+            .launchIn(lifecycleScope)
 
         generateColor.setOnClickListener {
             val rand = Random.nextInt(0, seekBar.width)
@@ -94,60 +101,53 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
             }
         }
         saveCategory.setOnClickListener {
-            categoryDetailsViewModel.createCategory(getCurrentState())
+            categoryDetailsViewModel.createCategory(
+                imageId = (categoryImage.tag as Int?) ?: Images.NO_IMAGE,
+                color = (categoryImage.background as? ColorDrawable)?.color
+                    ?: ColorUtils.getColor(),
+                description = categoryName.text.toString(),
+                subcategories = getChips()
+
+            )
             findNavController().popBackStack()
         }
-
-    }
-
-
-    private fun getCurrentState(): CategoryEntity {
-        val background = categoryImage.background
-        val color: ColorDrawable? = background as? ColorDrawable
-        val imageId = categoryImage.tag as Int?
-        return CategoryEntity(
-            id = args.categoryId ?: UUID.randomUUID().toString(),
-            imageId = imageId ?: Images.NO_IMAGE,
-            color = color?.color ?: ColorUtils.getColor(),
-            description = categoryName.text.toString()
-        )
     }
 
     private fun setCategory(categoryDetails: CategoryDetails?) {
-        if (categoryDetails?.subcategory == null) {
-            chipsContainer.visibility = View.GONE
-        } else {
-            chipsContainer.visibility = View.GONE
-            with(categoryImage) {
-                setBackgroundColor(categoryDetails.category.color)
-            }
-            categoryName.setText(categoryDetails.category.description)
-            seekBar.setColor(categoryDetails.category.color.toFloat())
-
-            categoryDetails.subcategory.let {
-                chips.removeAllViews()
-                it.forEach { subcategory ->
-                    chips.addView(buildChip(subcategory))
-                }
+        categoryDetails?.category?.let {
+            categoryImage.setBackgroundColor(it.color)
+            categoryName.setText(it.description)
+            seekBar.setColor(it.color.toFloat())
+        }
+        categoryDetails?.subcategory?.let {
+            chips.removeAllViews()
+            it.forEach { subcategory ->
+                chips.addView(buildChip(subcategory.description))
             }
         }
     }
 
-    private fun buildChip(subcategory: SubCategoryEntity): Chip {
+    private fun getChips(): MutableList<SubCategoryEntity> {
+        val count = chips.size
+        val items = mutableListOf<SubCategoryEntity>()
+        for (i in 0 until count){
+            val chip = chips.getChildAt(i) as Chip
+            items.add(SubCategoryEntity(id = chip.tag as String,
+            description = chip.text.toString(),
+            categoryId = categoryDetailsViewModel.categoryId))
+        }
+        return items
+    }
+
+    private fun buildChip(subcategoryName: String, subcategoryId: String?): Chip {
         val chip = Chip(context)
-        val text = subcategory.description
-        chip.text = text
-        chip.chipBackgroundColor = ColorStateList.valueOf(subcategory.color)
+        chip.text = subcategoryName
+        chip.tag = subcategoryId ?: UUID.randomUUID().toString()
         chip.textSize = 20f
         chip.isCloseIconVisible = true
         chip.setOnCloseIconClickListener {
             chips.removeView(chip)
         }
         return chip
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        disposables.dispose()
     }
 }

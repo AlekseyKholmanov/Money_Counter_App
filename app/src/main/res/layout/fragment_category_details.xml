@@ -4,10 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/appBar"
-        layout="@layout/include_toolbar" />
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScroll"
         android:layout_width="match_parent"
@@ -41,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:hint="@string/et_text_enter_category_name"
                 android:imeOptions="actionDone"
                 android:inputType="text"
@@ -54,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/text_color"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -99,21 +95,22 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Подкатегории: "
+                    android:text="@string/subcategories"
                     android:textSize="16sp" />
 
-                <Button
+                <ImageButton
+                    android:id="@+id/addSubcategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textSize="20sp"
-                    android:text="+" />
+                    android:padding="8dp"
+                    android:background="?selectableItemBackground"
+                    android:src="@drawable/ic_add" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chips"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp" />
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
 
             <Button

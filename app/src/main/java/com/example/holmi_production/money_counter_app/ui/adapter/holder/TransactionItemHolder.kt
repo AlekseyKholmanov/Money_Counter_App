@@ -1,11 +1,11 @@
 package com.example.holmi_production.money_counter_app.ui.adapter.holder
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl
 import com.example.holmi_production.money_counter_app.R
@@ -74,11 +74,15 @@ class TransactionItemHolder(
             }
             //image
             if (category == null) {
-                itemImage.visibility = View.GONE
                 indicator.visibility = View.GONE
+                if (transaction.sum > 0) {
+                    itemImage.load(R.drawable.ic_money_got)
+                } else {
+                    itemImage.load(R.drawable.ic_money_loss)
+                }
             } else {
                 itemImage.visibility = View.VISIBLE
-                itemImage.setImageResource(Images.getImageById(item.category.imageId))
+                itemImage.load(Images.getImageById(item.category.imageId))
                 indicator.visibility = View.VISIBLE
                 indicator.setColors(listOf(backgroundColor))
             }
