@@ -25,7 +25,7 @@ class CategoryDiffutill : DiffUtil.ItemCallback<Item>() {
                 return oldItem.description == newItem.description &&
                         oldItem.color == newItem.color &&
                         oldItem.imageResId == newItem.imageResId &&
-                        oldItem.withSubcategory == newItem.withSubcategory
+                        oldItem.subcategories == newItem.subcategories
             }
             oldItem is ZeroItem && newItem is ZeroItem -> {
                 return true

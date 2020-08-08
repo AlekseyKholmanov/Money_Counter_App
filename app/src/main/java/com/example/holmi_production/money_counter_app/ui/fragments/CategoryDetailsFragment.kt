@@ -85,7 +85,7 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
             .debounce(300)
             .map { it.isNotBlank() }
             .onEach {
-                saveCategory.isSelected = it
+                saveCategory.isEnabled = it
             }
             .launchIn(lifecycleScope)
 

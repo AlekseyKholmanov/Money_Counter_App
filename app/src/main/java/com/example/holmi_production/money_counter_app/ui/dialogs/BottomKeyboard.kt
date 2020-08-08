@@ -1,11 +1,13 @@
 package com.example.holmi_production.money_counter_app.ui.dialogs
 
+import android.animation.LayoutTransition
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -19,6 +21,7 @@ import com.example.holmi_production.money_counter_app.model.enums.ButtonType
 import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import com.example.holmi_production.money_counter_app.ui.adapter.SelectCategoryAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.SelectCategoryHolder
+import com.example.holmi_production.money_counter_app.ui.adapter.items.CategoryItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.ZeroItem
 import com.example.holmi_production.money_counter_app.ui.custom.SingleSelectionGridLayutManager
 import com.example.holmi_production.money_counter_app.ui.viewModels.BottomKeyboardViewModel
@@ -26,6 +29,8 @@ import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.bottom_keyboard_full.*
+import kotlinx.android.synthetic.main.bottom_keyboard_full.chipsContainer
+import kotlinx.android.synthetic.main.fragment_category_details.*
 import kotlinx.android.synthetic.main.view_splitted_button.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -45,7 +50,6 @@ class BottomKeyboard : BottomSheetDialogFragment() {
     private val categoryPickerCallback by lazy(LazyThreadSafetyMode.NONE) {
         object : SelectCategoryHolder.Callback {
             override fun categoryPicked(index: Int, categoryId: String?) {
-                viewModel.selectedCategoryId = categoryId
                 manager.check(index)
             }
 
@@ -65,7 +69,32 @@ class BottomKeyboard : BottomSheetDialogFragment() {
     {
         object : SingleSelectionGridLayutManager.OnCheckedListener {
             override fun onCheckedChange(checkedId: Int) {
+                viewModel.selectedCategoryId = if(checkedId == View.NO_ID){
+                    showSubcategories(listOf())
+                    null
+                }else {
+                    val categoryItem = (adapter.items[checkedId] as CategoryItem)
+                    showSubcategories(categoryItem.subcategories)
+                    categoryItem.categoryId
+
+                }
+                Log.d("M_BottomKeyboard","$checkedId")
             }
+        }
+    }
+
+    private fun showSubcategories(items: List<SubCategoryEntity>){
+        if(items.isNullOrEmpty()){
+            chipsContainer.visibility = View.GONE
+        } else{
+            subcategories.removeAllViews()
+                items
+                    .filter{!it.isDeleted}
+                    .forEach { subcategory ->
+                    subcategories.addView(buildChip(subcategory))
+                }
+
+            chipsContainer.visibility = View.VISIBLE
         }
     }
 
@@ -103,6 +132,9 @@ class BottomKeyboard : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val lt = LayoutTransition()
+        lt.setAnimateParentHierarchy(false)
+        numbers_keyboard.layoutTransition = lt
         manager.setListener(checkedListener)
         categories.layoutManager = manager
         with(viewModel) {
@@ -138,7 +170,7 @@ class BottomKeyboard : BottomSheetDialogFragment() {
             }
         }
         summary.text = displayedSum
-        cg_subcategory_group.clearCheck()
+        subcategories.clearCheck()
     }
 
 
@@ -191,9 +223,9 @@ class BottomKeyboard : BottomSheetDialogFragment() {
             "0" -> return
             else -> {
                 val text = itemComment.text.toString()
-                val checkedId = cg_subcategory_group.checkedChipId
+                val checkedId = subcategories.checkedChipId
                 val tag: Int? = if (checkedId != View.NO_ID) {
-                    val chips = cg_subcategory_group.findViewById<Chip>(checkedId)
+                    val chips = subcategories.findViewById<Chip>(checkedId)
                     chips.tag as Int
                 } else {
                     null
@@ -204,38 +236,19 @@ class BottomKeyboard : BottomSheetDialogFragment() {
 
                 displayedSum = "0"
                 itemComment.setText("")
-                cg_subcategory_group.clearCheck()
+                subcategories.clearCheck()
             }
         }
     }
 
-    private fun buildChip(subcategory: SubCategoryEntity, color: Int, alpha: Int): Chip {
+    private fun buildChip(subcategory: SubCategoryEntity): Chip {
         val chip = Chip(context)
         chip.isCheckable = true
         chip.isClickable = true
-        chip.setTextColor(ColorUtils.getFontColor(color))
         chip.text = subcategory.description
-        chip.background.alpha = alpha
-        chip.chipBackgroundColor = ColorStateList.valueOf(color)
         chip.textSize = 20f
         chip.tag = subcategory.id
         return chip
-    }
-
-    private fun showChipsContainer(subcategories: List<SubCategoryEntity>, color: Int) {
-        if (subcategories.isNullOrEmpty()) {
-            chipsContainer.visibility = View.GONE
-        } else {
-            chipsContainer.visibility = View.VISIBLE
-            for (i in subcategories.indices) {
-                val alpha = 255 - (i + 1) * 35
-                cg_subcategory_group.addView(
-                    buildChip(
-                        subcategories[i], color, alpha
-                    ) as View
-                )
-            }
-        }
     }
 
 }

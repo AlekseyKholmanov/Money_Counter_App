@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.model.Item
+import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
 import com.example.holmi_production.money_counter_app.model.toItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.CategoryItem
@@ -31,6 +32,9 @@ class BottomKeyboardViewModel(
     private val _categories: MutableLiveData<List<Item>> = MutableLiveData()
     val categories: LiveData<List<Item>> = _categories
 
+    private val _subcategories: MutableLiveData<List<SubCategoryEntity>> = MutableLiveData()
+    val subcategories: LiveData<List<SubCategoryEntity>> = _subcategories
+
     var selectedCategoryId:String? = null
 
 
@@ -40,13 +44,11 @@ class BottomKeyboardViewModel(
                 .map {
                     val newItems = mutableListOf<CategoryItem>()
                     val items = it.mapIndexed { index, categoryDetails ->   categoryDetails.toItem(index + 1) }
-                    newItems.add( CategoryItem(index = 0, categoryId = null, description = "Добавить", withSubcategory = false, imageResId = R.drawable.ic_add, color = Color.TRANSPARENT))
+                    newItems.add( CategoryItem(index = 0, categoryId = null, description = "Добавить", subcategories = listOf(), imageResId = R.drawable.ic_add, color = Color.TRANSPARENT))
                     newItems.addAll(items)
                     newItems
                 }
                 .flowOn(Dispatchers.IO)
-                .onEach {
-                }
                 .collect {
                     _categories.value = it
                 }

@@ -4,7 +4,7 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/numbers_keyboard"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
 
@@ -14,13 +14,16 @@
         android:layout_height="1dp"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.66" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/summary"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 
     <TextView
@@ -35,28 +38,34 @@
         android:textColor="#FFFFFF"
         android:textSize="40sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categories"
+        app:layout_constraintBottom_toTopOf="@id/chipsContainer"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <HorizontalScrollView
         android:id="@+id/chipsContainer"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
         android:scrollbars="none"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/summary">
+        app:layout_constraintBottom_toTopOf="@id/commentDivider">
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/cg_subcategory_group"
+            android:id="@+id/subcategories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
             app:chipSpacingVertical="8dp"
             app:singleSelection="true" />
     </HorizontalScrollView>
+    <View
+        android:id="@+id/commentDivider"
+        android:layout_width="match_parent"
+        android:background="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/itemComment"
+        android:layout_height="1dp"/>
 
     <EditText
         android:id="@+id/itemComment"
@@ -70,7 +79,7 @@
         android:paddingEnd="8dp"
         android:textColor="@color/design_default_color_primary_dark"
         android:textSize="26sp"
-        app:layout_constraintTop_toBottomOf="@id/chipsContainer"
+        app:layout_constraintBottom_toTopOf="@id/key7"
         tool:layout_editor_absoluteY="60dp"
         tool:text="комментарий" />
 
@@ -80,11 +89,12 @@
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:text="@string/key_7"
+        android:layout_marginBottom="2dp"
         app:layout_constraintEnd_toStartOf="@+id/key_8"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/itemComment" />
+        app:layout_constraintBottom_toTopOf="@id/key4"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/key_8"
@@ -140,13 +150,13 @@
         android:id="@+id/key4"
         style="@style/TextButton"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         android:layout_marginEnd="1dp"
         android:text="@string/key4"
         app:layout_constraintEnd_toStartOf="@+id/key5"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/key7" />
+        app:layout_constraintBottom_toTopOf="@id/key1" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/key5"
@@ -175,36 +185,36 @@
         android:id="@+id/key1"
         style="@style/TextButton"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         android:layout_marginEnd="1dp"
         android:text="@string/key1"
         app:layout_constraintEnd_toStartOf="@+id/key2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/key4" />
+        app:layout_constraintBottom_toTopOf="@id/key0" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/key2"
         style="@style/TextButton"
-        android:layout_marginTop="2dp"
         android:layout_marginEnd="1dp"
         android:text="@string/key2"
         app:layout_constraintEnd_toStartOf="@+id/key3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/key1"
-        app:layout_constraintTop_toBottomOf="@id/key4" />
+        app:layout_constraintBottom_toBottomOf="@id/key1"
+        app:layout_constraintTop_toTopOf="@id/key1"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/key3"
         style="@style/TextButton"
         android:layout_height="40dp"
-        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/key1"
         android:layout_marginEnd="1dp"
         android:text="@string/key3"
         app:layout_constraintEnd_toEndOf="@id/v66"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/key2"
-        app:layout_constraintTop_toBottomOf="@id/key4" />
+        app:layout_constraintTop_toTopOf="@id/key1"/>
     <!-- -->
 
 
@@ -219,7 +229,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/key1"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="1dp"/>
 
@@ -233,7 +242,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toEndOf="@+id/key0"
-        app:layout_constraintTop_toBottomOf="@id/key1"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="1dp"/>
 

@@ -49,6 +49,9 @@ class SingleSelectionGridLayutManager @JvmOverloads constructor(
     fun check(id: Int) {
         Log.d("M_BottomKeyboard", "check $id")
         if (id == checkedId) {
+            setCheckedStateForView(id, false)
+            checkedId = View.NO_ID
+            listener?.onCheckedChange(View.NO_ID)
             return
         }
         if (checkedId != View.NO_ID) {

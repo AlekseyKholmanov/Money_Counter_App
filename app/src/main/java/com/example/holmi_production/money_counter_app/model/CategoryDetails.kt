@@ -28,6 +28,6 @@ fun CategoryDetails.toItem(index: Int): CategoryItem {
         description = this.category.description,
         color = this.category.color,
         imageResId = Images.getImageById(this.category.imageId),
-        withSubcategory = !this.subcategory.isNullOrEmpty()
+        subcategories = this.subcategory ?: listOf()
     )
 }

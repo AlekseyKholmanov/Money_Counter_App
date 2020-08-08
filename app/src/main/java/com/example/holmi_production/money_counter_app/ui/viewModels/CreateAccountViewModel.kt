@@ -40,6 +40,7 @@ class CreateAccountViewModel(
             accountId = accountId
         )
         viewModelScope.launch {
+            appPreference.isOnboardingCompleted = true
             createAccountViewModel.createAccount(entity)
             addTransactionUseCase.save(transaction)
         }
