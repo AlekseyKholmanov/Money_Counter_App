@@ -1,7 +1,6 @@
 package com.example.holmi_production.money_counter_app.storage.impl
 
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
-import com.example.holmi_production.money_counter_app.orm.ExpenseDatabase
 import com.example.holmi_production.money_counter_app.orm.SubcategoryDao
 import com.example.holmi_production.money_counter_app.storage.SubCategoryDatabase
 import kotlinx.coroutines.Dispatchers
@@ -13,21 +12,30 @@ class SubCategoryDatabaseImpl(
     private val dao: SubcategoryDao
 ) : SubCategoryDatabase {
 
-    override suspend fun insert(category: SubCategoryEntity) {
-        withContext(Dispatchers.IO) { dao.insert(category) }
+    override suspend fun insert(subcategory: SubCategoryEntity) = withContext(Dispatchers.IO) {
+        dao.insert(subcategory)
     }
 
-    override fun observeSubCategories(): Flow<List<SubCategoryEntity>> {
-        return dao.observeCategories()
+    override fun observeSubCategories(categoryId: String): Flow<List<SubCategoryEntity>> {
+        return dao.observeCategories(categoryId)
     }
 
-    override suspend fun delete(subCategory: SubCategoryEntity) {
-        withContext(Dispatchers.IO) { dao.delete(subCategory) }
-    }
-
-    suspend fun deleteALL() {
+    override suspend fun getAllByCategoryId(categoryId: String): List<SubCategoryEntity> =
         withContext(Dispatchers.IO) {
-            dao.deleteAll()
+            dao.getCategories(categoryId)
         }
+
+    override suspend fun insertAll(subcategories: List<SubCategoryEntity>) =
+        withContext(Dispatchers.IO) {
+            dao.insertAll(subcategories)
+        }
+
+    override suspend fun delete(subcategoryId: String) = withContext(Dispatchers.IO) {
+        dao.delete(subcategoryId)
+    }
+
+
+    suspend fun deleteALL() = withContext(Dispatchers.IO) {
+        dao.deleteAll()
     }
 }

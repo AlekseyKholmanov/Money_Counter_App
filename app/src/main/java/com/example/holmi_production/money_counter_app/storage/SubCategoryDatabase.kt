@@ -10,8 +10,12 @@ interface SubCategoryDatabase {
 
     suspend fun insert(subcategory: SubCategoryEntity)
 
-    suspend fun delete(subcategory: SubCategoryEntity)
+    suspend fun delete(subcategoryId: String)
 
-    fun observeSubCategories(): Flow<List<SubCategoryEntity>>
+    fun observeSubCategories(categoryId: String): Flow<List<SubCategoryEntity>>
+
+    suspend fun getAllByCategoryId(categoryId: String): List<SubCategoryEntity>
+
+    suspend fun insertAll(subcategories: List<SubCategoryEntity>)
 
 }

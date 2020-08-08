@@ -54,4 +54,5 @@
     <string name="process_income">Пополнение</string>
     <string name="process_spending">Списание</string>
     <string name="subcategories">Подкатегории:</string>
+    <string name="choose_image">Выберите Изображение</string>
 </resources>

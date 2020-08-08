@@ -54,7 +54,9 @@ class BottomKeyboard : BottomSheetDialogFragment() {
                 findNavController().navigate(destination)
             }
 
-            override fun categoryEdited(categoryId: String?) {
+            override fun categoryEdited(categoryId: String) {
+                val destination = BottomKeyboardDirections.actionBottomKeyboardToCategoryDetailsFragment(categoryId)
+                findNavController().navigate(destination)
             }
         }
     }

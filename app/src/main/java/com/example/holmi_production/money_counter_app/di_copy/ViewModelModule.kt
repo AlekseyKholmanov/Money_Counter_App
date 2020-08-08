@@ -35,7 +35,9 @@ val viewModelsModule = module {
     viewModel {
         CategoryDetailsViewModel(
             getCategoryUseCase = get(),
-            addCategoryUseCase = get()
+            addCategoryUseCase = get(),
+            addSubcategoryUseCase = get(),
+            editSubcategoryUseCase = get()
         )
     }
 

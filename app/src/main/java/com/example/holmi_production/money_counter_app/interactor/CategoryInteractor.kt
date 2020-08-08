@@ -33,8 +33,8 @@ class CategoryInteractor(
         subCategoryDatabase.insert(subcategory)
     }
 
-    suspend fun delete(subcategory: SubCategoryEntity){
-        subCategoryDatabase.delete(subcategory)
+    suspend fun delete(subcategoryId: String){
+        subCategoryDatabase.delete(subcategoryId)
     }
 
 

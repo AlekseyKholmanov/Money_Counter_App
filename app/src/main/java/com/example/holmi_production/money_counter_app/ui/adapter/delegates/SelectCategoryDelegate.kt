@@ -37,6 +37,12 @@ class SelectCategoryDelegate(private val callback: SelectCategoryHolder.Callback
                     callback.createCategorySelected()
                 }
             }
+            itemView.setOnLongClickListener {
+                if(item.index != 0) {
+                    item.categoryId?.let{ callback.categoryEdited(it) }
+                }
+                true
+            }
             bind(item)
         }
     }

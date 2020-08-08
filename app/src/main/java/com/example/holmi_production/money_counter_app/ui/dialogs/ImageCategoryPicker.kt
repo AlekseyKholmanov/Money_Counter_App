@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.ui.adapter.IconPickerAdapter
@@ -28,6 +29,7 @@ class ImageCategoryPicker(
         window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT)
+        window?.setBackgroundDrawable(ContextCompat.getDrawable(context,R.drawable.bg_rounded_8dp))
         val ids = Images.values().map { it.imageResId }
         with(rv_images){
             adapter = IconPickerAdapter(ids, callback )

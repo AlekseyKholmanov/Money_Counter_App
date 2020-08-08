@@ -79,4 +79,22 @@ val useCasesModule = module {
             periodsDatabase = get()
         )
     }
+
+    single<AddSubcategoryUseCase> {
+        AddSubcategoryUseCaseImpl(
+            db = get()
+        )
+    }
+
+    single<GetSubcategoryUseCase> {
+        GetSubcategoryUseCaseImpl(
+            db = get()
+        )
+    }
+
+    single<EditSubcategoryUseCase> {
+        EditSubcategoryUseCaseImpl(
+            db = get()
+        )
+    }
 }

@@ -24,7 +24,7 @@
     <string name="text_income">Income</string>
     <string name="text_spending">Spendings</string>
     <string name="text_accumulation">Accumulation</string>
-    <string name="save">Save</string>
+    <string name="save">Save category</string>
     <string name="et_text_enter_subcategory_name">Subcategoy name</string>
     <string name="text_update">Refresh</string>
     <string name="txt_add_subcategory">Add subcategory</string>
@@ -54,4 +54,5 @@
     <string name="process_income">Income</string>
     <string name="process_spending">Spending</string>
     <string name="subcategories">Subcategories:</string>
+    <string name="choose_image">Choose category image</string>
 </resources>

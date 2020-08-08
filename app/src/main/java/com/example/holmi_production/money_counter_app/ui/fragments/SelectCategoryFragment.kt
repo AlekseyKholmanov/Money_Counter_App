@@ -36,7 +36,7 @@ class SelectCategoryFragment : BaseFragment(R.layout.fragment_select_category) {
             TODO("Not yet implemented")
         }
 
-        override fun categoryEdited(categoryId: String?) {
+        override fun categoryEdited(categoryId: String) {
         }
     }
 

@@ -1,7 +1,10 @@
 package com.example.holmi_production.money_counter_app.ui.fragments
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.size
@@ -13,6 +16,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
+import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.ui.custom.ColorSeekBar
@@ -47,6 +51,7 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         categoryDetailsViewModel.categories.observe(viewLifecycleOwner, Observer(::setCategory))
+        categoryDetailsViewModel.subcategories.observe(viewLifecycleOwner, Observer(::setSubcategory))
 
         categoryImage.setOnClickListener {
             val dialog =
@@ -62,15 +67,15 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
             dialog.show()
         }
         addSubcategory.setOnClickListener {
-            CreateSubcategoryDialog() {
-                val chip = buildChip(it)
+            CreateSubcategoryDialog{
+                val chip = buildChip(it, null)
                 chips.addView(chip)
             }.show(childFragmentManager, "CreateSubcategory")
         }
 
         seekBar.setOnColorChangeListener(object : ColorSeekBar.OnColorChangeListener {
             override fun onColorChangeListener(color: Int) {
-                categoryImage.setBackgroundColor(color)
+                categoryImage.backgroundTintList = ColorStateList.valueOf(color)
             }
 
         })
@@ -103,26 +108,31 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
         saveCategory.setOnClickListener {
             categoryDetailsViewModel.createCategory(
                 imageId = (categoryImage.tag as Int?) ?: Images.NO_IMAGE,
-                color = (categoryImage.background as? ColorDrawable)?.color
-                    ?: ColorUtils.getColor(),
+                color = categoryImage.backgroundTintList?.defaultColor ?: Color.TRANSPARENT,
                 description = categoryName.text.toString(),
                 subcategories = getChips()
-
             )
             findNavController().popBackStack()
         }
     }
 
-    private fun setCategory(categoryDetails: CategoryDetails?) {
-        categoryDetails?.category?.let {
-            categoryImage.setBackgroundColor(it.color)
+    private fun setCategory(category: CategoryEntity?) {
+        category?.let {
+            val image = Images.getImageById(it.imageId)
+            with(categoryImage){
+                backgroundTintList = ColorStateList.valueOf(it.color)
+                setImageResource(image)
+                tag = it.imageId
+            }
             categoryName.setText(it.description)
-            seekBar.setColor(it.color.toFloat())
         }
-        categoryDetails?.subcategory?.let {
+    }
+
+    private fun setSubcategory(subcategory: List<SubCategoryEntity>){
+        subcategory.let {
             chips.removeAllViews()
             it.forEach { subcategory ->
-                chips.addView(buildChip(subcategory.description))
+                chips.addView(buildChip(subcategory.description, subcategory.id))
             }
         }
     }
@@ -130,11 +140,15 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
     private fun getChips(): MutableList<SubCategoryEntity> {
         val count = chips.size
         val items = mutableListOf<SubCategoryEntity>()
-        for (i in 0 until count){
+        for (i in 0 until count) {
             val chip = chips.getChildAt(i) as Chip
-            items.add(SubCategoryEntity(id = chip.tag as String,
-            description = chip.text.toString(),
-            categoryId = categoryDetailsViewModel.categoryId))
+            items.add(
+                SubCategoryEntity(
+                    id = chip.tag as String,
+                    description = chip.text.toString(),
+                    categoryId = categoryDetailsViewModel.categoryId
+                )
+            )
         }
         return items
     }
@@ -146,7 +160,11 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
         chip.textSize = 20f
         chip.isCloseIconVisible = true
         chip.setOnCloseIconClickListener {
-            chips.removeView(chip)
+            if (args.categoryId == null) {
+                chips.removeView(chip)
+            } else {
+                subcategoryId?.let{ categoryDetailsViewModel.deleteSubcategory(it)}
+            }
         }
         return chip
     }

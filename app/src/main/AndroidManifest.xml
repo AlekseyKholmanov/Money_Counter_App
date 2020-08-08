@@ -21,9 +21,9 @@
         <activity
             android:name=".ui.MainActivity"
             android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"
-            android:windowSoftInputMode="adjustPan">
+            android:theme="@style/SplashTheme">
             <nav-graph android:value="@navigation/app_navigation"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
