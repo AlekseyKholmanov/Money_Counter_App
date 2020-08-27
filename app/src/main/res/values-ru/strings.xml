@@ -55,4 +55,9 @@
     <string name="process_spending">Списание</string>
     <string name="subcategories">Подкатегории:</string>
     <string name="choose_image">Выберите Изображение</string>
+    <string name="today">Сегодня</string>
+    <string name="this_week">Текущая неделя</string>
+    <string name="this_month">Текущий месяц</string>
+    <string name="this_year">Текущий год</string>
+    <string name="custom">Свой период</string>
 </resources>

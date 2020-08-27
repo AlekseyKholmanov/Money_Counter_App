@@ -12,16 +12,8 @@ import com.github.mikephil.charting.components.XAxis
 import kotlinx.android.synthetic.main.chart_bar.*
 
 class ChartStackedFragment : BaseFragment(R.layout.chart_bar) {
-    companion object {
-        fun newInstance(): ChartStackedFragment {
-            return ChartStackedFragment()
-        }
-    }
-
 
     lateinit var chart: BarChart
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -1,3 +1,6 @@
+import androidx.lifecycle.ViewModel
+import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
+
 //package com.example.holmi_production.money_counter_app.ui.presenters.charts
 //
 //import android.graphics.Color
@@ -10,11 +13,13 @@
 //import com.example.holmi_production.money_counter_app.model.entity.*
 //
 //
-//
-//class ChartPieViewModel (
-//    private val spendingInteractor: SpendingInteractor
-//) : ViewModel() {
-//
+
+class ChartPieViewModel (
+    private val spendingInteractor: SpendingInteractor
+) : ViewModel() {
+
+}
+
 //    var spendingList = mutableListOf<TransactionDetails>()
 //    fun observeData() {
 ////        spendingInteractor.observeSpendingWithType()

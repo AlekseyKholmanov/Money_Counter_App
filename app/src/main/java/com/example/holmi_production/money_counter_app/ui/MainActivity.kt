@@ -82,7 +82,9 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { item ->
             navigationView.setCheckedItem(item.itemId)
             checkMenuPosition(item.itemId)
-            navController.navigate(item.itemId)
+            if(navController.popBackStack(item.itemId, false).not()){
+                navController.navigate(item.itemId)
+            }
             backdropBehavior.close()
             true
         }

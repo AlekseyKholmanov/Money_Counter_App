@@ -2,7 +2,7 @@ package com.example.holmi_production.money_counter_app.ui.adapter.items
 
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
-import com.example.holmi_production.money_counter_app.ui.adapter.delegates.SelectCategoryDelegate
+import com.example.holmi_production.money_counter_app.ui.adapter.delegate.SelectCategoryDelegate
 
 class CategoryItem(
     val index: Int,

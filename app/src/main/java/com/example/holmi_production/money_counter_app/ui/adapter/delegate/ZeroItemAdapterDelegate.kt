@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.adapter.delegates
+package com.example.holmi_production.money_counter_app.ui.adapter.delegate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

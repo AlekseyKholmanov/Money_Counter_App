@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.presenters.charts
+package com.example.holmi_production.money_counter_app.ui.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.example.holmi_production.money_counter_app.extensions.async

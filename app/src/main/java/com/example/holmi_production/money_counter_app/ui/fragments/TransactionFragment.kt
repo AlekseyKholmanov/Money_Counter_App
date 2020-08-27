@@ -2,14 +2,17 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
+import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import com.example.holmi_production.money_counter_app.ui.adapter.TransactionAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.items.ZeroItem
+import com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog
 import com.example.holmi_production.money_counter_app.ui.viewModels.TransactionViewModel
 import kotlinx.android.synthetic.main.fragment_trasnsactions.*
 import org.joda.time.DateTime
@@ -29,7 +32,6 @@ class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
             override fun deleteTransaction(transactionId: String) {
                 viewModel.deleteTransaction(transactionId)
             }
-
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,9 @@ class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
             transactions.observe(viewLifecycleOwner, Observer(::updateTransactions))
             activePeriod.observe(viewLifecycleOwner, Observer(::updatePeriod))
             summary.observe(viewLifecycleOwner, Observer(::updateSummary))
+        }
+        period.setOnClickListener {
+
         }
     }
 
@@ -71,6 +76,13 @@ class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
             listOf(ZeroItem(R.layout.item_transaction_0data))
         } else {
             transactions
+        }
+    }
+
+    fun setResultListener(){
+        setFragmentResultListener(BottomDialog.REQUEST_FROM_TRANSACTION_FRAGMENT){ _, bundle ->
+            val selected = PeriodType.values()[bundle.getInt("periodType")]
+            val dateType = when
         }
     }
 
@@ -103,11 +115,5 @@ class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
 //        tv_costs_spending.text = spendingText
 //
 //    }
-
-    companion object {
-        fun newInstance(): TransactionFragment {
-            return TransactionFragment()
-        }
-    }
 
 }

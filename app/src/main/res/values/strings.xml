@@ -55,4 +55,10 @@
     <string name="process_spending">Spending</string>
     <string name="subcategories">Subcategories:</string>
     <string name="choose_image">Choose category image</string>
+    <string name="today">Today</string>
+    <string name="this_week">This week</string>
+    <string name="this_month">This month</string>
+    <string name="this_year">This year</string>
+    <string name="custom">Custom</string>
+    <string name="period_choose">выбор периода</string>
 </resources>

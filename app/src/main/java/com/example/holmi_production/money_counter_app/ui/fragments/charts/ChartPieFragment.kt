@@ -175,11 +175,4 @@ class ChartPieFragment : BaseFragment(R.layout.chart_pie){
         emptyPlaceholder_pie.isVisible = true
         chart_pie.isVisible = false
     }
-
-
-    companion object {
-        fun newInstance(): ChartPieFragment {
-            return ChartPieFragment()
-        }
-    }
 }

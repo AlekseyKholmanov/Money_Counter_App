@@ -24,7 +24,7 @@ data class TransactionEntity(
 
     val categoryId: String? = null,
 
-    val subcategoryId:Int? = null,
+    val subcategoryId:String? = null,
 
     val comment:String? = null,
 

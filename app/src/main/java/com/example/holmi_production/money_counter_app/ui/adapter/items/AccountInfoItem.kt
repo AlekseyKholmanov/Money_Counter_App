@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.model.uiModels
+package com.example.holmi_production.money_counter_app.ui.adapter.items
 
 import com.example.holmi_production.money_counter_app.model.AccountDetails
 import com.example.holmi_production.money_counter_app.model.enums.AccountType
@@ -6,7 +6,7 @@ import com.example.holmi_production.money_counter_app.model.enums.AccountType
 /**
  * @author Alexey Kholmanov (alexey.holmanov@cleverpumpkin.ru)
  */
-class AccountInfo(
+class AccountInfoItem(
     val id: String,
     val description: String,
     val isHidden: Boolean,
@@ -16,9 +16,9 @@ class AccountInfo(
     val balance: Double
 )
 
-fun AccountDetails.toInfo(): AccountInfo {
+fun AccountDetails.toInfo(): AccountInfoItem {
     val balance = this.transactions.filter { !it.isDeleted }.sumByDouble { it.sum }
-    return AccountInfo(
+    return AccountInfoItem(
         id = this.account.id,
         description = this.account.description,
         isHidden = this.account.isHidden,

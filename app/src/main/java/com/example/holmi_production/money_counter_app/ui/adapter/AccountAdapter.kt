@@ -4,14 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.AccountDetails
-import com.example.holmi_production.money_counter_app.model.uiModels.AccountInfo
+import com.example.holmi_production.money_counter_app.ui.adapter.items.AccountInfoItem
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.AccountViewHolder
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.Callback
 
 class AccountAdapter(private val callback: Callback) : RecyclerView.Adapter<AccountViewHolder>() {
 
-    val items = mutableListOf<AccountInfo>()
+    val items = mutableListOf<AccountInfoItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_account, parent, false)
@@ -20,7 +19,7 @@ class AccountAdapter(private val callback: Callback) : RecyclerView.Adapter<Acco
 
     override fun getItemCount(): Int = items.size
 
-    fun setItems(newItems: List<AccountInfo>) {
+    fun setItems(newItems: List<AccountInfoItem>) {
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()

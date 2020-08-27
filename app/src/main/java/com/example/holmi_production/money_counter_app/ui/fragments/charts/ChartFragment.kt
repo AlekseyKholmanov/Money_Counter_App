@@ -11,12 +11,6 @@ import kotlinx.android.synthetic.main.fragment_bottom_chart.*
 
 class ChartFragment : BaseFragment(R.layout.fragment_bottom_chart) {
 
-    companion object{
-        fun newInstance(): ChartFragment {
-            return ChartFragment()
-        }
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -46,13 +46,13 @@ class TopbarViewModel (
     fun setPeriod(type: PeriodType) {
         val period = FilterPeriodEntity("")
         when (type) {
-            DAY -> {
+            TODAY -> {
             }
-            WEEK -> {
+            THIS_WEEK -> {
                 period.leftBorder = period.leftBorder.withDayOfWeek(1)
                 period.rightBorder = period.rightBorder.withDayOfWeek(7)
             }
-            MONTH -> {
+            THIS_MONTH -> {
                 period.leftBorder = period.leftBorder.withDayOfMonth(1)
                 period.rightBorder = period.rightBorder.withTimeAtEndOfMonth(DateTime().monthOfYear)
             }
@@ -83,7 +83,7 @@ class TopbarViewModel (
         isRightDirection: Boolean,
         currentPeriod: PeriodType
     ): FilterPeriodEntity {
-        if (currentPeriod == MONTH) {
+        if (currentPeriod == THIS_MONTH) {
             val date =
                 if (isRightDirection) oldPeriod.leftBorder.withNextMonthDate() else oldPeriod.leftBorder.withPreviousMonthDate()
             return FilterPeriodEntity(
@@ -108,7 +108,7 @@ class TopbarViewModel (
     }
 
     private fun getPeriodText(period: FilterPeriodEntity, type: PeriodType): String {
-        return if (type == DAY) period.leftBorder.toRUformat() else
+        return if (type == TODAY) period.leftBorder.toRUformat() else
             " ${period.leftBorder.toRUformat()} - ${period.rightBorder.toRUformat()}"
     }
 }

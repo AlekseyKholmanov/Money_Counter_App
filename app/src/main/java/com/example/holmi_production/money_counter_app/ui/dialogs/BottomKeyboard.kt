@@ -224,9 +224,9 @@ class BottomKeyboard : BottomSheetDialogFragment() {
             else -> {
                 val text = itemComment.text.toString()
                 val checkedId = subcategories.checkedChipId
-                val tag: Int? = if (checkedId != View.NO_ID) {
+                val tag: String? = if (checkedId != View.NO_ID) {
                     val chips = subcategories.findViewById<Chip>(checkedId)
-                    chips.tag as Int
+                    chips.tag as String
                 } else {
                     null
                 }

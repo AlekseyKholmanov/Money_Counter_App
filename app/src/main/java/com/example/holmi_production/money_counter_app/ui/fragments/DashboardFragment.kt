@@ -1,17 +1,15 @@
 package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
-import com.example.holmi_production.money_counter_app.model.uiModels.AccountInfo
+import com.example.holmi_production.money_counter_app.ui.adapter.items.AccountInfoItem
 import com.example.holmi_production.money_counter_app.ui.adapter.AccountAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.Callback
 import com.example.holmi_production.money_counter_app.ui.viewModels.DashboardViewModel
@@ -73,7 +71,6 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             findNavController().navigate(destinatination)
         }
         accounts.registerOnPageChangeCallback(viewPagerCallback)
-
 //        keyboard.setListener(object : IKeyboardListener {
 ////            override fun enterPressed(
 ////                money: Double,
@@ -110,7 +107,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         findNavController().navigate(direction)
     }
 
-    private fun updateAccounts(accountItems: List<AccountInfo>) {
+    private fun updateAccounts(accountItems: List<AccountInfoItem>) {
         (accounts.adapter as AccountAdapter).setItems(accountItems)
     }
 

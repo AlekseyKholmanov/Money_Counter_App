@@ -55,12 +55,13 @@ class BottomKeyboardViewModel(
         }
     }
 
-    fun saveTransaction(accountId: String, sum: Double, comment: String?, subcategoryId: Int?) {
+    fun saveTransaction(accountId: String, sum: Double, comment: String?, subcategoryId: String?) {
         val transaction = TransactionEntity(
             createdDate = DateTime.now(),
             sum = sum,
             comment = comment,
             accountId = accountId,
+            subcategoryId = subcategoryId,
             categoryId = selectedCategoryId
         )
         viewModelScope.launch {

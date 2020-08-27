@@ -25,7 +25,7 @@ data class TransactionDetails(
     var category: CategoryEntity?,
 
     @Relation(
-        parentColumn = "categoryId",
+        parentColumn = "subcategoryId",
         entityColumn = "id"
     )
     var subcategory: SubCategoryEntity?

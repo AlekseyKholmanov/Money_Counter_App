@@ -7,9 +7,9 @@ import com.daimajia.swipe.interfaces.SwipeItemMangerInterface
 import com.daimajia.swipe.util.Attributes
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.Item
-import com.example.holmi_production.money_counter_app.ui.adapter.delegates.TransactionDayHeaderDelegate
-import com.example.holmi_production.money_counter_app.ui.adapter.delegates.TransactionItemDelegate
-import com.example.holmi_production.money_counter_app.ui.adapter.delegates.ZeroItemAdapterDelegate
+import com.example.holmi_production.money_counter_app.ui.adapter.delegate.TransactionDayHeaderDelegate
+import com.example.holmi_production.money_counter_app.ui.adapter.delegate.TransactionItemDelegate
+import com.example.holmi_production.money_counter_app.ui.adapter.delegate.ZeroItemAdapterDelegate
 import com.example.holmi_production.money_counter_app.ui.adapter.diffUtil.TransactionDiffutil
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.TransactionItemHolder
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter

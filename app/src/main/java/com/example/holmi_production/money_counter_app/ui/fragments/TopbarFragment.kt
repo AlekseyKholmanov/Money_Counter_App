@@ -5,19 +5,16 @@ import android.view.View
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.enums.PeriodType
-import com.example.holmi_production.money_counter_app.ui.dialogs.ITopbarDatePickerCallback
 import org.joda.time.DateTime
 
 
-class TopbarFragment : BaseFragment(R.layout.fragment_topbar),
-    ITopbarDatePickerCallback {
+class TopbarFragment : BaseFragment(R.layout.fragment_topbar){
 
     companion object{
         fun newInstance(): TopbarFragment {
             return TopbarFragment()
         }
     }
-
 
 
 
@@ -42,13 +39,6 @@ class TopbarFragment : BaseFragment(R.layout.fragment_topbar),
 //        tv_topbar_text.text = date
 //    }
 
-    override fun datePicked(type: PeriodType) {
-//        presenter.setPeriod(type)
-    }
-
-    override fun datePicked(left: DateTime, right: DateTime) {
-//        presenter.setPeriod(left, right)
-    }
 
 //    @Inject
 //    lateinit var vmFactory : ViewModelProvider.Factory

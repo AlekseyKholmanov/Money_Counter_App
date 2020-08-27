@@ -1,5 +1,6 @@
 package com.example.holmi_production.money_counter_app.di_copy
 
+import ChartPieViewModel
 import com.example.holmi_production.money_counter_app.ui.viewModels.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -75,6 +76,18 @@ val viewModelsModule = module {
             editTransactionUSeCase = get(),
             getLatestActivePeriodUseCase = get(),
             addActivePeriodUseCase = get()
+        )
+    }
+
+    viewModel {
+        ChartPieViewModel(
+            spendingInteractor = get()
+        )
+    }
+
+    viewModel {
+        ChartBalanceViewModel(
+            balanceInteractor = get()
         )
     }
 }

@@ -27,17 +27,10 @@
     <fragment
         android:id="@+id/transactionFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.TransactionFragment"
-        android:label="CostsFragment" />
-    <fragment
-        android:id="@+id/selectCategoryFragment"
-        android:name="com.example.holmi_production.money_counter_app.ui.fragments.SelectCategoryFragment"
-        android:label="SelectCategoryFragment" >
+        android:label="CostsFragment" >
         <action
-            android:id="@+id/action_selectCategoryFragment_to_categoryDetailsFragment"
-            app:destination="@id/categoryDetailsFragment" />
-        <action
-            android:id="@+id/action_selectCategoryFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
+            android:id="@+id/action_transactionFragment_to_bottomDialog"
+            app:destination="@id/bottomDialog" />
     </fragment>
     <fragment
         android:id="@+id/limitsFragment"
@@ -86,4 +79,15 @@
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.onboarding.CreateAccountFragment"
         tools:layout="@layout/fragment_onboarding_account_create"
         android:label="CreateAccountFragment" />
+    <dialog
+        android:id="@+id/bottomDialog"
+        android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog"
+        android:label="BottomDialog" >
+        <argument
+            android:name="selectedId"
+            app:argType="integer" />
+        <argument
+            android:name="dialogType"
+            app:argType="string" />
+    </dialog>
 </navigation>

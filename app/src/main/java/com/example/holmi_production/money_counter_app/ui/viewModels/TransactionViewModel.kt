@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
+import com.example.holmi_production.money_counter_app.model.uiModels.DatePeriodType
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionDayHeaderItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.toItem
 import com.example.holmi_production.money_counter_app.useCases.AddActivePeriodUseCase
@@ -81,6 +82,10 @@ class TransactionViewModel(
         viewModelScope.launch {
             editTransactionUSeCase.deleteTransaction(transactionId)
         }
+    }
+
+    fun updateSelectedPeriod(period: DatePeriodType){
+
     }
 
 }

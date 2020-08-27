@@ -8,7 +8,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.ui.presenters.charts.ChartBalanceViewModel
+import com.example.holmi_production.money_counter_app.ui.viewModels.ChartBalanceViewModel
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.formatter.ValueFormatter
 import kotlinx.android.synthetic.main.chart_balance.*
@@ -29,7 +29,7 @@ class ChartBalanceFragment : BaseFragment(R.layout.chart_balance) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
    //AppComponent.instance.inject(this)
-        meViewModel.observeBalances()
+        //meViewModel.observeBalances()
         chart = view.findViewById(R.id.line_chart)
         chart.xAxis.disableGridDashedLine()
         chart.xAxis.disableAxisLineDashedLine()
@@ -156,12 +156,6 @@ class ChartBalanceFragment : BaseFragment(R.layout.chart_balance) {
                 position = 0
             position++
             return if (labelIndexes.contains(position)) value.toDouble().toCurencyFormat().withRubleSign() else ""
-        }
-    }
-
-    companion object {
-        fun newInstance(): ChartBalanceFragment {
-            return ChartBalanceFragment()
         }
     }
 }

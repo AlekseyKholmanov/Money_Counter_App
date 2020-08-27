@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.holmi_production.money_counter_app.model.uiModels.AccountInfo
-import com.example.holmi_production.money_counter_app.model.uiModels.toInfo
+import com.example.holmi_production.money_counter_app.ui.adapter.items.AccountInfoItem
+import com.example.holmi_production.money_counter_app.ui.adapter.items.toInfo
 import com.example.holmi_production.money_counter_app.useCases.GetAccountsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -19,8 +19,8 @@ class DashboardViewModel(
 ) : ViewModel() {
 
 
-    private val _accounts = MutableLiveData<List<AccountInfo>>()
-    val accounts: LiveData<List<AccountInfo>> = _accounts
+    private val _accounts = MutableLiveData<List<AccountInfoItem>>()
+    val accounts: LiveData<List<AccountInfoItem>> = _accounts
 
 
 

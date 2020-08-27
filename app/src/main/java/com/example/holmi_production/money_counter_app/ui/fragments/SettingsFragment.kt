@@ -7,22 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.ui.presenters.KeyboardPresenter
-import com.example.holmi_production.money_counter_app.ui.presenters.SettingsPresenter
-import kotlinx.android.synthetic.main.frament_settings.*
 
 
-
-
-
-
-class SettingsFragment : BaseFragment(R.layout.frament_settings){
-
-
+class SettingsFragment : BaseFragment(R.layout.frament_settings) {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
