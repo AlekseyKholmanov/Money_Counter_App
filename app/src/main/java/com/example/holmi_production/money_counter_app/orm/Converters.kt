@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.orm
 
 import androidx.room.TypeConverter
 import com.example.holmi_production.money_counter_app.model.enums.AccountType
+import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import org.joda.time.DateTime
 
@@ -51,6 +52,16 @@ class Converters {
     @TypeConverter
     fun fromAccountType(type:AccountType):Int{
         return type.ordinal
+    }
+
+    @TypeConverter
+    fun fromPeriodType(type:PeriodType): Int{
+        return type.ordinal
+    }
+
+    @TypeConverter
+    fun toPeriodType(type:Int): PeriodType {
+        return PeriodType.values()[type]
     }
 
 

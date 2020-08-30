@@ -17,6 +17,7 @@ val databaseModule = module {
     single {
         Room.databaseBuilder(androidApplication(), ExpenseDatabase::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigrationOnDowngrade()
             .build()
     }
 

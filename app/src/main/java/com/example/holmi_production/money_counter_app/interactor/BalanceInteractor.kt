@@ -21,10 +21,10 @@ class BalanceInteractor(
     fun observeBalances(): Flow<List<BalanceEntity>> {
         return balanceDatabase.observeBalances()
             .combine(periodsDatabase.observePeriod()) { balances, period ->
-                if (period.leftBorder == period.rightBorder) {
-                    balances.filter { it.id == period.leftBorder }
+                if (period.from == period.to) {
+                    balances.filter { it.id == period.from }
                 } else {
-                    balances.filter { it.id >= period.leftBorder && it.id <= period.rightBorder }
+                    balances.filter { it.id >= period.from && it.id <= period.to }
                 }
             }
     }

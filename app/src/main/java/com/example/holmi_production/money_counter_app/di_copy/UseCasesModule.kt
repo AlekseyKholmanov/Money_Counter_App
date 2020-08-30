@@ -58,7 +58,8 @@ val useCasesModule = module {
 
     single<GetTransactionUseCase> {
         GetTransactionUseCaseImpl(
-            transactionDatabase = get()
+            transactionDatabase = get(),
+            getActivePeriodUseCase = get()
         )
     }
 
@@ -68,14 +69,14 @@ val useCasesModule = module {
         )
     }
 
-    single<GetLatestActivePeriodUseCase> {
-        GetLatestActivePeriodUseCaseImpl(
+    single<GetActivePeriodUseCase> {
+        GetActivePeriodUseCaseImpl(
             periodsDatabase = get()
         )
     }
 
-    single<AddActivePeriodUseCase> {
-        AddActivePeriodUseCaseImpl(
+    single<UpdateActivePeriodUseCase> {
+        UpdateActivePeriodUseCaseImpl(
             periodsDatabase = get()
         )
     }

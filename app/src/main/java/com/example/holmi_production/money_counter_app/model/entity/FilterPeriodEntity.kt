@@ -3,16 +3,19 @@ package com.example.holmi_production.money_counter_app.model.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfDay
+import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import org.joda.time.DateTime
 
 @Entity
 data class FilterPeriodEntity(
     @PrimaryKey(autoGenerate = false)
 
-    val id: String,
+    val id: String = "DATE",
 
-    var leftBorder: DateTime = DateTime().withTimeAtStartOfDay(),
+    val type: PeriodType = PeriodType.DAY,
 
-    var rightBorder: DateTime = DateTime().withTimeAtEndOfDay()
+    var from: DateTime = DateTime().withTimeAtStartOfDay(),
+
+    var to: DateTime = DateTime().withTimeAtEndOfDay()
 
 )

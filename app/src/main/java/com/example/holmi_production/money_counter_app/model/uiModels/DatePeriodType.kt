@@ -7,7 +7,7 @@ import org.joda.time.DateTime
 
 @Parcelize
 class DatePeriodType(
-    val type: PeriodType = PeriodType.TODAY,
+    val type: PeriodType = PeriodType.DAY,
     val from: DateTime? = null,
     val to: DateTime?= null
 ) : Parcelable

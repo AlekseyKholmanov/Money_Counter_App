@@ -11,9 +11,9 @@ class ChartFragmentAdapter(fm: FragmentManager, behavior: Int = BEHAVIOR_RESUME_
     FragmentPagerAdapter(fm, behavior) {
     override fun getItem(position: Int): Fragment {
         return when (ChartType.values()[position]){
-            ChartType.PIE_CHART -> ChartPieFragment.newInstance()
+            ChartType.PIE_CHART -> ChartPieFragment()
 //            ChartType.GRAPH_CHART -> ChartStackedFragment.newInstance()
-            ChartType.BALANCE_CHART -> ChartBalanceFragment.newInstance()
+            ChartType.BALANCE_CHART -> ChartBalanceFragment()
         }
     }
 

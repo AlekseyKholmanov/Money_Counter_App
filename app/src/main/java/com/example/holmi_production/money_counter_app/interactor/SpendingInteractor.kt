@@ -37,10 +37,10 @@ class SpendingInteractor(
     fun observeWithPeriods(): Flow<List<TransactionEntity>> {
         return periodsDatabase.observePeriod()
             .combine(transactionDatabase.observeTransactions()) { periods, spendings ->
-                if (periods.leftBorder == periods.rightBorder) {
-                    spendings.filter { it.createdDate == periods.leftBorder }
+                if (periods.from == periods.to) {
+                    spendings.filter { it.createdDate == periods.from }
                 } else {
-                    spendings.filter { it.createdDate >= periods.leftBorder && it.createdDate <= periods.rightBorder }
+                    spendings.filter { it.createdDate >= periods.from && it.createdDate <= periods.to }
                 }
             }
     }

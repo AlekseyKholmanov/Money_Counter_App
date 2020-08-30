@@ -9,7 +9,6 @@ import com.example.holmi_production.money_counter_app.storage.impl.PeriodsDataba
 import com.example.holmi_production.money_counter_app.storage.AppPreference
 
 import org.joda.time.DateTime
-import org.joda.time.Duration
 
 class TopbarViewModel (
     private val periodsDatabase: PeriodsDatabaseImpl,
@@ -46,15 +45,15 @@ class TopbarViewModel (
     fun setPeriod(type: PeriodType) {
         val period = FilterPeriodEntity("")
         when (type) {
-            TODAY -> {
+            DAY -> {
             }
-            THIS_WEEK -> {
-                period.leftBorder = period.leftBorder.withDayOfWeek(1)
-                period.rightBorder = period.rightBorder.withDayOfWeek(7)
+            WEEK -> {
+                period.from = period.from.withDayOfWeek(1)
+                period.to = period.to.withDayOfWeek(7)
             }
-            THIS_MONTH -> {
-                period.leftBorder = period.leftBorder.withDayOfMonth(1)
-                period.rightBorder = period.rightBorder.withTimeAtEndOfMonth(DateTime().monthOfYear)
+            MONTH -> {
+                period.from = period.from.withDayOfMonth(1)
+                period.to = period.to.withTimeAtEndOfMonth()
             }
             CUSTOM -> {
                 return
@@ -78,37 +77,4 @@ class TopbarViewModel (
 //            .keep()
     }
 
-    private fun getNewPeriod(
-        oldPeriod: FilterPeriodEntity,
-        isRightDirection: Boolean,
-        currentPeriod: PeriodType
-    ): FilterPeriodEntity {
-        if (currentPeriod == THIS_MONTH) {
-            val date =
-                if (isRightDirection) oldPeriod.leftBorder.withNextMonthDate() else oldPeriod.leftBorder.withPreviousMonthDate()
-            return FilterPeriodEntity(
-                "",
-                date.withTimeAtStartOfMonth().withTimeAtStartOfDay(),
-                date.withTimeAtEndOfMonth(date.monthOfYear).withTimeAtEndOfDay()
-            )
-        } else {
-            val difDays = if (isRightDirection)
-                Duration(
-                    oldPeriod.leftBorder,
-                    oldPeriod.rightBorder
-                ).standardDays + 1 //чтобы не пересекались даты
-            else
-                Duration(oldPeriod.rightBorder, oldPeriod.leftBorder).standardDays - 1
-            return FilterPeriodEntity(
-                "",
-                oldPeriod.leftBorder.plusDays(difDays.toInt()).withTimeAtStartOfDay(),
-                oldPeriod.rightBorder.plusDays(difDays.toInt()).withTimeAtEndOfDay()
-            )
-        }
-    }
-
-    private fun getPeriodText(period: FilterPeriodEntity, type: PeriodType): String {
-        return if (type == TODAY) period.leftBorder.toRUformat() else
-            " ${period.leftBorder.toRUformat()} - ${period.rightBorder.toRUformat()}"
-    }
 }

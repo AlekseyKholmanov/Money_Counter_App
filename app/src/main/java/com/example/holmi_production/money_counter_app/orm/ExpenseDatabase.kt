@@ -17,7 +17,7 @@ import com.example.holmi_production.money_counter_app.model.entity.*
         AccountEntity::class,
         RecentCategoryEntity::class,
         RecentAccountEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class ExpenseDatabase : RoomDatabase() {

@@ -1,14 +1,13 @@
 package com.example.holmi_production.money_counter_app.ui.adapter.delegate
 
-import androidx.core.content.ContextCompat
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.RecyclerItem
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegate
-import kotlinx.android.synthetic.main.item_dialog_value.view.*
 import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogValueItem
+import kotlinx.android.synthetic.main.item_bottom_dialog_value.view.*
 
 fun dialogValueItemAdapterDelegate(itemClickedListener: (Int) -> Unit) =
-    adapterDelegate<DialogValueItem, RecyclerItem>(R.layout.item_dialog_value) {
+    adapterDelegate<DialogValueItem, RecyclerItem>(DialogValueItem.VIEW_TYPE) {
         bind {
             with(itemView) {
                 dialogItem.text = context.getText(item.text)

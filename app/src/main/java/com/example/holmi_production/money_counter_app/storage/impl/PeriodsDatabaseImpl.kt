@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.storage.impl
 
 import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfDay
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
+import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import com.example.holmi_production.money_counter_app.orm.PeriodsDao
 import com.example.holmi_production.money_counter_app.storage.PeriodsDatabase
 import kotlinx.coroutines.Dispatchers
@@ -18,11 +19,12 @@ class PeriodsDatabaseImpl(
         const val key = "DATE"
     }
 
-    override suspend fun addPeriod(left: DateTime, right: DateTime) {
+    override suspend fun addPeriod(left: DateTime, right: DateTime, type: PeriodType) {
         val entity = FilterPeriodEntity(
             id = key,
-            leftBorder = left,
-            rightBorder = right
+            type = type,
+            from = left,
+            to = right
         )
         withContext(Dispatchers.IO) { dao.insert(entity) }
     }
@@ -34,15 +36,11 @@ class PeriodsDatabaseImpl(
     override fun observePeriod(): Flow<FilterPeriodEntity> {
         return dao.observePeriod(key)
             .map {
-                if (it == null) {
-                    FilterPeriodEntity(
+                it ?: FilterPeriodEntity(
                         key,
-                        leftBorder = DateTime().withTimeAtStartOfDay(),
-                        rightBorder = DateTime().withTimeAtEndOfDay()
+                        from = DateTime().withTimeAtStartOfDay(),
+                        to = DateTime().withTimeAtEndOfDay()
                     )
-                } else {
-                    it
-                }
             }
     }
 }

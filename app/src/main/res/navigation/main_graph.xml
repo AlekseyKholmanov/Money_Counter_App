@@ -85,7 +85,8 @@
         android:label="BottomDialog" >
         <argument
             android:name="selectedId"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="-1" />
         <argument
             android:name="dialogType"
             app:argType="string" />

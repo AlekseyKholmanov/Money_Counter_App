@@ -4,14 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfDay
+import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfMonth
+import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfYear
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
-import com.example.holmi_production.money_counter_app.model.uiModels.DatePeriodType
+import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionDayHeaderItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.toItem
-import com.example.holmi_production.money_counter_app.useCases.AddActivePeriodUseCase
+import com.example.holmi_production.money_counter_app.useCases.UpdateActivePeriodUseCase
 import com.example.holmi_production.money_counter_app.useCases.EditTransactionUseCase
-import com.example.holmi_production.money_counter_app.useCases.GetLatestActivePeriodUseCase
+import com.example.holmi_production.money_counter_app.useCases.GetActivePeriodUseCase
 import com.example.holmi_production.money_counter_app.useCases.GetTransactionUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -20,12 +23,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.joda.time.DateTime
 
 class TransactionViewModel(
     private val getTransactionUseCase: GetTransactionUseCase,
     private val editTransactionUSeCase: EditTransactionUseCase,
-    private val getLatestActivePeriodUseCase: GetLatestActivePeriodUseCase,
-    private val addActivePeriodUseCase: AddActivePeriodUseCase
+    private val getActivePeriodUseCase: GetActivePeriodUseCase,
+    private val updateActivePeriodUseCase: UpdateActivePeriodUseCase
 ) : ViewModel() {
 
     private val _transactions = MutableLiveData<List<Item>>()
@@ -69,7 +73,7 @@ class TransactionViewModel(
 
     fun observeActivePeriod() {
         viewModelScope.launch {
-            getLatestActivePeriodUseCase.observeLatestPeriod()
+            getActivePeriodUseCase.observeLatestPeriod()
                 .flowOn(Dispatchers.IO)
                 .collect {
                     _activePeriod.value = it
@@ -84,8 +88,58 @@ class TransactionViewModel(
         }
     }
 
-    fun updateSelectedPeriod(period: DatePeriodType){
+    fun updateSelectedPeriod(period: PeriodType, from: DateTime? = null, to: DateTime? = null) {
+        val periodType = when (period) {
+            PeriodType.DAY -> {
+                FilterPeriodEntity(
+                    from = DateTime.now().withTimeAtStartOfDay(),
+                    to = DateTime.now().withTimeAtEndOfDay()
+                )
+            }
+            PeriodType.WEEK ->
+                FilterPeriodEntity(
+                    from = DateTime.now().withTimeAtStartOfDay().withDayOfWeek(1),
+                    to = DateTime.now().withTimeAtEndOfDay().withDayOfWeek(7)
+                )
+            PeriodType.MONTH -> {
+                FilterPeriodEntity(
+                    from = DateTime.now().withDayOfMonth(1).withTimeAtStartOfDay(),
+                    to = DateTime.now().withTimeAtEndOfMonth()
+                        .withTimeAtEndOfDay()
+                )
+            }
+            PeriodType.YEAR -> {
+                FilterPeriodEntity(
+                    from = DateTime.now().withDayOfYear(1).withTimeAtStartOfDay(),
+                    to = DateTime.now().withTimeAtEndOfYear().withTimeAtEndOfDay()
+                )
+            }
+            PeriodType.CUSTOM -> {
+                FilterPeriodEntity(
+                    from = from!!.withTimeAtStartOfDay(),
+                    to = to!!.withTimeAtEndOfDay()
+                )
+            }
+        }
+        viewModelScope.launch {
+            updateActivePeriodUseCase.updateActivePeriod(periodType.from, periodType.to, period)
+        }
+    }
 
+    fun moveDateForward() {
+        viewModelScope.launch {
+            activePeriod.value?.let {
+                updateActivePeriodUseCase.moveForward(it)
+            }
+        }
+    }
+
+    fun moveDateBack() {
+        viewModelScope.launch {
+            activePeriod.value?.let {
+                updateActivePeriodUseCase.moveBack(it)
+            }
+        }
     }
 
 }
