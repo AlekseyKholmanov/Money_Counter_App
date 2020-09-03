@@ -90,5 +90,5 @@
         <argument
             android:name="dialogType"
             app:argType="string" />
-    </dialog>
+    </dialog><action android:id="@+id/action_global_bottomDialog" app:destination="@id/bottomDialog"/>
 </navigation>

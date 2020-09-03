@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.presenters
+package com.example.holmi_production.money_counter_app.ui._old_presenters
 
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 class CreateCategoryPresenter (private val interactor: CategoryInteractor)  {

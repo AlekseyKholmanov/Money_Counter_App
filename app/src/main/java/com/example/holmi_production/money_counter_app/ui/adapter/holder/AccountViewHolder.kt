@@ -12,7 +12,7 @@ class AccountViewHolder(v: View, val callback: Callback) : RecyclerView.ViewHold
     fun bind(item: AccountInfoItem) {
         with(itemView){
             accountName.text = item.description
-            accountBalance.text = item.balance.toString()
+            accountBalance.text = "${item.balance.toString()} ${item.currencyType.icon}"
             plus.setOnClickListener {
                 callback.plusClicked(item.id)
             }

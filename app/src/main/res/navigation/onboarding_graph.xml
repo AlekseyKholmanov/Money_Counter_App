@@ -19,7 +19,23 @@
         android:id="@+id/createAccountFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.onboarding.CreateAccountFragment"
         android:label="CreateAccountFragment"
-        tools:layout="@layout/fragment_onboarding_account_create"/>
+        tools:layout="@layout/fragment_onboarding_account_create">
+        <action
+            android:id="@+id/action_createAccountFragment_to_bottomDialogInOnboarding"
+            app:destination="@id/bottomDialogInOnboarding" />
+    </fragment>
+    <dialog
+        android:id="@+id/bottomDialogInOnboarding"
+        android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog"
+        android:label="BottomDialog">
+        <argument
+            android:name="selectedId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="dialogType"
+            app:argType="string" />
+    </dialog>
 
 
 </navigation>

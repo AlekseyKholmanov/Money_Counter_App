@@ -1,4 +1,4 @@
-package com.example.holmi_production.money_counter_app.ui.presenters
+package com.example.holmi_production.money_counter_app.ui._old_presenters
 
 import androidx.lifecycle.ViewModel
 import com.example.holmi_production.money_counter_app.extensions.*

@@ -1,21 +1,5 @@
 package com.example.holmi_production.money_counter_app.ui.fragments
 
-import android.app.DatePickerDialog
-import android.content.Context
-import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.isVisible
-import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.extensions.hideKeyboard
-import com.example.holmi_production.money_counter_app.ui.presenters.FirstLaunchPresenter
-import kotlinx.android.synthetic.main.fragment_first_launch.*
-import org.joda.time.DateTime
-
 class FirstLaunchFragment() {
 //    override fun showMainScreen() {
 ////        findNavController().navigate(R.id.action_navFirstLaunch_to_navMain)

@@ -1,9 +1,12 @@
 package com.example.holmi_production.money_counter_app.ui.adapter.holder
 
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.daimajia.swipe.SwipeLayout
@@ -14,6 +17,7 @@ import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionItem
+import com.example.holmi_production.money_counter_app.ui.utils.dpToPx
 import com.example.holmi_production.money_counter_app.utils.SwipeLayoutListenerImpl
 import kotlinx.android.synthetic.main.item_transaction.view.*
 
@@ -28,7 +32,7 @@ class TransactionItemHolder(
 
     private val deleteButton: ImageButton = itemView.findViewById(R.id.transactionDeleteButton)
 
-    private val bottomWrapper: FrameLayout = itemView.findViewById(R.id.bottomWrapper)
+    private val bottomWrapper: LinearLayout = itemView.findViewById(R.id.bottomWrapper)
 
     private val swipeListener = object : SwipeLayoutListenerImpl() {
         override fun onOpen(layout: SwipeLayout?) {
@@ -48,6 +52,7 @@ class TransactionItemHolder(
             val transaction = item.transaction
             val subcategory = item.subcategory
             val category = item.category
+            val account = item.account
             val directionColor =
                 if (transaction.sum < 0) Color.parseColor("#c62828") else Color.parseColor(
                     "#2e7d32"
@@ -64,7 +69,7 @@ class TransactionItemHolder(
 
             val backgroundColor = category?.color ?: Color.LTGRAY
 
-            val sum = transaction.sum.toCurencyFormat().withRubleSign()
+            val sum = "${transaction.sum.toCurencyFormat()} ${account.currencyType.icon}"
             //comment
             itemComment.visibility = if (transaction.comment.isNullOrEmpty()) {
                 View.GONE
@@ -86,7 +91,11 @@ class TransactionItemHolder(
                 indicator.visibility = View.VISIBLE
                 indicator.setColors(listOf(backgroundColor))
             }
-
+            //background stroke color
+            val mainShapeContainer = shapeContainer.background as GradientDrawable
+            val buttonShapeContainer = bottomWrapper.background as GradientDrawable
+            mainShapeContainer.setStroke(dpToPx(1).toInt(), ColorStateList.valueOf(category?.color ?: Color.GRAY))
+            buttonShapeContainer.setStroke(dpToPx(1).toInt(), ColorStateList.valueOf(category?.color ?: Color.GRAY))
             //sum
             with(itemSum) {
                 setText(sum)

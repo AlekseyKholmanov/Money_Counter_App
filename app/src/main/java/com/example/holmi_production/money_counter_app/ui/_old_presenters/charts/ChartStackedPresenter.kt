@@ -1,7 +1,6 @@
-package com.example.holmi_production.money_counter_app.ui.presenters.charts
+package com.example.holmi_production.money_counter_app.ui._old_presenters.charts
 
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
 import org.joda.time.DateTime
 

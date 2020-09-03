@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.model.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
 import com.example.holmi_production.money_counter_app.model.enums.AccountType
 import java.util.*
 
@@ -18,6 +19,8 @@ data class AccountEntity(
     val isCalculatePerDaySum: Boolean,
 
     val accountType: AccountType,
+
+    val currencyType: CurrencyType,
 
     val password: String? = null
 

@@ -1,13 +1,9 @@
 package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.example.holmi_production.money_counter_app.App
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.ui.presenters.EndPeriodPresenter
 import kotlinx.android.synthetic.main.fragment_end_period.*
 
 

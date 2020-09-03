@@ -2,6 +2,7 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -54,12 +55,12 @@ class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
             summary.observe(viewLifecycleOwner, Observer(::updateSummary))
         }
         period.setOnClickListener {
-            val destination =
-                TransactionFragmentDirections.actionTransactionFragmentToBottomDialog(
-                    dialogType = BottomDialog.TOOLBAR_DATE_SELECT,
-                    selectedId = viewModel.activePeriod.value!!.type.ordinal
-                )
-            findNavController().navigate(destination)
+
+            findNavController().navigate(R.id.action_global_bottomDialog,
+            bundleOf(
+               BottomDialog.ARGS_DIALOG_TYPE to BottomDialog.TYPE_TOOLBAR_PERIOD,
+                BottomDialog.ARGS_SELECTED_ID to viewModel.activePeriod.value!!.type.ordinal
+            ))
         }
         right.setOnClickListener {
             viewModel.moveDateForward()

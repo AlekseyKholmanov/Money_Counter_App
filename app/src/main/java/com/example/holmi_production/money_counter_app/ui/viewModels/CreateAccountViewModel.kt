@@ -1,9 +1,13 @@
 package com.example.holmi_production.money_counter_app.ui.viewModels
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
+import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
 import com.example.holmi_production.money_counter_app.model.enums.AccountType
 import com.example.holmi_production.money_counter_app.storage.AppPreference
 import com.example.holmi_production.money_counter_app.useCases.AddAccountUseCase
@@ -17,6 +21,9 @@ class CreateAccountViewModel(
     private val addTransactionUseCase: AddTransactionUseCase,
     private val appPreference: AppPreference
 ) : ViewModel() {
+
+    private val _currencyType: MutableLiveData<CurrencyType?> = MutableLiveData()
+    val currencyType: LiveData<CurrencyType?> = _currencyType
 
     fun createAccount(
         description: String,
@@ -32,7 +39,8 @@ class CreateAccountViewModel(
             isHidden = isHidden,
             isCalculatePerDaySum = isCalculatePerDay,
             password = password,
-            accountType = AccountType.DEBET
+            accountType = AccountType.DEBET,
+            currencyType = currencyType.value ?: CurrencyType.RUBBLE
         )
         val transaction = TransactionEntity(
             createdDate = DateTime.now(),
@@ -44,6 +52,10 @@ class CreateAccountViewModel(
             createAccountViewModel.createAccount(entity)
             addTransactionUseCase.save(transaction)
         }
+    }
+
+    fun updateCurrency(currencyType: CurrencyType) {
+        _currencyType.value = currencyType
     }
 
 }
