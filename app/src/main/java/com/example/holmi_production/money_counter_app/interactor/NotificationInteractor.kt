@@ -1,9 +1,7 @@
 package com.example.holmi_production.money_counter_app.interactor
 
-import android.util.Log
 import com.example.holmi_production.money_counter_app.notification.NotificationManager
-import com.example.holmi_production.money_counter_app.storage.impl.SumPerDayDatabaseImpl
-import io.reactivex.disposables.Disposable
+import com.example.holmi_production.money_counter_app.storage.db.impl.SumPerDayDatabaseImpl
 
 
 class NotificationInteractor(

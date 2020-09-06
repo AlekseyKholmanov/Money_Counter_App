@@ -10,6 +10,9 @@
     <color name="yellowAccent">#f5a22a</color>
     <color name="Gray">#616161</color>
     <color name="surface">#f9fafb</color>
+    <color name="textPrimary">#291720</color>
+
+
 
     <color name="text_button_text_color_normal">@color/colorPrimary</color>
     <color name="text_button_text_color_disabled">@color/colorPrimaryDark</color>

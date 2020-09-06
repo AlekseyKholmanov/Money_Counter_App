@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.DashboardFragment"
-        tools:layout="@layout/fragment_dashboard"
+        tools:layout="@layout/old_fragment_dashboard"
         android:label="KeyboardFragment" >
         <action
             android:id="@+id/action_keyboardFragment_to_bottomKeyboard"
@@ -27,11 +27,7 @@
     <fragment
         android:id="@+id/transactionFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.TransactionFragment"
-        android:label="CostsFragment" >
-        <action
-            android:id="@+id/action_transactionFragment_to_bottomDialog"
-            app:destination="@id/bottomDialog" />
-    </fragment>
+        android:label="CostsFragment" />
     <fragment
         android:id="@+id/limitsFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.LimitsFragment"
@@ -84,11 +80,17 @@
         android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog"
         android:label="BottomDialog" >
         <argument
-            android:name="selectedId"
+            android:name="selectedIdInt"
             app:argType="integer"
             android:defaultValue="-1" />
+
         <argument
             android:name="dialogType"
             app:argType="string" />
+        <argument
+            android:name="selectedIdString"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </dialog><action android:id="@+id/action_global_bottomDialog" app:destination="@id/bottomDialog"/>
 </navigation>

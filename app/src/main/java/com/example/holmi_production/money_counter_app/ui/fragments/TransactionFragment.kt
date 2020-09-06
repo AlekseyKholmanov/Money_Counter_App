@@ -3,7 +3,6 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.holmi_production.money_counter_app.R
@@ -11,12 +10,10 @@ import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
-import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import com.example.holmi_production.money_counter_app.ui.adapter.TransactionAdapter
 import com.example.holmi_production.money_counter_app.ui.adapter.items.ZeroItem
 import com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog
 import com.example.holmi_production.money_counter_app.ui.viewModels.TransactionViewModel
-import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.fragment_trasnsactions.*
 import org.joda.time.DateTime
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -54,21 +51,12 @@ class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
             activePeriod.observe(viewLifecycleOwner, Observer(::updatePeriod))
             summary.observe(viewLifecycleOwner, Observer(::updateSummary))
         }
-        period.setOnClickListener {
-
-            findNavController().navigate(R.id.action_global_bottomDialog,
-            bundleOf(
-               BottomDialog.ARGS_DIALOG_TYPE to BottomDialog.TYPE_TOOLBAR_PERIOD,
-                BottomDialog.ARGS_SELECTED_ID to viewModel.activePeriod.value!!.type.ordinal
-            ))
-        }
         right.setOnClickListener {
             viewModel.moveDateForward()
         }
         left.setOnClickListener {
             viewModel.moveDateBack()
         }
-        setResultListener()
     }
 
     private fun updateSummary(pair: Pair<Double, Double>) {
@@ -91,27 +79,6 @@ class TransactionFragment : BaseFragment(R.layout.fragment_trasnsactions) {
             listOf(ZeroItem(R.layout.item_transaction_0data))
         } else {
             transactions
-        }
-    }
-
-    private fun setResultListener() {
-        setFragmentResultListener(BottomDialog.REQUEST_FROM_TRANSACTION_FRAGMENT) { _, bundle ->
-            val selected = PeriodType.values()[bundle.getInt("periodType")]
-            if (selected == PeriodType.CUSTOM) {
-                val dialog = MaterialDatePicker.Builder
-                    .dateRangePicker()
-                    .setTheme(R.style.AppTheme_RangeDatePicker)
-                    .build()
-
-                dialog.show(childFragmentManager, "DATE_PICKER")
-                dialog.addOnPositiveButtonClickListener {
-                    val to = DateTime(it.first)
-                    val from = DateTime(it.second)
-                    viewModel.updateSelectedPeriod(selected, to, from)
-                }
-            } else {
-                viewModel.updateSelectedPeriod(selected)
-            }
         }
     }
 

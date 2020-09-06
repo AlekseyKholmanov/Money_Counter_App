@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.holmi_production.money_counter_app.model.entity.SumPerDayEntity
-import io.reactivex.Flowable
 import kotlinx.coroutines.flow.Flow
 
 @Dao

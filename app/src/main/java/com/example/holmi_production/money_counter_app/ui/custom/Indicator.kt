@@ -39,7 +39,7 @@ class Indicator @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         paintColors.forEachIndexed { index, color ->
-            if(paintColors.size == 1) {
+            if (paintColors.size == 1) {
                 drawSingle(canvas, color)
             } else {
                 when (index) {
@@ -57,7 +57,16 @@ class Indicator @JvmOverloads constructor(
         rectF.set(0f, 0f, width.toFloat(), partHeight)
         path.addRoundRect(
             rectF,
-            floatArrayOf(width.toFloat(), width.toFloat(),  0f, 0f, 0f, 0f,  width.toFloat(), width.toFloat()),
+            floatArrayOf(
+                0f,
+                0f,
+                width.toFloat(),
+                width.toFloat(),
+                width.toFloat(),
+                width.toFloat(),
+                0f,
+                0f
+            ),
             Path.Direction.CW
         )
         canvas.drawPath(path, paint)
@@ -66,7 +75,7 @@ class Indicator @JvmOverloads constructor(
     private fun drawTop(canvas: Canvas, @ColorInt color: Int) {
         path.reset()
         paint.color = color
-        rectF.set(0f, 0f, width.toFloat() - 2* dpToPx(2), partHeight)
+        rectF.set(0f, 0f, width.toFloat() - 2 * dpToPx(2), partHeight)
         path.addRoundRect(
             rectF,
             floatArrayOf(0f, 0f, width.toFloat(), width.toFloat(), 0f, 0f, 0f, 0f),

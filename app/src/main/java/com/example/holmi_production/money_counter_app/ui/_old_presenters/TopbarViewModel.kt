@@ -5,14 +5,15 @@ import com.example.holmi_production.money_counter_app.extensions.*
 import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import com.example.holmi_production.money_counter_app.model.enums.PeriodType.*
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
-import com.example.holmi_production.money_counter_app.storage.impl.PeriodsDatabaseImpl
-import com.example.holmi_production.money_counter_app.storage.AppPreference
+import com.example.holmi_production.money_counter_app.storage.db.impl.PeriodsDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.db.AppPreference
 
 import org.joda.time.DateTime
 
 class TopbarViewModel (
     private val periodsDatabase: PeriodsDatabaseImpl,
-    private val appPreference: AppPreference) :
+    private val appPreference: AppPreference
+) :
     ViewModel() {
 
     fun setNewPeriod(isRightDirection: Boolean) {

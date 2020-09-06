@@ -1,7 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui.viewModels
 
 import androidx.lifecycle.ViewModel
-import com.example.holmi_production.money_counter_app.extensions.async
 import com.example.holmi_production.money_counter_app.interactor.BalanceInteractor
 import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
 

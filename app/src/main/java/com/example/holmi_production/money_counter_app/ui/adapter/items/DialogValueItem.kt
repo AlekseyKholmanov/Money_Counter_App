@@ -22,3 +22,13 @@ class DialogValueTextItem(
         val VIEW_TYPE = R.layout.item_bottom_dialog_value
     }
 }
+
+class DialogValueGuidItem(
+    val id:String,
+    val text: String,
+    val isSelected: Boolean
+): RecyclerItem{
+    companion object{
+        val VIEW_TYPE = R.layout.item_bottom_dialog_value
+    }
+}

@@ -3,14 +3,15 @@ package com.example.holmi_production.money_counter_app.ui._old_presenters
 
 import com.example.holmi_production.money_counter_app.interactor.CategoryInteractor
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.storage.AppPreference
+import com.example.holmi_production.money_counter_app.storage.db.AppPreference
 
 
 
 class SettingsPresenter (
     private val spendingInteractor: SpendingInteractor,
     private val categoryInteractor: CategoryInteractor,
-    private val appPreference: AppPreference) {
+    private val appPreference: AppPreference
+) {
     fun deleteData() {
 //        spendingInteractor.deleteAll()
 //            .subscribe {

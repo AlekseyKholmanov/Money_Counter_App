@@ -29,7 +29,7 @@ class ImageCategoryPicker(
         window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT)
-        window?.setBackgroundDrawable(ContextCompat.getDrawable(context,R.drawable.bg_rounded_8dp))
+        window?.setBackgroundDrawable(ContextCompat.getDrawable(context,R.drawable.bg_rounded_8dp_transparent))
         val ids = Images.values().map { it.imageResId }
         with(rv_images){
             adapter = IconPickerAdapter(ids, callback )

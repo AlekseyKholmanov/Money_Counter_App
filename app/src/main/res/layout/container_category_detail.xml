@@ -49,7 +49,7 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:text="@string/text_income" />
+        android:text="@string/income" />
 
     <CheckedTextView
         android:id="@+id/ch_spending"
@@ -62,7 +62,7 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:text="@string/text_spending" />
+        android:text="@string/expenses" />
 
     <CheckedTextView
         android:id="@+id/ch_accumulation"

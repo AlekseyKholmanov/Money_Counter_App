@@ -8,7 +8,7 @@
             android:enabled="true"
             android:icon="@drawable/ic_launcher_foreground"
             app:iconTint="@color/colorAccent"
-            android:title="@string/text_main" />
+            android:title="@string/dashboard" />
         <item
             android:id="@+id/transactionFragment"
             android:enabled="true"

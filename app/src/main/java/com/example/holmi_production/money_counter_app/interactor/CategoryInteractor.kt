@@ -1,14 +1,11 @@
 package com.example.holmi_production.money_counter_app.interactor
 
 import android.graphics.drawable.ColorDrawable
-import com.example.holmi_production.money_counter_app.model.CategoryDetails
-import com.example.holmi_production.money_counter_app.model.enums.SpDirection
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
-import com.example.holmi_production.money_counter_app.storage.CategoryDatabase
-import com.example.holmi_production.money_counter_app.storage.SubCategoryDatabase
+import com.example.holmi_production.money_counter_app.storage.db.CategoryDatabase
+import com.example.holmi_production.money_counter_app.storage.db.SubCategoryDatabase
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
-import kotlinx.coroutines.flow.Flow
 
 class CategoryInteractor(
     private val categoryDatabase: CategoryDatabase,

@@ -1,8 +1,8 @@
 package com.example.holmi_production.money_counter_app.useCases.impl
 
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
-import com.example.holmi_production.money_counter_app.storage.CategoryDatabase
-import com.example.holmi_production.money_counter_app.storage.TransactionDatabase
+import com.example.holmi_production.money_counter_app.storage.db.CategoryDatabase
+import com.example.holmi_production.money_counter_app.storage.db.TransactionDatabase
 import com.example.holmi_production.money_counter_app.useCases.AddTransactionUseCase
 
 class AddTransactionUseCaseImpl(

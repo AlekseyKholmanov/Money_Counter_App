@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dashboard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showPaths="true">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addAccount"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_margin="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Добавить счет"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@color/colorPrimary" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/accounts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/addAccount" />
+
+    <me.relex.circleindicator.CircleIndicator3
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        app:ci_drawable="@drawable/dot_selected"
+        app:ci_drawable_unselected="@drawable/dot_unselected"
+        app:ci_gravity="center"
+        app:ci_height="6dp"
+        app:ci_margin="8dp"
+        app:ci_width="6dp"
+        app:layout_constraintTop_toBottomOf="@id/accounts" />
+
+
+    <Button
+        android:id="@+id/showBottom"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_rounded_16dp"
+        android:backgroundTint="@color/colorYellow"
+        android:gravity="center"
+        android:text="show bottom"
+        android:textAllCaps="true"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

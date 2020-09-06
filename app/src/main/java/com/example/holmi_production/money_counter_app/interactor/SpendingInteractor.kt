@@ -2,11 +2,11 @@ package com.example.holmi_production.money_counter_app.interactor
 
 import com.example.holmi_production.money_counter_app.model.TransactionDetails
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
-import com.example.holmi_production.money_counter_app.storage.CategoryDatabase
-import com.example.holmi_production.money_counter_app.storage.AppPreference
-import com.example.holmi_production.money_counter_app.storage.SumPerDayDatabase
-import com.example.holmi_production.money_counter_app.storage.TransactionDatabase
-import com.example.holmi_production.money_counter_app.storage.impl.PeriodsDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.db.CategoryDatabase
+import com.example.holmi_production.money_counter_app.storage.db.AppPreference
+import com.example.holmi_production.money_counter_app.storage.db.SumPerDayDatabase
+import com.example.holmi_production.money_counter_app.storage.db.TransactionDatabase
+import com.example.holmi_production.money_counter_app.storage.db.impl.PeriodsDatabaseImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 

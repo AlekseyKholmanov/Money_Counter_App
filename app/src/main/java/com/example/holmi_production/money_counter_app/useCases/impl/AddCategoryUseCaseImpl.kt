@@ -2,7 +2,7 @@ package com.example.holmi_production.money_counter_app.useCases.impl
 
 import android.graphics.drawable.ColorDrawable
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
-import com.example.holmi_production.money_counter_app.storage.CategoryDatabase
+import com.example.holmi_production.money_counter_app.storage.db.CategoryDatabase
 import com.example.holmi_production.money_counter_app.useCases.AddCategoryUseCase
 import com.example.holmi_production.money_counter_app.utils.ColorUtils
 

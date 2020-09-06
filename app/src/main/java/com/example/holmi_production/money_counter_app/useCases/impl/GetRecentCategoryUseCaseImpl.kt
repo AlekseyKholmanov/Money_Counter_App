@@ -1,8 +1,8 @@
 package com.example.holmi_production.money_counter_app.useCases.impl
 
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
-import com.example.holmi_production.money_counter_app.storage.CategoryDatabase
-import com.example.holmi_production.money_counter_app.storage.RecentCategoryDatabase
+import com.example.holmi_production.money_counter_app.storage.db.CategoryDatabase
+import com.example.holmi_production.money_counter_app.storage.db.RecentCategoryDatabase
 import com.example.holmi_production.money_counter_app.useCases.GetRecentCategoryUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

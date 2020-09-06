@@ -3,8 +3,8 @@ package com.example.holmi_production.money_counter_app.worker
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.example.holmi_production.money_counter_app.storage.impl.BalanceDatabaseImpl
-import com.example.holmi_production.money_counter_app.storage.impl.TransactionDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.db.impl.BalanceDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.db.impl.TransactionDatabaseImpl
 
 class BalanceTask constructor(
     private val context: Context,

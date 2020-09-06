@@ -5,14 +5,12 @@ import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOf
 import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfYear
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import com.example.holmi_production.money_counter_app.model.enums.PeriodType
-import com.example.holmi_production.money_counter_app.storage.PeriodsDatabase
+import com.example.holmi_production.money_counter_app.storage.db.PeriodsDatabase
 import com.example.holmi_production.money_counter_app.useCases.UpdateActivePeriodUseCase
-import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
 import org.joda.time.Days
-import org.joda.time.LocalDateTime
 
 class UpdateActivePeriodUseCaseImpl(
     private val periodsDatabase: PeriodsDatabase

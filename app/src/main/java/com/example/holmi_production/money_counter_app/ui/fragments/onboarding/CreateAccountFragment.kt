@@ -10,12 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
-import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog
 import com.example.holmi_production.money_counter_app.ui.viewModels.CreateAccountViewModel
-import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.fragment_onboarding_account_create.*
-import org.joda.time.DateTime
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateAccountFragment : BaseFragment(R.layout.fragment_onboarding_account_create) {
@@ -37,7 +34,7 @@ class CreateAccountFragment : BaseFragment(R.layout.fragment_onboarding_account_
         accountCurrencyEditText.setOnClickListener {
             findNavController().navigate(
                 R.id.action_global_bottomDialog, bundleOf(
-                    BottomDialog.ARGS_SELECTED_ID to (viewModel.currencyType.value?.ordinal ?: View.NO_ID),
+                    BottomDialog.ARGS_SELECTED_ID_INT to (viewModel.currencyType.value?.ordinal ?: View.NO_ID),
                     BottomDialog.ARGS_DIALOG_TYPE to BottomDialog.TYPE_ACCOUNT_CURRENCY
                 )
             )
