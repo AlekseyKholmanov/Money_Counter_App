@@ -1,6 +1,6 @@
 package com.example.holmi_production.money_counter_app.useCases.impl
 
-import com.example.holmi_production.money_counter_app.storage.SubCategoryDatabase
+import com.example.holmi_production.money_counter_app.storage.db.SubCategoryDatabase
 import com.example.holmi_production.money_counter_app.useCases.EditSubcategoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

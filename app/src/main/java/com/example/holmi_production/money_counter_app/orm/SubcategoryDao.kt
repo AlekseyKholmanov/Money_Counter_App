@@ -15,6 +15,10 @@ interface SubcategoryDao {
     @Query("SELECT * FROM SubcategoryTable WHERE id=:subcategoryId AND isDeleted = 0")
     fun getCategories(subcategoryId: String): List<SubCategoryEntity>
 
+
+    @Query("SELECT * FROM SubcategoryTable WHERE id=:subcategoryId AND isDeleted = 0")
+    fun getSubcategoryById(subcategoryId: String): SubCategoryEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(subcategory: SubCategoryEntity)
 

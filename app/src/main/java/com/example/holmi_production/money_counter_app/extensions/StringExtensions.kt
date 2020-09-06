@@ -36,6 +36,11 @@ fun DateTime.toRUformat(): String {
     return formatter.print(this)
 }
 
+fun DateTime.simpleFormat():String{
+    val formatter = DateTimeFormat.forPattern("dd.MM.yy")
+    return formatter.print(this)
+}
+
 fun DateTime.toRUformatWithTime(): String {
     val formatter = DateTimeFormat.forPattern("dd.MM.yyyy hh:mm")
         .withLocale(Locale("ru"))

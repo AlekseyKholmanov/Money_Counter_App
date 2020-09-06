@@ -1,53 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/backDrop"
-    tools:context=".ui.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:background="@color/colorPrimary">
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    tools:context=".ui.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/backLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@android:color/transparent"
+        android:orientation="vertical"
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleTextColor="@color/colorYellow" />
+            app:titleTextColor="@color/colorYellow">
 
+            <TextView
+                android:id="@+id/period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_rounded_corner_with_ripple_8dp"
+                android:clickable="true"
+                android:focusable="true"
+                style="@style/MediumFontFamily"
+                android:padding="4dp"
+                android:text="November"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down"
+                app:drawableTint="@color/white" />
+        </androidx.appcompat.widget.Toolbar>
 
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigationView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:fitsSystemWindows="true"
-            app:elevation="0dp"
-            android:paddingStart="@dimen/small_gap"
-            android:paddingEnd="@dimen/small_gap"
-            app:itemBackground="@drawable/bg_menu_item"
-            app:itemTextColor="@color/colorYellow"
-            app:itemIconTint="@color/colorYellow"
-            app:menu="@menu/bottom_navigation_main" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navHostFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clickable="true"
         android:focusable="true"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_top_radius"
         app:layout_behavior="ru.semper_viventem.backdrop.BackdropBehavior" />
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:fitsSystemWindows="true"
+        android:paddingStart="@dimen/small_gap"
+        android:paddingEnd="@dimen/small_gap"
+        app:elevation="0dp"
+        app:itemBackground="@drawable/bg_menu_item"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/bottom_navigation_main" />
+</LinearLayout>

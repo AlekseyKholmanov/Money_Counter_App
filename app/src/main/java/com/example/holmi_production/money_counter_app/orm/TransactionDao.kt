@@ -5,7 +5,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.example.holmi_production.money_counter_app.model.TransactionDetails
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
-import io.reactivex.Maybe
 import kotlinx.coroutines.flow.Flow
 import org.joda.time.DateTime
 

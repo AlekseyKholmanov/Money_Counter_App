@@ -7,7 +7,7 @@
     android:lineSpacingExtra="8sp"
     android:textColor="@color/black"
     android:backgroundTint="@color/checked_item_background_tint"
-    android:background="@drawable/bg_rounded_8dp"
+    android:background="@drawable/bg_rounded_8dp_transparent"
     android:padding="12dp"
     android:clickable="true"
     android:focusable="true"

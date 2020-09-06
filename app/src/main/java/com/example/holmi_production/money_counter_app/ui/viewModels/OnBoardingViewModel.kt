@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
 import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
 import com.example.holmi_production.money_counter_app.model.enums.AccountType
-import com.example.holmi_production.money_counter_app.storage.AppPreference
+import com.example.holmi_production.money_counter_app.storage.db.AppPreference
 import com.example.holmi_production.money_counter_app.useCases.AddAccountUseCase
 import kotlinx.coroutines.launch
 

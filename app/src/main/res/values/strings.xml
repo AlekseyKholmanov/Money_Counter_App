@@ -21,8 +21,8 @@
     <string name="text_color">Color:</string>
     <string name="et_text_enter_category_name">Category name</string>
     <string name="text_choose_type">Choose type:</string>
-    <string name="text_income">Income</string>
-    <string name="text_spending">Spendings</string>
+    <string name="income">Income</string>
+    <string name="expenses">Expenses</string>
     <string name="text_accumulation">Accumulation</string>
     <string name="save">Save category</string>
     <string name="et_text_enter_subcategory_name">Subcategoy name</string>
@@ -61,4 +61,6 @@
     <string name="this_year">This year</string>
     <string name="custom">Custom</string>
     <string name="period_choose">выбор периода</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="balance">Balance</string>
 </resources>

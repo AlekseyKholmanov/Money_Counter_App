@@ -1,7 +1,7 @@
 package com.example.holmi_production.money_counter_app.useCases.impl
 
 import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
-import com.example.holmi_production.money_counter_app.storage.AccountDatabase
+import com.example.holmi_production.money_counter_app.storage.db.AccountDatabase
 import com.example.holmi_production.money_counter_app.useCases.AddAccountUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

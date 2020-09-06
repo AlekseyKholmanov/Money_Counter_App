@@ -2,8 +2,8 @@ package com.example.holmi_production.money_counter_app.ui.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.example.holmi_production.money_counter_app.interactor.SpendingInteractor
-import com.example.holmi_production.money_counter_app.storage.TransactionDatabase
-import com.example.holmi_production.money_counter_app.storage.SumPerDayDatabase
+import com.example.holmi_production.money_counter_app.storage.db.TransactionDatabase
+import com.example.holmi_production.money_counter_app.storage.db.SumPerDayDatabase
 
 
 /**

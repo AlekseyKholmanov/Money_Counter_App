@@ -1,7 +1,7 @@
 package com.example.holmi_production.money_counter_app.useCases.impl
 
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
-import com.example.holmi_production.money_counter_app.storage.CategoryDatabase
+import com.example.holmi_production.money_counter_app.storage.db.CategoryDatabase
 import com.example.holmi_production.money_counter_app.useCases.GetCategoryUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.example.holmi_production.money_counter_app.storage.AppPreference
+import com.example.holmi_production.money_counter_app.storage.db.AppPreference
 
 class EndMonthTask(
     private val appContext: Context,
@@ -15,7 +15,6 @@ class EndMonthTask(
     override fun doWork(): Result {
         Log.d("M_EndMonthTask", "Start")
         val value = inputData.getInt("endMonth", 1)
-        appPreference.setEndMonth(value)
         Log.d("M_EndMonthTask", "complete $value")
         return Result.success()
     }

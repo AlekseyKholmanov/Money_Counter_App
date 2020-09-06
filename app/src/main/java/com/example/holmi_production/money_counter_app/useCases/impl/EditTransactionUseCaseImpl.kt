@@ -1,6 +1,6 @@
 package com.example.holmi_production.money_counter_app.useCases.impl
 
-import com.example.holmi_production.money_counter_app.storage.TransactionDatabase
+import com.example.holmi_production.money_counter_app.storage.db.TransactionDatabase
 import com.example.holmi_production.money_counter_app.useCases.EditTransactionUseCase
 
 class EditTransactionUseCaseImpl(

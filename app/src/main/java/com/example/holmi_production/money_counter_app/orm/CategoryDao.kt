@@ -5,7 +5,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
-import io.reactivex.Flowable
 import kotlinx.coroutines.flow.Flow
 
 @Dao

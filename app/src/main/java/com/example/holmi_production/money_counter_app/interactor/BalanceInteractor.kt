@@ -1,8 +1,8 @@
 package com.example.holmi_production.money_counter_app.interactor
 
 import com.example.holmi_production.money_counter_app.model.entity.BalanceEntity
-import com.example.holmi_production.money_counter_app.storage.impl.BalanceDatabaseImpl
-import com.example.holmi_production.money_counter_app.storage.impl.PeriodsDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.db.impl.BalanceDatabaseImpl
+import com.example.holmi_production.money_counter_app.storage.db.impl.PeriodsDatabaseImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 
