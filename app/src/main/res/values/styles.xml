@@ -84,4 +84,27 @@
         <item name="fontFamily">@font/rubik_medium</item>
     </style>
 
+    <style name="TextInputColorStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/text_input_box_stroke</item>
+        <item name="colorControlNormal">@color/textPrimaryInverted</item>
+        <item name="colorControlActivated">@color/textPrimaryInverted</item>
+        <item name="colorControlHighlight">@color/textPrimaryInverted</item>
+        <item name="android:textColor">@color/text_input_box_stroke</item>
+        <item name="android:textColorHint">@color/text_input_box_stroke</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="FabStyle" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="drawableTint">@color/textPrimary</item>
+        <item name="rippleColor">@color/textPrimary</item>
+        <item name="backgroundTint">@color/background</item>
+    </style>
+    <style name="FabStyleInverted" parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="android:textColor">@color/background</item>
+        <item name="drawableTint">@color/background</item>
+        <item name="rippleColor">@color/background</item>
+        <item name="backgroundTint">@color/textPrimary</item>
+    </style>
+
 </resources>

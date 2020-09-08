@@ -92,5 +92,5 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null" />
-    </dialog><action android:id="@+id/action_global_bottomDialog" app:destination="@id/bottomDialog"/>
+    </dialog><action android:id="@+id/action_global_bottomDialog" app:destination="@id/bottomDialog"/><action android:id="@+id/action_global_createAccountFragment2" app:destination="@id/createAccountFragment2"/>
 </navigation>

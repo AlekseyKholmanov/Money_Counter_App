@@ -7,24 +7,22 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.RecyclerItem
 import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
-import com.example.holmi_production.money_counter_app.model.enums.PeriodType
-import com.example.holmi_production.money_counter_app.ui.adapter.delegate.dialogHeaderItemDelegate
-import com.example.holmi_production.money_counter_app.ui.adapter.delegate.dialogValueGuidItemAdapterDelegate
-import com.example.holmi_production.money_counter_app.ui.adapter.delegate.dialogValueItemAdapterDelegate
-import com.example.holmi_production.money_counter_app.ui.adapter.delegate.dialogValueTextItemAdapterDelegate
+import com.example.holmi_production.money_counter_app.ui.adapter.decorators.AsyncBaseDecorator
+import com.example.holmi_production.money_counter_app.ui.adapter.decorators.ListDelegationDecorator
+import com.example.holmi_production.money_counter_app.ui.adapter.delegate.*
+import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogFirstItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogValueGuidItem
-import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogValueItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogValueTextItem
 import com.example.holmi_production.money_counter_app.useCases.GetAccountsUseCase
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import kotlinx.android.synthetic.main.bottom_dialog.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class BottomDialog : BottomSheetDialogFragment() {
@@ -46,6 +44,10 @@ class BottomDialog : BottomSheetDialogFragment() {
             },
             dialogValueGuidItemAdapterDelegate {
                 finish(value = it)
+                dismiss()
+            },
+            dialogFirstItemDelegate {
+                findNavController().navigate(R.id.action_global_createAccountFragment2)
                 dismiss()
             }
         )
@@ -72,9 +74,9 @@ class BottomDialog : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter.items = prepareItems()
-        recycler.setHasFixedSize(true)
+        recycler.addItemDecoration(ListDelegationDecorator(requireContext()))
         recycler.adapter = adapter
+        adapter.items = prepareItems()
     }
 
     private fun prepareItems(): List<RecyclerItem> {
@@ -102,8 +104,9 @@ class BottomDialog : BottomSheetDialogFragment() {
                                 accountEntity.id == args.selectedIdString
                             )
                         )
-                        adapter.notifyDataSetChanged()
                     }
+                    items.add(0, DialogFirstItem("Add account"))
+                    adapter.notifyDataSetChanged()
                 }
             }
         }

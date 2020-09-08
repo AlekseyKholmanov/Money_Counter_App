@@ -37,18 +37,36 @@
                 tools:backgroundTint="@color/black" />
 
 
-            <EditText
-                android:id="@+id/categoryName"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/categoryNameInputLayout"
+                style="@style/TextInputColorStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="4dp"
-                android:hint="@string/et_text_enter_category_name"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@id/categoryImage"
-                tools:layout_editor_absoluteX="16dp" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/category_name"
+                android:minHeight="56dp"
+                android:transitionGroup="true"
+                app:hintTextAppearance="@style/TextInputColorStyle"
+                app:layout_constraintTop_toBottomOf="@id/categoryImage">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/categoryName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:lineSpacingExtra="8sp"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:textColor="@color/textPrimaryInverted"
+                    android:textColorHint="@color/textPrimaryInverted"
+                    android:textSize="20sp"
+                    android:textStyle="normal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/hintColor"
@@ -57,10 +75,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/text_color"
+                android:textColor="@color/textPrimaryInverted"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/categoryName" />
+                app:layout_constraintTop_toBottomOf="@id/categoryNameInputLayout" />
 
 
             <com.example.holmi_production.money_counter_app.ui.custom.ColorSeekBar
@@ -72,7 +91,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/generateColor"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/categoryName"
+                app:layout_constraintTop_toBottomOf="@id/categoryNameInputLayout"
                 app:layout_constraintTop_toTopOf="@id/generateColor" />
 
 
@@ -85,7 +104,7 @@
                 android:text="@string/button_generate_color"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:cornerRadius="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -109,6 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/subcategories"
+                    android:textColor="@color/textPrimaryInverted"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@id/addSubcategory"
                     app:layout_constraintStart_toStartOf="parent"
@@ -123,18 +143,18 @@
                     android:padding="8dp"
                     android:text="@string/txt_add_subcategory"
                     android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textColor="@color/textPrimaryInverted"
+                    android:textSize="16sp"
                     app:cornerRadius="8dp"
                     app:icon="@drawable/ic_24_add"
                     app:iconGravity="start"
                     app:iconPadding="4dp"
                     app:iconSize="18dp"
-                    app:iconTint="@color/black"
+                    app:iconTint="@color/textPrimaryInverted"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:rippleColor="@color/yellowAccent"
-                    app:strokeColor="@color/black" />
+                    app:rippleColor="@color/textPrimaryInverted"
+                    app:strokeColor="@color/textPrimaryInverted" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chips"
@@ -144,25 +164,23 @@
                     app:layout_constraintTop_toBottomOf="@id/addSubcategory" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-            <com.google.android.material.button.MaterialButton
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/saveCategory"
+                style="@style/FabStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:layout_marginBottom="16dp"
                 android:text="@string/save"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
                 android:textSize="14sp"
-                android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/chipsContainer"
                 app:layout_constraintVertical_bias="1.0"
-                app:rippleColor="@color/yellowAccent"
                 app:strokeColor="@color/black" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

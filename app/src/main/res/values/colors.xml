@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <color name="background">@color/white</color>
 
@@ -11,7 +11,7 @@
     <color name="Gray">#616161</color>
     <color name="surface">#f9fafb</color>
     <color name="textPrimary">#291720</color>
-
+    <color name="textPrimaryInverted">#ffffff</color>
 
 
     <color name="text_button_text_color_normal">@color/colorPrimary</color>

@@ -5,25 +5,23 @@
     android:id="@+id/swipe"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="0dp"
     android:clickable="true"
     android:focusable="true"
-    android:paddingVertical="8dp"
     android:gravity="center_vertical"
+    android:paddingVertical="8dp"
     app:show_mode="pull_out">
 
     <LinearLayout
         android:id="@+id/bottomWrapper"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="4dp"
-        android:background="@drawable/spending_background"
-        android:backgroundTint="@android:color/white"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/transactionDeleteButton"
-            android:layout_width="56dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="4dp"
             android:background="@drawable/bg_rounded_8dp_stroked"
@@ -33,7 +31,7 @@
 
         <ImageButton
             android:id="@+id/transactionEditButton"
-            android:layout_width="56dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="4dp"
             android:background="@drawable/bg_rounded_8dp_stroked"
@@ -42,78 +40,70 @@
             tools:ignore="ContentDescription" />
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/spending_item"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/shapeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true"
         android:paddingTop="4dp"
         android:paddingRight="4dp"
         android:paddingBottom="4dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/shapeContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <com.example.holmi_production.money_counter_app.ui.custom.Indicator
+            android:id="@+id/indicator"
+            android:layout_width="8dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.example.holmi_production.money_counter_app.ui.custom.Indicator
-                android:id="@+id/indicator"
-                android:layout_width="8dp"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <com.example.holmi_production.money_counter_app.ui.custom.SquareImageView
+            android:id="@+id/itemImage"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/itemContainer"
+            app:layout_constraintStart_toEndOf="@id/indicator"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.example.holmi_production.money_counter_app.ui.custom.SquareImageView
-                android:id="@+id/itemImage"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/itemContainer"
-                app:layout_constraintStart_toEndOf="@id/indicator"
-                app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:id="@+id/itemContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/itemImage"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/itemContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/itemImage"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/itemCategory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="3"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="@id/itemComment"
-                    app:layout_constraintLeft_toRightOf="@id/image"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Категория" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/itemSum"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/itemCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="3"
                 android:gravity="center_vertical"
                 android:textColor="@color/textPrimary"
                 android:textSize="17sp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/itemComment"
+                app:layout_constraintLeft_toRightOf="@id/image"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:textAllCaps="true"
-                tools:text="1500" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
+                tools:text="Категория" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/itemSum"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:textColor="@color/textPrimary"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:textAllCaps="true"
+            tools:text="1500" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.daimajia.swipe.SwipeLayout>

@@ -19,7 +19,7 @@
     <string name="error_list">Произошла ошибка</string>
     <string name="button_generate_color">Generate</string>
     <string name="text_color">Цвет:</string>
-    <string name="et_text_enter_category_name">введите название категории</string>
+    <string name="category_name">введите название категории</string>
     <string name="text_choose_type">Выберите тип:</string>
     <string name="income">Доходы</string>
     <string name="expenses">Расходы</string>
@@ -62,4 +62,11 @@
     <string name="custom">Свой период</string>
     <string name="dashboard">Dashboard</string>
     <string name="balance">Баланс</string>
+    <string name="choose_currency_type">Выберите валюту</string>
+    <string name="show_hidden">Отображать скрыто?</string>
+    <string name="show_sum_per_day">Отображать сумму в день?</string>
+    <string name="start_balance">Стартовый баланс</string>
+    <string name="account_name">Название счета</string>
+    <string name="add_transaction">Add transaction</string>
+    <string name="create_account">Create account</string>
 </resources>

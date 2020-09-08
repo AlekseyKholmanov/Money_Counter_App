@@ -46,7 +46,7 @@ class GetAccountsUseCaseImpl(
                                     it.subcategoryId
                                 )
                             )
-                        }
+                        }.reversed()
                 DashboardAccountDetails(
                     account = details.account,
                     transactions = transactionDetails

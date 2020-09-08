@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/headerItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:lineSpacingExtra="8sp"
+    android:padding="12dp"
+    android:textColor="@color/textPrimary"
+    android:textSize="16sp"
+    app:drawableStartCompat="@drawable/ic_24_add"
+    android:drawablePadding="8dp"
+    app:drawableTint="@color/textPrimary"
+    tools:text="1234" />

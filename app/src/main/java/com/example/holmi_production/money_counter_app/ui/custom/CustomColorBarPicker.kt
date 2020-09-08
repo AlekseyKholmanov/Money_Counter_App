@@ -26,7 +26,7 @@ class ColorSeekBar(context: Context, attributeSet: AttributeSet): View(context, 
     private var thumbBorder: Float = 4f
     private var thumbRadius: Float = 16f
     private var thumbBorderRadius: Float = thumbRadius + thumbBorder
-    private var thumbBorderColor = Color.BLACK
+    private var thumbBorderColor = Color.WHITE
     private var paddingStart = 30f
     private var paddingEnd = 30f
     private var barCornerRadius: Float = 8f

@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="@color/colorAccent">
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/accountNameInputLayout"
+        style="@style/TextInputColorStyle"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="название счета"
+        android:hint="@string/account_name"
+        android:minHeight="56dp"
         android:transitionGroup="true"
+        app:hintTextAppearance="@style/TextInputColorStyle"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/accountNameEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="sans-serif"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:lineSpacingExtra="8sp"
             android:maxLength="100"
             android:maxLines="1"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/black"
-            android:textSize="16sp"
+            android:textColor="@color/textPrimaryInverted"
+            android:textColorHint="@color/textPrimaryInverted"
+            android:textSize="20sp"
             android:textStyle="normal" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -36,59 +40,55 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/accountBalanceInputLayout"
+        style="@style/TextInputColorStyle"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:hint="стартовый баланс"
+        android:hint="@string/start_balance"
         android:transitionGroup="true"
+        app:hintTextAppearance="@style/TextInputColorStyle"
+        app:hintTextColor="@color/textPrimaryInverted"
         app:layout_constraintTop_toBottomOf="@id/accountNameInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/accountBalanceEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="sans-serif"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
             android:lineSpacingExtra="8sp"
             android:maxLength="100"
             android:maxLines="1"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/black"
-            android:textSize="16sp"
+            android:textColor="@color/textPrimaryInverted"
+            android:textColorHint="@color/textPrimaryInverted"
+            android:textSize="20sp"
             android:textStyle="normal" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/accountCurrencyType"
+
+    <EditText
+        android:id="@+id/accountCurrencyEditText"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:hint="выбрать валюту аккаунта"
-        android:transitionGroup="true"
-        app:layout_constraintTop_toBottomOf="@id/accountBalanceInputLayout">
+        android:backgroundTint="@color/textPrimaryInverted"
+        android:clickable="false"
+        android:focusable="false"
+        android:hint="@string/choose_currency_type"
+        android:imeOptions="actionDone"
+        android:inputType="numberDecimal"
+        android:lineSpacingExtra="8sp"
+        android:maxLength="100"
+        android:maxLines="1"
+        android:textColor="@color/textPrimaryInverted"
+        android:textColorHint="@color/textPrimaryInverted"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        app:layout_constraintTop_toBottomOf="@id/accountBalanceInputLayout" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/accountCurrencyEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="sans-serif"
-            android:imeOptions="actionDone"
-            android:clickable="false"
-            android:focusable="false"
-            android:inputType="numberDecimal"
-            android:lineSpacingExtra="8sp"
-            android:maxLength="100"
-            android:maxLines="1"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="normal" />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/hiddenMode"
@@ -96,20 +96,23 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
+        android:buttonTint="@color/textPrimaryInverted"
         android:checked="false"
-        android:text="Отображать скрыто?"
+        android:text="@string/show_hidden"
+        android:textColor="@color/textPrimaryInverted"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/accountCurrencyType" />
+        app:layout_constraintTop_toBottomOf="@id/accountCurrencyEditText" />
 
     <ImageView
         android:id="@+id/hiddenModeDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:padding="8dp"
         android:src="@drawable/ic_baseline_whatshot_24"
         app:layout_constraintBottom_toBottomOf="@id/hiddenMode"
         app:layout_constraintStart_toEndOf="@id/hiddenMode"
-        app:layout_constraintTop_toTopOf="@id/hiddenMode" />
+        app:layout_constraintTop_toTopOf="@id/hiddenMode"
+        app:tint="@color/textPrimaryInverted" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/sumPerDayMode"
@@ -117,8 +120,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
+        android:buttonTint="@color/textPrimaryInverted"
         android:checked="true"
-        android:text="Отображать сумму в день?"
+        android:text="@string/show_sum_per_day"
+        android:textColor="@color/textPrimaryInverted"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hiddenMode" />
 
@@ -126,33 +131,35 @@
         android:id="@+id/sumPerDayModeDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:padding="8dp"
         android:src="@drawable/ic_baseline_whatshot_24"
         app:layout_constraintBottom_toBottomOf="@id/sumPerDayMode"
         app:layout_constraintStart_toEndOf="@id/sumPerDayMode"
-        app:layout_constraintTop_toTopOf="@id/sumPerDayMode" />
+        app:layout_constraintTop_toTopOf="@id/sumPerDayMode"
+        app:tint="@color/textPrimaryInverted" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
+        android:alpha="0"
         android:hint="день окончания периода"
         android:textSize="16dp"
-        android:alpha="0"
         app:layout_constraintTop_toBottomOf="@id/sumPerDayMode" />
 
-    <Button
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/createAccount"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginHorizontal="16dp"
+        style="@style/FabStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_rounded_16dp"
-        android:backgroundTint="@color/colorYellow"
-        android:gravity="center"
-        android:text="создать"
+        android:drawableLeft="@drawable/ic_24_add"
+        android:text="@string/create_account"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.model.RecyclerItem
 import com.example.holmi_production.money_counter_app.model.enums.Images
-import com.example.holmi_production.money_counter_app.ui.adapter.decorators.BaseDecorator
+import com.example.holmi_production.money_counter_app.ui.adapter.decorators.AsyncBaseDecorator
 import com.example.holmi_production.money_counter_app.ui.adapter.diffUtil.DashboardDetailsItemDiffUtilCallback
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionDashboardHeaderItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionDashboardItem
@@ -35,7 +35,7 @@ fun dashboardTransactionDelegate() =
             manager
         )
         itemView.transactionGroup.adapter = adapter
-        itemView.transactionGroup.addItemDecoration(BaseDecorator(context))
+        itemView.transactionGroup.addItemDecoration(AsyncBaseDecorator(context))
 
         bind {
             val items = mutableListOf<RecyclerItem>()
@@ -60,7 +60,7 @@ fun dashboardTransactionDetailsDelegate() =
                 val lp = itemImage.layoutParams as ConstraintLayout.LayoutParams
                 itemSum.text = item.sum.toString()
                 itemCategory.text =
-                    item.categoryId?.description ?: if (item.sum > 0) "Expense" else "Income"
+                    item.categoryId?.description ?: if (item.sum > 0) "Income" else "Expense"
                 if (item.categoryId == null) {
                     indicator.visibility = View.GONE
                     if (item.sum > 0) {

@@ -32,8 +32,8 @@
         android:id="@+id/accountSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="16dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/accountName">
@@ -71,24 +71,27 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/accountItems"
-        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginVertical="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/accountSummary" />
 
-    <Button
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/showBottom"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+        style="@style/FabStyleInverted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_rounded_16dp"
-        android:backgroundTint="@color/colorYellow"
-        android:gravity="center"
-        android:text="show bottom"
-        android:textAllCaps="true"
+        android:layout_marginBottom="16dp"
+        android:drawableLeft="@drawable/ic_24_add"
+        android:text="@string/add_transaction"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:rippleColor="@color/textPrimaryInverted"
+        app:drawableTint="@color/textPrimaryInverted"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

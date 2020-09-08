@@ -37,17 +37,19 @@ class MainActivity : AppCompatActivity() {
         host.navController
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initNavController()
         initializeNavigation()
         initView()
+
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.onBoardingFragment) {
-                backLayout.visibility = View.GONE
+                appBar.visibility = View.GONE
             } else {
-                backLayout.visibility = View.VISIBLE
+                appBar.visibility = View.VISIBLE
             }
         }
         viewModel.activePeriod.observe(this, Observer(::updatePeriod))
