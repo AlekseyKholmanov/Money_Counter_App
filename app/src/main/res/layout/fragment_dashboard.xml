@@ -84,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:drawableLeft="@drawable/ic_24_add"
         android:text="@string/add_transaction"
         android:textSize="14sp"
