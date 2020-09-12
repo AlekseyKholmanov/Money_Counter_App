@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
@@ -17,7 +16,6 @@ import com.example.holmi_production.money_counter_app.ui.LaunchDestination
 import com.example.holmi_production.money_counter_app.ui.MainActivity
 import com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog
 import com.example.holmi_production.money_counter_app.ui.viewModels.CreateAccountViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_onboarding_account_create.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -59,6 +57,7 @@ class CreateAccountFragment : BaseFragment(R.layout.fragment_onboarding_account_
                     BottomDialog.ARGS_DIALOG_TYPE to BottomDialog.TYPE_ACCOUNT_CURRENCY
                 )
             )
+            
         }
 
         viewModel.currencyType.observe(viewLifecycleOwner, Observer(::updateCurrencyType))

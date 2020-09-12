@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     val topLevelDestinations: Set<Int>
         get() = setOf(
-            R.id.dashboardFragment,
+            R.id.navigationDashboard,
             R.id.chartFragment,
             R.id.limitsFragment,
             R.id.transactionFragment
@@ -51,7 +52,10 @@ class MainActivity : AppCompatActivity() {
         initView()
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             period.visibility =
-                if (topLevelDestinations.contains(destination.id)) {
+                if (topLevelDestinations.contains(destination.id) || (topLevelDestinations.contains(
+                        navController.previousBackStackEntry?.destination?.id
+                    ) && (destination.id == R.id.navigationBottomDialog || destination.id == R.id.navigationAddTransactionKeyboard))
+                ) {
                     View.VISIBLE
                 } else {
                     View.GONE
@@ -109,6 +113,7 @@ class MainActivity : AppCompatActivity() {
     private fun initializeNavigation() {
         NavigationUI.setupWithNavController(navigationView, navController)
         toolbar.setupWithNavController(navController, appBarConfiguration)
+        navigationView.setupWithNavController(navController)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

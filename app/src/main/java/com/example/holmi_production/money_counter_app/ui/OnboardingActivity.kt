@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import com.example.holmi_production.money_counter_app.R
+import kotlinx.android.synthetic.main.activity_main.*
 
 class OnboardingActivity :AppCompatActivity(){
 
@@ -37,7 +39,6 @@ class OnboardingActivity :AppCompatActivity(){
 
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.navHostFragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

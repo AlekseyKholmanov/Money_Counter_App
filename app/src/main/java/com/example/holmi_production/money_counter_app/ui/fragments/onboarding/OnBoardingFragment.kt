@@ -21,7 +21,7 @@ class OnBoardingFragment: BaseFragment(R.layout.fragment_onboarding) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         createManual.setOnClickListener {
-            val direction = OnBoardingFragmentDirections.actionOnBoardingFragmentToCreateAccountFragment()
+            val direction = OnBoardingFragmentDirections.actionOnBoardingFragmentToCreateAccountFragmentOnboarding()
             findNavController().navigate(direction)
         }
         createAuto.setOnClickListener {

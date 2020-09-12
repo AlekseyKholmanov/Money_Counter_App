@@ -10,17 +10,14 @@
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.onboarding.OnBoardingFragment"
         tools:layout="@layout/fragment_onboarding">
         <action
-            android:id="@+id/action_onBoardingFragment_to_createAccountFragment"
-            app:destination="@id/createAccountFragment" />
+            android:id="@+id/action_onBoardingFragment_to_createAccountFragmentOnboarding"
+            app:destination="@id/createAccountFragmentOnboarding" />
     </fragment>
 
     <fragment
-        android:id="@+id/createAccountFragment"
+        android:id="@+id/createAccountFragmentOnboarding"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.onboarding.CreateAccountFragment"
         tools:layout="@layout/fragment_onboarding_account_create">
-        <action
-            android:id="@+id/action_createAccountFragment_to_bottomDialogInOnboarding"
-            app:destination="@id/bottomDialogInOnboarding" />
         <argument
             android:name="from"
             app:argType="com.example.holmi_production.money_counter_app.ui.LaunchDestination"
@@ -28,23 +25,26 @@
     </fragment>
 
     <dialog
-        android:id="@+id/bottomDialogInOnboarding"
-        android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog">
+        android:id="@id/navigationBottomDialog"
+        android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog"
+        android:label="BottomDialog">
         <argument
             android:name="selectedIdInt"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
 
         <argument
             android:name="dialogType"
             app:argType="string" />
-
         <argument
             android:name="selectedIdString"
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
     </dialog>
+    <action
+        android:id="@+id/action_global_bottomDialog"
+        app:destination="@id/navigationBottomDialog" />
 
 
 </navigation>

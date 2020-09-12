@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/dashboardFragment">
+    app:startDestination="@id/navigationDashboard">
 
     <fragment
-        android:id="@+id/dashboardFragment"
+        android:id="@id/navigationDashboard"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.DashboardFragment"
         tools:layout="@layout/old_fragment_dashboard">
         <action
             android:id="@+id/action_keyboardFragment_to_bottomKeyboard"
-            app:destination="@id/bottomKeyboard" />
+            app:destination="@id/navigationAddTransactionKeyboard" />
         <action
             android:id="@+id/action_dashboardFragment_to_simpleBottomKeyboard"
             app:destination="@id/simpleBottomKeyboard" />
@@ -29,7 +29,7 @@
         android:id="@+id/limitsFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.LimitsFragment" />
     <dialog
-        android:id="@+id/bottomKeyboard"
+        android:id="@id/navigationAddTransactionKeyboard"
         android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomKeyboard"
         tools:layout="@layout/bottom_keyboard_full">
         <argument
@@ -74,7 +74,7 @@
             android:defaultValue="MAIN_ACTIVITY" />
     </fragment>
     <dialog
-        android:id="@+id/bottomDialog"
+        android:id="@id/navigationBottomDialog"
         android:name="com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog"
         android:label="BottomDialog">
         <argument
@@ -93,7 +93,7 @@
     </dialog>
     <action
         android:id="@+id/action_global_bottomDialog"
-        app:destination="@id/bottomDialog" />
+        app:destination="@id/navigationBottomDialog" />
     <action
         android:id="@+id/action_global_createAccountFragment"
         app:destination="@id/createAccountFragment" />
