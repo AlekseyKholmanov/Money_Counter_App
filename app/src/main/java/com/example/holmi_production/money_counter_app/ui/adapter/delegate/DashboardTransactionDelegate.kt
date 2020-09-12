@@ -4,6 +4,7 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import coil.load
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.model.RecyclerItem
 import com.example.holmi_production.money_counter_app.model.enums.Images
@@ -58,7 +59,7 @@ fun dashboardTransactionDetailsDelegate() =
         bind {
             with(itemView) {
                 val lp = itemImage.layoutParams as ConstraintLayout.LayoutParams
-                itemSum.text = item.sum.toString()
+                itemSum.text = item.sum.toCurencyFormat()
                 itemCategory.text =
                     item.categoryId?.description ?: if (item.sum > 0) "Income" else "Expense"
                 if (item.categoryId == null) {
@@ -87,7 +88,7 @@ fun dashboardTransactionDetailsHeaderDelegate() =
         bind {
             with(itemView) {
                 headerDate.text = item.date.toRUformat()
-                headerSum.text = "Total: ${item.total.toString()}"
+                headerSum.text = "Total: ${item.total.toCurencyFormat()}"
             }
         }
     }

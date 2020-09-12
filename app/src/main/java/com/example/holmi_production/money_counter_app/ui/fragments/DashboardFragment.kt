@@ -7,10 +7,9 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.example.holmi_production.money_counter_app.R
+import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.uiModels.DashboardAccountDetails
 import com.example.holmi_production.money_counter_app.ui.adapter.delegate.dashboardTransactionDelegate
 import com.example.holmi_production.money_counter_app.ui.adapter.diffUtil.DashboardGroupDiffUtilCallback
@@ -19,6 +18,7 @@ import com.example.holmi_production.money_counter_app.ui.adapter.items.Transacti
 import com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog
 import com.example.holmi_production.money_counter_app.ui.viewModels.DashboardViewModel
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -99,9 +99,9 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     private fun updateAccounts(details: DashboardAccountDetails) {
         accountName.text = details.account.description
         val divided = details.transactions.partition { it.sum > 0 }
-        accountExpenses.setAmount(divided.second.sumByDouble { it.sum }.toString())
-        accountIncome.setAmount(divided.first.sumByDouble { it.sum }.toString())
-        accountBalance.setAmount(details.transactions.sumByDouble { it.sum }.toString())
+        accountExpenses.setAmount(divided.second.sumByDouble { it.sum }.toCurencyFormat())
+        accountIncome.setAmount(divided.first.sumByDouble { it.sum }.toCurencyFormat())
+        accountBalance.setAmount(details.transactions.sumByDouble { it.sum }.toCurencyFormat())
         transactionAdapter.items =
             details.transactions.groupBy { it.createdDate.withTimeAtStartOfDay() }
                 .map { TransactionGroupItem(it.key, it.value) }

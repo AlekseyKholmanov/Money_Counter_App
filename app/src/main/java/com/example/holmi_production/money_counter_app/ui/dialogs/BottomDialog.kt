@@ -12,17 +12,19 @@ import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.RecyclerItem
 import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
-import com.example.holmi_production.money_counter_app.ui.adapter.decorators.AsyncBaseDecorator
+import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import com.example.holmi_production.money_counter_app.ui.adapter.decorators.ListDelegationDecorator
 import com.example.holmi_production.money_counter_app.ui.adapter.delegate.*
 import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogFirstItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogValueGuidItem
+import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogValueItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogValueTextItem
 import com.example.holmi_production.money_counter_app.useCases.GetAccountsUseCase
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import kotlinx.android.synthetic.main.bottom_dialog.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class BottomDialog : BottomSheetDialogFragment() {
@@ -47,7 +49,7 @@ class BottomDialog : BottomSheetDialogFragment() {
                 dismiss()
             },
             dialogFirstItemDelegate {
-                findNavController().navigate(R.id.action_global_createAccountFragment2)
+                findNavController().navigate(R.id.action_global_createAccountFragment)
                 dismiss()
             }
         )

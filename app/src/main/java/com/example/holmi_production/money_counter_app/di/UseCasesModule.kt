@@ -101,4 +101,10 @@ val useCasesModule = module {
             db = get()
         )
     }
+
+    single<OnboardingCompletedUseCase>{
+        OnboardingCompletedUseCaseImpl(
+            appPreference = get()
+        )
+    }
 }

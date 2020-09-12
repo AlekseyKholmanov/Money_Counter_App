@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.di
 
 import ChartPieViewModel
+import com.example.holmi_production.money_counter_app.ui.LaunchViewModel
 import com.example.holmi_production.money_counter_app.ui.viewModels.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -97,6 +98,12 @@ val viewModelsModule = module {
         MainViewModel(
             getActivePeriodUseCase = get(),
             updateActivePeriodUseCase = get()
+        )
+    }
+
+    viewModel {
+        LaunchViewModel(
+            onboardingCompletedUseCase = get()
         )
     }
 }

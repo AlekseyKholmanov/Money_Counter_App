@@ -2,11 +2,10 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.core.content.ContextCompat
 import androidx.core.view.size
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -15,16 +14,16 @@ import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.main.BaseFragment
-import com.example.holmi_production.money_counter_app.model.CategoryDetails
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.model.enums.Images
+import com.example.holmi_production.money_counter_app.ui.MainActivity
 import com.example.holmi_production.money_counter_app.ui.custom.ColorSeekBar
 import com.example.holmi_production.money_counter_app.ui.dialogs.CreateSubcategoryDialog
 import com.example.holmi_production.money_counter_app.ui.dialogs.ImageCategoryPicker
 import com.example.holmi_production.money_counter_app.ui.viewModels.CategoryDetailsViewModel
-import com.example.holmi_production.money_counter_app.utils.ColorUtils
 import com.google.android.material.chip.Chip
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_category_details.*
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
@@ -51,7 +50,10 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         categoryDetailsViewModel.categories.observe(viewLifecycleOwner, Observer(::setCategory))
-        categoryDetailsViewModel.subcategories.observe(viewLifecycleOwner, Observer(::setSubcategory))
+        categoryDetailsViewModel.subcategories.observe(
+            viewLifecycleOwner,
+            Observer(::setSubcategory)
+        )
 
         categoryImage.setOnClickListener {
             val dialog =
@@ -67,7 +69,7 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
             dialog.show()
         }
         addSubcategory.setOnClickListener {
-            CreateSubcategoryDialog{
+            CreateSubcategoryDialog {
                 val chip = buildChip(it, null)
                 chips.addView(chip)
             }.show(childFragmentManager, "CreateSubcategory")
@@ -114,12 +116,30 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
             )
             findNavController().popBackStack()
         }
+
+        with(saveCategory) {
+            if (args.categoryId != null) {
+                val image = ContextCompat.getDrawable(requireContext(), R.drawable.ic_save)!!
+                text = "Edit Category"
+                val h = image.intrinsicHeight
+                val w = image.intrinsicWidth
+                image.setBounds( 0, 0, w, h )
+                setCompoundDrawables(image, null, null, null)
+            } else {
+                val image = ContextCompat.getDrawable(requireContext(), R.drawable.ic_24_add)!!
+                val h = image.intrinsicHeight
+                val w = image.intrinsicWidth
+                image.setBounds( 0, 0, w, h )
+                text = "Create Category"
+                setCompoundDrawables(image, null, null, null)
+            }
+        }
     }
 
     private fun setCategory(category: CategoryEntity?) {
         category?.let {
             val image = Images.getImageById(it.imageId)
-            with(categoryImage){
+            with(categoryImage) {
                 backgroundTintList = ColorStateList.valueOf(it.color)
                 setImageResource(image)
                 tag = it.imageId
@@ -128,7 +148,7 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
         }
     }
 
-    private fun setSubcategory(subcategory: List<SubCategoryEntity>){
+    private fun setSubcategory(subcategory: List<SubCategoryEntity>) {
         subcategory.let {
             chips.removeAllViews()
             it.forEach { subcategory ->
@@ -163,7 +183,7 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
             if (args.categoryId == null) {
                 chips.removeView(chip)
             } else {
-                subcategoryId?.let{ categoryDetailsViewModel.deleteSubcategory(it)}
+                subcategoryId?.let { categoryDetailsViewModel.deleteSubcategory(it) }
             }
         }
         return chip

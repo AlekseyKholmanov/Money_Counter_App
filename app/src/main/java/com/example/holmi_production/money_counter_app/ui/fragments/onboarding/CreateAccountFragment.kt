@@ -1,23 +1,31 @@
 package com.example.holmi_production.money_counter_app.ui.fragments.onboarding
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
+import com.example.holmi_production.money_counter_app.ui.LaunchDestination
+import com.example.holmi_production.money_counter_app.ui.MainActivity
 import com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog
 import com.example.holmi_production.money_counter_app.ui.viewModels.CreateAccountViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_onboarding_account_create.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateAccountFragment : BaseFragment(R.layout.fragment_onboarding_account_create) {
 
     private val viewModel: CreateAccountViewModel by viewModel()
+
+    private val args: CreateAccountFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,19 +37,31 @@ class CreateAccountFragment : BaseFragment(R.layout.fragment_onboarding_account_
                 password = null,
                 startBalance = accountBalanceEditText.text.toString().toDouble()
             )
-            findNavController().navigate(R.id.dashboardFragment)
+            if (args.from == LaunchDestination.ONBOARDING) {
+                startActivity(
+                    Intent(
+                        requireContext(),
+                        MainActivity::class.java
+                    )
+                )
+                requireActivity().finishAfterTransition()
+            } else {
+                findNavController().popBackStack()
+            }
         }
         accountCurrencyEditText.setOnClickListener {
             findNavController().navigate(
                 R.id.action_global_bottomDialog, bundleOf(
-                    BottomDialog.ARGS_SELECTED_ID_INT to (viewModel.currencyType.value?.ordinal ?: View.NO_ID),
+                    BottomDialog.ARGS_SELECTED_ID_INT to (viewModel.currencyType.value?.ordinal
+                        ?: View.NO_ID),
+                    BottomDialog.ARGS_SELECTED_ID_INT to (viewModel.currencyType.value?.ordinal
+                        ?: View.NO_ID),
                     BottomDialog.ARGS_DIALOG_TYPE to BottomDialog.TYPE_ACCOUNT_CURRENCY
                 )
             )
         }
 
         viewModel.currencyType.observe(viewLifecycleOwner, Observer(::updateCurrencyType))
-
         setResultListener()
     }
 

@@ -1,17 +1,11 @@
 package com.example.holmi_production.money_counter_app.extensions
 
 import org.joda.time.DateTime
-import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
-import java.lang.Exception
 import java.util.*
-import java.util.regex.Pattern
 
 fun Number.toCurencyFormat(): String {
-    return if (this.toString().takeLast(2) == ".0")
-        (this.toString().dropLast(2))
-    else
-        String.format(Locale.ROOT, "%.1f", this)
+    return String.format(Locale.ROOT, "%,.2f", this)
 }
 
 fun DateTime.getNameDayOfWeek(): String {
@@ -36,7 +30,7 @@ fun DateTime.toRUformat(): String {
     return formatter.print(this)
 }
 
-fun DateTime.simpleFormat():String{
+fun DateTime.simpleFormat(): String {
     val formatter = DateTimeFormat.forPattern("dd.MM.yy")
     return formatter.print(this)
 }

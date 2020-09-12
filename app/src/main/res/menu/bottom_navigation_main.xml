@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/design_default_color_primary_variant">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/dashboardFragment"
             android:enabled="true"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/ic_menu_home"
             app:iconTint="@color/colorAccent"
             android:title="@string/dashboard" />
         <item
             android:id="@+id/transactionFragment"
             android:enabled="true"
             app:iconTint="@color/colorAccent"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/ic_menu_graph"
             android:title="@string/text_сosts" />
         <item
             android:id="@+id/chartFragment"

@@ -150,7 +150,7 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/createAccount"
-        style="@style/FabStyle"
+        style="@style/FabStyleInverted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"

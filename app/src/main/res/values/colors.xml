@@ -5,13 +5,16 @@
 
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="colorYellow">#ffea00</color>
+    <color name="colorAccent">#D81B60</color>>
     <color name="yellowAccent">#f5a22a</color>
     <color name="Gray">#616161</color>
     <color name="surface">#f9fafb</color>
     <color name="textPrimary">#291720</color>
     <color name="textPrimaryInverted">#ffffff</color>
+    <color name ="colorPink">#D90368</color>
+    <color name ="colorGreen">#04A777</color>
+    <color name ="colorYellow">#FDC133</color>
+    <color name ="colorPurple">#820263</color>
 
 
     <color name="text_button_text_color_normal">@color/colorPrimary</color>
