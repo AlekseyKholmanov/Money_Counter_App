@@ -59,7 +59,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/spending_background">
 
-            <com.example.holmi_production.money_counter_app.ui.custom.Indicator
+            <com.example.holmi_production.money_counter_app.ui.custom.ColorIndicator
                 android:id="@+id/indicator"
                 android:layout_width="8dp"
                 android:layout_height="match_parent"

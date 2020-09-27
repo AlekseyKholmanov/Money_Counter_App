@@ -10,7 +10,7 @@ import com.example.holmi_production.money_counter_app.ui.utils.dpToPx
 /**
  * @author Alexey Kholmanov (alexey.holmanov@cleverpumpkin.ru)
  */
-class Indicator @JvmOverloads constructor(
+class ColorIndicator @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 

@@ -18,14 +18,19 @@ class GetTransactionUseCaseImpl(
     }
 
     override fun observeTransactionsDetails(): Flow<List<TransactionDetails>> {
-        return combine(
-            transactionDatabase.observeTransactionsDetails(),
-            getActivePeriodUseCase.observeLatestPeriod()
-        ) { transaction, period ->
-            transaction.filter {
-                it.transaction.createdDate <= period.to && it.transaction.createdDate >= period.from
-            }
-        }
+        return transactionDatabase.observeTransactionsDetails()
+//        return combine(
+//            transactionDatabase.observeTransactionsDetails(),
+//            getActivePeriodUseCase.observeLatestPeriod()
+//        ) { transaction, period ->
+//            transaction.filter {
+//                it.transaction.createdDate <= period.to && it.transaction.createdDate >= period.from
+//            }
+//        }
+    }
+
+    override fun observeTransactionDetailsWithDate(): Flow<List<TransactionDetails>> {
+        return transactionDatabase.observeTransactionsDetailsWithPeriod()
     }
 }
 

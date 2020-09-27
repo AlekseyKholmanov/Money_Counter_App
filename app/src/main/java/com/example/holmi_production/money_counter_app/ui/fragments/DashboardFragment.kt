@@ -104,7 +104,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         accountBalance.setAmount(details.transactions.sumByDouble { it.sum }.toCurencyFormat())
         transactionAdapter.items =
             details.transactions.groupBy { it.createdDate.withTimeAtStartOfDay() }
-                .map { TransactionGroupItem(it.key, it.value) }
+                .map { TransactionGroupItem(it.key, it.value.sortedByDescending { it.createdDate }) }
     }
 
     override fun onDestroyView() {

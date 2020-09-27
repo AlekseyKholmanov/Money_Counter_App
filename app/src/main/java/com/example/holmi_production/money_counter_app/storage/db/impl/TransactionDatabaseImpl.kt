@@ -48,4 +48,12 @@ class TransactionDatabaseImpl(
     override fun observeTransactionsDetails(): Flow<List<TransactionDetails>> {
         return dao.observeTransactionDetails()
     }
+
+    override fun observeTransactionsDetailsWithPeriod(): Flow<List<TransactionDetails>> {
+        return dao.observeTransactionDetailsWithPeriod()
+    }
+
+    override fun observeTransactionsWithPeriod(): Flow<List<TransactionEntity>> {
+        return dao.observeTransactionsWithPeriod()
+    }
 }

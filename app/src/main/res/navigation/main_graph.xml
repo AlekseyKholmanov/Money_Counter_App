@@ -24,7 +24,7 @@
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartFragment" />
     <fragment
         android:id="@+id/transactionFragment"
-        android:name="com.example.holmi_production.money_counter_app.ui.fragments.TransactionFragment" />
+        android:name="com.example.holmi_production.money_counter_app.ui.fragments.ChartFragment" />
     <fragment
         android:id="@+id/limitsFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.LimitsFragment" />

@@ -33,6 +33,9 @@ class   TransactionDashboardItem(
     companion object{
         val VIEW_TYPE = R.layout.item_dashboard_transaction
     }
+
+    override val padding: Int
+        get() = 32
 }
 
 fun DashboardTransactionDetails.toItem(): TransactionDashboardItem {

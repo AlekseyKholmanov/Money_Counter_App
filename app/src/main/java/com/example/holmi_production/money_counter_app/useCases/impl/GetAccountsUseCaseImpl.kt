@@ -33,8 +33,9 @@ class GetAccountsUseCaseImpl(
                 details to period
             }.map { (details, period) ->
                 val transactionDetails =
-                    details.transactions.sortedByDescending { it.createdDate }
+                    details.transactions
                         .filter { it.createdDate >= period.from && it.createdDate <= period.to }
+                        .sortedByDescending { it.createdDate }
                         .map {
                             DashboardTransactionDetails(
                                 id = it.id,
@@ -62,8 +63,9 @@ class GetAccountsUseCaseImpl(
             }.map { (details, period) ->
                 details.map {
                     val transaction =
-                        it.transactions.sortedByDescending { it.createdDate }
+                        it.transactions
                             .filter { it.createdDate >= period.from && it.createdDate <= period.to }
+                            .sortedByDescending { it.createdDate }
                     DashboardAccountDetails(
                         account = it.account,
                         transactions = transaction.map {

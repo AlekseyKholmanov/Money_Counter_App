@@ -8,19 +8,18 @@ import com.example.holmi_production.money_counter_app.ui.adapter.items.Transacti
 class DashboardDetailsItemDiffUtilCallback : DiffUtil.ItemCallback<RecyclerItem>() {
     override fun areItemsTheSame(oldItem: RecyclerItem, newItem: RecyclerItem): Boolean {
         return when {
-            oldItem is TransactionDashboardHeaderItem && newItem is TransactionDashboardHeaderItem -> true
+            oldItem is TransactionDashboardHeaderItem && newItem is TransactionDashboardHeaderItem -> oldItem.date == newItem.date
 
             oldItem is TransactionDashboardItem && newItem is TransactionDashboardItem -> oldItem.id == newItem.id
 
-            else -> false
+            else -> true
         }
     }
 
     override fun areContentsTheSame(oldItem: RecyclerItem, newItem: RecyclerItem): Boolean {
         return when {
             oldItem is TransactionDashboardHeaderItem && newItem is TransactionDashboardHeaderItem -> {
-                oldItem.date == newItem.date
-                        && oldItem.total == newItem.total
+                      oldItem.total == newItem.total
             }
             oldItem is TransactionDashboardItem && newItem is TransactionDashboardItem -> {
                 oldItem.categoryId == newItem.categoryId

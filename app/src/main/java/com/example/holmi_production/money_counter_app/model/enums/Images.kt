@@ -60,8 +60,8 @@ enum class Images(@DrawableRes val imageResId: Int) {
     companion object {
         const val NO_IMAGE = -1
 
-        fun getImageById(id: Int): Int {
-            return if (id == NO_IMAGE) {
+        fun getImageById(id: Int?): Int {
+            return if (id == NO_IMAGE || id == null) {
                 R.drawable.img_no_image
             } else {
                 values()[id].imageResId

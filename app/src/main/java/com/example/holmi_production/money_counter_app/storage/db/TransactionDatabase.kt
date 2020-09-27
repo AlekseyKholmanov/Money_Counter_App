@@ -22,4 +22,8 @@ interface TransactionDatabase {
     suspend fun markDeleted(transactionId:String)
 
     fun observeTransactionsDetails(): Flow<List<TransactionDetails>>
+
+    fun observeTransactionsDetailsWithPeriod(): Flow<List<TransactionDetails>>
+
+    fun observeTransactionsWithPeriod(): Flow<List<TransactionEntity>>
 }

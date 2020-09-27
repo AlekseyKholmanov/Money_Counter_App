@@ -16,8 +16,8 @@
 
         <activity
             android:name=".ui.MainActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
             <nav-graph android:value="@navigation/main_graph"/>

@@ -10,4 +10,6 @@ interface GetTransactionUseCase {
 
     fun observeTransactionsDetails(): Flow<List<TransactionDetails>>
 
+    fun observeTransactionDetailsWithDate(): Flow<List<TransactionDetails>>
+
 }

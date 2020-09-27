@@ -38,7 +38,7 @@ class ListDelegationDecorator(context: Context) : RecyclerView.ItemDecoration() 
             when (holderItem) {
                 is LeftPaddedMarker -> {
                     if (i != parent.childCount - 1) {
-                        drawDivider(padding16dp, child, c, lm)
+                        drawDivider(dpToPx(holderItem.padding), child, c, lm)
                         c.restoreToCount(save)
                     }
                 }

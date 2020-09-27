@@ -1,7 +1,6 @@
 package com.example.holmi_production.money_counter_app.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -65,8 +64,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updatePeriod(filterPeriodEntity: FilterPeriodEntity?) {
-        period.text =
-            "${filterPeriodEntity?.from?.simpleFormat()} - ${filterPeriodEntity?.to?.simpleFormat()}"
+        val text =
+            if (filterPeriodEntity?.to?.toLocalDate() == filterPeriodEntity?.from?.toLocalDate()) {
+                filterPeriodEntity?.to?.simpleFormat()
+            } else {
+                "${filterPeriodEntity?.from?.simpleFormat()} - ${filterPeriodEntity?.to?.simpleFormat()}"
+            }
+        period.text = text
+
     }
 
     private fun initView() {

@@ -74,7 +74,7 @@ val viewModelsModule = module {
     }
 
     viewModel {
-        TransactionViewModel(
+        ChartViewModel(
             getTransactionUseCase = get(),
             editTransactionUSeCase = get(),
             getActivePeriodUseCase = get(),

@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.RecyclerItem
 import com.example.holmi_production.money_counter_app.ui.adapter.decorators.FullLineMarker
-import com.example.holmi_production.money_counter_app.ui.adapter.decorators.LeftPaddedMarker
 
 class DialogValueItem(
     val id: Int,

@@ -14,7 +14,6 @@ import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 class AsyncBaseDecorator(context: Context) : RecyclerView.ItemDecoration() {
 
     private val bounds = RectF()
-    private val padding16dp = dpToPx(32)
     private val dividerWidth = dpToPx(1)
     private val paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
         strokeWidth = dividerWidth
@@ -37,7 +36,7 @@ class AsyncBaseDecorator(context: Context) : RecyclerView.ItemDecoration() {
             when (holderItem) {
                 is LeftPaddedMarker -> {
                     if (i != parent.childCount - 1) {
-                        drawDivider(padding16dp, child, c, lm)
+                        drawDivider(dpToPx(holderItem.padding), child, c, lm)
                         c.restoreToCount(save)
                     }
                 }

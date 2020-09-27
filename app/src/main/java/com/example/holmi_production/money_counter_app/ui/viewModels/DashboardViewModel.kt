@@ -1,15 +1,11 @@
 package com.example.holmi_production.money_counter_app.ui.viewModels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.holmi_production.money_counter_app.model.AccountDetails
 import com.example.holmi_production.money_counter_app.model.uiModels.DashboardAccountDetails
 import com.example.holmi_production.money_counter_app.storage.data_store.SettingManager
-import com.example.holmi_production.money_counter_app.ui.adapter.items.AccountInfoItem
-import com.example.holmi_production.money_counter_app.ui.adapter.items.toInfo
 import com.example.holmi_production.money_counter_app.useCases.GetAccountsUseCase
 import com.example.holmi_production.money_counter_app.useCases.GetTransactionUseCase
 import kotlinx.coroutines.Dispatchers
@@ -39,9 +35,11 @@ class DashboardViewModel(
                 } else {
                     getAccountsUseCase.observeAccountDetailsById(value)
                 }
-            }.collect {
-                _accountDetails.value = it
             }
+                .flowOn(Dispatchers.IO)
+                .collect {
+                    _accountDetails.value = it
+                }
         }
     }
 
@@ -49,9 +47,5 @@ class DashboardViewModel(
         viewModelScope.launch {
             settingsManager.setAccountId(selectedAccountId)
         }
-    }
-
-    fun observeSelectedAccount() {
-
     }
 }
