@@ -9,6 +9,7 @@ import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOf
 import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfYear
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import com.example.holmi_production.money_counter_app.model.enums.PeriodType
+import com.example.holmi_production.money_counter_app.useCases.FetchCurrencyUseCase
 import com.example.holmi_production.money_counter_app.useCases.GetActivePeriodUseCase
 import com.example.holmi_production.money_counter_app.useCases.UpdateActivePeriodUseCase
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +20,8 @@ import org.joda.time.DateTime
 
 class MainViewModel(
     private val getActivePeriodUseCase: GetActivePeriodUseCase,
-    private val updateActivePeriodUseCase: UpdateActivePeriodUseCase
+    private val updateActivePeriodUseCase: UpdateActivePeriodUseCase,
+    private val fetchCurrencyUseCase: FetchCurrencyUseCase
 ): ViewModel() {
 
     private val _activePeriod = MutableLiveData<FilterPeriodEntity>()
@@ -32,6 +34,9 @@ class MainViewModel(
                 .collect {
                     _activePeriod.value = it
                 }
+        }
+        viewModelScope.launch {
+            fetchCurrencyUseCase.fetchAndSaveCurrencies()
         }
     }
 

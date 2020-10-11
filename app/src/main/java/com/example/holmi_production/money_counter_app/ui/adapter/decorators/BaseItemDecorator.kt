@@ -11,7 +11,7 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.ui.utils.dpToPx
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
-class AsyncBaseDecorator(context: Context) : RecyclerView.ItemDecoration() {
+class BaseItemDecorator(context: Context) : RecyclerView.ItemDecoration() {
 
     private val bounds = RectF()
     private val dividerWidth = dpToPx(1)

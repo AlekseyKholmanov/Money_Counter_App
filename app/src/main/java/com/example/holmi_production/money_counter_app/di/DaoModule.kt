@@ -18,4 +18,5 @@ val daoModule = module {
     single { get<ExpenseDatabase>().accountDao() }
     single { get<ExpenseDatabase>().recentAccountDao() }
     single { get<ExpenseDatabase>().recentCategoryDao() }
+    single { get<ExpenseDatabase>().currencyDao() }
 }

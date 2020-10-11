@@ -4,22 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfDay
-import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfMonth
-import com.example.holmi_production.money_counter_app.extensions.withTimeAtEndOfYear
-import com.example.holmi_production.money_counter_app.model.TransactionDetails
-import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
-import com.example.holmi_production.money_counter_app.model.enums.PeriodType
+import com.example.holmi_production.money_counter_app.model.dto.TransactionDetailsDTO
 import com.example.holmi_production.money_counter_app.ui.adapter.items.CharCategoryItem
 import com.example.holmi_production.money_counter_app.useCases.EditTransactionUseCase
 import com.example.holmi_production.money_counter_app.useCases.GetActivePeriodUseCase
 import com.example.holmi_production.money_counter_app.useCases.GetTransactionUseCase
 import com.example.holmi_production.money_counter_app.useCases.UpdateActivePeriodUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.joda.time.DateTime
 import kotlin.math.abs
 
 class ChartViewModel(
@@ -32,7 +25,7 @@ class ChartViewModel(
     private val _transactions = MutableLiveData<List<CharCategoryItem>>()
     val transactions: LiveData<List<CharCategoryItem>> = _transactions
 
-    var showExpense:Boolean = true
+    var showExpense:Boolean = false
 
     private val expenses = mutableListOf<CharCategoryItem>()
     private val income = mutableListOf<CharCategoryItem>()
@@ -40,9 +33,9 @@ class ChartViewModel(
 
     fun observeTransaction() {
         viewModelScope.launch {
-            getTransactionUseCase.observeTransactionDetailsWithDate()
+            getTransactionUseCase.observeDetails()
                 .map{ transaction ->
-                        val divided = transaction.partition { it.transaction.sum > 0 }
+                        val divided = transaction.partition { it.sum > 0 }
                         buildCategoryItem(divided.first) to
                                 buildCategoryItem(divided.second)
 
@@ -59,11 +52,11 @@ class ChartViewModel(
         }
     }
 
-    private fun buildCategoryItem(transactions: List<TransactionDetails>): List<CharCategoryItem> {
-        val groupped = transactions.groupBy { it.category?.id ?: "No Category" }
-        val max = transactions.sumByDouble { it.transaction.sum }
+    private fun buildCategoryItem(transactions: List<TransactionDetailsDTO>): List<CharCategoryItem> {
+        val groupped = transactions.groupBy { it.category ?: "No Category" }
+        val max = transactions.sumByDouble { it.sum }
         return groupped.map {
-            val sum = it.value.sumByDouble { it.transaction.sum }
+            val sum = it.value.sumByDouble { it.sum }
             val category = it.value.first().category
             CharCategoryItem(
                 categoryName = category?.description ?: "No Category",

@@ -13,9 +13,6 @@
             android:id="@+id/action_keyboardFragment_to_bottomKeyboard"
             app:destination="@id/navigationAddTransactionKeyboard" />
         <action
-            android:id="@+id/action_dashboardFragment_to_simpleBottomKeyboard"
-            app:destination="@id/simpleBottomKeyboard" />
-        <action
             android:id="@+id/action_dashboardFragment_to_createAccountFragment"
             app:destination="@id/createAccountFragment" />
     </fragment>
@@ -47,22 +44,7 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
-    <dialog
-        android:id="@+id/simpleBottomKeyboard"
-        android:name="com.example.holmi_production.money_counter_app.ui.dialogs.SimpleBottomKeyboard"
-        android:label="SimpleBottomKeyboard"
-        tools:layout="@layout/bottom_keyboard_simple">
-        <argument
-            android:name="accountId"
-            app:argType="string" />
-        <argument
-            android:name="isSubstraction"
-            android:defaultValue="false"
-            app:argType="boolean" />
-        <action
-            android:id="@+id/action_simpleBottomKeyboard_to_categoryDetailsFragment"
-            app:destination="@id/categoryDetailsFragment" />
-    </dialog>
+
 
     <fragment
         android:id="@+id/createAccountFragment"
@@ -97,4 +79,7 @@
     <action
         android:id="@+id/action_global_createAccountFragment"
         app:destination="@id/createAccountFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.holmi_production.money_counter_app.ui.fragments.SettingsFragment" />
 </navigation>

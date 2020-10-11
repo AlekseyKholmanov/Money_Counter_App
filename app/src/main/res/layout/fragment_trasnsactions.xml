@@ -13,6 +13,7 @@
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="12dp"
         app:borderWidth="12dp"
+        app:isDrawText="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

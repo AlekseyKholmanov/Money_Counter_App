@@ -20,25 +20,29 @@ class AccountDatabaseImpl(
         return dao.observeAccountById(accountId)
     }
 
+    override suspend fun getAccountById(accountId: String): AccountEntity {
+        return dao.getAccountById(accountId)
+    }
+
     override suspend fun getAccounts(): List<AccountEntity> = withContext(Dispatchers.IO) {
         dao.getAccounts()
     }
 
 
-    override suspend fun getAccountDetailsById(accountId: String): AccountDetails = withContext(Dispatchers.IO) {
-        dao.getAccountDetailsById(accountId)
-    }
-
     override suspend fun getAccountsDetails(): List<AccountDetails> = withContext(Dispatchers.IO) {
         dao.getAccountsDetails()
     }
 
-    override fun observeAccountDetailsById(accountId: String): Flow<AccountDetails> {
-        return dao.observeAccountDetailsById(accountId)
-    }
-
     override fun observeAccountsDetails(): Flow<List<AccountDetails>> {
         return dao.observeAccountsDetails()
+    }
+
+    override fun observeAccountById(accountId: String): Flow<AccountEntity> {
+        return dao.observeAccountById(accountId)
+    }
+
+    override fun observeAccounts(): Flow<List<AccountEntity>> {
+        return dao.observeAccounts()
     }
 
 }

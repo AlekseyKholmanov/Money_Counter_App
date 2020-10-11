@@ -9,14 +9,18 @@ interface AccountDatabase {
 
     fun observeById(accountId: String): Flow<AccountEntity>
 
-    suspend fun getAccounts(): List<AccountEntity>
+    suspend fun getAccountById(accountId:String): AccountEntity
 
-    suspend fun getAccountDetailsById(accountId: String): AccountDetails
+    suspend fun getAccounts(): List<AccountEntity>
 
     suspend fun getAccountsDetails(): List<AccountDetails>
 
-    fun observeAccountDetailsById(accountId: String): Flow<AccountDetails>
-
     fun observeAccountsDetails(): Flow<List<AccountDetails>>
+
+    fun observeAccountById(accountId: String): Flow<AccountEntity>
+
+    fun observeAccounts(): Flow<List<AccountEntity>>
+
+
 
 }

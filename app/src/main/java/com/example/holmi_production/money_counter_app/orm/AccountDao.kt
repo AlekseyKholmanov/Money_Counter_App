@@ -32,4 +32,10 @@ abstract class AccountDao : BaseDao<AccountEntity>() {
     @Query("""SELECT * FROM AccountTable """)
     abstract fun observeAccountsDetails(): Flow<List<AccountDetails>>
 
+    @Query("SELECT * FROM AccountTable WHERE id=:accountId")
+    abstract fun getAccountById(accountId: String): AccountEntity
+
+    @Query("SELECT * FROM AccountTable")
+    abstract fun observeAccounts(): Flow<List<AccountEntity>>
+
 }

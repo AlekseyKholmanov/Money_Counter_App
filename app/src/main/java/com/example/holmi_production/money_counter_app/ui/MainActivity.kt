@@ -26,20 +26,21 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModel()
 
-    val navController by lazy {
+    private val navController by lazy {
         val host = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         host.navController
     }
 
-    val topLevelDestinations: Set<Int>
+    private val topLevelDestinations: Set<Int>
         get() = setOf(
             R.id.navigationDashboard,
             R.id.chartFragment,
             R.id.limitsFragment,
-            R.id.transactionFragment
+            R.id.transactionFragment,
+            R.id.settingsFragment
         )
 
-    val appBarConfiguration: AppBarConfiguration by lazy(LazyThreadSafetyMode.NONE) {
+    private val appBarConfiguration: AppBarConfiguration by lazy(LazyThreadSafetyMode.NONE) {
         AppBarConfiguration(topLevelDestinations, null) { false }
     }
 
@@ -72,6 +73,12 @@ class MainActivity : AppCompatActivity() {
             }
         period.text = text
 
+    }
+
+    private fun updateDatePickerVisibility(shouldShow: Boolean){
+        if(shouldShow){
+
+        }
     }
 
     private fun initView() {

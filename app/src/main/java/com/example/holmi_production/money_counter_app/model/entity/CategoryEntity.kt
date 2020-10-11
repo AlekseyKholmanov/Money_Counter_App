@@ -9,7 +9,6 @@ import java.util.*
 @Entity(tableName = "CategoryTable")
 data class CategoryEntity(
     @PrimaryKey
-
     val id: String = UUID.randomUUID().toString(),
 
     val description: String,

@@ -1,6 +1,6 @@
 package com.example.holmi_production.money_counter_app.storage.db.impl
 
-import com.example.holmi_production.money_counter_app.model.TransactionDetails
+import com.example.holmi_production.money_counter_app.model.dto.TransactionDetailsDTO
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
 import com.example.holmi_production.money_counter_app.orm.TransactionDao
 import com.example.holmi_production.money_counter_app.storage.db.TransactionDatabase
@@ -41,19 +41,23 @@ class TransactionDatabaseImpl(
         }
     }
 
-    override suspend fun markDeleted(transactionId: String) = withContext(Dispatchers.IO){
+    override suspend fun markDeleted(transactionId: String) = withContext(Dispatchers.IO) {
         dao.markDeleted(transactionId)
     }
 
-    override fun observeTransactionsDetails(): Flow<List<TransactionDetails>> {
-        return dao.observeTransactionDetails()
-    }
-
-    override fun observeTransactionsDetailsWithPeriod(): Flow<List<TransactionDetails>> {
-        return dao.observeTransactionDetailsWithPeriod()
+    override fun observeTransactionCount(): Flow<Int> {
+        return dao.observeTransactionCount()
     }
 
     override fun observeTransactionsWithPeriod(): Flow<List<TransactionEntity>> {
         return dao.observeTransactionsWithPeriod()
+    }
+
+    override fun observeTransactionDetailsByAccountId(accountId: String): Flow<List<TransactionDetailsDTO>> {
+        return dao.observeDetailsTransactionByAccountId(accountId)
+    }
+
+    override fun observeTransactionDetails(): Flow<List<TransactionDetailsDTO>> {
+        return dao.observeDetailsTransaction()
     }
 }

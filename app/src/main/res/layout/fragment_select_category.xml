@@ -60,7 +60,7 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_delete"
+                android:src="@drawable/ic_close"
                 app:backgroundTint="@color/Gray"
                 app:elevation="6dp"
                 app:fabSize="mini"
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:src="@drawable/ic_delete"
+                android:src="@drawable/ic_close"
                 app:backgroundTint="@color/colorYellow"
                 app:elevation="6dp"
                 app:fabSize="mini"

@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface GetAccountsUseCase {
 
-    suspend fun getAccountDetailsById(accountId: String): AccountDetails
-
     suspend fun getAccounts(): List<AccountEntity>
 
-    fun observeAccountDetailsById(accountId: String): Flow<DashboardAccountDetails>
+    suspend fun getAccountById(accountId: String): AccountEntity
 
-    fun observeAccountsDetails(): Flow<List<DashboardAccountDetails>>
+    fun observeAccountById(accountId: String): Flow<AccountEntity>
+
+    fun observeAccounts():Flow<List<AccountEntity>>
 }

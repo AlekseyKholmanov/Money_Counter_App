@@ -69,4 +69,9 @@
     <string name="account_name">Название счета</string>
     <string name="add_transaction">Add transaction</string>
     <string name="create_account">Create account</string>
+    <string name="account">Account</string>
+    <string name="settings">Настройки</string>
+    <string name="transaction_available">Доступно транзакций:</string>
+
+    <string name="transaction_count">%1$d из %2$d</string>
 </resources>

@@ -8,13 +8,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.model.Item
+import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
+import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
 import com.example.holmi_production.money_counter_app.model.toItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.CategoryItem
-import com.example.holmi_production.money_counter_app.useCases.AddTransactionUseCase
-import com.example.holmi_production.money_counter_app.useCases.GetCategoriesUseCase
-import com.example.holmi_production.money_counter_app.useCases.GetRecentCategoryUseCase
+import com.example.holmi_production.money_counter_app.useCases.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
@@ -26,7 +26,8 @@ import org.joda.time.DateTime
 class BottomKeyboardViewModel(
     private val getRecentCategoryUseCase: GetRecentCategoryUseCase,
     private val getCategoriesUseCase: GetCategoriesUseCase,
-    private val addTransactionUseCase: AddTransactionUseCase
+    private val addTransactionUseCase: AddTransactionUseCase,
+    private val getAccountUseCase: GetAccountsUseCase
 ) : ViewModel() {
 
     private val _categories: MutableLiveData<List<Item>> = MutableLiveData()
@@ -36,6 +37,8 @@ class BottomKeyboardViewModel(
     val subcategories: LiveData<List<SubCategoryEntity>> = _subcategories
 
     var selectedCategoryId:String? = null
+
+    var accauntInfo:AccountEntity? = null
 
 
     fun observeCategories() {
@@ -55,6 +58,12 @@ class BottomKeyboardViewModel(
         }
     }
 
+    fun getAccountInfo(accountId:String){
+        viewModelScope.launch {
+            accauntInfo = getAccountUseCase.getAccountById(accountId)
+        }
+    }
+
     fun saveTransaction(accountId: String, sum: Double, comment: String?, subcategoryId: String?) {
         val transaction = TransactionEntity(
             createdDate = DateTime.now(),
@@ -62,7 +71,8 @@ class BottomKeyboardViewModel(
             comment = comment,
             accountId = accountId,
             subcategoryId = subcategoryId,
-            categoryId = selectedCategoryId
+            categoryId = selectedCategoryId,
+            currencyType = accauntInfo?.currencyType ?: CurrencyType.RUBBLE
         )
         viewModelScope.launch {
             addTransactionUseCase.save(transaction)

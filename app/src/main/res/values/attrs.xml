@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="CustomPieChart">
         <attr name="borderWidth" format="dimension" />
+        <attr name="isDrawText" format="boolean"/>
     </declare-styleable>
 </resources>

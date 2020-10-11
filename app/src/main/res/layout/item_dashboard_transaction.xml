@@ -25,7 +25,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="4dp"
             android:background="@drawable/bg_rounded_8dp_stroked"
-            android:src="@drawable/ic_delete"
+            android:src="@drawable/ic_close"
             android:tint="@android:color/holo_red_light"
             tools:ignore="ContentDescription" />
 

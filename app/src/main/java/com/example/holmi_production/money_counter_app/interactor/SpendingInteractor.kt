@@ -30,9 +30,6 @@ class SpendingInteractor(
         return transactionDatabase.getTransactions()
     }
 
-    fun observeSpendingDetails(): Flow<List<TransactionDetails>> {
-        return transactionDatabase.observeTransactionsDetails()
-    }
 
     fun observeWithPeriods(): Flow<List<TransactionEntity>> {
         return periodsDatabase.observePeriod()

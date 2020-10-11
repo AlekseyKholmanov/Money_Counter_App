@@ -25,14 +25,15 @@ class OnBoardingFragment: BaseFragment(R.layout.fragment_onboarding) {
             findNavController().navigate(direction)
         }
         createAuto.setOnClickListener {
-            viewModel.createAccount()
-            startActivity(
-                Intent(
-                    requireContext(),
-                    MainActivity::class.java
+            viewModel.createAccount().also {
+                startActivity(
+                    Intent(
+                        requireContext(),
+                        MainActivity::class.java
+                    )
                 )
-            )
-            requireActivity().finishAfterTransition()
+                requireActivity().finishAfterTransition()
+            }
         }
     }
 }

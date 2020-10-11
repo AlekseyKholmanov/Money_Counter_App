@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:alpha="0.8"
         android:textColor="@color/textPrimary"
         android:textSize="15sp"

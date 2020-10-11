@@ -61,8 +61,7 @@ val useCasesModule = module {
 
     single<GetTransactionUseCase> {
         GetTransactionUseCaseImpl(
-            transactionDatabase = get(),
-            getActivePeriodUseCase = get()
+            transactionDatabase = get()
         )
     }
 
@@ -105,6 +104,19 @@ val useCasesModule = module {
     single<OnboardingCompletedUseCase>{
         OnboardingCompletedUseCaseImpl(
             appPreference = get()
+        )
+    }
+
+    single<FetchCurrencyUseCase>{
+        FetchCurrencyUseCaseImpl(
+            api = get(),
+            db = get()
+        )
+    }
+
+    single<GetCurrenciesCourseUseCase>{
+        GetCurrenciesCourseUseCaseImpl(
+            db = get()
         )
     }
 }

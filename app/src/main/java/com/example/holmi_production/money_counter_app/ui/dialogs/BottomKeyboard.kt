@@ -111,6 +111,7 @@ class BottomKeyboard : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.observeCategories()
+        viewModel.getAccountInfo(args.accountId)
     }
 
     override fun onCreateView(

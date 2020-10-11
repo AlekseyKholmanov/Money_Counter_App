@@ -26,5 +26,11 @@
             android:icon="@drawable/ic_launcher_foreground"
             app:iconTint="@color/colorAccent"
             android:title="@string/text_limits" />
+        <item
+            android:id="@+id/settingsFragment"
+            android:enabled="true"
+            android:icon="@drawable/ic_menu_settings"
+            app:iconTint="@color/colorAccent"
+            android:title="@string/settings" />
     </group>
 </menu>

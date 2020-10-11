@@ -65,8 +65,15 @@ val databaseModule = module {
             dao = get()
         )
     }
+
     single<RecentCategoryDatabase> {
         RecentCategoryDatabaseImpl(
+            dao = get()
+        )
+    }
+
+    single<CurrencyDatabase>{
+        CurrencyDatabaseImpl(
             dao = get()
         )
     }

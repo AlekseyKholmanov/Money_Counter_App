@@ -8,6 +8,10 @@ fun Number.toCurencyFormat(): String {
     return String.format(Locale.ROOT, "%,.2f", this)
 }
 
+fun Number.withCurrencyIcon(char: Char): String {
+    return "${String.format(Locale.ROOT, "%,.2f", this)} $char"
+}
+
 fun DateTime.getNameDayOfWeek(): String {
     return when (this.dayOfWeek().get()) {
         1 -> "Понедельник"

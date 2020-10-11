@@ -1,18 +1,20 @@
 package com.example.holmi_production.money_counter_app.ui.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.holmi_production.money_counter_app.model.uiModels.DashboardAccountDetails
+import android.util.Log
+import androidx.lifecycle.*
+import com.example.holmi_production.money_counter_app.model.dto.CurrencyCourseDTO
+import com.example.holmi_production.money_counter_app.model.dto.TransactionDetailsDTO
+import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
+import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
 import com.example.holmi_production.money_counter_app.storage.data_store.SettingManager
+import com.example.holmi_production.money_counter_app.ui.adapter.items.AccountSummary
+import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionGroupItem
+import com.example.holmi_production.money_counter_app.ui.adapter.items.toDashboardItem
 import com.example.holmi_production.money_counter_app.useCases.GetAccountsUseCase
+import com.example.holmi_production.money_counter_app.useCases.GetCurrenciesCourseUseCase
 import com.example.holmi_production.money_counter_app.useCases.GetTransactionUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
@@ -21,31 +23,115 @@ import kotlinx.coroutines.launch
 class DashboardViewModel(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
+    private val getCurrenciesCourseUseCase: GetCurrenciesCourseUseCase,
     private val settingsManager: SettingManager
 ) : ViewModel() {
 
-    private val _accountDetails = MutableLiveData<DashboardAccountDetails>()
-    val accountDetails: LiveData<DashboardAccountDetails> = _accountDetails
+    private val _accountDetails = MutableLiveData<List<TransactionGroupItem>>()
+    val accountDetails: LiveData<List<TransactionGroupItem>> = _accountDetails
+
+    private val _currency = MutableLiveData<CurrencyType?>(null)
+    val currency: LiveData<CurrencyType?> = _currency
+
+    private val _accountSummary = MutableLiveData<AccountSummary>()
+    val accountSummary: LiveData<AccountSummary> = _accountSummary
+
+    var course: CurrencyCourseDTO? = null
+    var accountDetailsEntity: AccountEntity? = null
 
     init {
-        viewModelScope.launch {
-            settingsManager.lastAccountFlow.flatMapLatest { value ->
+        getCurrenciesCourseUseCase.observeCourses()
+            .flowOn(Dispatchers.IO)
+            .onEach {
+                if (it.isNotEmpty())
+                    course = it.last()
+            }.launchIn(viewModelScope)
+
+        settingsManager.lastAccountFlow
+            .map {
+                return@map if (it == null) getAccountsUseCase.getAccounts().last() else
+                    getAccountsUseCase.getAccountById(it)
+            }.flowOn(Dispatchers.IO)
+            .onEach { accountEntity ->
+                accountEntity.let {
+                    _currency.value = it.currencyType
+                }
+            }.launchIn(viewModelScope)
+
+        settingsManager.lastAccountFlow
+            .flatMapLatest { value ->
                 if (value == null) {
-                    getAccountsUseCase.observeAccountsDetails().map { it.first() }
+                    getAccountsUseCase.observeAccounts().map { it.first() }
                 } else {
-                    getAccountsUseCase.observeAccountDetailsById(value)
+                    getAccountsUseCase.observeAccountById(value)
                 }
+                    .onEach {
+                        accountDetailsEntity = it
+                    }
+                    .flatMapLatest { account ->
+                        getTransactionUseCase.observeDetailsByAccountId(account.id)
+                    }
+                    .combine(
+                        currency.asFlow()
+                    ) { transactions, selectedCurrency -> transactions to selectedCurrency }
+            }.map { (transactions, selectedCurrency) ->
+                val divided = transactions.partition { it.sum > 0 }
+                val accountSummary = AccountSummary(
+                    accountId = accountDetailsEntity!!.id,
+                    description = accountDetailsEntity!!.description,
+                    balance = transactions.sumByDouble { it.sum },
+                    income = divided.first.sumByDouble { it.sum },
+                    expenses = divided.second.sumByDouble { it.sum },
+                    currencyType = accountDetailsEntity!!.currencyType
+                )
+                val transactionInfo =
+                    if (selectedCurrency == null || selectedCurrency == accountDetailsEntity!!.currencyType) {
+                        buildTransactionItems(transactions)
+                    } else {
+                        buildTransactionItems(transactions, changeCurrency = true)
+                    }
+                accountSummary to transactionInfo
             }
-                .flowOn(Dispatchers.IO)
-                .collect {
-                    _accountDetails.value = it
-                }
-        }
+            .flowOn(Dispatchers.IO)
+            .onEach { (summary, transactions) ->
+                _accountDetails.value = transactions
+                _accountSummary.value = summary
+            }
+            .launchIn(viewModelScope)
     }
 
     fun updateAccountId(selectedAccountId: String) {
         viewModelScope.launch {
             settingsManager.setAccountId(selectedAccountId)
         }
+    }
+
+    fun updateDisplayedCurrency(selected: CurrencyType) {
+        Log.d("M_DashboardViewModel", "change currency $selected")
+        _currency.value = selected
+    }
+
+    private fun buildTransactionItems(
+        items: List<TransactionDetailsDTO>,
+        changeCurrency: Boolean = false
+    ): List<TransactionGroupItem> {
+        val adapterItems = if (changeCurrency) {
+            items.map {
+                if (it.currencyType == currency.value) {
+                    it.toDashboardItem()
+                } else {
+                    val convertedSum = (it.sum.toFloat() / (course?.courses?.get(it.currencyType)
+                        ?: 1f) * (course?.courses?.get(currency.value)
+                        ?: 1f)).toDouble()
+                    it.toDashboardItem(convertedSum, currency.value)
+                }
+            }
+        } else items.map { it.toDashboardItem() }
+        return adapterItems.groupBy { it.createdDate.withTimeAtStartOfDay() }
+            .map {
+                TransactionGroupItem(
+                    it.key,
+                    it.value.sortedByDescending { it.createdDate })
+            }
     }
 }

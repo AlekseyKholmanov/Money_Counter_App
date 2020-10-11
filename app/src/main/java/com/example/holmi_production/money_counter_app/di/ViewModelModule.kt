@@ -29,7 +29,8 @@ val viewModelsModule = module {
         BottomKeyboardViewModel(
             getRecentCategoryUseCase = get(),
             addTransactionUseCase = get(),
-            getCategoriesUseCase = get()
+            getCategoriesUseCase = get(),
+            getAccountUseCase = get()
         )
     }
 
@@ -47,7 +48,8 @@ val viewModelsModule = module {
         DashboardViewModel(
             getAccountsUseCase = get(),
             getTransactionUseCase = get(),
-            settingsManager = get()
+            settingsManager = get(),
+            getCurrenciesCourseUseCase = get()
         )
     }
 
@@ -55,7 +57,8 @@ val viewModelsModule = module {
         CreateAccountViewModel(
             appPreference = get(),
             addTransactionUseCase = get(),
-            createAccountViewModel = get()
+            createAccountViewModel = get(),
+            settingsManager = get()
         )
     }
 
@@ -63,13 +66,6 @@ val viewModelsModule = module {
         OnBoardingViewModel(
             createAccountViewModel = get(),
             appPreference = get()
-        )
-    }
-
-    viewModel {
-        SimpleBottomKeyboardViewModel(
-            getRecentCategoryUseCase = get(),
-            addTransactionUseCase = get()
         )
     }
 
@@ -97,13 +93,20 @@ val viewModelsModule = module {
     viewModel {
         MainViewModel(
             getActivePeriodUseCase = get(),
-            updateActivePeriodUseCase = get()
+            updateActivePeriodUseCase = get(),
+            fetchCurrencyUseCase = get()
         )
     }
 
     viewModel {
         LaunchViewModel(
             onboardingCompletedUseCase = get()
+        )
+    }
+
+    viewModel {
+        SettingsViewModel(
+            getTransactionUseCase = get()
         )
     }
 }

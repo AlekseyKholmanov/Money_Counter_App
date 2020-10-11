@@ -5,25 +5,37 @@ import com.example.holmi_production.money_counter_app.model.RecyclerItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionDashboardHeaderItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionDashboardItem
 
-class DashboardDetailsItemDiffUtilCallback : DiffUtil.ItemCallback<RecyclerItem>() {
-    override fun areItemsTheSame(oldItem: RecyclerItem, newItem: RecyclerItem): Boolean {
-        return when {
-            oldItem is TransactionDashboardHeaderItem && newItem is TransactionDashboardHeaderItem -> oldItem.date == newItem.date
+class DashboardDetailsItemDiffUtilCallback(
+    private val oldItems: List<RecyclerItem>,
+    private val newItems: List<RecyclerItem>
+) : DiffUtil.Callback() {
 
-            oldItem is TransactionDashboardItem && newItem is TransactionDashboardItem -> oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldItems[oldItemPosition]
+        val newItem = newItems[newItemPosition]
+        return when {
+            oldItem is TransactionDashboardHeaderItem && newItem is TransactionDashboardHeaderItem -> {
+                oldItem.date == newItem.date
+            }
+
+            oldItem is TransactionDashboardItem && newItem is TransactionDashboardItem -> {
+                oldItem.id == newItem.id
+            }
 
             else -> true
         }
     }
 
-    override fun areContentsTheSame(oldItem: RecyclerItem, newItem: RecyclerItem): Boolean {
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldItems[oldItemPosition]
+        val newItem = newItems[newItemPosition]
         return when {
             oldItem is TransactionDashboardHeaderItem && newItem is TransactionDashboardHeaderItem -> {
-                      oldItem.total == newItem.total
+                oldItem.total == newItem.total
             }
             oldItem is TransactionDashboardItem && newItem is TransactionDashboardItem -> {
-                oldItem.categoryId == newItem.categoryId
-                        && oldItem.subcategoryId == newItem.subcategoryId
+                oldItem.category == newItem.category
+                        && oldItem.subcategory == newItem.subcategory
                         && oldItem.createdDate == newItem.createdDate
                         && oldItem.comment == newItem.comment
                         && oldItem.isDeleted == newItem.isDeleted
@@ -32,4 +44,35 @@ class DashboardDetailsItemDiffUtilCallback : DiffUtil.ItemCallback<RecyclerItem>
             else -> true
         }
     }
+
+    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
+        val oldItem = oldItems[oldItemPosition]
+        val newItem = newItems[newItemPosition]
+        val payloads = mutableListOf<Any>()
+        when {
+            oldItem is TransactionDashboardItem && newItem is TransactionDashboardItem -> {
+                if (oldItem.currencyType != newItem.currencyType) {
+                    payloads.add(TransactionDashboardItem.CURRENCY_TYPE)
+                }
+                if (oldItem.sum != newItem.sum) {
+                    payloads.add(TransactionDashboardItem.SUM)
+                }
+                if (oldItem.category?.id != newItem.category?.id) {
+                    payloads.add(TransactionDashboardItem.CATEGORY)
+                }
+                if (oldItem.subcategory?.id != newItem.subcategory?.id) {
+                    payloads.add(TransactionDashboardItem.SUBCATEGORY)
+                }
+            }
+        }
+        return if (payloads.isEmpty()) {
+            null
+        } else {
+            payloads
+        }
+    }
+
+    override fun getOldListSize(): Int = oldItems.size
+
+    override fun getNewListSize(): Int = newItems.size
 }

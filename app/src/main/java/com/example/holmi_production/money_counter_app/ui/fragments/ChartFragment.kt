@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -59,37 +58,9 @@ class ChartFragment : BaseFragment(R.layout.fragment_trasnsactions) {
         percentList.adapter = top5Adapter
         detailsList.adapter = detailsAdapter
         detailsList.addItemDecoration(ListDelegationDecorator(requireContext()))
-//        swap.setOnClickListener {
-//            val ddAnim = Rotate3dAnimation(
-//                mFromDegrees = 0f,
-//                mToDegrees = 180f,
-//                mCenterX = swap.width / 2f,
-//                mCenterY = swap.height / 2f,
-//                mDepthZ = 0f,
-//                mReverse = false
-//            )
-//
-//            ddAnim.setAnimationListener(object : Animation.AnimationListener {
-//                override fun onAnimationStart(animation: Animation?) {
-//                }
-//
-//                override fun onAnimationEnd(animation: Animation?) {
-//                    swap.text = if (viewModel.showExpense) "Expense" else "Income"
-//                }
-//
-//                override fun onAnimationRepeat(animation: Animation?) {
-//                }
-//
-//            })
-//            val animation = RotateAnimation(
-//                0f, 360f,
-//                swap.width / 2f, swap.height / 2f
-//            )
-//            ddAnim.duration = 1000L
-//            swap.animation = ddAnim
-//            ddAnim.start()
-//            viewModel.swapValues()
-//        }
+        chart.setOnClickListener {
+            viewModel.swapValues()
+        }
     }
 
     private fun updateTransaction(transaction: List<CharCategoryItem>) {
@@ -97,6 +68,8 @@ class ChartFragment : BaseFragment(R.layout.fragment_trasnsactions) {
         val size = transaction.size
         val items = mutableListOf<CharCategoryItem>()
         val top4Transaction = transaction.take(4)
+        val spendingType = if (viewModel.showExpense) "Expenses" else "Spending"
+        val totalSum = transaction.sumByDouble { it.sum }
         items.addAll(top4Transaction)
         if (size > 4) {
             val lastItems = transaction.drop(4)
@@ -119,11 +92,13 @@ class ChartFragment : BaseFragment(R.layout.fragment_trasnsactions) {
         top5Adapter.items = items
         val detailsItem = mutableListOf<RecyclerItem>()
         detailsItem.add(
-            ChartCategoryHeaderItem(spendingType = if (viewModel.showExpense) "Expenses" else "Spending",
-                sum = transaction.sumByDouble { it.sum })
+            ChartCategoryHeaderItem(
+                spendingType = spendingType,
+                sum = totalSum
+            )
         )
         detailsItem.addAll(transaction)
-        chart.updateIndicator(charItems)
+        chart.updateIndicator(charItems, spendingType, totalSum)
         detailsAdapter.items = detailsItem
         top5Adapter.notifyDataSetChanged()
         detailsAdapter.notifyDataSetChanged()

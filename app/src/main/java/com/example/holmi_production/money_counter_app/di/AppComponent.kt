@@ -10,5 +10,6 @@ val appComponent = listOf(
     interactorModule,
     toolsModule,
     viewModelsModule,
-    useCasesModule
+    useCasesModule,
+    networkModule
 )

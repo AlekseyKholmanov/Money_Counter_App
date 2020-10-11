@@ -70,12 +70,9 @@ class CreateAccountFragment : BaseFragment(R.layout.fragment_onboarding_account_
                 R.id.action_global_bottomDialog, bundleOf(
                     BottomDialog.ARGS_SELECTED_ID_INT to (viewModel.currencyType.value?.ordinal
                         ?: View.NO_ID),
-                    BottomDialog.ARGS_SELECTED_ID_INT to (viewModel.currencyType.value?.ordinal
-                        ?: View.NO_ID),
                     BottomDialog.ARGS_DIALOG_TYPE to BottomDialog.TYPE_ACCOUNT_CURRENCY
                 )
             )
-
         }
 
         viewModel.currencyType.observe(viewLifecycleOwner, Observer(::updateCurrencyType))
