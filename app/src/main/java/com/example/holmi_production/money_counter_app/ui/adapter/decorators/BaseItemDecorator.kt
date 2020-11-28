@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.ui.utils.dpToPx
+import com.hannesdorfmann.adapterdelegates4.AbsDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
 class BaseItemDecorator(context: Context) : RecyclerView.ItemDecoration() {
@@ -22,7 +23,7 @@ class BaseItemDecorator(context: Context) : RecyclerView.ItemDecoration() {
 
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         val lm = parent.layoutManager ?: return
-        val adapter = parent.adapter as? AsyncListDifferDelegationAdapter<*> ?: return
+        val adapter = parent.adapter as? AbsDelegationAdapter<List<*>> ?: return
 
         for (i in 0 until parent.childCount) {
             val save = c.save()

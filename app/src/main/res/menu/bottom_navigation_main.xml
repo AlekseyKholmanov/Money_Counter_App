@@ -13,17 +13,11 @@
             android:enabled="true"
             app:iconTint="@color/colorAccent"
             android:icon="@drawable/ic_menu_graph"
-            android:title="@string/text_сosts" />
-        <item
-            android:id="@+id/chartFragment"
-            android:enabled="true"
-            android:icon="@drawable/ic_launcher_foreground"
-            app:iconTint="@color/colorAccent"
             android:title="@string/text_chart" />
         <item
             android:id="@+id/limitsFragment"
             android:enabled="true"
-            android:icon="@drawable/ic_launcher_foreground"
+            android:icon="@drawable/ic_menu_limits"
             app:iconTint="@color/colorAccent"
             android:title="@string/text_limits" />
         <item

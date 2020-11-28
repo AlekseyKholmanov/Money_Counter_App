@@ -15,24 +15,27 @@
     <LinearLayout
         android:id="@+id/bottomWrapper"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/transactionDeleteButton"
             android:layout_width="40dp"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_close"
             android:layout_marginEnd="4dp"
             android:background="@drawable/bg_rounded_8dp_stroked"
-            android:src="@drawable/ic_close"
             android:tint="@android:color/holo_red_light"
             tools:ignore="ContentDescription" />
 
         <ImageButton
             android:id="@+id/transactionEditButton"
             android:layout_width="40dp"
-            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_height="40dp"
             android:layout_marginEnd="4dp"
             android:background="@drawable/bg_rounded_8dp_stroked"
             android:src="@drawable/ic_edit"

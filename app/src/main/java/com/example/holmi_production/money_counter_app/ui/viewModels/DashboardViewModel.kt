@@ -2,11 +2,12 @@ package com.example.holmi_production.money_counter_app.ui.viewModels
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.holmi_production.money_counter_app.model.DashbordFilter
 import com.example.holmi_production.money_counter_app.model.dto.CurrencyCourseDTO
 import com.example.holmi_production.money_counter_app.model.dto.TransactionDetailsDTO
 import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
 import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
-import com.example.holmi_production.money_counter_app.storage.data_store.SettingManager
+import com.example.holmi_production.money_counter_app.storage.data_store.LastAccountManager
 import com.example.holmi_production.money_counter_app.ui.adapter.items.AccountSummary
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionGroupItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.toDashboardItem
@@ -24,7 +25,7 @@ class DashboardViewModel(
     private val getAccountsUseCase: GetAccountsUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
     private val getCurrenciesCourseUseCase: GetCurrenciesCourseUseCase,
-    private val settingsManager: SettingManager
+    private val lastAccountManager: LastAccountManager
 ) : ViewModel() {
 
     private val _accountDetails = MutableLiveData<List<TransactionGroupItem>>()
@@ -32,6 +33,9 @@ class DashboardViewModel(
 
     private val _currency = MutableLiveData<CurrencyType?>(null)
     val currency: LiveData<CurrencyType?> = _currency
+
+    private val _filerValue = MutableLiveData(DashbordFilter.ALL)
+    val filterValue: LiveData<DashbordFilter> = _filerValue
 
     private val _accountSummary = MutableLiveData<AccountSummary>()
     val accountSummary: LiveData<AccountSummary> = _accountSummary
@@ -47,7 +51,7 @@ class DashboardViewModel(
                     course = it.last()
             }.launchIn(viewModelScope)
 
-        settingsManager.lastAccountFlow
+        lastAccountManager.lastAccountFlow
             .map {
                 return@map if (it == null) getAccountsUseCase.getAccounts().last() else
                     getAccountsUseCase.getAccountById(it)
@@ -58,7 +62,7 @@ class DashboardViewModel(
                 }
             }.launchIn(viewModelScope)
 
-        settingsManager.lastAccountFlow
+        lastAccountManager.lastAccountFlow
             .flatMapLatest { value ->
                 if (value == null) {
                     getAccountsUseCase.observeAccounts().map { it.first() }
@@ -75,15 +79,16 @@ class DashboardViewModel(
                         currency.asFlow()
                     ) { transactions, selectedCurrency -> transactions to selectedCurrency }
             }.map { (transactions, selectedCurrency) ->
-                val divided = transactions.partition { it.sum > 0 }
+                val divided = transactions.partition { it.transaction.sum > 0 }
                 val accountSummary = AccountSummary(
                     accountId = accountDetailsEntity!!.id,
                     description = accountDetailsEntity!!.description,
-                    balance = transactions.sumByDouble { it.sum },
-                    income = divided.first.sumByDouble { it.sum },
-                    expenses = divided.second.sumByDouble { it.sum },
+                    balance = transactions.sumByDouble { it.transaction.sum },
+                    income = divided.first.sumByDouble { it.transaction.sum },
+                    expenses = divided.second.sumByDouble { it.transaction.sum },
                     currencyType = accountDetailsEntity!!.currencyType
                 )
+                Log.d("M_DashboardViewModel","selectedCurrensy in map:$selectedCurrency accountType:${accountDetailsEntity!!.currencyType}")
                 val transactionInfo =
                     if (selectedCurrency == null || selectedCurrency == accountDetailsEntity!!.currencyType) {
                         buildTransactionItems(transactions)
@@ -102,7 +107,7 @@ class DashboardViewModel(
 
     fun updateAccountId(selectedAccountId: String) {
         viewModelScope.launch {
-            settingsManager.setAccountId(selectedAccountId)
+            lastAccountManager.setAccountId(selectedAccountId)
         }
     }
 
@@ -117,21 +122,26 @@ class DashboardViewModel(
     ): List<TransactionGroupItem> {
         val adapterItems = if (changeCurrency) {
             items.map {
-                if (it.currencyType == currency.value) {
+                if (it.transaction.currencyType == currency.value) {
                     it.toDashboardItem()
                 } else {
-                    val convertedSum = (it.sum.toFloat() / (course?.courses?.get(it.currencyType)
+                    val convertedSum = (it.transaction.sum.toFloat() / (course?.courses?.get(it.transaction.currencyType)
                         ?: 1f) * (course?.courses?.get(currency.value)
                         ?: 1f)).toDouble()
                     it.toDashboardItem(convertedSum, currency.value)
                 }
             }
         } else items.map { it.toDashboardItem() }
-        return adapterItems.groupBy { it.createdDate.withTimeAtStartOfDay() }
+        return adapterItems.sortedByDescending { it.createdDate.withTimeAtStartOfDay() }
+            .groupBy { it.createdDate.withTimeAtStartOfDay() }
             .map {
                 TransactionGroupItem(
                     it.key,
                     it.value.sortedByDescending { it.createdDate })
             }
+    }
+
+    fun updateFilter(filter: DashbordFilter) {
+        _filerValue.value = filter
     }
 }

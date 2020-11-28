@@ -1,6 +1,7 @@
 package com.example.holmi_production.money_counter_app.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
@@ -10,11 +11,13 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
 import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.main.BaseFragment
+import com.example.holmi_production.money_counter_app.model.DashbordFilter
 import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
 import com.example.holmi_production.money_counter_app.ui.adapter.delegate.dashboardTransactionDelegate
 import com.example.holmi_production.money_counter_app.ui.adapter.diffUtil.DashboardGroupDiffUtilCallback
 import com.example.holmi_production.money_counter_app.ui.adapter.items.AccountSummary
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionGroupItem
+import com.example.holmi_production.money_counter_app.ui.custom.CurrencyBadge
 import com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog
 import com.example.holmi_production.money_counter_app.ui.viewModels.DashboardViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -33,11 +36,14 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         )
     }
 
+    private val currencyBadgeDrawable by lazy { CurrencyBadge(requireContext()) }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(viewModel) {
             accountDetails.observe(viewLifecycleOwner, Observer(::updateAccounts))
-            currency.observe(viewLifecycleOwner, Observer (::updateCurrency))
-            accountSummary.observe(viewLifecycleOwner, Observer (::updateSummary))
+            currency.observe(viewLifecycleOwner, Observer(::updateCurrency))
+            accountSummary.observe(viewLifecycleOwner, Observer(::updateSummary))
+            filterValue.observe(viewLifecycleOwner, Observer(::updateFilterValue))
         }
         accountExpenses.setTitleRes(R.string.expenses)
         accountIncome.setTitleRes(R.string.income)
@@ -77,6 +83,39 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
                 findNavController().navigate(destination)
             }
         }
+        accountIncome.setOnClickListener {
+            val value =
+                if (viewModel.filterValue.value == DashbordFilter.INCOME) DashbordFilter.ALL else DashbordFilter.INCOME
+            viewModel.updateFilter(value)
+        }
+        accountExpenses.setOnClickListener {
+            val value =
+                if (viewModel.filterValue.value == DashbordFilter.SPENDING) DashbordFilter.ALL else DashbordFilter.SPENDING
+            viewModel.updateFilter(value)
+        }
+        accountBalance.setOnClickListener {
+            viewModel.updateFilter(DashbordFilter.ALL)
+        }
+        currencyBadge.setImageDrawable(currencyBadgeDrawable)
+    }
+
+    private fun updateFilterValue(dashbordFilter: DashbordFilter) {
+        Log.d("M_DashboardFragment", "filter $dashbordFilter")
+        when (dashbordFilter) {
+            DashbordFilter.INCOME -> {
+
+                accountExpenses.isHiglited = false
+                accountIncome.isHiglited = true
+            }
+            DashbordFilter.SPENDING -> {
+                accountExpenses.isHiglited = true
+                accountIncome.isHiglited = false
+            }
+            else -> {
+                accountExpenses.isHiglited = false
+                accountIncome.isHiglited = false
+            }
+        }
     }
 
     private fun updateSummary(accountSummary: AccountSummary) {
@@ -84,6 +123,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
         accountExpenses.setAmount(accountSummary.expenses.toCurencyFormat())
         accountIncome.setAmount(accountSummary.income.toCurencyFormat())
         accountBalance.setAmount(accountSummary.balance.toCurencyFormat())
+        currencyBadgeDrawable.updateCurrency(accountSummary.currencyType.icon)
     }
 
     private fun updateCurrency(currencyType: CurrencyType?) {

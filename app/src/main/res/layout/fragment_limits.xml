@@ -4,7 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/appBar"
-        layout="@layout/include_toolbar" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:fontFamily="@font/rubik_medium"
+        android:textColor="@color/textPrimaryInverted"
+        android:padding="16dp"
+        android:text="@string/limits"/>
 </LinearLayout>

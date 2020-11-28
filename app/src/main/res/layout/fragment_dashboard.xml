@@ -29,6 +29,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/currencyBadge"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/accountName"
+        app:layout_constraintStart_toStartOf="@id/accountName"/>
+
     <TextView
         android:id="@+id/accountCurrency"
         style="@style/MediumFontFamily"

@@ -15,6 +15,8 @@
     <color name ="colorGreen">#04A777</color>
     <color name ="colorYellow">#FDC133</color>
     <color name ="colorPurple">#820263</color>
+    <color name="selectedTextColor">#57a1f2</color>
+    <color name="checkedBackgroundColor">#50000000</color>
 
 
     <color name="text_button_text_color_normal">@color/colorPrimary</color>

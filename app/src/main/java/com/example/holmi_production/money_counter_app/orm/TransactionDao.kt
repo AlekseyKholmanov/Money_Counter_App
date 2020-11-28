@@ -40,6 +40,7 @@ abstract class TransactionDao : BaseDao<TransactionEntity>() {
     @Query("UPDATE TransactionTable SET isDeleted = 1 WHERE id=:transactionId ")
     abstract fun markDeleted(transactionId: String)
 
+    @Transaction
     @Query(
         """
         SELECT * FROM TransactionTable, PeriodTable 
@@ -52,9 +53,10 @@ abstract class TransactionDao : BaseDao<TransactionEntity>() {
     )
     abstract fun observeDetailsTransactionByAccountId(accountId: String): Flow<List<TransactionDetailsDTO>>
 
+    @Transaction
     @Query(
         """
-        SELECT * FROM TransactionTable, PeriodTable 
+        SELECT * FROM TransactionTable, PeriodTable
         WHERE createdDate >= PeriodTable.`from`
         AND createdDate <= PeriodTable.`to`
         AND isDeleted = 0 

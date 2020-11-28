@@ -37,16 +37,16 @@ fun TransactionDetailsDTO.toDashboardItem(
     convertedSum: Double? = null,
     convertedCurrency: CurrencyType? = null
 ): TransactionDashboardItem {
-    val sum = convertedSum ?: sum
+    val sum = convertedSum ?: transaction.sum
     return TransactionDashboardItem(
-        id = id,
-        createdDate = createdDate,
+        id = transaction.id,
+        createdDate = transaction.createdDate,
         sum = convertedSum ?: sum,
         category = category,
-        currencyType = convertedCurrency ?: currencyType,
-        comment = comment,
+        currencyType = convertedCurrency ?: transaction.currencyType,
+        comment = transaction.comment,
         subcategory = subcategory,
-        isDeleted = isDeleted,
+        isDeleted = transaction.isDeleted,
         isConverted = convertedSum != null
     )
 }

@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     private val topLevelDestinations: Set<Int>
         get() = setOf(
             R.id.navigationDashboard,
-            R.id.chartFragment,
             R.id.limitsFragment,
             R.id.transactionFragment,
             R.id.settingsFragment
@@ -73,12 +72,6 @@ class MainActivity : AppCompatActivity() {
             }
         period.text = text
 
-    }
-
-    private fun updateDatePickerVisibility(shouldShow: Boolean){
-        if(shouldShow){
-
-        }
     }
 
     private fun initView() {

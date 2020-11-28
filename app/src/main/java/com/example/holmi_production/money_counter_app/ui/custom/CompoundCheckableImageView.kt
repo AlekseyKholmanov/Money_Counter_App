@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import coil.api.load
+import coil.load
 import com.example.holmi_production.money_counter_app.R
 import kotlinx.android.synthetic.main.view_checkable_category.view.*
 

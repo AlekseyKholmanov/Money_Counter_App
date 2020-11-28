@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:layout_marginTop="2dp"
-        app:icon="@drawable/ic_arrow_up"
+        app:icon="@drawable/ic_arrow_down"
         app:iconGravity="textStart"
         app:iconTint="@color/colorPink" />
 
@@ -25,7 +25,7 @@
         android:layout_weight="1"
         android:text="@null"
         android:layout_marginTop="2dp"
-        app:icon="@drawable/ic_arrow_down"
+        app:icon="@drawable/ic_arrow_up"
         app:iconGravity="textStart"
         app:iconTint="@color/colorGreen" />
 

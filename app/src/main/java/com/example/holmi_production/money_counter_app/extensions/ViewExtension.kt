@@ -3,7 +3,9 @@ package com.example.holmi_production.money_counter_app.extensions
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Context
+import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.IdRes
@@ -45,4 +47,14 @@ fun <T : View?> Fragment.bindView(@IdRes idRes: Int): Lazy<T> {
     return lazy(LazyThreadSafetyMode.NONE) {
         requireView().findViewById<T>(idRes)
     }
+}
+
+private fun ViewGroup.addRipple() = with(TypedValue()) {
+    context.theme.resolveAttribute(android.R.attr.selectableItemBackground, this, true)
+    setBackgroundResource(resourceId)
+}
+
+private fun ViewGroup.addCircleRipple() = with(TypedValue()) {
+    context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, this, true)
+    setBackgroundResource(resourceId)
 }

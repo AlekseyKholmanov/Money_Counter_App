@@ -2,26 +2,20 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.example.holmi_production.money_counter_app"
+        applicationId 'holmi.money_counter_app'
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [
-                        disableEmptyStrategyCheck: 'true',
-                        defaultMoxyStrategy      : 'moxy.viewstate.strategy.OneExecutionStateStrategy'
-                ]
-            }
-        }
     }
     buildTypes {
         release {
@@ -51,16 +45,16 @@ def room_version = "2.2.5"
 def workManager = "2.4.0"
 def coroutinesVersion = "1.3.0-M2"
 def flipper = "0.49.0"
-def coil = "0.12.0"
-def NAVIGATION_VERSION = "2.3.0"
+def coil = "1.0.0"
+def NAVIGATION_VERSION = "2.3.1"
 def navigationDrawer = "8.0.0-b04"
 def koin = "2.0.1"
-def coroutines = "1.3.9"
-def kotlin_version = "1.4.0"
+def coroutines = "1.4.0"
+def kotlin_version = "1.4.10"
 def adapter_delegate = "4.3.0"
+def lifecycle_version = "2.2.0"
 
 dependencies {
-    def lifecycle_version = "2.2.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -71,21 +65,22 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
 
     // material
-    implementation 'com.google.android.material:material:1.3.0-alpha02'
+    implementation 'com.google.android.material:material:1.3.0-alpha03'
 
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //androidx
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.core:core-ktx:1.3.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "androidx.annotation:annotation:1.1.0"
+    implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.viewpager2:viewpager2:1.0.0"
-    implementation "androidx.fragment:fragment-ktx:1.3.0-alpha08"
+    implementation "androidx.fragment:fragment-ktx:1.3.0-beta01"
     implementation "androidx.preference:preference-ktx:1.1.1"
-    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha01"
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha04"
 
     // Koin
     implementation "org.koin:koin-android:$koin"
@@ -152,6 +147,14 @@ dependencies {
     implementation "io.github.reactivecircus.flowbinding:flowbinding-preference:${flow_binding_version}"
     implementation "io.github.reactivecircus.flowbinding:flowbinding-recyclerview:${flow_binding_version}"
 
+
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+
+    // Declare the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+
     //UI
     implementation 'me.relex:circleindicator:2.1.4'
     implementation "com.mikepenz:materialdrawer:$navigationDrawer"
@@ -162,8 +165,6 @@ dependencies {
     implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
     //charts
     implementation 'com.github.PhilJay:MPAndroidChart:3.1.0'
-    //backdrop menu
-    implementation 'ru.semper-viventem.backdrop:backdrop:0.1.7'
 
     // tests
     testImplementation 'junit:junit:4.13'

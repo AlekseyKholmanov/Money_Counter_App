@@ -8,7 +8,7 @@ import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
 import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
 import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
 import com.example.holmi_production.money_counter_app.model.enums.AccountType
-import com.example.holmi_production.money_counter_app.storage.data_store.SettingManager
+import com.example.holmi_production.money_counter_app.storage.data_store.LastAccountManager
 import com.example.holmi_production.money_counter_app.storage.db.AppPreference
 import com.example.holmi_production.money_counter_app.useCases.AddAccountUseCase
 import com.example.holmi_production.money_counter_app.useCases.AddTransactionUseCase
@@ -20,7 +20,7 @@ class CreateAccountViewModel(
     private val createAccountViewModel: AddAccountUseCase,
     private val addTransactionUseCase: AddTransactionUseCase,
     private val appPreference: AppPreference,
-    private val settingsManager: SettingManager
+    private val settingsManager: LastAccountManager
 ) : ViewModel() {
 
     private val _currencyType: MutableLiveData<CurrencyType?> = MutableLiveData()

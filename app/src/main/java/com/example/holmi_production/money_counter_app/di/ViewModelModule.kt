@@ -48,7 +48,7 @@ val viewModelsModule = module {
         DashboardViewModel(
             getAccountsUseCase = get(),
             getTransactionUseCase = get(),
-            settingsManager = get(),
+            lastAccountManager =    get(),
             getCurrenciesCourseUseCase = get()
         )
     }

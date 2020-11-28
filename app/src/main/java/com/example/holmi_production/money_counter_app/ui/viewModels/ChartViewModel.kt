@@ -35,7 +35,7 @@ class ChartViewModel(
         viewModelScope.launch {
             getTransactionUseCase.observeDetails()
                 .map{ transaction ->
-                        val divided = transaction.partition { it.sum > 0 }
+                        val divided = transaction.partition { it.transaction.sum > 0 }
                         buildCategoryItem(divided.first) to
                                 buildCategoryItem(divided.second)
 
@@ -54,9 +54,9 @@ class ChartViewModel(
 
     private fun buildCategoryItem(transactions: List<TransactionDetailsDTO>): List<CharCategoryItem> {
         val groupped = transactions.groupBy { it.category ?: "No Category" }
-        val max = transactions.sumByDouble { it.sum }
+        val max = transactions.sumByDouble { it.transaction.sum }
         return groupped.map {
-            val sum = it.value.sumByDouble { it.sum }
+            val sum = it.value.sumByDouble { it.transaction.sum }
             val category = it.value.first().category
             CharCategoryItem(
                 categoryName = category?.description ?: "No Category",

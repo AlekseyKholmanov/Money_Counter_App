@@ -29,7 +29,7 @@ fun dashboardTransactionDelegate() =
         val detailsAdapter = DashboardTransactionDetailsAdapter()
         with(itemView.transactionGroup) {
             adapter = detailsAdapter
-            addItemDecoration(BaseItemDecorator(context))
+            addItemDecoration(BaseItemDecorator(itemView.context))
         }
 
         bind {
@@ -53,54 +53,67 @@ fun dashboardTransactionDelegate() =
 
 fun dashboardTransactionDetailsDelegate() =
     adapterDelegate<TransactionDashboardItem, RecyclerItem>(TransactionDashboardItem.VIEW_TYPE) {
-        fun setCategory(category: CategoryEntity?) {
-            with(itemView) {
-                val lp = itemImage.layoutParams as ConstraintLayout.LayoutParams
-                itemCategory.text =
-                    category?.description ?: if (item.sum > 0) "Income" else "Expense"
-                if (category == null) {
-                    indicator.visibility = View.GONE
-                    if (item.sum > 0) {
-                        itemImage.load(R.drawable.ic_money_got)
-                    } else {
-                        itemImage.load(R.drawable.ic_money_loss)
-                    }
-                    lp.marginStart = dpToPx(16).toInt()
-                    itemImage.layoutParams = lp
-                } else {
-                    lp.marginStart = dpToPx(8).toInt()
-                    itemImage.layoutParams = lp
-                    itemImage.visibility = View.VISIBLE
-                    itemImage.load(Images.getImageById(category.imageId))
-                    indicator.visibility = View.VISIBLE
-                    indicator.setColors(listOf(category.color))
-                }
-            }
-        }
-
         bind { payloads ->
-            if (payloads.isEmpty()) {
+//            if (payloads.isNullOrEmpty()) {
                 with(itemView) {
                     itemSum.text = item.sum.withCurrencyIcon(item.currencyType.icon)
-                    setCategory(item.category)
-                }
-            } else {
-                if (payloads is List<*>) {
-                    payloads.forEach { payload ->
-                        if (payload is String && payload == TransactionDashboardItem.CURRENCY_TYPE) {
+                    val lp = itemImage.layoutParams as ConstraintLayout.LayoutParams
+                    itemCategory.text =
+                        item.category?.description ?: if (item.sum > 0) "Income" else "Expense"
+                    if (item.category == null) {
+                        indicator.visibility = View.GONE
+                        if (item.sum > 0) {
+                            itemImage.load(R.drawable.ic_money_got)
+                        } else {
+                            itemImage.load(R.drawable.ic_money_loss)
                         }
-                        if (payload is String && payload == TransactionDashboardItem.SUM) {
-                            itemView.itemSum.text = item.sum.withCurrencyIcon(
-                                item.currencyType.icon
-                            )
-                        }
-                        if (payload is String && payload == TransactionDashboardItem.CATEGORY) {
-                            setCategory(item.category)
-                        }
-
+                        lp.marginStart = dpToPx(16).toInt()
+                        itemImage.layoutParams = lp
+                    } else {
+                        lp.marginStart = dpToPx(8).toInt()
+                        itemImage.layoutParams = lp
+                        itemImage.visibility = View.VISIBLE
+                        itemImage.load(Images.getImageById(item.category!!.imageId))
+                        indicator.visibility = View.VISIBLE
+                        indicator.setColors(listOf(item.category!!.color))
                     }
+//                }
+//            } else {
+//                if (payloads is List<*>) {
+//                    payloads.forEach { payload ->
+//                        if (payload is String && payload == TransactionDashboardItem.SUM) {
+//                            itemView.itemSum.text = item.sum.withCurrencyIcon(
+//                                item.currencyType.icon
+//                            )
+//                        }
+//                        if (payload is String && payload == TransactionDashboardItem.CATEGORY) {
+//                            with(itemView){
+//                                val lp = itemImage.layoutParams as ConstraintLayout.LayoutParams
+//                                itemCategory.text =
+//                                    item.category?.description ?: if (item.sum > 0) "Income" else "Expense"
+//                                if (item.category == null) {
+//                                    indicator.visibility = View.GONE
+//                                    if (item.sum > 0) {
+//                                        itemImage.load(R.drawable.ic_money_got)
+//                                    } else {
+//                                        itemImage.load(R.drawable.ic_money_loss)
+//                                    }
+//                                    lp.marginStart = dpToPx(16).toInt()
+//                                    itemImage.layoutParams = lp
+//                                } else {
+//                                    lp.marginStart = dpToPx(8).toInt()
+//                                    itemImage.layoutParams = lp
+//                                    itemImage.visibility = View.VISIBLE
+//                                    itemImage.load(Images.getImageById(item.category!!.imageId))
+//                                    indicator.visibility = View.VISIBLE
+//                                    indicator.setColors(listOf(item.category!!.color))
+//                                }
+//                            }
+//                        }
+//
+//                    }
+//                }
                 }
-            }
         }
     }
 

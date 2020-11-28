@@ -22,7 +22,7 @@ class DashboardDetailsItemDiffUtilCallback(
                 oldItem.id == newItem.id
             }
 
-            else -> true
+            else -> false
         }
     }
 
@@ -34,14 +34,14 @@ class DashboardDetailsItemDiffUtilCallback(
                 oldItem.total == newItem.total
             }
             oldItem is TransactionDashboardItem && newItem is TransactionDashboardItem -> {
-                oldItem.category == newItem.category
-                        && oldItem.subcategory == newItem.subcategory
-                        && oldItem.createdDate == newItem.createdDate
+                oldItem.category?.id == newItem.category?.id
+                        && oldItem.subcategory?.id == newItem.subcategory?.id
+                        && oldItem.currencyType == newItem.currencyType
                         && oldItem.comment == newItem.comment
                         && oldItem.isDeleted == newItem.isDeleted
                         && oldItem.sum == newItem.sum
             }
-            else -> true
+            else -> false
         }
     }
 
@@ -51,13 +51,10 @@ class DashboardDetailsItemDiffUtilCallback(
         val payloads = mutableListOf<Any>()
         when {
             oldItem is TransactionDashboardItem && newItem is TransactionDashboardItem -> {
-                if (oldItem.currencyType != newItem.currencyType) {
-                    payloads.add(TransactionDashboardItem.CURRENCY_TYPE)
-                }
                 if (oldItem.sum != newItem.sum) {
                     payloads.add(TransactionDashboardItem.SUM)
                 }
-                if (oldItem.category?.id != newItem.category?.id) {
+                if ((oldItem.category == null && newItem.category == null) || oldItem.category?.id != newItem.category?.id) {
                     payloads.add(TransactionDashboardItem.CATEGORY)
                 }
                 if (oldItem.subcategory?.id != newItem.subcategory?.id) {

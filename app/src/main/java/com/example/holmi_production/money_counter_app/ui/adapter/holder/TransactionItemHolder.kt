@@ -4,17 +4,15 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import coil.load
 import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.getTime
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
-import com.example.holmi_production.money_counter_app.extensions.withRubleSign
 import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionItem
 import com.example.holmi_production.money_counter_app.ui.utils.dpToPx
@@ -94,8 +92,14 @@ class TransactionItemHolder(
             //background stroke color
             val mainShapeContainer = shapeContainer.background as GradientDrawable
             val buttonShapeContainer = bottomWrapper.background as GradientDrawable
-            mainShapeContainer.setStroke(dpToPx(1).toInt(), ColorStateList.valueOf(category?.color ?: Color.GRAY))
-            buttonShapeContainer.setStroke(dpToPx(1).toInt(), ColorStateList.valueOf(category?.color ?: Color.GRAY))
+            mainShapeContainer.setStroke(
+                dpToPx(1).toInt(),
+                ColorStateList.valueOf(category?.color ?: Color.GRAY)
+            )
+            buttonShapeContainer.setStroke(
+                dpToPx(1).toInt(),
+                ColorStateList.valueOf(category?.color ?: Color.GRAY)
+            )
             //sum
             with(itemSum) {
                 setText(sum)

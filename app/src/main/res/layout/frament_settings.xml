@@ -13,7 +13,7 @@
         android:fontFamily="@font/rubik_medium"
         android:textColor="@color/textPrimaryInverted"
         android:padding="16dp"
-        android:text="Настройки:"/>
+        android:text="@string/settings"/>
 
 
     <LinearLayout

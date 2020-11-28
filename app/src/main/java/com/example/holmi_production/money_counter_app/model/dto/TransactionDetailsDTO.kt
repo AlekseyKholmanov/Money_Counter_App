@@ -1,30 +1,24 @@
 package com.example.holmi_production.money_counter_app.model.dto
 
 import androidx.room.Embedded
+import androidx.room.Relation
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
-import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
-import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionDashboardItem
-import org.joda.time.DateTime
+import com.example.holmi_production.money_counter_app.model.entity.TransactionEntity
 
 data class TransactionDetailsDTO(
-    val id: String,
+    @Embedded
+    val transaction: TransactionEntity,
 
-    val createdDate: DateTime,
-
-    val sum: Double,
-
-    val accountId: String,
-
-    @Embedded(prefix = "category_")
+    @Relation(
+        parentColumn = "categoryId",
+        entityColumn = "id"
+    )
     val category: CategoryEntity?,
 
-    val currencyType: CurrencyType,
-
-    @Embedded(prefix = "subcategory_")
-    val subcategory: SubCategoryEntity?,
-
-    val comment: String? = null,
-
-    val isDeleted: Boolean = false
+    @Relation(
+        parentColumn = "subcategoryId",
+        entityColumn = "id"
+    )
+    val subcategory: SubCategoryEntity?
 )

@@ -17,16 +17,15 @@ import com.example.holmi_production.money_counter_app.ui.adapter.items.CharCateg
 import com.example.holmi_production.money_counter_app.ui.adapter.items.ChartCategoryHeaderItem
 import com.example.holmi_production.money_counter_app.ui.adapter.top5categoriesAdapterDelegate
 import com.example.holmi_production.money_counter_app.ui.custom.CharItem
-import com.example.holmi_production.money_counter_app.ui.utils.Rotate3dAnimation
 import com.example.holmi_production.money_counter_app.ui.viewModels.ChartViewModel
 import com.github.mikephil.charting.data.BarEntry
 import com.hannesdorfmann.adapterdelegates4.AdapterDelegatesManager
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
-import kotlinx.android.synthetic.main.fragment_trasnsactions.*
+import kotlinx.android.synthetic.main.fragment_charts.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ChartFragment : BaseFragment(R.layout.fragment_trasnsactions) {
+class ChartFragment : BaseFragment(R.layout.fragment_charts) {
 
     private val viewModel: ChartViewModel by viewModel()
 

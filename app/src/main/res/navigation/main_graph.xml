@@ -17,9 +17,6 @@
             app:destination="@id/createAccountFragment" />
     </fragment>
     <fragment
-        android:id="@+id/chartFragment"
-        android:name="com.example.holmi_production.money_counter_app.ui.fragments.charts.ChartFragment" />
-    <fragment
         android:id="@+id/transactionFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.ChartFragment" />
     <fragment

@@ -5,7 +5,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Vibrator
 import androidx.core.content.getSystemService
-import com.example.holmi_production.money_counter_app.storage.data_store.SettingManager
+import com.example.holmi_production.money_counter_app.storage.data_store.LastAccountManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -20,6 +20,6 @@ val toolsModule = module {
     single { androidContext().getSystemService<AlarmManager>() }
     single { androidContext().getSystemService<NotificationManager>() }
     single { androidContext().getSystemService<Vibrator>() }
-    single { SettingManager(context = get()) }
+    single { LastAccountManager(context = get()) }
 
 }
