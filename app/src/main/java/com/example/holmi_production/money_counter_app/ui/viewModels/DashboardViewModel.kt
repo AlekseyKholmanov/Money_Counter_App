@@ -117,7 +117,7 @@ class DashboardViewModel(
         _currency.value = selected
     }
 
-    fun filterTransaction(transactions: List<TransactionDetailsDTO>, filter: DashbordFilter): List<TransactionDetailsDTO>{
+    private fun filterTransaction(transactions: List<TransactionDetailsDTO>, filter: DashbordFilter): List<TransactionDetailsDTO>{
         return when (filter) {
             DashbordFilter.ALL -> transactions
             DashbordFilter.INCOME -> transactions.filter { it.transaction.sum > 0 }
