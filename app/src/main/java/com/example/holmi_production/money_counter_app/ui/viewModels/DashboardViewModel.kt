@@ -3,6 +3,7 @@ package com.example.holmi_production.money_counter_app.ui.viewModels
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.holmi_production.money_counter_app.model.DashbordFilter
+import com.example.holmi_production.money_counter_app.model.TransactionDetails
 import com.example.holmi_production.money_counter_app.model.dto.CurrencyCourseDTO
 import com.example.holmi_production.money_counter_app.model.dto.TransactionDetailsDTO
 import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
@@ -62,7 +63,7 @@ class DashboardViewModel(
                 }
             }.launchIn(viewModelScope)
 
-        lastAccountManager.lastAccountFlow
+        val lastAccountManagerFlow = lastAccountManager.lastAccountFlow
             .flatMapLatest { value ->
                 if (value == null) {
                     getAccountsUseCase.observeAccounts().map { it.first() }
@@ -75,9 +76,9 @@ class DashboardViewModel(
                     .flatMapLatest { account ->
                         getTransactionUseCase.observeDetailsByAccountId(account.id)
                     }
-                    .combine(
-                        currency.asFlow()
-                    ) { transactions, selectedCurrency -> transactions to selectedCurrency }
+            }
+            combine(lastAccountManagerFlow, currency.asFlow(), filterValue.asFlow())        {
+                transaction, selectedCurrency, filters -> filterTransaction(transaction, filters) to selectedCurrency
             }.map { (transactions, selectedCurrency) ->
                 val divided = transactions.partition { it.transaction.sum > 0 }
                 val accountSummary = AccountSummary(
@@ -114,6 +115,16 @@ class DashboardViewModel(
     fun updateDisplayedCurrency(selected: CurrencyType) {
         Log.d("M_DashboardViewModel", "change currency $selected")
         _currency.value = selected
+    }
+
+    fun filterTransaction(transactions: List<TransactionDetailsDTO>, filter: DashbordFilter): List<TransactionDetailsDTO>{
+        return when (filter) {
+            DashbordFilter.ALL -> transactions
+            DashbordFilter.INCOME -> transactions.filter { it.transaction.sum > 0 }
+            else -> {
+                transactions.filter { it.transaction.sum <0 }
+            }
+        }
     }
 
     private fun buildTransactionItems(
