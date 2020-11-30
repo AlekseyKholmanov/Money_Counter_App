@@ -10,7 +10,6 @@
         <item name="fontFamily">@font/rubik_regular</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="android:datePickerDialogTheme">@style/AppTheme.DatePicker</item>
-        <item name="navigationIcon">@drawable/ic_back</item>
     </style>
 
     <style name="AppTheme.Onboarding">
@@ -118,7 +117,7 @@
     </style>
 
     <style name="OverFlow" parent="Widget.MaterialComponents.Toolbar.Primary">
-        <item name="srcCompat">@drawable/ic_back</item>
+        <item name="srcCompat">@drawable/ic_custom_back</item>
     </style>
 
 </resources>

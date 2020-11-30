@@ -38,6 +38,8 @@
 
         <activity
             android:name=".ui.OnboardingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.Onboarding" >
             <nav-graph android:value="@navigation/onboarding_graph"/>
         </activity>

@@ -1,16 +1,22 @@
 package com.example.holmi_production.money_counter_app.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupWithNavController
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.simpleFormat
+import com.example.holmi_production.money_counter_app.main.AndroidBug5497Workaround
+import com.example.holmi_production.money_counter_app.main.ToolbarOwner
 import com.example.holmi_production.money_counter_app.model.entity.FilterPeriodEntity
 import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog
@@ -18,10 +24,13 @@ import com.example.holmi_production.money_counter_app.ui.dialogs.DateSelectorDia
 import com.example.holmi_production.money_counter_app.ui.viewModels.MainViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.activity_main.*
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener
 import org.joda.time.DateTime
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity(), ToolbarOwner {
 
 
     private val viewModel: MainViewModel by viewModel()
@@ -30,6 +39,8 @@ class MainActivity : AppCompatActivity() {
         val host = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         host.navController
     }
+
+    override val toolbar: Toolbar by lazy { findViewById(R.id.toolbar) }
 
     private val topLevelDestinations: Set<Int>
         get() = setOf(
@@ -46,9 +57,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        AndroidBug5497Workaround.assistActivity(this)
         initNavController()
         initializeNavigation()
         initView()
+        attachKeyboardListener()
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             period.visibility =
                 if (topLevelDestinations.contains(destination.id) || (topLevelDestinations.contains(
@@ -61,6 +74,17 @@ class MainActivity : AppCompatActivity() {
                 }
         }
         viewModel.activePeriod.observe(this, Observer(::updatePeriod))
+    }
+
+    override fun onBackPressed() {
+        if (!navController.popBackStack()) {
+            super.onBackPressed()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return item.onNavDestinationSelected(findNavController(R.id.navHostFragment))
+                || super.onOptionsItemSelected(item)
     }
 
     private fun updatePeriod(filterPeriodEntity: FilterPeriodEntity?) {
@@ -104,10 +128,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        if (!navController.popBackStack()) {
-            super.onBackPressed()
-        }
+    private fun attachKeyboardListener() {
+        KeyboardVisibilityEvent.setEventListener(this, object : KeyboardVisibilityEventListener {
+            override fun onVisibilityChanged(isOpen: Boolean) {
+                if (isOpen) {
+                    bottomNavigationView.visibility = View.GONE
+                } else {
+                    bottomNavigationView.visibility = View.VISIBLE
+                }
+            }
+        })
     }
 
     private fun initNavController() {
@@ -116,19 +146,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeNavigation() {
-        NavigationUI.setupWithNavController(navigationView, navController)
+        toolbar.setNavigationIcon(R.drawable.ic_custom_back)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbar.setupWithNavController(navController, appBarConfiguration)
-        navigationView.setupWithNavController(navController)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return item.onNavDestinationSelected(findNavController(R.id.navHostFragment))
-                || super.onOptionsItemSelected(item)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.navHostFragment)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+        bottomNavigationView.setupWithNavController(navController)
     }
 
 }

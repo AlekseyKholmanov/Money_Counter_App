@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.main.BaseFragment
+import com.example.holmi_production.money_counter_app.main.ToolbarOwner
 import com.example.holmi_production.money_counter_app.model.entity.CategoryEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
 import com.example.holmi_production.money_counter_app.model.enums.Images
@@ -54,7 +55,8 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
             viewLifecycleOwner,
             Observer(::setSubcategory)
         )
-
+        val title = if(args.categoryId == null) "Create category" else "EditCategory"
+        updateToolbarTitle(title)
         categoryImage.setOnClickListener {
             val dialog =
                 ImageCategoryPicker(
@@ -123,17 +125,22 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
                 text = "Edit Category"
                 val h = image.intrinsicHeight
                 val w = image.intrinsicWidth
-                image.setBounds( 0, 0, w, h )
+                image.setBounds(0, 0, w, h)
                 setCompoundDrawables(image, null, null, null)
             } else {
                 val image = ContextCompat.getDrawable(requireContext(), R.drawable.ic_24_add)!!
                 val h = image.intrinsicHeight
                 val w = image.intrinsicWidth
-                image.setBounds( 0, 0, w, h )
+                image.setBounds(0, 0, w, h)
                 text = "Create Category"
                 setCompoundDrawables(image, null, null, null)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as ToolbarOwner).toolbar.setNavigationIcon(R.drawable.ic_custom_back)
     }
 
     private fun setCategory(category: CategoryEntity?) {

@@ -1,12 +1,12 @@
 package com.example.holmi_production.money_counter_app.main
 
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.util.Log
+import android.view.View
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.holmi_production.money_counter_app.ui.custom.CustomBackgroundDrawable
-import com.example.holmi_production.money_counter_app.utils.Point
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 /**
@@ -26,5 +26,11 @@ abstract class BaseFragment : Fragment {
         val width = displayMetrics.x
         val background = CustomBackgroundDrawable(width, height)
         requireActivity().window.setBackgroundDrawable(background)
+    }
+
+    protected fun updateToolbarTitle(title: String = "") {
+        (requireActivity() as? ToolbarOwner).let {
+            it?.toolbar?.title = title
+        }
     }
 }

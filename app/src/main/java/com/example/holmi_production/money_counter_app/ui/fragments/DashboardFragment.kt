@@ -45,6 +45,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             accountSummary.observe(viewLifecycleOwner, Observer(::updateSummary))
             filterValue.observe(viewLifecycleOwner, Observer(::updateFilterValue))
         }
+        updateToolbarTitle()
         accountExpenses.setTitleRes(R.string.expenses)
         accountIncome.setTitleRes(R.string.income)
         accountBalance.setTitleRes(R.string.balance)

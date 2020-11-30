@@ -165,6 +165,7 @@ dependencies {
     implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
     //charts
     implementation 'com.github.PhilJay:MPAndroidChart:3.1.0'
+    implementation "net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2"
 
     // tests
     testImplementation 'junit:junit:4.13'

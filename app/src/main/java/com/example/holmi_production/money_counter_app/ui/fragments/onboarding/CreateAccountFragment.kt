@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
+import com.example.holmi_production.money_counter_app.main.ToolbarOwner
 import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
 import com.example.holmi_production.money_counter_app.ui.LaunchDestination
 import com.example.holmi_production.money_counter_app.ui.MainActivity
@@ -33,10 +34,11 @@ class CreateAccountFragment : BaseFragment(R.layout.fragment_onboarding_account_
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        updateToolbarTitle("Create account")
         accountNameEditText.textChanges()
             .map { it.isNotBlank() }
             .onEach {
-                createAccount.visibility = if(it) View.VISIBLE else View.GONE
+                createAccount.visibility = if (it) View.VISIBLE else View.GONE
             }
             .launchIn(viewLifecycleOwner.lifecycleScope)
 
@@ -79,9 +81,13 @@ class CreateAccountFragment : BaseFragment(R.layout.fragment_onboarding_account_
         setResultListener()
     }
 
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as? ToolbarOwner)?.toolbar?.setNavigationIcon(R.drawable.ic_custom_back)
+    }
+
     private fun updateCurrencyType(currencyType: CurrencyType?) {
         val text = if (currencyType == null) "" else "${currencyType.name}: ${currencyType.icon}"
-        Log.d("M_CreateAccountFragment", "$text")
         accountCurrencyEditText.setText(text)
     }
 
