@@ -9,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
@@ -58,9 +60,10 @@ class BottomKeyboard : BottomSheetDialogFragment() {
                 findNavController().navigate(destination)
             }
 
-            override fun categoryEdited(categoryId: String) {
+            override fun categoryEdited(categoryId: String, imageView: ImageView) {
                 val destination = BottomKeyboardDirections.actionBottomKeyboardToCategoryDetailsFragment(categoryId)
-                findNavController().navigate(destination)
+                val extras = FragmentNavigatorExtras(imageView to categoryId)
+                findNavController().navigate(destination,extras)
             }
         }
     }
@@ -80,21 +83,6 @@ class BottomKeyboard : BottomSheetDialogFragment() {
                 }
                 Log.d("M_BottomKeyboard","$checkedId")
             }
-        }
-    }
-
-    private fun showSubcategories(items: List<SubCategoryEntity>){
-        if(items.isNullOrEmpty()){
-            chipsContainer.visibility = View.GONE
-        } else{
-            subcategories.removeAllViews()
-                items
-                    .filter{!it.isDeleted}
-                    .forEach { subcategory ->
-                    subcategories.addView(buildChip(subcategory))
-                }
-
-            chipsContainer.visibility = View.VISIBLE
         }
     }
 
@@ -120,14 +108,6 @@ class BottomKeyboard : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.bottom_keyboard_full, container, false)
-    }
-
-    private fun setCategories(categories: List<Item>) {
-        adapter.items = if (categories.isEmpty()) {
-            listOf(ZeroItem(R.layout.item_category_0data))
-        } else {
-            categories
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -174,6 +154,28 @@ class BottomKeyboard : BottomSheetDialogFragment() {
         subcategories.clearCheck()
     }
 
+    private fun setCategories(categories: List<Item>) {
+        adapter.items = if (categories.isEmpty()) {
+            listOf(ZeroItem(R.layout.item_category_0data))
+        } else {
+            categories
+        }
+    }
+
+    private fun showSubcategories(items: List<SubCategoryEntity>){
+        if(items.isNullOrEmpty()){
+            chipsContainer.visibility = View.GONE
+        } else{
+            subcategories.removeAllViews()
+            items
+                .filter{!it.isDeleted}
+                .forEach { subcategory ->
+                    subcategories.addView(buildChip(subcategory))
+                }
+
+            chipsContainer.visibility = View.VISIBLE
+        }
+    }
 
     private fun pressed(type: ButtonType, value: String? = null) {
         when (type) {

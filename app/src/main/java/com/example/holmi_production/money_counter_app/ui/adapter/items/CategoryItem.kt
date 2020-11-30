@@ -10,7 +10,8 @@ class CategoryItem(
     val description: String,
     val color: Int,
     val imageResId: Int,
-    val subcategories: List<SubCategoryEntity>
+    val subcategories: List<SubCategoryEntity>,
+    val transitionName: String
 ) : Item {
     override val viewType: Int
         get() = SelectCategoryDelegate.VIEW_TYPE

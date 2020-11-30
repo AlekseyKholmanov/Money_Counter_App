@@ -6,7 +6,11 @@ import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.ui.adapter.holder.SelectCategoryHolder
 import com.example.holmi_production.money_counter_app.ui.adapter.items.CategoryItem
+import com.example.holmi_production.money_counter_app.ui.custom.CompoundCheckableImageView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
+import kotlinx.android.synthetic.main.item_category.view.*
+import kotlinx.android.synthetic.main.item_image.view.*
+import kotlinx.android.synthetic.main.view_checkable_category.view.*
 
 class SelectCategoryDelegate(private val callback: SelectCategoryHolder.Callback) :
     AbsListItemAdapterDelegate<CategoryItem, Item, SelectCategoryHolder>() {
@@ -38,8 +42,13 @@ class SelectCategoryDelegate(private val callback: SelectCategoryHolder.Callback
                 }
             }
             itemView.setOnLongClickListener {
-                if(item.index != 0) {
-                    item.categoryId?.let{ callback.categoryEdited(it) }
+                if (item.index != 0) {
+                    item.categoryId?.let { callback.categoryEdited(
+                        it,
+                        itemView.findViewById<CompoundCheckableImageView>(R.id.categoryItem)
+                            .findViewById(R.id.image_category_dialog)
+                    )
+                    }
                 }
                 true
             }

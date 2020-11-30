@@ -30,30 +30,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:lines="1"
         android:textColor="@color/black"
         android:textSize="18sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@+id/detailsPercentage"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/itemImage"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="books" />
+        tools:text="books  " />
 
     <TextView
         android:id="@+id/detailsPercentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="24dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/detailsName"
+        app:layout_constraintEnd_toStartOf="@id/detailsSum"
         app:layout_constraintStart_toEndOf="@id/detailsName"
         app:layout_constraintTop_toTopOf="@id/detailsName"
         tools:text="25%" />
 
     <TextView
         android:id="@+id/detailsSum"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_weight="1"
         android:gravity="end"
-        android:layout_marginEnd="8dp"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

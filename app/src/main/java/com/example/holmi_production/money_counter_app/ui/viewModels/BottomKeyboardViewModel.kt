@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.R
-import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.model.Item
 import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
 import com.example.holmi_production.money_counter_app.model.entity.SubCategoryEntity
@@ -19,7 +18,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 
@@ -36,9 +34,9 @@ class BottomKeyboardViewModel(
     private val _subcategories: MutableLiveData<List<SubCategoryEntity>> = MutableLiveData()
     val subcategories: LiveData<List<SubCategoryEntity>> = _subcategories
 
-    var selectedCategoryId:String? = null
+    var selectedCategoryId: String? = null
 
-    var accauntInfo:AccountEntity? = null
+    private var accountInfo: AccountEntity? = null
 
 
     fun observeCategories() {
@@ -46,8 +44,19 @@ class BottomKeyboardViewModel(
             getCategoriesUseCase.observeCategoriesDetails()
                 .map {
                     val newItems = mutableListOf<CategoryItem>()
-                    val items = it.mapIndexed { index, categoryDetails ->   categoryDetails.toItem(index + 1) }
-                    newItems.add( CategoryItem(index = 0, categoryId = null, description = "Добавить", subcategories = listOf(), imageResId = R.drawable.ic_add, color = Color.TRANSPARENT))
+                    val items =
+                        it.mapIndexed { index, categoryDetails -> categoryDetails.toItem(index + 1) }
+                    newItems.add(
+                        CategoryItem(
+                            index = 0,
+                            categoryId = null,
+                            description = "Добавить",
+                            subcategories = listOf(),
+                            imageResId = R.drawable.ic_add,
+                            color = Color.TRANSPARENT,
+                            transitionName = "0item"
+                        )
+                    )
                     newItems.addAll(items)
                     newItems
                 }
@@ -58,9 +67,9 @@ class BottomKeyboardViewModel(
         }
     }
 
-    fun getAccountInfo(accountId:String){
+    fun getAccountInfo(accountId: String) {
         viewModelScope.launch {
-            accauntInfo = getAccountUseCase.getAccountById(accountId)
+            accountInfo = getAccountUseCase.getAccountById(accountId)
         }
     }
 
@@ -72,7 +81,7 @@ class BottomKeyboardViewModel(
             accountId = accountId,
             subcategoryId = subcategoryId,
             categoryId = selectedCategoryId,
-            currencyType = accauntInfo?.currencyType ?: CurrencyType.RUBBLE
+            currencyType = accountInfo?.currencyType ?: CurrencyType.RUBBLE
         )
         viewModelScope.launch {
             addTransactionUseCase.save(transaction)

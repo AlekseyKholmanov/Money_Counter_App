@@ -56,6 +56,10 @@ class CompoundCheckableImageView @JvmOverloads constructor(
         }
     }
 
+    fun setImageTransitionTag(transitionTag: String){
+        image_category_dialog.transitionName = transitionTag
+    }
+
     override fun isChecked(): Boolean = mChecked
 
     override fun toggle() {

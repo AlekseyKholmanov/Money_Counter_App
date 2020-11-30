@@ -3,6 +3,8 @@ package com.example.holmi_production.money_counter_app.ui.fragments
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.transition.TransitionInflater
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
@@ -11,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.hideKeyboardFrom
 import com.example.holmi_production.money_counter_app.main.BaseFragment
@@ -33,6 +36,7 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import reactivecircus.flowbinding.android.widget.textChanges
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details) {
@@ -46,6 +50,8 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         categoryDetailsViewModel.observeCategoryById(args.categoryId)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,7 +61,10 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
             viewLifecycleOwner,
             Observer(::setSubcategory)
         )
-        val title = if(args.categoryId == null) "Create category" else "EditCategory"
+        val title = if (args.categoryId == null) "Create category" else "EditCategory"
+        if (args.categoryId != null) {
+            //categoryImage.transitionName = args.categoryId
+        }
         updateToolbarTitle(title)
         categoryImage.setOnClickListener {
             val dialog =
@@ -81,7 +90,6 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
             override fun onColorChangeListener(color: Int) {
                 categoryImage.backgroundTintList = ColorStateList.valueOf(color)
             }
-
         })
 
         categoryName
@@ -148,7 +156,7 @@ class CategoryDetailsFragment : BaseFragment(R.layout.fragment_category_details)
             val image = Images.getImageById(it.imageId)
             with(categoryImage) {
                 backgroundTintList = ColorStateList.valueOf(it.color)
-                setImageResource(image)
+                load(image)
                 tag = it.imageId
             }
             categoryName.setText(it.description)

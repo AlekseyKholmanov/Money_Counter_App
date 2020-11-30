@@ -28,6 +28,7 @@ fun CategoryDetails.toItem(index: Int): CategoryItem {
         description = this.category.description,
         color = this.category.color,
         imageResId = Images.getImageById(this.category.imageId),
-        subcategories = this.subcategory ?: listOf()
+        subcategories = this.subcategory ?: listOf(),
+        transitionName = this.category.id
     )
 }

@@ -22,22 +22,22 @@
             android:id="@+id/transactionDeleteButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/bg_rounded_8dp_stroked"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_close"
-            android:layout_marginEnd="4dp"
-            android:background="@drawable/bg_rounded_8dp_stroked"
             android:tint="@android:color/holo_red_light"
             tools:ignore="ContentDescription" />
 
         <ImageButton
             android:id="@+id/transactionEditButton"
             android:layout_width="40dp"
-            android:clickable="true"
-            android:focusable="true"
             android:layout_height="40dp"
             android:layout_marginEnd="4dp"
             android:background="@drawable/bg_rounded_8dp_stroked"
+            android:clickable="true"
+            android:focusable="true"
             android:src="@drawable/ic_edit"
             android:tint="@color/colorPrimary"
             tools:ignore="ContentDescription" />
@@ -65,33 +65,28 @@
             android:layout_height="32dp"
             android:layout_marginStart="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/itemContainer"
+            app:layout_constraintRight_toLeftOf="@id/itemCategory"
             app:layout_constraintStart_toEndOf="@id/indicator"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/itemContainer"
-            android:layout_width="wrap_content"
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/itemCategory"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
-            android:orientation="vertical"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="3"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:textColor="@color/textPrimary"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/itemImage"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/itemCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:gravity="center_vertical"
-                android:textColor="@color/textPrimary"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="@id/itemComment"
-                app:layout_constraintLeft_toRightOf="@id/image"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Категория" />
-        </LinearLayout>
+            app:layout_constraintEnd_toStartOf="@+id/itemSum"
+            app:layout_constraintStart_toEndOf="@id/itemImage"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Категория" />
 
         <TextView
             android:id="@+id/itemSum"
