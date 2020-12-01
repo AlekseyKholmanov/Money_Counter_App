@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.RecyclerItem
-import com.example.holmi_production.money_counter_app.ui.adapter.decorators.ListDelegationDecorator
+import com.example.holmi_production.money_counter_app.ui.adapter.decorators.FirstLineDecorator
 import com.example.holmi_production.money_counter_app.ui.adapter.delegate.dialogFirstItemDelegate
 import com.example.holmi_production.money_counter_app.ui.adapter.delegate.dialogHeaderItemDelegate
 import com.example.holmi_production.money_counter_app.ui.adapter.delegate.dialogValueGuidItemAdapterDelegate
@@ -26,7 +26,9 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class AccountPickDialog : BottomSheetDialogFragment() {
-
+    companion object {
+        const val REQUEST_FROM_CHART_ACCOUNT_SELECTION = "request_from_chart_account_selection"
+    }
 
     val args: AccountPickDialogArgs by navArgs()
 
@@ -59,7 +61,7 @@ class AccountPickDialog : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recycler.addItemDecoration(ListDelegationDecorator(requireContext()))
+        recycler.addItemDecoration(FirstLineDecorator(requireContext()))
         recycler.adapter = adapter
         adapter.items = prepareItems()
     }
@@ -90,7 +92,7 @@ class AccountPickDialog : BottomSheetDialogFragment() {
 
     private fun finish(value: String) {
         setFragmentResult(
-            BottomDialog.REQUEST_FROM_DASHBOARD_ACCOUNT_SELECTION, bundleOf(
+            args.from, bundleOf(
                 BottomDialog.TYPE_ACCOUNT_ID to value
             )
         )

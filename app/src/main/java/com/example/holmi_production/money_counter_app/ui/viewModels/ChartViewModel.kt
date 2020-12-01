@@ -1,15 +1,15 @@
 package com.example.holmi_production.money_counter_app.ui.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.util.Log
+import androidx.lifecycle.*
 import com.example.holmi_production.money_counter_app.model.dto.TransactionDetailsDTO
+import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
 import com.example.holmi_production.money_counter_app.ui.adapter.items.CharCategoryItem
 import com.example.holmi_production.money_counter_app.useCases.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
 class ChartViewModel(
@@ -23,7 +23,14 @@ class ChartViewModel(
     private val _transactions = MutableLiveData<List<CharCategoryItem>>()
     val transactions: LiveData<List<CharCategoryItem>> = _transactions
 
-    var showExpense:Boolean = false
+    private val _accountId = MutableLiveData<String?>(null)
+    val accountId: LiveData<String?> = _accountId
+
+    private val _accountEntity = MutableLiveData<AccountEntity?>(null)
+    val accountEntity: LiveData<AccountEntity?> = _accountEntity
+
+
+    var showExpense: Boolean = false
 
     private val expenses = mutableListOf<CharCategoryItem>()
     private val income = mutableListOf<CharCategoryItem>()
@@ -31,29 +38,38 @@ class ChartViewModel(
 
     fun observeTransaction() {
         viewModelScope.launch {
+            val accountFlow = accountId.asFlow().map {
+                if(it.isNullOrEmpty())null else getAccountsUseCase.getAccountById(it)
+            }
             getTransactionUseCase.observeDetails()
-                .map{ transaction ->
-                        val divided = transaction.partition { it.transaction.sum > 0 }
-                        buildCategoryItem(divided.first) to
-                                buildCategoryItem(divided.second)
+                .combine(accountFlow) { transactions, accountId -> (if (accountId == null) transactions else transactions.filter { it.transaction.accountId == accountId.id }) to accountId }
+                .map { (transaction, accountId) ->
+                    val divided = transaction.partition { it.transaction.sum > 0 }
+                    buildCategoryItem(divided.first) to
+                            buildCategoryItem(divided.second) to accountId
 
-                }.onEach {
+                }.onEach { (transactions, accountId) ->
                     expenses.clear()
-                    expenses.addAll(it.first)
+                    expenses.addAll(transactions.first)
                     income.clear()
-                    income.addAll(it.second)
+                    income.addAll(transactions.second)
+                    Log.d("M_M_M", "$accountId")
+                    withContext(Dispatchers.Main){_accountEntity.value = accountId}
                 }
                 .flowOn(Dispatchers.IO)
-                .collect {
-                    _transactions.value = if(showExpense) it.first else it.second
+                .collect { (transactions, qwe) ->
+
+                    Log.d("M_M_M", "collect")
+                    _transactions.value =
+                        if (showExpense) transactions.first else transactions.second
                 }
         }
     }
 
     private fun buildCategoryItem(transactions: List<TransactionDetailsDTO>): List<CharCategoryItem> {
-        val groupped = transactions.groupBy { it.category ?: "No Category" }
+        val grouped = transactions.groupBy { it.category ?: "No Category" }
         val max = transactions.sumByDouble { it.transaction.sum }
-        return groupped.map {
+        return grouped.map {
             val sum = it.value.sumByDouble { it.transaction.sum }
             val category = it.value.first().category
             CharCategoryItem(
@@ -68,11 +84,11 @@ class ChartViewModel(
 
     fun swapValues() {
         showExpense = !showExpense
-        _transactions.value = if(showExpense) expenses else income
+        _transactions.value = if (showExpense) expenses else income
     }
 
     fun updateAccountId(accountId: String) {
-        TODO("Not yet implemented")
+        _accountId.value = if (accountId.isEmpty()) null else accountId
     }
 
 }

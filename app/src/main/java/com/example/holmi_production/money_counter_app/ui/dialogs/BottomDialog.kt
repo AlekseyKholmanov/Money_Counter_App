@@ -56,7 +56,6 @@ class BottomDialog : BottomSheetDialogFragment() {
         val REQUEST_FROM_ACCOUNT_CURRENCY_TYPE = "request_from_account_currency_type"
         val REQUEST_FROM_DASHBOARD_FRAGMENT_CURRENCY_TYPE = "request_from_dashboard_fragment_currency_type"
         val REQUEST_FROM_DASHBOARD_ACCOUNT_SELECTION = "request_from_account_selection"
-        val REQUEST_FROM_CHART_ACCOUNT_SELECTION = "request_from_chart_account_selection"
 
 
         val TYPE_ACCOUNT_CURRENCY = "type_account_currency"

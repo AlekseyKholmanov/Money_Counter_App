@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.main.BaseFragment
 import com.example.holmi_production.money_counter_app.model.RecyclerItem
+import com.example.holmi_production.money_counter_app.model.entity.AccountEntity
 import com.example.holmi_production.money_counter_app.ui.adapter.chartCategoriesHeaderDelegate
 import com.example.holmi_production.money_counter_app.ui.adapter.chartCategoryDetailsAdapterDelegate
 import com.example.holmi_production.money_counter_app.ui.adapter.decorators.ListDelegationDecorator
@@ -19,6 +20,7 @@ import com.example.holmi_production.money_counter_app.ui.adapter.items.CharCateg
 import com.example.holmi_production.money_counter_app.ui.adapter.items.ChartCategoryHeaderItem
 import com.example.holmi_production.money_counter_app.ui.adapter.top5categoriesAdapterDelegate
 import com.example.holmi_production.money_counter_app.ui.custom.CharItem
+import com.example.holmi_production.money_counter_app.ui.dialogs.AccountPickDialog
 import com.example.holmi_production.money_counter_app.ui.dialogs.BottomDialog
 import com.example.holmi_production.money_counter_app.ui.viewModels.ChartViewModel
 import com.github.mikephil.charting.data.BarEntry
@@ -57,7 +59,10 @@ class ChartFragment : BaseFragment(R.layout.fragment_charts) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.transactions.observe(viewLifecycleOwner, Observer(::updateTransaction))
+        with(viewModel){
+            transactions.observe(viewLifecycleOwner, Observer(::updateTransaction))
+            accountEntity.observe(viewLifecycleOwner, Observer(::updateAccount))
+        }
         percentList.adapter = top5Adapter
         detailsList.adapter = detailsAdapter
         detailsList.addItemDecoration(ListDelegationDecorator(requireContext()))
@@ -66,13 +71,24 @@ class ChartFragment : BaseFragment(R.layout.fragment_charts) {
         }
 
         accountName.setOnClickListener {
-            val action = ChartFragmentDirections.actionOpenBottomAccountDialog(null, withCreateAction = false, showValueAll = true)
+            val action = ChartFragmentDirections.actionOpenBottomAccountDialog(
+                null,
+                withCreateAction = false,
+                showValueAll = true,
+                from = AccountPickDialog.REQUEST_FROM_CHART_ACCOUNT_SELECTION
+            )
             findNavController().navigate(action)
         }
+        setResultListener()
+    }
+
+    private fun updateAccount(accountEntity: AccountEntity?) {
+        Log.d("M_M_M","update acc")
+        accountName.text = accountEntity?.description ?: "All accounts"
     }
 
     private fun setResultListener() {
-        setFragmentResultListener(BottomDialog.REQUEST_FROM_CHART_ACCOUNT_SELECTION) { _, bundle ->
+        setFragmentResultListener(AccountPickDialog.REQUEST_FROM_CHART_ACCOUNT_SELECTION) { _, bundle ->
             val selectedAccountId = bundle.getString(BottomDialog.TYPE_ACCOUNT_ID)
             selectedAccountId?.let { viewModel.updateAccountId(it) }
         }
