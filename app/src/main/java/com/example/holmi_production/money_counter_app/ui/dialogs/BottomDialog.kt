@@ -12,19 +12,16 @@ import androidx.navigation.fragment.navArgs
 import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.model.RecyclerItem
 import com.example.holmi_production.money_counter_app.model.enums.CurrencyType
-import com.example.holmi_production.money_counter_app.model.enums.PeriodType
 import com.example.holmi_production.money_counter_app.ui.adapter.decorators.ListDelegationDecorator
 import com.example.holmi_production.money_counter_app.ui.adapter.delegate.*
 import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogFirstItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogValueGuidItem
-import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogValueItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.DialogValueTextItem
 import com.example.holmi_production.money_counter_app.useCases.GetAccountsUseCase
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import kotlinx.android.synthetic.main.bottom_dialog.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 class BottomDialog : BottomSheetDialogFragment() {
@@ -58,9 +55,12 @@ class BottomDialog : BottomSheetDialogFragment() {
     companion object {
         val REQUEST_FROM_ACCOUNT_CURRENCY_TYPE = "request_from_account_currency_type"
         val REQUEST_FROM_DASHBOARD_FRAGMENT_CURRENCY_TYPE = "request_from_dashboard_fragment_currency_type"
-        val REQUEST_FROM_ACCOUNT_SELECTION = "request_from_account_selection"
-        val TYPE_ACCOUNT_CURRENCY = "currency_type"
-        val TYPE_ACCOUNT_SELECTION = "account_selection"
+        val REQUEST_FROM_DASHBOARD_ACCOUNT_SELECTION = "request_from_account_selection"
+        val REQUEST_FROM_CHART_ACCOUNT_SELECTION = "request_from_chart_account_selection"
+
+
+        val TYPE_ACCOUNT_CURRENCY = "type_account_currency"
+        val TYPE_ACCOUNT_ID = "type_account_id"
 
         val ARGS_SELECTED_ID_STRING = "selectedIdString"
         val ARGS_SELECTED_ID_INT = "selectedIdInt"
@@ -96,7 +96,7 @@ class BottomDialog : BottomSheetDialogFragment() {
                     )
                 }
             }
-            TYPE_ACCOUNT_SELECTION -> {
+            TYPE_ACCOUNT_ID -> {
                 viewLifecycleOwner.lifecycleScope.launch {
                     val accounts = getAccountUseCase.getAccounts()
                     accounts.forEachIndexed { index, accountEntity ->
@@ -130,10 +130,10 @@ class BottomDialog : BottomSheetDialogFragment() {
                     )
                 )
             }
-            TYPE_ACCOUNT_SELECTION -> {
+            TYPE_ACCOUNT_ID -> {
                 setFragmentResult(
-                    REQUEST_FROM_ACCOUNT_SELECTION, bundleOf(
-                        TYPE_ACCOUNT_SELECTION to value as String
+                    REQUEST_FROM_DASHBOARD_ACCOUNT_SELECTION, bundleOf(
+                        TYPE_ACCOUNT_ID to value as String
                     )
                 )
             }

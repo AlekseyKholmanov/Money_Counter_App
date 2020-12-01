@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.holmi_production.money_counter_app.model.dto.TransactionDetailsDTO
 import com.example.holmi_production.money_counter_app.ui.adapter.items.CharCategoryItem
-import com.example.holmi_production.money_counter_app.useCases.EditTransactionUseCase
-import com.example.holmi_production.money_counter_app.useCases.GetActivePeriodUseCase
-import com.example.holmi_production.money_counter_app.useCases.GetTransactionUseCase
-import com.example.holmi_production.money_counter_app.useCases.UpdateActivePeriodUseCase
+import com.example.holmi_production.money_counter_app.useCases.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -17,6 +14,7 @@ import kotlin.math.abs
 
 class ChartViewModel(
     private val getTransactionUseCase: GetTransactionUseCase,
+    private val getAccountsUseCase: GetAccountsUseCase,
     private val editTransactionUSeCase: EditTransactionUseCase,
     private val getActivePeriodUseCase: GetActivePeriodUseCase,
     private val updateActivePeriodUseCase: UpdateActivePeriodUseCase
@@ -71,6 +69,10 @@ class ChartViewModel(
     fun swapValues() {
         showExpense = !showExpense
         _transactions.value = if(showExpense) expenses else income
+    }
+
+    fun updateAccountId(accountId: String) {
+        TODO("Not yet implemented")
     }
 
 }

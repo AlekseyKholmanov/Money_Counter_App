@@ -54,7 +54,7 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
             findNavController().navigate(
                 R.id.action_global_bottomDialog,
                 bundleOf(
-                    BottomDialog.ARGS_DIALOG_TYPE to BottomDialog.TYPE_ACCOUNT_SELECTION,
+                    BottomDialog.ARGS_DIALOG_TYPE to BottomDialog.TYPE_ACCOUNT_ID,
                     BottomDialog.ARGS_SELECTED_ID_STRING to viewModel.accountSummary.value?.accountId
                 )
             )
@@ -132,8 +132,8 @@ class DashboardFragment : BaseFragment(R.layout.fragment_dashboard) {
     }
 
     private fun setResultListener() {
-        setFragmentResultListener(BottomDialog.REQUEST_FROM_ACCOUNT_SELECTION) { _, bundle ->
-            val selectedAccountId = bundle.getString(BottomDialog.TYPE_ACCOUNT_SELECTION)
+        setFragmentResultListener(BottomDialog.REQUEST_FROM_DASHBOARD_ACCOUNT_SELECTION) { _, bundle ->
+            val selectedAccountId = bundle.getString(BottomDialog.TYPE_ACCOUNT_ID)
             selectedAccountId?.let { viewModel.updateAccountId(it) }
         }
         setFragmentResultListener(BottomDialog.REQUEST_FROM_DASHBOARD_FRAGMENT_CURRENCY_TYPE) { _, bundle ->

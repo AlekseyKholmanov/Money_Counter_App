@@ -11,11 +11,12 @@ class ImageHolder(
     v: View
 ) : RecyclerView.ViewHolder(v) {
 
-    fun bind(imageId: Int, position: Int) {
+    fun bind(imageId: Int) {
         with(itemView) {
             with(categoryItem) {
                 setImage(imageId)
                 setTextVisibility(false)
+
             }
         }
     }

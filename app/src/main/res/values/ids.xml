@@ -20,5 +20,6 @@
          Each menu item and nav graph fragment represent the same logical item. -->
     <item name="navigationDashboard" type="id" />
     <item name="navigationBottomDialog" type="id" />
+    <item name="navigationBottomAccountDialog" type="id" />
     <item name="navigationAddTransactionKeyboard" type="id" />
 </resources>

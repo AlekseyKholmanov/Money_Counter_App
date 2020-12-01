@@ -46,11 +46,11 @@
     <fragment
         android:id="@+id/createAccountFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.onboarding.CreateAccountFragment"
-        tools:layout="@layout/fragment_onboarding_account_create" >
+        tools:layout="@layout/fragment_onboarding_account_create">
         <argument
             android:name="from"
-            app:argType="com.example.holmi_production.money_counter_app.ui.LaunchDestination"
-            android:defaultValue="MAIN_ACTIVITY" />
+            android:defaultValue="MAIN_ACTIVITY"
+            app:argType="com.example.holmi_production.money_counter_app.ui.LaunchDestination" />
     </fragment>
     <dialog
         android:id="@id/navigationBottomDialog"
@@ -70,6 +70,24 @@
             app:argType="string"
             app:nullable="true" />
     </dialog>
+    <dialog
+        android:id="@id/navigationBottomAccountDialog"
+        android:name="com.example.holmi_production.money_counter_app.ui.dialogs.AccountPickDialog"
+        android:label="BottomDialog">
+        <argument
+            android:name="selectedIdString"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="withCreateAction"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <argument
+            android:name="showValueAll"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </dialog>
     <action
         android:id="@+id/action_global_bottomDialog"
         app:destination="@id/navigationBottomDialog" />
@@ -79,4 +97,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.holmi_production.money_counter_app.ui.fragments.SettingsFragment" />
+    <action
+        android:id="@+id/action_openBottomAccountDialog"
+        app:destination="@id/navigationBottomAccountDialog" />
 </navigation>

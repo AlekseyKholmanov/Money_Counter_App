@@ -1,23 +1,18 @@
 package com.example.holmi_production.money_counter_app.ui.adapter
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import coil.load
-import com.example.holmi_production.money_counter_app.R
 import com.example.holmi_production.money_counter_app.extensions.toCurencyFormat
-import com.example.holmi_production.money_counter_app.extensions.toRUformat
 import com.example.holmi_production.money_counter_app.model.RecyclerItem
 import com.example.holmi_production.money_counter_app.model.enums.Images
 import com.example.holmi_production.money_counter_app.ui.adapter.items.CharCategoryItem
 import com.example.holmi_production.money_counter_app.ui.adapter.items.ChartCategoryHeaderItem
-import com.example.holmi_production.money_counter_app.ui.adapter.items.TransactionDashboardHeaderItem
 import com.example.holmi_production.money_counter_app.ui.custom.CharItem
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegate
 import kotlinx.android.synthetic.main.item_categories_details.view.*
 import kotlinx.android.synthetic.main.item_categories_header.view.*
-import kotlinx.android.synthetic.main.item_dashboard_transaction_header.view.*
 import kotlinx.android.synthetic.main.item_percentage_categories.view.*
-import java.lang.Math.abs
+import kotlin.math.abs
 import java.util.*
 
 fun top5categoriesAdapterDelegate() =
@@ -31,7 +26,7 @@ fun top5categoriesAdapterDelegate() =
                     listOf(
                         CharItem(
                             angle = 360f,
-                            color = item.color ?: Color.CYAN
+                            color = item.color ?: Color.GRAY
                         )
                     )
                 )

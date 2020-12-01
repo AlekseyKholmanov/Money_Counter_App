@@ -74,7 +74,8 @@ val viewModelsModule = module {
             getTransactionUseCase = get(),
             editTransactionUSeCase = get(),
             getActivePeriodUseCase = get(),
-            updateActivePeriodUseCase = get()
+            updateActivePeriodUseCase = get(),
+            getAccountsUseCase = get()
         )
     }
 

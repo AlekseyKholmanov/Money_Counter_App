@@ -6,16 +6,62 @@
     android:animateLayoutChanges="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+    <TextView
+        android:id="@+id/accountName"
+        style="@style/MediumFontFamily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/bg_rounded_corner_with_ripple_8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/rubik_light"
+        android:padding="4dp"
+        android:text="@string/account"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        app:drawableEndCompat="@drawable/ic_arrow_drop_down"
+        app:drawableTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/currencyBadge"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/accountName"
+        app:layout_constraintStart_toStartOf="@id/accountName"/>
+
+    <TextView
+        android:id="@+id/accountCurrency"
+        style="@style/MediumFontFamily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/bg_rounded_corner_with_ripple_8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/rubik_light"
+        android:padding="4dp"
+        android:text="@string/account"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        app:drawableEndCompat="@drawable/ic_arrow_drop_down"
+        app:drawableTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.example.holmi_production.money_counter_app.ui.custom.CustomPieChart
         android:id="@+id/chart"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="4dp"
         app:borderWidth="12dp"
         app:isDrawText="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/accountName" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/percentList"

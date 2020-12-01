@@ -21,6 +21,6 @@ class IconPickerAdapter(private val imageIds: List<Int>, val callback: ImageHold
         holder.itemView.setOnClickListener {
             callback.imagePicked(position)
         }
-        holder.bind(imageId, position)
+        holder.bind(imageId)
     }
 }
